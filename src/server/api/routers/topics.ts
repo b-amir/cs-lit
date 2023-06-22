@@ -1,0 +1,221 @@
+import { z } from "zod";
+import {
+  createTRPCRouter,
+  publicProcedure,
+  protectedProcedure,
+} from "@/server/api/trpc";
+
+import { TRPCError } from "@trpc/server";
+import { a } from "@react-spring/web";
+import { PrismaClient, type Topic } from "@prisma/client";
+
+
+
+export const topicsWithCategoryData = async (topics: Topic[]) => {
+  const prisma = new PrismaClient();
+  const topicsWithCategoryData = await Promise.all(
+    topics.map(async (topic) => {
+      const category = await prisma.category.findUnique({
+        where: { id: topic.categoryId },
+      });
+      return { ...topic, category };
+    })
+  );
+  return topicsWithCategoryData;
+}
+
+
+
+export const topicsRouter = createTRPCRouter({
+  getAll: publicProcedure.query(async ({ ctx }) => {
+    const topics = await ctx.prisma.topic.findMany({
+      take: 10,
+      orderBy: [{ createdAt: "desc" }],
+    });
+    // return analogies;
+
+    // return addUsersDataToAnalogies(analogies, ctx);
+    return topics;
+  }),
+
+  getByCategoryId: publicProcedure
+    .input(z.object({ id: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const topics = await ctx.prisma.topic.findMany({
+        where: {
+          categoryId: input.id,
+        },
+        take: 10,
+        orderBy: [{ createdAt: "desc" }],
+      });
+      return topics;
+    }),
+
+  getById: publicProcedure
+    .input(z.object({ id: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const topic = await ctx.prisma.topic.findUnique({
+        where: {
+          id: input.id,
+        },
+      });
+      if (!topic) throw new TRPCError({ code: "NOT_FOUND" });
+      // return (await addUsersDataToAnalogies([analogy]))[0];
+      return topic;
+    }),
+
+  getByName: publicProcedure
+    .input(z.object({ title: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const topic = await ctx.prisma.topic.findFirst({
+        where: {
+          title: input.title,
+        },
+      });
+      if (!topic) throw new TRPCError({ code: "NOT_FOUND" });
+      return topic;
+    }),
+
+  searchByName: publicProcedure
+    .input(z.object({ query: z.string().min(2).max(64) }))
+    .query(async ({ ctx, input }) => {
+      const topics = await ctx.prisma.topic.findMany({
+        where: {
+          title: {
+            contains: input.query,
+          },
+        },
+        take: 5,
+        orderBy: [{ createdAt: "desc" }],
+      });
+      return topicsWithCategoryData(topics);
+    }),
+
+  getBySlug: publicProcedure
+    .input(z.object({ slug: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const topic = await ctx.prisma.topic.findFirst({
+        where: {
+          slug: input.slug,
+        },
+      });
+      if (!topic) throw new TRPCError({ code: "NOT_FOUND" });
+      return topic;
+    }),
+
+
+  create: protectedProcedure
+    .input(
+      z.object({
+        title: z.string().min(2).max(100),
+        slug: z.string(),
+        id: z.string(),
+        category: z.object({
+          id: z.string(),
+        }),
+        url: z.string().url(),
+        starter: z.object({
+          id: z.string(),
+        }),
+        analogies: z.array(z.object({
+          id: z.string(),
+          description: z.string(),
+        })),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const topic = await ctx.prisma.topic.create({
+        data: {
+          title: input.title,
+          slug: input.slug,
+          category: {
+            connect: { id: input.category.id }, // Connect to an existing category using its ID
+          },
+          url: input.url,
+          starter: {
+            connect: { id: input.starter.id }, // Connect to an existing user using its ID
+          },
+          analogies: {
+            // create first analogy and append to topic analogies array
+            create: {
+              description: input.analogies[0]?.description || "",
+              author: {
+                connect: { id: input.starter.id }, // Connect to an existing user using its ID
+              },
+            },
+          },
+        },
+      });
+      return topic;
+
+      // throw trpc error
+
+    }),
+
+  update: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        title: z.string().min(2).max(100),
+        slug: z.string(),
+        category: z.object({
+          id: z.string(),
+        }),
+        url: z.string().url(),
+        starter: z.object({
+          id: z.string(),
+        }),
+        // analogies: z.array(z.object({
+        //   id: z.string(),
+        //   description: z.string(),
+        // })),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const topic = await ctx.prisma.topic.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          title: input.title,
+          slug: input.slug,
+          category: {
+            connect: { id: input.category.id }, // Connect to an existing category using its ID
+          },
+          url: input.url,
+          starter: {
+            connect: { id: input.starter.id }, // Connect to an existing user using its ID
+          },
+          // analogies: {
+          //   // create first analogy and append to topic analogies array
+          //   create: {
+          //     description: input.analogies[0]?.description || "",
+          //     author: {
+          //       connect: { id: input.starter.id }, // Connect to an existing user using its ID
+          //     },
+          //   },
+          // },
+        },
+      });
+      return topic;
+    }),
+
+  delete: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      await ctx.prisma.analogy.deleteMany({
+        where: { topicId: input.id },
+      });
+
+      const topic = await ctx.prisma.topic.delete({
+        where: { id: input.id },
+      });
+
+      return topic;
+    }),
+
+
+
+
+
+});
