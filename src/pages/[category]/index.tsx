@@ -30,7 +30,7 @@ export interface ITopicInput {
   firstAnalogy: string;
 }
 
-function CategoryPage() {
+function CategoryPage(props) {
   const router = useRouter();
   const UrlCategory = router.query.category as string;
 
@@ -117,7 +117,7 @@ function CategoryPage() {
                       header
                 ------------------  */}
           <div className="mx-auto mb-0  mt-10 flex max-w-[640px] flex-col justify-between px-3 ">
-            <h1 className=" mb-4 items-start justify-start font-merriweathersans  text-5xl font-extrabold  tracking-tight text-[#2A2A2E] sm:text-[2rem]">
+            <h1 className=" font-merriweathersans mb-4 items-start justify-start  text-5xl font-extrabold  tracking-tight text-[#2A2A2E] sm:text-[2rem]">
               {categoryData?.name}
             </h1>
             <div className="flex flex-row items-end place-self-end text-sm font-semibold text-[#2A2A2E]">
@@ -217,7 +217,10 @@ function CategoryPage() {
                               //   );
                               case "PENDING":
                                 return (
-                                  <IoTimeOutline className="text-lg text-[#838383] " />
+                                  <IoTimeOutline className="text-md h-[24px] w-[24px] rounded-full bg-[#fffddd] p-[2px] text-[#aa8a3f]" />
+                                  // <span className="rounded-[9px] bg-[#fffddd] px-3 text-xs font-semibold text-[#aa8a3f]">
+                                  // Pending
+                                  // </span>
                                 );
                               case "REJECTED":
                                 return (
@@ -250,7 +253,7 @@ function CategoryPage() {
                 </table>
               </div>
             ) : (
-              <div className="mx-auto mt-[20%] flex h-full flex-col items-center justify-center gap-10 font-merriweathersans text-lg font-semibold text-[#8c8c8cdd]">
+              <div className="font-merriweathersans mx-auto mt-[20%] flex h-full flex-col items-center justify-center gap-10 text-lg font-semibold text-[#8c8c8cdd]">
                 <FaGhost className="text-9xl  text-[#a3a3a380]" />
                 <span>
                   No topics yet.{" "}
@@ -428,7 +431,7 @@ function TopicEditorForm({
       },
       onError: (e) => {
         const errorMessage = e.data?.zodError?.fieldErrors;
-        console.log(errorMessage);
+        // console.log(errorMessage);
         if (errorMessage) {
           if (errorMessage.url) {
             toast.error(errorMessage?.url.join(" "));

@@ -170,12 +170,13 @@ model Like {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    receiver   User    @relation(fields: [receiverId], references: [id])
-    receiverId String
-    analogy    Analogy @relation(fields: [analogyId], references: [id])
-    analogyId  String
+    voter     User    @relation(fields: [voterId], references: [id])
+    voterId   String
+    analogy   Analogy @relation(fields: [analogyId], references: [id])
+    analogyId String
 
-    @@index([receiverId, id])
+    @@unique([voterId, analogyId])
+    @@index([voterId, id])
     @@index([analogyId])
 }
 
@@ -185,12 +186,13 @@ model Dislike {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    receiver   User    @relation(fields: [receiverId], references: [id])
-    receiverId String
-    analogy    Analogy @relation(fields: [analogyId], references: [id])
-    analogyId  String
+    voter     User    @relation(fields: [voterId], references: [id])
+    voterId   String
+    analogy   Analogy @relation(fields: [analogyId], references: [id])
+    analogyId String
 
-    @@index([receiverId, id])
+    @@unique([voterId, analogyId])
+    @@index([voterId, id])
     @@index([analogyId])
 }
 

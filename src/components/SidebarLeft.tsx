@@ -4,20 +4,17 @@ import Link from "next/link";
 import { SiNextdotjs } from "react-icons/si";
 import { SiTypescript } from "react-icons/si";
 import { SiJavascript } from "react-icons/si";
-import { TbBrandReact, TbCategory } from "react-icons/tb";
-import { IoLogoCss3, IoMdSquare } from "react-icons/io";
-import { UserSection } from "./UserSection";
-import { TbPencilMinus } from "react-icons/tb";
-import Logo from "public/assets/logo";
-import { Footer } from "./Footer";
-import * as icon from "react-icons";
+import { TbBrandReact } from "react-icons/tb";
+import { IoLogoCss3 } from "react-icons/io";
+// import { UserSection } from "./UserSection";
+// import { Footer } from "./Footer";
 import { api } from "@/utils/api";
-import { LoadingPage } from "./loading";
 import { useSession } from "next-auth/react";
-import { RiMenuAddFill } from "react-icons/ri";
+import { RiFlowChart, RiMenuAddFill } from "react-icons/ri";
 import slugify from "slugify";
 import toast from "react-hot-toast";
 import { GrSquare } from "react-icons/gr";
+import { MdCategory } from "react-icons/md";
 
 export function SidebarLeft(props: { username: any }) {
   // const [userSectionShown, setUserSectionShown] = useState(false);
@@ -74,6 +71,10 @@ export function SidebarLeft(props: { username: any }) {
         return <TbBrandReact />;
       case "css":
         return <IoLogoCss3 />;
+      case "algorithm":
+        return <RiFlowChart />;
+      case "data-structure":
+        return <MdCategory />;
       default:
         return <GrSquare className="text-gray-300" />;
     }
@@ -115,7 +116,7 @@ export function SidebarLeft(props: { username: any }) {
                 <li key={category.id}>
                   <Link
                     className="flex items-center rounded-lg p-2 text-[#2A2A2E] hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                    onClick={() => {}}
+                    // onClick={() => {}}
                     href={`/${category.slug}`}
                   >
                     {/*  since there's only gonna be a few obvious topics,

@@ -200,10 +200,9 @@ export function SearchBar() {
               >
                 {results?.length !== 0 &&
                   results?.map((topic: any) => (
-                    <li className="w-full">
+                    <li className="w-full" key={topic.id}>
                       <Link
                         href={`/${topic.category.slug}/${topic.title}`}
-                        key={topic.id}
                         className="mx-12 flex flex-col rounded-[12px] border border-transparent bg-gray-100 px-6 py-5 shadow-sm transition-all hover:border-[#858585c2] hover:shadow-md"
                       >
                         <span className="text-md pb-2 pt-1 font-bold text-[#2A2A2E]">
@@ -233,7 +232,7 @@ export function SearchBar() {
             </div>
           </animated.div>
           <div
-            className="fixed right-[0px] top-[0px] z-0 h-screen w-screen bg-black opacity-50 "
+            className="fixed right-[0px] top-[0px] z-0 h-screen w-screen bg-black opacity-70 !backdrop-blur-sm !backdrop-filter"
             onClick={() => setShowResultsPanel(false)}
           ></div>
         </>

@@ -168,5 +168,125 @@ export const analogiesRouter = createTRPCRouter({
     }
     ),
 
+  getAnalogyVotes: publicProcedure
+    .input(
+      z.object({
+        analogyId: z.string(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const analogyLikes = await ctx.prisma.like.findMany({
+        where: {
+          analogyId: input.analogyId,
+        },
+      });
+      const analogyDislikes = await ctx.prisma.dislike.findMany({
+        where: {
+          analogyId: input.analogyId,
+        },
+      });
+      const analogyVotes = {
+        likes: analogyLikes.length,
+        dislikes: analogyDislikes.length,
+      }
+
+      return analogyVotes;
+    }
+    ),
+
+  voting: protectedProcedure
+    .input(
+      z.object({
+        analogyId: z.string(),
+        vote: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const voterId = ctx.session?.user.id;
+      const analogyId = input.analogyId;
+      const vote = input.vote;
+      if (vote === "like") {
+        await ctx.prisma.dislike.deleteMany({
+          where: {
+            voterId,
+            analogyId,
+          },
+        });
+        await ctx.prisma.like.create({
+          data: {
+            voterId,
+            analogyId,
+          },
+        });
+      } else if (vote === "dislike") {
+        await ctx.prisma.like.deleteMany({
+          where: {
+            voterId,
+            analogyId,
+          },
+        });
+        await ctx.prisma.dislike.create({
+          data: {
+            voterId,
+            analogyId,
+          },
+        });
+      } else if (vote === "retract") {
+        await ctx.prisma.like.deleteMany({
+          where: {
+            voterId,
+            analogyId,
+          },
+        });
+        await ctx.prisma.dislike.deleteMany({
+          where: {
+            voterId,
+            analogyId,
+          },
+        });
+
+      } else {
+        throw new TRPCError({ code: "NOT_FOUND" });
+      }
+      return "success";
+    }
+    ),
+
+  whatDidCurrentUserVote: protectedProcedure
+    .input(
+      z.object({
+        analogyId: z.string(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const voterId = ctx.session?.user.id;
+      const analogyId = input.analogyId;
+      const analogyLikes = await ctx.prisma.like.findMany({
+        where: {
+          analogyId: analogyId,
+          voterId: voterId,
+        },
+      });
+      const analogyDislikes = await ctx.prisma.dislike.findMany({
+        where: {
+          analogyId: analogyId,
+          voterId: voterId,
+        },
+      });
+      const whatDidCurrentUserVote =
+        // if analogyLikes.length === 1 { return "like" }
+        // else if (analogyDislikes.length === 1) { return "dislike" }
+        // else { return null }
+        analogyLikes.length === 1 ? "like" : analogyDislikes.length === 1 ? "dislike" : null;
+
+
+
+
+
+      return whatDidCurrentUserVote;
+    }
+    ),
+
+
 
 });
