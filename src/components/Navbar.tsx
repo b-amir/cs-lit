@@ -33,7 +33,7 @@ export function Navbar() {
   });
 
   return (
-    <nav className="fixed top-0 z-40 flex min-h-[90px] w-4/6 items-center justify-between border-b border-[#EBEAE8] bg-transparent bg-gradient-to-b from-[#EBEAE8] to-transparent px-10 backdrop-blur-sm backdrop-filter dark:border-gray-700 dark:bg-gray-800">
+    <nav className="fixed top-0 z-40 flex min-h-[90px] w-4/6 items-center justify-between border-b !border-[#ebe8e869] border-opacity-20 bg-transparent bg-gradient-to-b from-[#EBEAE8] to-[#ebeae84a] px-10 backdrop-blur-sm backdrop-filter">
       <div className="flex w-full items-center justify-between px-3 py-3 lg:px-5 ">
         <div className=" flex h-10 items-start  justify-start rounded-full bg-[#EBEAE800] px-0 py-1 backdrop-blur-none backdrop-filter-none">
           <div className="my-auto inline-flex text-sm">

@@ -1,8 +1,7 @@
 import { api } from "@/utils/api";
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
-import { SlArrowUp } from "react-icons/sl";
-import { SlArrowDown } from "react-icons/sl";
+import { IoIosArrowUp } from "react-icons/io";
 
 export function Voting({ analogyId }: { analogyId: string }) {
   const { data: whatDidCurrentUserVote } =
@@ -87,17 +86,25 @@ export function Voting({ analogyId }: { analogyId: string }) {
 
   return (
     <div className="flex flex-col">
-      <SlArrowUp
-        className={`${
-          vote === "like" ? "text-green-400" : "text-gray-400"
-        } cursor-pointer ${isVoting ? "animate-pulse" : ""}}`}
+      <IoIosArrowUp
+        className={`mb-0.5 ${
+          vote === "like"
+            ? "text-green-400 hover:text-green-600"
+            : "text-gray-400 hover:text-gray-600"
+        } cursor-pointer ${
+          isVoting ? "animate-pulse" : ""
+        }} scale-[1.3] scale-x-[1.4]`}
         onClick={handleLike}
       />
 
-      <SlArrowDown
+      <IoIosArrowUp
         className={`${
-          vote === "dislike" ? "text-red-400" : "text-gray-400"
-        } cursor-pointer  ${isVoting ? "animate-pulse" : ""}}`}
+          vote === "dislike"
+            ? "text-red-400 hover:text-red-600"
+            : "text-gray-400 hover:text-gray-600"
+        } cursor-pointer  ${
+          isVoting ? "animate-pulse" : ""
+        }} rotate-180 scale-[1.3] scale-x-[1.4]`}
         onClick={handleDislike}
       />
     </div>
