@@ -4,6 +4,9 @@ import { Voting } from "./Voting";
 import { useRouter } from "next/router";
 import { api } from "@/utils/api";
 import { useEffect, useState } from "react";
+import ReactMarkdown from "react-markdown";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { coldarkDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 
 interface IAnalogyViewProps {
   analogy: {
@@ -135,7 +138,37 @@ export const AnalogyView = (props: IAnalogyViewProps) => {
           </div>
         </div>
         <div className="h-min-400 p-x8 w-full bg-white px-5 py-4">
-          <p className="my-10 text-gray-400">{analogy?.description}</p>
+          <ReactMarkdown
+            className="prose-code:dark:text-gray-30 prose prose-pre:bg-[#101A25]"
+            // eslint-disable-next-line react/no-children-prop
+            children={analogy?.description}
+            components={{
+              code({ node, inline, className, children, ...props }) {
+                const match = /language-(\w+)/.exec(className || "");
+                return !inline && match ? (
+                  <SyntaxHighlighter
+                    {...props}
+                    // eslint-disable-next-line react/no-children-prop
+                    children={String(children).replace(/\n$/, "")}
+                    style={coldarkDark}
+                    // wrapLines={true}
+                    wrapLongLines={true}
+                    language={match[1]}
+                    // showLineNumbers={true}
+                    // showInlineLineNumbers={true}
+                    PreTag="div"
+                    customStyle={{
+                      padding: "1.1em",
+                    }}
+                  />
+                ) : (
+                  <code {...props} className={className}>
+                    {children}
+                  </code>
+                );
+              },
+            }}
+          />
         </div>
       </div>
     </Link>

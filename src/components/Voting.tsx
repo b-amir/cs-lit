@@ -44,7 +44,7 @@ export function Voting({ analogyId }: { analogyId: string }) {
           toast.error(errorMessage?.vote.join(" "));
         }
       } else {
-        toast.error("Login to vote!");
+        toast.error("Sign in to vote!");
       }
     },
   });
