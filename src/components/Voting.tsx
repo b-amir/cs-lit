@@ -10,6 +10,8 @@ export function Voting({ analogyId }: { analogyId: string }) {
       analogyId: analogyId,
     });
 
+  const ctx = api.useContext();
+
   const [vote, setVote] = useState<string | null>(
     whatDidCurrentUserVote ?? null
   );
@@ -24,6 +26,8 @@ export function Voting({ analogyId }: { analogyId: string }) {
 
   const { mutate: Vote, isLoading: isVoting } = api.analogy.voting.useMutation({
     onSuccess: () => {
+      void ctx.analogy.getAnalogyVotes.invalidate();
+
       toast.success(
         vote === "like"
           ? "You liked this analogy!"

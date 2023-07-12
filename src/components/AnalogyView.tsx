@@ -3,8 +3,7 @@ import Image from "next/image";
 import { Voting } from "./Voting";
 import { useRouter } from "next/router";
 import { api } from "@/utils/api";
-import { use, useEffect, useState } from "react";
-import { set } from "nprogress";
+import { useEffect, useState } from "react";
 
 interface IAnalogyViewProps {
   analogy: {
@@ -28,8 +27,6 @@ export const AnalogyView = (props: IAnalogyViewProps) => {
     analogyId: analogy.id,
   });
 
-  const ctx = api.useContext();
-
   const [votingAverage, setVotingAverage] = useState(0);
 
   useEffect(() => {
@@ -48,7 +45,7 @@ export const AnalogyView = (props: IAnalogyViewProps) => {
   const {
     category: UrlCategory,
     topic: UrlTopic,
-    analogy: UrlAnalogyId,
+    // analogy: UrlAnalogyId,
   } = router.query;
 
   return (
