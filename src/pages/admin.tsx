@@ -76,9 +76,9 @@ export default function AdminPage(props) {
 function ListView({ data, title }: { data: any; title: string }) {
   return (
     <>
-      <div className="flex w-full flex-col rounded-[17px] bg-white  py-8 shadow-sm">
-        <div className="flex w-full flex-col items-start justify-between px-6 ">
-          <div className="mb-2 flex flex-row items-center">
+      <div className=" relative z-20  overflow-clip rounded-[17px]  border  border-gray-200 bg-white px-0 pb-8 shadow-lg transition-all hover:border-[#c1c1c1] ">
+        <div className="flex w-full flex-col items-start justify-between border-b bg-gray-50 px-6 pb-4 pt-8">
+          <div className="mb-4 flex flex-row items-center">
             <h1 className="text-2xl font-bold">{title}</h1>
             <span className="ml-2 text-sm text-gray-500">
               {data?.length ?? 0}
@@ -88,7 +88,7 @@ function ListView({ data, title }: { data: any; title: string }) {
             <input
               type="text"
               placeholder="Search"
-              className="max-w-[50%] rounded-md border border-gray-300 px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-gray-200"
+              className="max-w-[60%] rounded-md border border-gray-300 px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-gray-200"
             />
             <select
               name="filter"
@@ -102,7 +102,7 @@ function ListView({ data, title }: { data: any; title: string }) {
             </select>
           </div>
         </div>
-        <div className="flex w-full flex-col py-4">
+        <div className="flex w-full flex-col">
           {data?.map((item) => (
             <ListItemView key={item.id} item={item} />
           ))}
@@ -117,7 +117,7 @@ function ListItemView({ item }) {
 
   return (
     <div
-      className="flex h-6 w-full cursor-pointer flex-row items-center justify-between border-b-[1px]  border-gray-100 px-6 py-5 hover:bg-gray-200"
+      className="z-0 flex h-6 w-full cursor-pointer flex-row items-center justify-between border-b-[1px] border-gray-100  px-6 py-5 transition-all hover:bg-gray-100"
       // key={item.id}
       onMouseEnter={() => setShowActionMenuDots(true)}
       onMouseLeave={() => setShowActionMenuDots(false)}
@@ -141,7 +141,7 @@ function ActionMenu() {
   return (
     <div
       id="action-menu"
-      className="flex flex-row items-center"
+      className="z-10 flex flex-row items-center"
       onMouseLeave={() => setShowExtendedActionMenu(false)}
     >
       {showExtendedActionMenu && (
@@ -154,7 +154,7 @@ function ActionMenu() {
       <button
         onClick={() => setShowExtendedActionMenu(!showExtendedActionMenu)}
       >
-        <HiOutlineDotsVertical className="h-6 w-6 cursor-pointer rounded-full p-1 text-gray-400 hover:bg-gray-100" />
+        <HiOutlineDotsVertical className="h-6 w-6 cursor-pointer rounded-full p-1 text-gray-400 hover:bg-gray-200" />
       </button>
     </div>
   );
