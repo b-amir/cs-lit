@@ -29,7 +29,7 @@ export const topicsWithCategoryData = async (topics: Topic[]) => {
 export const topicsRouter = createTRPCRouter({
   getAll: publicProcedure.query(async ({ ctx }) => {
     const topics = await ctx.prisma.topic.findMany({
-      take: 10,
+      take: 100,
       orderBy: [{ createdAt: "desc" }],
     });
     // return analogies;

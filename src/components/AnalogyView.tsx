@@ -100,7 +100,7 @@ export const AnalogyView = (props: IAnalogyViewProps) => {
                       <>
                         {votingAverage === -2 ? (
                           <span className="text-[#b95353]">
-                            Needs improving
+                            Needs improvement
                           </span>
                         ) : votingAverage === -1 ? (
                           <span>

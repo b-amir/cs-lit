@@ -51,7 +51,7 @@ export const analogyWithUserData = async (analogy: Analogy) => {
 export const analogiesRouter = createTRPCRouter({
   getAll: publicProcedure.query(async ({ ctx }) => {
     const analogies = await ctx.prisma.analogy.findMany({
-      take: 5,
+      take: 100,
       orderBy: [{ createdAt: "desc" }],
     });
     // return analogies;

@@ -15,7 +15,7 @@ import { NextPageContext } from "next";
 export const categoriesRouter = createTRPCRouter({
   getAll: publicProcedure.query(async ({ ctx }) => {
     const categories = await ctx.prisma.category.findMany({
-      take: 15,
+      take: 50,
       orderBy: [{ createdAt: "asc" }],
     });
     // return analogies;
