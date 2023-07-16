@@ -3,7 +3,7 @@ import { IoSearch } from "react-icons/io5";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { api } from "@/utils/api";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { type ChangeEvent, useEffect, useRef, useState } from "react";
 import { animated, useSpring } from "@react-spring/web";
 import { useDebounce } from "@/hooks/useDebounce";
 import { CgSpinner } from "react-icons/cg";
@@ -40,6 +40,15 @@ export function Navbar() {
             <Link href="/">
               <TiHome className="mt-[0px] cursor-pointer !text-lg text-[#2A2A2E]" />
             </Link>
+
+            {router.pathname === "/admin" && (
+              <>
+                <span className="mx-2 text-[#69696975]">/</span>
+                <span className="cursor-pointer font-semibold text-[#2A2A2E]">
+                  Admin panel
+                </span>
+              </>
+            )}
 
             {categoryData && (
               <>

@@ -7,8 +7,8 @@ import { PageLayout } from "@/components/layout";
 import { LoadingPage } from "@/components/loading";
 import { FaArrowLeft } from "react-icons/fa";
 import { RiImageLine } from "react-icons/ri";
-import { AiOutlineLink } from "react-icons/ai";
-import { LuExternalLink } from "react-icons/lu";
+import { LuList } from "react-icons/lu";
+import { TbTriangleInvertedFilled } from "react-icons/tb";
 import { archivo } from "@/styles/customFonts";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useSpring, animated } from "@react-spring/web";
@@ -23,6 +23,8 @@ import { useToasterStore } from "react-hot-toast";
 import Head from "next/head";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { set } from "nprogress";
+import { comment } from "postcss";
+import { MdAccessTime } from "react-icons/md";
 
 export default function AdminPage(props) {
   // sections:
@@ -52,6 +54,8 @@ export default function AdminPage(props) {
   const [searchTerm, setSearchTerm] = React.useState("");
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
   const [searchResults, setSearchResults] = React.useState([]);
+  const [listIsShown, setListIsShown] = React.useState(true);
+  const [activeSection, setActiveSection] = React.useState("Categories");
 
   return (
     <>
@@ -61,54 +65,173 @@ export default function AdminPage(props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <PageLayout>
-        <div className="mt-32 grid grid-cols-1 gap-10 px-14 md:grid-cols-2 lg:grid-cols-2">
-          <ListView title="Categories" data={categoriesData} />
-          <ListView title="Topics" data={topicsData} />
-          <ListView title="Users" data={usersData} />
-          <ListView title="Analogies" data={analogiesData} />
-          {/* <ListView  title="Comments" data={commentsData}/> */}
-        </div>
+        <PillsRow
+          setActiveSection={setActiveSection}
+          activeSection={activeSection}
+        />
+        <ListView
+          listIsShown={listIsShown}
+          data={
+            activeSection === "Categories"
+              ? categoriesData
+              : activeSection === "Topics"
+              ? topicsData
+              : activeSection === "Analogies"
+              ? analogiesData
+              : activeSection === "Users"
+              ? usersData
+              : []
+            // : commentsData
+          }
+          title={activeSection}
+        />
       </PageLayout>
     </>
   );
 }
 
-function ListView({ data, title }: { data: any; title: string }) {
+function PillsRow({
+  setActiveSection,
+  activeSection,
+}: {
+  setActiveSection: React.Dispatch<React.SetStateAction<string>>;
+  activeSection: string;
+}) {
+  return (
+    <div
+      id="pills-row"
+      className="mt-[90px] flex flex-row items-start gap-3 bg-[#F9F9F9]  px-16 py-8"
+    >
+      <Pill
+        title="Categories"
+        setActiveSection={setActiveSection}
+        activeSection={activeSection}
+      />
+      <Pill
+        title="Topics"
+        setActiveSection={setActiveSection}
+        activeSection={activeSection}
+      />
+      <Pill
+        title="Users"
+        setActiveSection={setActiveSection}
+        activeSection={activeSection}
+      />
+      <Pill
+        title="Analogies"
+        setActiveSection={setActiveSection}
+        activeSection={activeSection}
+      />
+      <Pill
+        title="Comments"
+        setActiveSection={setActiveSection}
+        activeSection={activeSection}
+      />
+    </div>
+  );
+}
+
+function Pill({
+  title,
+  setActiveSection,
+  activeSection,
+}: {
+  title: string;
+  setActiveSection: React.Dispatch<React.SetStateAction<string>>;
+  activeSection: string;
+}) {
   return (
     <>
-      <div className=" relative z-20  overflow-clip rounded-[17px]  border  border-gray-200 bg-white px-0 pb-8 shadow-lg transition-all hover:border-[#c1c1c1] ">
-        <div className="flex w-full flex-col items-start justify-between border-b bg-gray-50 px-6 pb-4 pt-8">
-          <div className="mb-4 flex flex-row items-center">
-            <h1 className="text-2xl font-bold">{title}</h1>
-            <span className="ml-2 text-sm text-gray-500">
-              {data?.length ?? 0}
-            </span>
-          </div>
-          <div className="flex flex-row items-center justify-between">
-            <input
-              type="text"
-              placeholder="Search"
-              className="max-w-[60%] rounded-md border border-gray-300 px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-gray-200"
-            />
-            <select
-              name="filter"
-              id="filter"
-              className=" ml-[-10px] rounded-md border border-gray-300 bg-gray-50 px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-gray-200"
-            >
-              <option value="all">All</option>
-              <option value="approved">Approved</option>
-              <option value="pending">Pending</option>
-              <option value="rejected">Rejected</option>
-            </select>
-          </div>
-        </div>
-        <div className="flex w-full flex-col">
-          {data?.map((item) => (
-            <ListItemView key={item.id} item={item} />
-          ))}
-        </div>
+      <div
+        className={`flex cursor-pointer items-center justify-center rounded-[12px] border px-5 py-1 shadow-sm ${
+          activeSection === title
+            ? "border-[#b5431a] bg-[#e95620] text-white "
+            : "border-[#d1d1d1] bg-[#ffffff] text-[#2A2A2E]"
+        }`}
+        onClick={() => setActiveSection(title)}
+      >
+        <h1 className={` text-sm font-bold`}>{title}</h1>
       </div>
     </>
+  );
+}
+
+function ListView({
+  listIsShown,
+  data,
+  title,
+}: {
+  title: string;
+  listIsShown: boolean;
+  data: any;
+}) {
+  return (
+    <div className=" relative z-20 mx-auto h-full  overflow-clip   border  border-gray-200 bg-white px-0 shadow-lg transition-all ">
+      {listIsShown && (
+        <>
+          <div className="flex flex-row items-center justify-between border-y border-l-0 border-[#5a5a5a2a] bg-gradient-to-tr from-[#eeeeee] to-[#dcdcdc] px-16 py-8">
+            <div className="flex flex-row items-center ">
+              <span className="mr-3 rounded-md border border-[#73717180] bg-[#00000013] px-2 pt-0.5 text-sm text-gray-500 shadow-sm">
+                {data?.length ?? 0}
+              </span>
+              <h1
+                className={` ${archivo.className}  flex flex-row items-center gap-1 text-3xl font-bold`}
+              >
+                {title}
+              </h1>
+            </div>
+            <div className="flex flex-row">
+              <input
+                type="text"
+                placeholder="Search"
+                className="mr-2 max-w-[60%] rounded-md border border-[#00000030] px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-gray-200"
+              />
+
+              <div className="grid grid-cols-2 gap-2 rounded-md bg-[#00000030] px-[2.5px] py-0.5 text-sm text-[#2f2f2f]">
+                <div>
+                  <input
+                    type="radio"
+                    name="option"
+                    id="all"
+                    value="All"
+                    className="peer hidden"
+                    checked
+                  />
+                  <label
+                    htmlFor="all"
+                    className=" flex cursor-pointer select-none flex-row items-center justify-center gap-1 rounded-md border border-transparent px-3 py-1 text-center peer-checked:border-[#0000006d] peer-checked:bg-gray-50 peer-checked:font-bold peer-checked:text-black peer-checked:shadow-sm"
+                  >
+                    <LuList className="mb-[4px]" />
+                    All
+                  </label>
+                </div>
+
+                <div>
+                  <input
+                    type="radio"
+                    name="option"
+                    id="pending"
+                    value="Pending"
+                    className="peer hidden"
+                  />
+                  <label
+                    htmlFor="pending"
+                    className="flex cursor-pointer select-none flex-row items-center justify-center gap-1 rounded-md border border-transparent px-3 py-1 text-center peer-checked:border-[#0000006d] peer-checked:bg-gray-50 peer-checked:font-bold peer-checked:text-black peer-checked:shadow-sm"
+                  >
+                    <MdAccessTime className="mb-[3px]" /> Pending
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="flex w-full flex-col">
+            {data?.map((item) => (
+              <ListItemView key={item.id} item={item} />
+            ))}
+          </div>
+        </>
+      )}
+    </div>
   );
 }
 
@@ -117,13 +240,13 @@ function ListItemView({ item }) {
 
   return (
     <div
-      className="z-0 flex h-6 w-full cursor-pointer flex-row items-center justify-between border-b-[1px] border-gray-100  px-6 py-5 transition-all hover:bg-gray-100"
+      className="z-0 flex h-8 w-full cursor-pointer flex-row items-center justify-between border-b-[1px] border-gray-100  px-16 py-6 transition-all hover:bg-gray-100"
       // key={item.id}
       onMouseEnter={() => setShowActionMenuDots(true)}
       onMouseLeave={() => setShowActionMenuDots(false)}
     >
       <div className="flex flex-row items-center">
-        <h1 className="text-sm font-bold">
+        <h1 className={`font text-sm font-bold`}>
           {item.title ? item.title : item.name ? item.name : item.id}
         </h1>
         <span className="ml-2 text-sm text-gray-500">{item?.status ?? ""}</span>
@@ -141,20 +264,27 @@ function ActionMenu() {
   return (
     <div
       id="action-menu"
-      className="z-10 flex flex-row items-center"
+      className="z-10 flex flex-row items-center rounded-lg hover:bg-[#00000014]"
       onMouseLeave={() => setShowExtendedActionMenu(false)}
     >
       {showExtendedActionMenu && (
-        <div id="action-menu-items" className="flex flex-row items-center">
-          <MdDelete className="mr-2 cursor-pointer text-[#b95353] hover:text-[#f24a4a]" />
-          <AiTwotoneEdit className="mr-2 cursor-pointer text-gray-400 hover:text-gray-500" />
+        <div
+          id="action-menu-items"
+          className="flex flex-row items-center rounded-l-lg bg-[#00000014] p-2"
+        >
+          <MdDelete className="mx-2 cursor-pointer text-[#c83535] hover:text-[#cd8a8a]" />
+          <AiTwotoneEdit className="mx-2 cursor-pointer text-gray-600 hover:text-gray-400" />
         </div>
       )}
 
       <button
         onClick={() => setShowExtendedActionMenu(!showExtendedActionMenu)}
       >
-        <HiOutlineDotsVertical className="h-6 w-6 cursor-pointer rounded-full p-1 text-gray-400 hover:bg-gray-200" />
+        <HiOutlineDotsVertical
+          className={`h-8 w-8 cursor-pointer rounded-lg p-2 text-gray-400 hover:bg-[#00000014] ${
+            showExtendedActionMenu ? "rounded-l-none" : ""
+          }`}
+        />
       </button>
     </div>
   );
