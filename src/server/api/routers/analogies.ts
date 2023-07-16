@@ -10,6 +10,7 @@ import { TRPCError } from "@trpc/server";
 import { filterUserForClient } from "@/server/helpers/filterUserForClient";
 import { PrismaClient, type Analogy } from "@prisma/client";
 import { NextPageContext } from "next";
+import { Context } from "react";
 
 export const analogiesWithUserData = async (analogies: Analogy[]) => {
   const prisma = new PrismaClient();
@@ -23,6 +24,7 @@ export const analogiesWithUserData = async (analogies: Analogy[]) => {
   );
   return analogiesWithUserData;
 };
+
 
 export const analogiesWithUserAndTopicData = async (analogies: Analogy[]) => {
   const prisma = new PrismaClient();
@@ -49,16 +51,45 @@ export const analogyWithUserData = async (analogy: Analogy) => {
 };
 
 export const analogiesRouter = createTRPCRouter({
-  getAll: publicProcedure.query(async ({ ctx }) => {
-    const analogies = await ctx.prisma.analogy.findMany({
-      take: 100,
-      orderBy: [{ createdAt: "desc" }],
-    });
-    // return analogies;
+  // getAll: publicProcedure.query(async ({ ctx }) => {
+  //   const analogies = await ctx.prisma.analogy.findMany({
+  //     take: 100,
+  //     orderBy: [{ createdAt: "desc" }],
+  //   });
+  //   return analogiesWithUserAndTopicData(analogies);
+  // }),
 
-    // return addUsersDataToAnalogies(analogies, ctx);
-    return analogiesWithUserAndTopicData(analogies);
-  }),
+  getAll: publicProcedure
+    .input(
+      z.object({
+        limit: z.number().min(1).max(100).nullish(),
+        cursor: z.string().nullish(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      const limit = input.limit ?? 50;
+      const { cursor } = input;
+      const items = await ctx.prisma.analogy.findMany({
+        take: limit + 1,
+        cursor: cursor ? { id: cursor } : undefined,
+        orderBy: {
+          myCursor: 'asc',
+        },
+      });
+      let nextCursor: typeof cursor | undefined = undefined;
+      if (items.length > limit) {
+        const nextItem = items.pop();
+        nextCursor = nextItem?.id as typeof cursor;
+      }
+      return {
+        items: await analogiesWithUserAndTopicData(items),
+        pageInfo: {
+          hasNextPage: items.length > limit,
+          nextCursor,
+        },
+      };
+    }),
+
 
   getById: publicProcedure
     .input(z.object({ id: z.string() }))

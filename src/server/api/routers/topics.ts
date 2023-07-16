@@ -27,16 +27,45 @@ export const topicsWithCategoryData = async (topics: Topic[]) => {
 
 
 export const topicsRouter = createTRPCRouter({
-  getAll: publicProcedure.query(async ({ ctx }) => {
-    const topics = await ctx.prisma.topic.findMany({
-      take: 100,
-      orderBy: [{ createdAt: "desc" }],
-    });
-    // return analogies;
+  // getAll: publicProcedure.query(async ({ ctx }) => {
+  //   const topics = await ctx.prisma.topic.findMany({
+  //     take: 100,
+  //     orderBy: [{ createdAt: "desc" }],
+  //   });
+  //   return topics;
+  // }),
 
-    // return addUsersDataToAnalogies(analogies, ctx);
-    return topics;
-  }),
+
+  getAll: publicProcedure
+    .input(
+      z.object({
+        limit: z.number().min(1).max(100).nullish(),
+        cursor: z.string().nullish(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      const limit = input.limit ?? 50;
+      const { cursor } = input;
+      const items = await ctx.prisma.topic.findMany({
+        take: limit + 1,
+        cursor: cursor ? { id: cursor } : undefined,
+        orderBy: {
+          myCursor: 'asc',
+        },
+      });
+      let nextCursor: typeof cursor | undefined = undefined;
+      if (items.length > limit) {
+        const nextItem = items.pop();
+        nextCursor = nextItem?.id as typeof cursor;
+      }
+      return {
+        items,
+        pageInfo: {
+          hasNextPage: items.length > limit,
+          nextCursor,
+        },
+      };
+    }),
 
   getByCategoryId: publicProcedure
     .input(z.object({ id: z.string() }))

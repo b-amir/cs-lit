@@ -23,6 +23,37 @@ export const UsersAnalogyCount = async (userId: string) => {
 
 export const profileRouter = createTRPCRouter({
 
+  getAll: publicProcedure
+    .input(
+      z.object({
+        limit: z.number().min(1).max(100).nullish(),
+        cursor: z.string().nullish(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      const limit = input.limit ?? 50;
+      const { cursor } = input;
+      const items = await ctx.prisma.user.findMany({
+        take: limit + 1,
+        cursor: cursor ? { id: cursor } : undefined,
+        orderBy: {
+          myCursor: 'asc',
+        },
+      });
+      let nextCursor: typeof cursor | undefined = undefined;
+      if (items.length > limit) {
+        const nextItem = items.pop();
+        nextCursor = nextItem?.id as typeof cursor;
+      }
+      return {
+        items,
+        pageInfo: {
+          hasNextPage: items.length > limit,
+          nextCursor,
+        },
+      };
+    }),
+
   getUserId: publicProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ ctx, input }) => {

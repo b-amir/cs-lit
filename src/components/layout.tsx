@@ -31,19 +31,8 @@ export const PageLayout = (props: PropsWithChildren<{}>) => {
         <Navbar />
         <SidebarLeft username={sessionData?.user} />
         <SidebarRight username={sessionData?.user} />
-        <main
-          className="flex h-full min-h-[100dvh] w-4/6 flex-col items-center justify-center bg-[#EBEAE8]"
-          style={
-            {
-              // noisy background
-              // inset: 0,
-              // backgroundImage: "url(./assets/noise.webp)",
-              // mixBlendMode: "color-dodge",
-            }
-          }
-        >
-          {/* <div className="container flex h-screen flex-col items-center justify-center gap-1 px-0 py-0 pt-0"> */}
-          <div className="container ">{props.children}</div>
+        <main className="flex h-full min-h-[100dvh] w-4/6 flex-col items-center justify-center bg-[#EBEAE8] ">
+          <div className="container top-0 ">{props.children}</div>
         </main>
       </div>
     </>

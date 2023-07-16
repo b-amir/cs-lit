@@ -10,7 +10,7 @@
 
 
 body {
-  overflow-y: overlay;
+  overflow-y: scroll;
 }
 
 /* width */
@@ -21,6 +21,7 @@ body {
 /* Track */
 ::-webkit-scrollbar-track {
   background: #f1f1f1;
+  border-left: 1px solid #55555541;
 }
 
 /* Handle */

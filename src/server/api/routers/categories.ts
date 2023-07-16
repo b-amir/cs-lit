@@ -13,16 +13,44 @@ import { NextPageContext } from "next";
 
 
 export const categoriesRouter = createTRPCRouter({
-  getAll: publicProcedure.query(async ({ ctx }) => {
-    const categories = await ctx.prisma.category.findMany({
-      take: 50,
-      orderBy: [{ createdAt: "asc" }],
-    });
-    // return analogies;
+  // getAll: publicProcedure.query(async ({ ctx }) => {
+  //   const categories = await ctx.prisma.category.findMany({
+  //     take: 50,
+  //     orderBy: [{ createdAt: "asc" }],
+  //   });
+  //   return categories;
+  // }),
 
-    // return addUsersDataToAnalogies(analogies, ctx);
-    return categories;
-  }),
+  getAll: publicProcedure
+    .input(
+      z.object({
+        limit: z.number().min(1).max(100).nullish(),
+        cursor: z.string().nullish(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      const limit = input.limit ?? 50;
+      const { cursor } = input;
+      const items = await ctx.prisma.category.findMany({
+        take: limit + 1,
+        cursor: cursor ? { id: cursor } : undefined,
+        orderBy: {
+          myCursor: 'asc',
+        },
+      });
+      let nextCursor: typeof cursor | undefined = undefined;
+      if (items.length > limit) {
+        const nextItem = items.pop();
+        nextCursor = nextItem?.id as typeof cursor;
+      }
+      return {
+        items,
+        pageInfo: {
+          hasNextPage: items.length > limit,
+          nextCursor,
+        },
+      };
+    }),
 
 
   getById: publicProcedure

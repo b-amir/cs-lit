@@ -23,7 +23,12 @@ export function SidebarLeft(props: { username: any }) {
     data: categories,
     isLoading: categoriesLoading,
     refetch: refetchCategories,
-  } = api.category.getAll.useQuery();
+  } = api.category.getAll.useInfiniteQuery(
+    { limit: 15 },
+    {
+      getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor,
+    }
+  );
   const [showSidebar, setShowSidebar] = useState(true);
   const [input, setInput] = useState({
     name: "",
@@ -112,23 +117,25 @@ export function SidebarLeft(props: { username: any }) {
 
             <ul className="mb-auto mt-6 space-y-2 px-3 text-sm font-medium">
               {/* map through category items from database */}
-              {categories?.map((category) => (
-                <li key={category.id}>
-                  <Link
-                    className="flex items-center rounded-lg p-2 text-[#2A2A2E] hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                    // onClick={() => {}}
-                    href={`/${category.slug}`}
-                  >
-                    {/*  since there's only gonna be a few obvious topics,
+              {categories?.pages?.map((page) =>
+                page?.items?.map((category) => (
+                  <li key={category.id}>
+                    <Link
+                      className="flex items-center rounded-lg p-2 text-[#2A2A2E] hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                      // onClick={() => {}}
+                      href={`/${category.slug}`}
+                    >
+                      {/*  since there's only gonna be a few obvious topics,
                            only some icons are suggested for less complexity for now  */}
-                    {getCategoryIcon(category?.slug)}
+                      {getCategoryIcon(category?.slug)}
 
-                    <span className="ml-3 flex-1 whitespace-nowrap">
-                      {category.name}
-                    </span>
-                  </Link>
-                </li>
-              ))}
+                      <span className="ml-3 flex-1 whitespace-nowrap">
+                        {category.name}
+                      </span>
+                    </Link>
+                  </li>
+                ))
+              )}
             </ul>
           </div>
 

@@ -14,7 +14,10 @@ export function SidebarRight(props: { username: any }) {
   const [userSectionShown, setUserSectionShown] = useState(false);
   const [showSidebar, setShowSidebar] = useState(true);
 
-  const { data: AnalogiesData } = api.analogy.getAll.useQuery();
+  const { data: AnalogiesData } = api.analogy.getAll.useInfiniteQuery(
+    { limit: 5 },
+    {}
+  );
   const { data: TopThreeData } = api.profile.getTopThree.useQuery();
 
   // if window height is small, show one widget at a time and hide the other
@@ -60,32 +63,36 @@ export function SidebarRight(props: { username: any }) {
                 isActive={activeWidgetIndex.includes(0)}
               >
                 <ul className="group">
-                  {AnalogiesData?.map((analogy: any) => (
-                    <li key={analogy.id}>
-                      <Link
-                        href={`/${analogy.category}/${analogy.topic}/${analogy.id}`}
-                      >
-                        <span
-                          className={`ml-0 flex w-full flex-col items-center whitespace-nowrap rounded-sm ${
-                            AnalogiesData &&
-                            analogy === AnalogiesData[AnalogiesData.length - 1]
-                              ? "border-0  border-[#eee]"
-                              : "border-b border-[#eee]"
-                          } px-3 py-2.5 pl-6  pt-3 text-xs font-normal  hover:bg-[#efefef84]`}
+                  {AnalogiesData?.pages?.map((page) =>
+                    page?.items?.map((analogy: any) => (
+                      // {AnalogiesData?.map((analogy: any) => (
+                      <li key={analogy.id}>
+                        <Link
+                          href={`/${analogy.category}/${analogy.topic}/${analogy.id}`}
                         >
-                          <span className="mb-1 self-start font-semibold text-gray-700">
-                            {analogy.topic.title}
+                          <span
+                            className={`ml-0 flex w-full flex-col items-center whitespace-nowrap rounded-sm ${
+                              AnalogiesData &&
+                              analogy ===
+                                AnalogiesData[AnalogiesData.length - 1]
+                                ? "border-0  border-[#eee]"
+                                : "border-b border-[#eee]"
+                            } px-3 py-2.5 pl-6  pt-3 text-xs font-normal  hover:bg-[#efefef84]`}
+                          >
+                            <span className="mb-1 self-start font-semibold text-gray-700">
+                              {analogy.topic.title}
+                            </span>
+                            <span className="self-start text-xs font-light text-gray-500">
+                              by{" "}
+                              {analogy.user.name
+                                ? analogy.user.name
+                                : analogy.user.email}
+                            </span>
                           </span>
-                          <span className="self-start text-xs font-light text-gray-500">
-                            by{" "}
-                            {analogy.user.name
-                              ? analogy.user.name
-                              : analogy.user.email}
-                          </span>
-                        </span>
-                      </Link>
-                    </li>
-                  ))}
+                        </Link>
+                      </li>
+                    ))
+                  )}
                 </ul>
               </SidebarRightWidget>
 
