@@ -9,6 +9,8 @@ import { AiTwotoneEdit } from "react-icons/ai";
 import Head from "next/head";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { MdAccessTime } from "react-icons/md";
+import { CgSpinner } from "react-icons/cg";
+import { PillsRow } from "../components/Pills";
 
 export default function AdminPage(props) {
   const {
@@ -93,6 +95,7 @@ export default function AdminPage(props) {
             className="w-3/4 overflow-clip border border-r-[#55555556]"
           >
             <PillsRow
+              pills={["Categories", "Topics", "Users", "Analogies", "Comments"]}
               setActiveSection={setActiveSection}
               activeSection={activeSection}
             />
@@ -148,7 +151,7 @@ export default function AdminPage(props) {
 
           <div
             id="admin-sidepanel"
-            className="relative z-20 mx-auto min-h-[calc(100dvh-92px)] w-1/4  overflow-clip   border  border-gray-200 bg-[#f7f3ee]  shadow-lg transition-all"
+            className="relative z-20 mx-auto min-h-[calc(100dvh-92px)] w-1/4  overflow-clip   border  border-[#b5b5b511] bg-[#f7f3ee]  shadow-lg transition-all"
           >
             <div
               id="urgent-header"
@@ -159,79 +162,13 @@ export default function AdminPage(props) {
               >
                 <TbUrgent className="mb-0.5" /> Urgent
               </h1>
-              <div className="w-full  pt-1 text-sm text-gray-500">
+              <div className="w-full  pt-1 text-sm font-light text-[#7a6a55]">
                 following items need your attention.
               </div>
             </div>
           </div>
         </div>
       </PageLayout>
-    </>
-  );
-}
-
-function PillsRow({
-  setActiveSection,
-  activeSection,
-}: {
-  setActiveSection: React.Dispatch<React.SetStateAction<string>>;
-  activeSection: string;
-}) {
-  return (
-    <div
-      id="pills-row"
-      className="flex flex-row items-start gap-3  bg-[#F9F9F9] px-16 py-8"
-    >
-      <Pill
-        title="Categories"
-        setActiveSection={setActiveSection}
-        activeSection={activeSection}
-      />
-      <Pill
-        title="Topics"
-        setActiveSection={setActiveSection}
-        activeSection={activeSection}
-      />
-      <Pill
-        title="Users"
-        setActiveSection={setActiveSection}
-        activeSection={activeSection}
-      />
-      <Pill
-        title="Analogies"
-        setActiveSection={setActiveSection}
-        activeSection={activeSection}
-      />
-      <Pill
-        title="Comments"
-        setActiveSection={setActiveSection}
-        activeSection={activeSection}
-      />
-    </div>
-  );
-}
-
-function Pill({
-  title,
-  setActiveSection,
-  activeSection,
-}: {
-  title: string;
-  setActiveSection: React.Dispatch<React.SetStateAction<string>>;
-  activeSection: string;
-}) {
-  return (
-    <>
-      <div
-        className={`flex cursor-pointer items-center justify-center rounded-[12px] border px-5 py-1 shadow-sm ${
-          activeSection === title
-            ? "border-[#b5431a] bg-[#e95620] text-white "
-            : "border-[#d1d1d1] bg-[#ffffff] text-[#2A2A2E]"
-        }`}
-        onClick={() => setActiveSection(title)}
-      >
-        <h1 className={` text-sm font-bold`}>{title}</h1>
-      </div>
     </>
   );
 }
@@ -250,7 +187,7 @@ function ListView({
   isfetchingNextPage: boolean;
 }) {
   return (
-    <div className=" relative z-20 mx-auto h-full  overflow-clip   border  border-gray-200 bg-white px-0 shadow-lg transition-all ">
+    <div className=" relative z-20 mx-auto h-full  overflow-clip    bg-white px-0 shadow-lg transition-all ">
       <>
         <div className="flex flex-col gap-5 border-y border-l-0 border-[#5a5a5a2a] bg-gradient-to-tr from-[#eeeeee] to-[#dcdcdc] px-16 py-6">
           <div
@@ -326,10 +263,17 @@ function ListView({
               onClick={() => fetchNextPage()}
               disabled={isfetchingNextPage}
             >
-              {isfetchingNextPage ? "Loading more..." : "Load more"}
+              <div className="flex w-full items-center justify-center border-y bg-[#efefef] py-6 font-semibold text-gray-500 hover:bg-[#f6f6f6] ">
+                {isfetchingNextPage ? (
+                  // TODO: fix spinning issue
+                  <CgSpinner className="scale-150 transform  animate-spin " />
+                ) : (
+                  "Load more"
+                )}
+              </div>
             </button>
           )}
-          {console.log("data:", data)}
+          {/* {console.log("data:", data)} */}
         </div>
       </>
     </div>
