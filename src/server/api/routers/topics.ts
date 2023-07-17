@@ -60,6 +60,7 @@ export const topicsRouter = createTRPCRouter({
       }
       return {
         items,
+        total: await ctx.prisma.topic.count(),
         pageInfo: {
           hasNextPage: items.length > limit,
           nextCursor,

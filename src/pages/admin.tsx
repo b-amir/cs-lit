@@ -258,7 +258,8 @@ function ListView({
             className="flex flex-row items-center justify-start"
           >
             <span className="mr-3 rounded-md border border-[#73717180] bg-[#00000013] px-2 pt-0.5 text-sm text-gray-500 shadow-sm">
-              {data?.length ?? 0}
+              {/* {data?.pages?.pageInfo.count ?? 0} */}
+              {data?.pages ? data?.pages[0]?.total : 0}
             </span>
             <h1
               className={` ${archivo.className}  flex flex-row items-center gap-1 text-3xl font-bold`}

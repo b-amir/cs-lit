@@ -47,6 +47,7 @@ export const profileRouter = createTRPCRouter({
       }
       return {
         items,
+        total: await ctx.prisma.user.count(),
         pageInfo: {
           hasNextPage: items.length > limit,
           nextCursor,

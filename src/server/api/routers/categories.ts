@@ -45,7 +45,9 @@ export const categoriesRouter = createTRPCRouter({
       }
       return {
         items,
+        total: await ctx.prisma.category.count(),
         pageInfo: {
+          count: items.length,
           hasNextPage: items.length > limit,
           nextCursor,
         },

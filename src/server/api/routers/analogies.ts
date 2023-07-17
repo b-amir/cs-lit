@@ -83,6 +83,7 @@ export const analogiesRouter = createTRPCRouter({
       }
       return {
         items: await analogiesWithUserAndTopicData(items),
+        total: await ctx.prisma.analogy.count(),
         pageInfo: {
           hasNextPage: items.length > limit,
           nextCursor,
