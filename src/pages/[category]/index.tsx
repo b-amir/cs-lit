@@ -1,4 +1,3 @@
-// import { type NextPage } from "next";
 import { PageLayout } from "@/components/layout";
 import { useRouter } from "next/router";
 import { CgFolderAdd } from "react-icons/cg";
@@ -7,20 +6,14 @@ import React, { useRef, useState } from "react";
 import { animated, useSpring } from "@react-spring/web";
 import { api } from "@/utils/api";
 import { LoadingPage } from "@/components/loading";
-// import { Session } from "next-auth";
 import { useSession } from "next-auth/react";
-// import { prisma } from "@/server/db";
-// import { Category } from "@prisma/client";
 import { IoTimeOutline } from "react-icons/io5";
-// import { IoMdCheckmark } from "react-icons/io";
-// import { MdModeEditOutline } from "react-icons/md";
 import Link from "next/link";
 import slugify from "slugify";
 import { toast } from "react-hot-toast";
-// import { ZodError } from "zod";
 import { FaGhost } from "react-icons/fa";
 import Head from "next/head";
-import { prisma } from "@/server/db";
+import { archivo } from "@/styles/customFonts";
 
 export interface ITopicInput {
   id: string;
@@ -117,7 +110,9 @@ function CategoryPage(props) {
                       header
                 ------------------  */}
           <div className="mx-auto mb-0  mt-10 flex max-w-[640px] flex-col justify-between px-3 ">
-            <h1 className=" font-merriweathersans mb-4 items-start justify-start  text-5xl font-extrabold  tracking-tight text-[#2A2A2E] sm:text-[2rem]">
+            <h1
+              className={`${archivo.className} mb-4 items-start justify-start  text-5xl font-extrabold  tracking-tight text-[#2A2A2E] sm:text-[2rem]`}
+            >
               {categoryData?.name}
             </h1>
             <div className="flex flex-row items-end place-self-end text-sm font-semibold text-[#2A2A2E]">
@@ -203,7 +198,7 @@ function CategoryPage(props) {
                           {" "}
                           <th
                             scope="row"
-                            className="min-w-[375px] max-w-[375px] cursor-pointer overflow-clip overflow-ellipsis whitespace-nowrap px-6 py-6 text-base font-medium text-[#2A2A2E] dark:text-white"
+                            className=" min-w-[375px] max-w-[375px] cursor-pointer overflow-clip overflow-ellipsis whitespace-nowrap px-6 py-6 text-base font-medium text-[#2A2A2E] dark:text-white"
                           >
                             {topic.title}
                           </th>

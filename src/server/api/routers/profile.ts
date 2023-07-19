@@ -31,7 +31,7 @@ export const profileRouter = createTRPCRouter({
       }),
     )
     .query(async ({ ctx, input }) => {
-      const limit = input.limit ?? 50;
+      const limit = input.limit ?? 10;
       const { cursor } = input;
       const items = await ctx.prisma.user.findMany({
         take: limit + 1,

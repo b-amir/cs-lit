@@ -3,12 +3,12 @@ import { TbStarFilled } from "react-icons/tb";
 import { MdAccessTimeFilled } from "react-icons/md";
 import { type PropsWithChildren, useEffect, useRef, useState } from "react";
 import { UserSection } from "./UserSection";
-import { VscTriangleRight } from "react-icons/vsc";
 import { api } from "@/utils/api";
 import Link from "next/link";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { animated, useSpring } from "@react-spring/web";
 import { archivo } from "../styles/customFonts";
+import { IoIosArrowUp } from "react-icons/io";
 
 export function SidebarRight(props: { username: any }) {
   const [userSectionShown, setUserSectionShown] = useState(false);
@@ -170,7 +170,7 @@ export function SidebarRightWidget(props: PropsWithChildren<any>) {
           {props.widgetIcon}
         </span>
         <span
-          className={`${archivo.className}  mr-1 whitespace-nowrap  pr-1.5 font-bold tracking-tight`}
+          className={`${archivo.className}  mr-1 whitespace-nowrap  pr-1 font-bold tracking-tight`}
           // className=" mr-1 whitespace-nowrap  pr-1.5 font-archivo font-bold tracking-tight"
         >
           {props.widgetTitle}
@@ -178,11 +178,11 @@ export function SidebarRightWidget(props: PropsWithChildren<any>) {
         <span
           className={` text-xs text-[#9f9f9f] transition-transform ${
             props.isActive
-              ? "rotate-90"
-              : "transition-all delay-200 duration-300 group-hover:rotate-[45deg]"
+              ? "rotate-180"
+              : "transition-all delay-200 duration-300 group-hover:rotate-[90deg]"
           }`}
         >
-          <VscTriangleRight />
+          <IoIosArrowUp />
         </span>
       </div>
 

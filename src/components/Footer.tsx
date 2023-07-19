@@ -1,9 +1,8 @@
 import { useRef, useState } from "react";
-import { SlArrowUp } from "react-icons/sl";
 import { useSpring, animated } from "@react-spring/web";
 import { FaLinkedin } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
-import { AiOutlineLink } from "react-icons/ai";
+import { IoIosArrowUp } from "react-icons/io";
 
 export function Footer() {
   const [collapsed, setCollapsed] = useState(true);
@@ -42,7 +41,7 @@ export function Footer() {
             className=" cursor-pointer rounded-full border bg-white p-2"
             onClick={FooterCollapseHandler}
           >
-            <SlArrowUp
+            <IoIosArrowUp
               className={`transform transition-transform delay-300 duration-300 ${
                 !collapsed ? "rotate-180" : ""
               }`}

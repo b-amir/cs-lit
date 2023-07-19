@@ -6,8 +6,9 @@ import { LuExternalLink } from "react-icons/lu";
 import { api } from "@/utils/api";
 import Head from "next/head";
 import Link from "next/link";
+import { archivo } from "@/styles/customFonts";
 
-function TopicPage() {
+function TopicPage(props) {
   const router = useRouter();
   const { category: UrlCategory, topic: UrlTopic } = router.query;
 
@@ -40,7 +41,9 @@ function TopicPage() {
           id="feed-header"
           className="z-10 mx-auto mt-32 flex max-w-[640px] flex-col items-start justify-between overflow-clip overflow-ellipsis whitespace-nowrap"
         >
-          <h1 className="font-merriweathersans px-5  text-5xl font-extrabold  tracking-tight text-[#2A2A2E] sm:text-[2rem]">
+          <h1
+            className={`${archivo.className} px-5  text-5xl font-extrabold  tracking-tight text-[#2A2A2E] sm:text-[2rem]`}
+          >
             {topicsData?.title}
           </h1>
           <br />
