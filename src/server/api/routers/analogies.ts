@@ -73,7 +73,7 @@ export const analogiesRouter = createTRPCRouter({
         take: limit + 1,
         cursor: cursor ? { id: cursor } : undefined,
         orderBy: {
-          myCursor: 'asc',
+          createdAt: 'asc',
         },
       });
       let nextCursor: typeof cursor | undefined = undefined;
@@ -173,6 +173,7 @@ export const analogiesRouter = createTRPCRouter({
 
       const analogy = await ctx.prisma.analogy.create({
         data: {
+          title: input.title,
           authorId,
           description: input.description,
           topicId: input.topicId,

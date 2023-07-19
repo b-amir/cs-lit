@@ -515,6 +515,7 @@ function TopicEditorForm({
         // append firstAnalogy to analogies array
         analogies: [
           {
+            title: `${input?.title ?? "untitled"} by x`,
             id: "",
             description: input?.firstAnalogy,
           },
@@ -536,6 +537,7 @@ function TopicEditorForm({
         // append firstAnalogy to analogies array
         analogies: [
           {
+            title: `${input?.title ?? "untitled"} by x`,
             id: "",
             description: input?.firstAnalogy,
           },

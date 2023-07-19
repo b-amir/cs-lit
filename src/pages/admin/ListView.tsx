@@ -1,10 +1,10 @@
 import React from "react";
 import { LuList } from "react-icons/lu";
 import { archivo } from "@/styles/customFonts";
-import { MdAccessTime, MdDelete } from "react-icons/md";
+import { MdAccessTime, MdOutlineModeEdit } from "react-icons/md";
 import { CgSpinner } from "react-icons/cg";
-import { AiTwotoneEdit } from "react-icons/ai";
 import { HiOutlineDotsVertical } from "react-icons/hi";
+import { RiDeleteBin6Line } from "react-icons/ri";
 
 interface IListViewProps {
   title: string;
@@ -98,7 +98,7 @@ export function ListView({
               onClick={() => fetchNextPage()}
               disabled={isfetchingNextPage}
             >
-              <div className="flex w-full items-center justify-center border-t border-t-[#55555538] bg-[#fff] py-6 font-semibold text-gray-500 shadow-[0px_2px_3px_0px_#00000010_inset] transition-all duration-300 hover:bg-gradient-to-b hover:from-[#efefef] hover:to-white ">
+              <div className="flex w-full items-center justify-center border-t border-t-[#55555538] bg-[#fff] py-6 font-semibold text-gray-500 shadow-[0px_2px_3px_0px_#00000010_inset] transition-all duration-300 hover:bg-gradient-to-b hover:from-[#efefef7b] hover:to-white hover:text-gray-800">
                 {isfetchingNextPage ? (
                   // TODO: fix spinning issue
                   <CgSpinner className="scale-150 transform  animate-spin " />
@@ -124,7 +124,7 @@ export function ListItemView({ item }) {
       onMouseEnter={() => setShowActionMenuDots(true)}
       onMouseLeave={() => setShowActionMenuDots(false)}
     >
-      <div className="flex flex-row items-center">
+      <div className="flex flex-row items-center overflow-clip overflow-ellipsis whitespace-nowrap">
         <h1 className={`font text-sm font-bold`}>
           {item.title ? item.title : item.name ? item.name : item.id}
         </h1>
@@ -150,8 +150,8 @@ export function ActionMenu() {
           id="action-menu-items"
           className="flex flex-row items-center rounded-l-lg bg-[#ffffff] p-2"
         >
-          <MdDelete className="mx-2 cursor-pointer text-[#c83535] hover:text-[#cd8a8a]" />
-          <AiTwotoneEdit className="mx-2 cursor-pointer text-gray-600 hover:text-gray-400" />
+          <RiDeleteBin6Line className="mx-2 cursor-pointer text-[#c83535] hover:text-[#cd8a8a]" />
+          <MdOutlineModeEdit className="mx-2 cursor-pointer text-gray-600 hover:text-gray-400" />
         </div>
       )}
 

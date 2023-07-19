@@ -35,7 +35,7 @@ export const categoriesRouter = createTRPCRouter({
         take: limit + 1,
         cursor: cursor ? { id: cursor } : undefined,
         orderBy: {
-          myCursor: 'asc',
+          createdAt: 'asc',
         },
       });
       let nextCursor: typeof cursor | undefined = undefined;

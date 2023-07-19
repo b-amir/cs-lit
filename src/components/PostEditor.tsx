@@ -5,7 +5,13 @@ import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { LoadingPage } from "./loading";
 
-export const PostEditor = ({ topicId }: { topicId?: string }) => {
+export const PostEditor = ({
+  topicId,
+  topicTitle,
+}: {
+  topicId?: string;
+  topicTitle?: string;
+}) => {
   // const { user, isLoaded: userLoaded, isSignedIn } = useUser();
   const { data: sessionData, status } = useSession();
 

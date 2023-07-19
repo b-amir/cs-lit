@@ -37,7 +37,7 @@ export const profileRouter = createTRPCRouter({
         take: limit + 1,
         cursor: cursor ? { id: cursor } : undefined,
         orderBy: {
-          myCursor: 'asc',
+          emailVerified: 'asc',
         },
       });
       let nextCursor: typeof cursor | undefined = undefined;

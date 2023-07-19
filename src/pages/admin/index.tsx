@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { api } from "@/utils/api";
 import { PageLayout } from "@/components/layout";
-import { TbActivity, TbUrgent } from "react-icons/tb";
-import { archivo } from "@/styles/customFonts";
 import Head from "next/head";
 import { PillsRow } from "../../components/Pills";
 import { ListView } from "./ListView";
-import { IoIosArrowUp } from "react-icons/io";
+import { AdminSidePanel } from "./AdminSidePanel";
+import { AdminFooter } from "./AdminFooter";
 
 export default function AdminPage(props) {
   const [AdminFooterCollapsed, setAdminFooterCollapsed] = useState(false);
@@ -158,24 +157,7 @@ export default function AdminPage(props) {
               />
             </div>
 
-            <div
-              id="admin-sidepanel"
-              className="relative z-20 mx-auto h-full w-1/4  overflow-x-clip   border  border-[#b5b5b511] bg-[#f7f3ee] transition-all"
-            >
-              <div
-                id="urgent-header"
-                className="flex h-[96px] w-full flex-col justify-between  rounded-sm border-b border-b-[#5555552a] bg-gradient-to-br from-[#fff] to-[#f7f3ee00] px-6  py-4"
-              >
-                <h1
-                  className={`${archivo.className}   flex flex-row items-center  gap-1 text-3xl font-bold`}
-                >
-                  <TbUrgent className="mb-0.5" /> Urgent
-                </h1>
-                <div className="w-full  pt-1 text-xs font-light text-[#7a6a55]">
-                  following items need your attention.
-                </div>
-              </div>
-            </div>
+            <AdminSidePanel />
           </div>
           <AdminFooter
             AdminFooterCollapsed={AdminFooterCollapsed}
@@ -184,45 +166,5 @@ export default function AdminPage(props) {
         </div>
       </PageLayout>
     </>
-  );
-}
-
-interface IAdminFooterProps {
-  AdminFooterCollapsed: boolean;
-  setAdminFooterCollapsed: React.Dispatch<React.SetStateAction<boolean>>;
-}
-function AdminFooter({
-  AdminFooterCollapsed,
-  setAdminFooterCollapsed,
-}: IAdminFooterProps) {
-  return (
-    <div
-      id="admin-footer"
-      className={`absolute bottom-0 z-20 w-4/6 border-t border-t-[#cbcbcb]  bg-[#e3e3e3] transition-all ${
-        AdminFooterCollapsed
-          ? "h-8 shadow-sm"
-          : "h-[20dvh] shadow-[0px_-1.5px_2px_0px_#00000010]"
-      }`}
-    >
-      <div
-        id="activity-log-header"
-        className={`${archivo.className} mx-auto flex h-8 w-[calc(100%-1px)] cursor-pointer flex-row items-center justify-center rounded-sm border-r border-[#5555552a] bg-[#f3f3f3] text-sm font-bold shadow-sm transition-all hover:bg-[#fdfdfd] `}
-        onClick={() => setAdminFooterCollapsed(!AdminFooterCollapsed)}
-      >
-        <TbActivity className="mb-0 mr-1 " /> Activity Log{" "}
-        <IoIosArrowUp
-          className={`mb-0 ml-1 scale-75 text-gray-400 transition-all delay-300  ${
-            AdminFooterCollapsed ? "" : "rotate-180"
-          }`}
-        />
-      </div>
-      {!AdminFooterCollapsed && (
-        <div id="activity-log-list " className="w-full p-4">
-          <div className="mx-auto w-[98%] text-sm text-gray-600">
-            Amir Bazgir Deleted a post:{" "}
-          </div>
-        </div>
-      )}
-    </div>
   );
 }

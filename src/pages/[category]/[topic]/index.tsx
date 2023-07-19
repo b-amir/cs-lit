@@ -73,7 +73,7 @@ function TopicPage(props) {
             - You can totally add your own analogy here! -
           </p>
         </div>
-        <PostEditor topicId={topicsData?.id} />
+        <PostEditor topicId={topicsData?.id} topicTitle={topicsData?.title} />
       </PageLayout>
     </>
   );

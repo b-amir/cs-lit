@@ -4,9 +4,7 @@ import {
   publicProcedure,
   protectedProcedure,
 } from "@/server/api/trpc";
-
 import { TRPCError } from "@trpc/server";
-import { a } from "@react-spring/web";
 import { PrismaClient, type Topic } from "@prisma/client";
 
 
@@ -24,6 +22,14 @@ export const topicsWithCategoryData = async (topics: Topic[]) => {
   return topicsWithCategoryData;
 }
 
+
+export async function getUserNameById(id: string) {
+  const prisma = new PrismaClient();
+  const user = await prisma.user.findUnique({
+    where: { id: id },
+  });
+return user?.name ? user?.name : user?.email
+}
 
 
 export const topicsRouter = createTRPCRouter({
@@ -50,7 +56,7 @@ export const topicsRouter = createTRPCRouter({
         take: limit + 1,
         cursor: cursor ? { id: cursor } : undefined,
         orderBy: {
-          myCursor: 'asc',
+          createdAt: 'asc',
         },
       });
       let nextCursor: typeof cursor | undefined = undefined;
@@ -168,6 +174,8 @@ export const topicsRouter = createTRPCRouter({
           analogies: {
             // create first analogy and append to topic analogies array
             create: {
+              // title: input.analogies[0]?.title || "",
+              title: `${input.title} by ${await getUserNameById(input.starter.id)}`,
               description: input.analogies[0]?.description || "",
               author: {
                 connect: { id: input.starter.id }, // Connect to an existing user using its ID
