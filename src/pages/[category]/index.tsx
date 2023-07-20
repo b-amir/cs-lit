@@ -521,6 +521,12 @@ function TopicEditorForm({
           },
         ],
       });
+      createActivityLogEntry({
+        entityType: "topic",
+        entityId: input.id,
+        entityTitle: input.title,
+        action: "created",
+      });
     } else if (topicEditor?.porpuse === "edit") {
       editTopic({
         title: input?.title,
@@ -542,6 +548,12 @@ function TopicEditorForm({
             description: input?.firstAnalogy,
           },
         ],
+      });
+      createActivityLogEntry({
+        entityType: "topic",
+        entityId: input.id,
+        entityTitle: input.title,
+        action: "updated",
       });
     }
   };
