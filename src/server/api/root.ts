@@ -4,6 +4,7 @@ import { profileRouter } from "./routers/profile";
 import { createTRPCRouter } from "@/server/api/trpc";
 import { topicsRouter } from './routers/topics';
 import { pendingRouter } from './routers/pending';
+import { activityRouter } from './routers/activity';
 
 /**
  * This is the primary router for your server.
@@ -16,6 +17,7 @@ export const appRouter = createTRPCRouter({
   category: categoriesRouter,
   topic: topicsRouter,
   pending: pendingRouter,
+  activity: activityRouter
 
 });
 

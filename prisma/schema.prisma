@@ -74,11 +74,12 @@ model User {
     status USER_STATUS @default(ACTIVE)
     role   USER_ROLE   @default(USER)
 
-    topics    Topic[]
-    analogies Analogy[]
-    likes     Like[]
-    dislikes  Dislike[]
-    comments  Comment[]
+    topics     Topic[]
+    analogies  Analogy[]
+    likes      Like[]
+    dislikes   Dislike[]
+    comments   Comment[]
+    activities Activity[]
 
     @@index([username])
 }
@@ -218,4 +219,30 @@ model Comment {
 
     @@index([userId])
     @@index([analogyId])
+}
+
+enum ACTIVITY_ACTION {
+    created
+    updated
+    deleted
+}
+
+enum ENTITY_TYPE {
+    category
+    topic
+    analogy
+    comment
+}
+
+model Activity {
+    id          String          @id @default(cuid())
+    user        User            @relation(fields: [userId], references: [id])
+    userId      String
+    entityType  ENTITY_TYPE
+    entityId    String
+    entityTitle String
+    action      ACTIVITY_ACTION
+    timestamp   DateTime        @default(now())
+
+    @@index([userId])
 }

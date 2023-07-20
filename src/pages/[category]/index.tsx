@@ -546,11 +546,36 @@ function TopicEditorForm({
     }
   };
 
+  interface IActivityLogProps {
+    entityType: "category" | "topic" | "analogy" | "comment";
+    entityId: string;
+    entityTitle: string;
+    action: "created" | "updated" | "deleted";
+  }
+
+  const { mutate: createEntry } = api.activity.create.useMutation();
+
+  const createActivityLogEntry = ({
+    entityType,
+    entityId,
+    entityTitle,
+    action,
+  }: IActivityLogProps) => {
+    createEntry({ entityType, entityId, entityTitle, action });
+  };
+
   const deleteTopicHandler = () => {
     try {
+      createActivityLogEntry({
+        entityType: "topic",
+        entityId: input.id,
+        entityTitle: input.title,
+        action: "deleted",
+      });
       deleteTopic({ id: input.id });
     } catch (e) {
-      toast.error("Something went wrong.");
+      toast.error("Something went wrong");
+      console.log(e);
     }
   };
 

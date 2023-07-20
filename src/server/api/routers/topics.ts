@@ -6,6 +6,7 @@ import {
 } from "@/server/api/trpc";
 import { TRPCError } from "@trpc/server";
 import { PrismaClient, type Topic } from "@prisma/client";
+import { Session } from 'inspector';
 
 
 
@@ -28,7 +29,7 @@ export async function getUserNameById(id: string) {
   const user = await prisma.user.findUnique({
     where: { id: id },
   });
-return user?.name ? user?.name : user?.email
+  return user?.name ? user?.name : user?.email
 }
 
 
@@ -245,9 +246,23 @@ export const topicsRouter = createTRPCRouter({
         where: { topicId: input.id },
       });
 
+      // add an activity log entry
+      // await ctx.prisma.activity.create({
+      //   data: {
+      //     action: "DELETE_TOPIC",
+      //     entity: {
+      //       connect: { entityId: input.id },
+      //     },
+      //     user: {
+      //       connect: { userId: Session.user.id },
+      //     },
+      //   },
+      // });
+
       const topic = await ctx.prisma.topic.delete({
         where: { id: input.id },
       });
+
 
       return topic;
     }),

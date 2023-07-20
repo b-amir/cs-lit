@@ -3,7 +3,6 @@ import { api } from "@/utils/api";
 import { TbUrgent } from "react-icons/tb";
 import { archivo } from "@/styles/customFonts";
 import { CgSpinner } from "react-icons/cg";
-import { IoClose, IoCheckmark, IoEyeOutline } from "react-icons/io5";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { MdDone, MdClose, MdOutlineOpenInNew } from "react-icons/md";
 
