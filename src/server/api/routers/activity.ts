@@ -26,7 +26,7 @@ export const activityRouter = createTRPCRouter({
         take: limit + 1,
         cursor: cursor ? { id: cursor } : undefined,
         orderBy: {
-          timestamp: 'asc',
+          timestamp: 'desc',
         },
       });
       let nextCursor: typeof cursor | undefined = undefined;

@@ -30,7 +30,7 @@ export function AdminFooter({
   return (
     <div
       id="admin-footer"
-      className={`absolute bottom-0 z-20 w-4/6 border-t border-t-[#cbcbcb]  bg-[#e3e3e3] transition-all ${
+      className={`absolute bottom-0 z-20 w-4/6 border-t border-t-[#cbcbcb]  bg-[#e1e1e1] transition-all ${
         AdminFooterCollapsed
           ? "h-8 shadow-sm"
           : "h-[20dvh]  shadow-[0px_-1.5px_2px_0px_#00000010]"
@@ -38,7 +38,7 @@ export function AdminFooter({
     >
       <div
         id="activity-log-header"
-        className={`${archivo.className} mx-auto flex h-8 w-[calc(100%-1px)] cursor-pointer flex-row items-center justify-center rounded-sm border-r border-[#5555552a] bg-[#f3f3f3] text-sm font-bold shadow-sm transition-all hover:bg-[#fdfdfd] `}
+        className={`${archivo.className} mx-auto flex h-[1.95rem] w-[calc(100%-1px)] cursor-pointer flex-row items-center justify-center border-r border-[#5555552a] bg-[#f1f1f1] text-sm font-bold shadow-sm transition-all hover:bg-[#fdfdfd] `}
         onClick={() => setAdminFooterCollapsed(!AdminFooterCollapsed)}
       >
         <TbActivity className="mb-0 mr-1 " /> Activity Log{" "}
@@ -51,7 +51,7 @@ export function AdminFooter({
       {!AdminFooterCollapsed && (
         <div
           id="activity-log-list "
-          className="h-[calc(20dvh-2rem)] w-full overflow-y-scroll "
+          className="h-[calc(20dvh-2.05rem)] w-full overflow-y-scroll "
         >
           <div className="mx-auto w-full text-sm text-gray-600">
             {activityData?.pages?.map((page) =>
@@ -66,7 +66,7 @@ export function AdminFooter({
                 disabled={isFetchingNextActivityPage}
                 className="w-full"
               >
-                <div className="flex w-full items-center justify-center  border-t border-t-[#55555538] bg-transparent py-6 font-semibold text-gray-500 shadow-[0px_2px_3px_0px_#00000009_inset] transition-all duration-300 hover:bg-gradient-to-b hover:from-[#2c2c2c0c] hover:to-transparent hover:text-gray-800">
+                <div className="flex w-full items-center justify-center  border-t border-t-[#55555538] bg-transparent py-2 font-semibold text-gray-500 shadow-[0px_2px_3px_0px_#00000009_inset] transition-all duration-300 hover:bg-gradient-to-b hover:from-[#2c2c2c0c] hover:to-transparent hover:text-gray-800">
                   {isFetchingNextActivityPage ? (
                     // TODO: fix spinning issue
                     <CgSpinner className="scale-150 transform  animate-spin " />

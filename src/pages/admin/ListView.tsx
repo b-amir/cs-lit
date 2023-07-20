@@ -3,7 +3,7 @@ import { LuList } from "react-icons/lu";
 import { archivo } from "@/styles/customFonts";
 import { MdAccessTime, MdOutlineModeEdit } from "react-icons/md";
 import { CgSpinner } from "react-icons/cg";
-import { HiOutlineDotsVertical } from "react-icons/hi";
+import { ActionMenu } from "./ActionMenu";
 import { RiDeleteBin6Line } from "react-icons/ri";
 
 interface IListViewProps {
@@ -119,7 +119,7 @@ export function ListItemView({ item }) {
 
   return (
     <div
-      className="z-0 flex h-8 w-full cursor-pointer flex-row items-center justify-between border-b-[1px] border-gray-100  px-16 py-6 transition-all hover:bg-gray-100"
+      className="z-0 flex h-8 w-full cursor-pointer flex-row items-center justify-between border-b-[1px] border-gray-100  py-6 pl-16 transition-all hover:bg-gray-100"
       // key={item.id}
       onMouseEnter={() => setShowActionMenuDots(true)}
       onMouseLeave={() => setShowActionMenuDots(false)}
@@ -131,39 +131,11 @@ export function ListItemView({ item }) {
         <span className="ml-2 text-sm text-gray-500">{item?.status ?? ""}</span>
       </div>
       <div className={`${showActionMenuDots ? "visible" : "hidden"} `}>
-        <ActionMenu />{" "}
-      </div>
-    </div>
-  );
-}
-export function ActionMenu() {
-  const [showExtendedActionMenu, setShowExtendedActionMenu] =
-    React.useState(false);
-  return (
-    <div
-      id="action-menu"
-      className="z-10 flex flex-row items-center rounded-lg border border-transparent transition-all hover:border-[#5555552a] hover:bg-[#ffffff] hover:shadow-sm"
-      onMouseLeave={() => setShowExtendedActionMenu(false)}
-    >
-      {showExtendedActionMenu && (
-        <div
-          id="action-menu-items"
-          className="flex flex-row items-center rounded-l-lg bg-[#ffffff] p-2"
-        >
+        <ActionMenu>
           <RiDeleteBin6Line className="mx-2 cursor-pointer text-[#c83535] hover:text-[#cd8a8a]" />
           <MdOutlineModeEdit className="mx-2 cursor-pointer text-gray-600 hover:text-gray-400" />
-        </div>
-      )}
-
-      <button
-        onClick={() => setShowExtendedActionMenu(!showExtendedActionMenu)}
-      >
-        <HiOutlineDotsVertical
-          className={`h-8 w-8 cursor-pointer rounded-lg p-2 text-gray-400 hover:bg-[#ffffff6c] ${
-            showExtendedActionMenu ? "rounded-l-none" : ""
-          }`}
-        />
-      </button>
+        </ActionMenu>
+      </div>
     </div>
   );
 }

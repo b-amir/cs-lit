@@ -3,8 +3,8 @@ import { api } from "@/utils/api";
 import { TbUrgent } from "react-icons/tb";
 import { archivo } from "@/styles/customFonts";
 import { CgSpinner } from "react-icons/cg";
-import { HiOutlineDotsVertical } from "react-icons/hi";
-import { MdDone, MdClose, MdOutlineOpenInNew } from "react-icons/md";
+import { MdDone, MdClose } from "react-icons/md";
+import { ActionMenu } from "./ActionMenu";
 
 export function AdminSidePanel() {
   const {
@@ -20,7 +20,7 @@ export function AdminSidePanel() {
   return (
     <div
       id="admin-sidepanel"
-      className="relative z-20 mx-auto h-full w-1/4   overflow-x-clip  border  border-[#b5b5b511] bg-[#f7f3ee] transition-all"
+      className="relative z-20 mx-auto h-full w-1/4   overflow-x-clip  border  border-[#b5b5b511] bg-[#f6f6f6] transition-all"
     >
       <div
         id="urgent-header"
@@ -70,7 +70,7 @@ export function PendingItemView({ item }) {
     React.useState(false);
   return (
     <div
-      className=" flex h-8 w-full cursor-pointer flex-row items-center justify-between border-b-[1px] border-[#00000012] px-6 py-6 transition-all hover:bg-[#00000012]"
+      className=" flex h-8 w-full cursor-pointer flex-row items-center justify-between border-b-[1px] border-[#00000012] py-6 pl-6 transition-all hover:bg-[#00000012]"
       // key={item.id}
       onMouseEnter={() => setShowActionMenuDots(true)}
       onMouseLeave={() => setShowActionMenuDots(false)}
@@ -79,7 +79,7 @@ export function PendingItemView({ item }) {
         <h1
           className={`${
             showExtendedActionMenu ? "max-w-[10%]" : "w-full"
-          }  font  text-sm font-bold`}
+          }  font  text-xs font-semibold`}
         >
           {item.title ? item.title : item.name ? item.name : item.id}
         </h1>
@@ -88,47 +88,11 @@ export function PendingItemView({ item }) {
         </span>
       </div>
       <div className={`${showActionMenuDots ? "visible " : "hidden"}  `}>
-        {" "}
-        <ActionMenu
-          className=" "
-          showExtendedActionMenu={showExtendedActionMenu}
-          setShowExtendedActionMenu={setShowExtendedActionMenu}
-        />
+        <ActionMenu>
+          <MdClose className="mx-2 cursor-pointer text-gray-600 hover:text-gray-400" />
+          <MdDone className="mx-2 cursor-pointer text-gray-600 hover:text-gray-400" />
+        </ActionMenu>
       </div>
-    </div>
-  );
-}
-
-export function ActionMenu({
-  showExtendedActionMenu,
-  setShowExtendedActionMenu,
-}) {
-  return (
-    <div
-      id="action-menu"
-      className="flex flex-row items-center rounded-lg border border-transparent transition-all hover:border-[#5555552a] hover:bg-[#ffffff] hover:shadow-sm"
-      onMouseLeave={() => setShowExtendedActionMenu(false)}
-    >
-      {showExtendedActionMenu && (
-        <div
-          id="action-menu-items"
-          className="flex flex-row items-center rounded-l-lg bg-[#ffffff] p-2"
-        >
-          <MdClose className="mx-2 cursor-pointer text-[#c83535] hover:text-[#cd8a8a]" />
-          <MdOutlineOpenInNew className="mx-2 cursor-pointer text-gray-600 hover:text-gray-400" />
-          <MdDone className="mx-2 cursor-pointer text-green-600 hover:text-green-400" />
-        </div>
-      )}
-
-      <button
-        onClick={() => setShowExtendedActionMenu(!showExtendedActionMenu)}
-      >
-        <HiOutlineDotsVertical
-          className={`h-8 w-8 cursor-pointer rounded-lg p-2 text-gray-400 hover:bg-[#ffffff6c] ${
-            showExtendedActionMenu ? "rounded-l-none" : ""
-          }`}
-        />
-      </button>
     </div>
   );
 }
