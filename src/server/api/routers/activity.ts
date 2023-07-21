@@ -64,7 +64,7 @@ export const activityRouter = createTRPCRouter({
   create: protectedProcedure
     .input(
       z.object({
-        entityType: z.enum(["category", "topic", "analogy", "comment"]),
+        entityType: z.enum(["category", "topic", "analogy", "comment", "user"]),
         entityId: z.string(),
         entityTitle: z.string(),
         action: z.enum(["created", "updated", "deleted"]),

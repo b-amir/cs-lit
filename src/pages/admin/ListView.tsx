@@ -5,6 +5,8 @@ import { MdAccessTime, MdOutlineModeEdit } from "react-icons/md";
 import { CgSpinner } from "react-icons/cg";
 import { ActionMenu } from "./ActionMenu";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { useDeleteItem } from "@/hooks/useDeleteItem";
+import { useUpdateItem } from "@/hooks/useUpdateItem";
 
 interface IListViewProps {
   title: string;
@@ -23,7 +25,7 @@ export function ListView({
   return (
     <div className=" relative z-20 mx-auto h-full  overflow-x-clip overflow-y-scroll  rounded-sm  bg-white px-0  transition-all ">
       <>
-        <div className="flex flex-col gap-5  border-b border-[#5555552a] bg-gradient-to-tr from-[#eeeeee] to-[#dcdcdc] px-16 py-6">
+        <div className="flex flex-col gap-5  border-b border-[#5555552a] bg-gradient-to-tr from-[#f4e6e07d] to-[#f9ece57d] px-16 py-6">
           <div
             id="count-title"
             className="flex flex-row items-center justify-start"
@@ -89,7 +91,7 @@ export function ListView({
           <div className="flex w-full flex-col ">
             {data?.pages?.map((page) =>
               page?.items?.map((item) => (
-                <ListItemView key={item.id} item={item} />
+                <ListItemView key={item.id} item={item} title={title} />
               ))
             )}
           </div>
@@ -114,8 +116,12 @@ export function ListView({
     </div>
   );
 }
-export function ListItemView({ item }) {
+
+export function ListItemView({ item, title }) {
   const [showActionMenuDots, setShowActionMenuDots] = React.useState(false);
+
+  const deleteItem = useDeleteItem(item, title);
+  const editItem = useUpdateItem(item, title);
 
   return (
     <div
@@ -132,8 +138,14 @@ export function ListItemView({ item }) {
       </div>
       <div className={`${showActionMenuDots ? "visible" : "hidden"} `}>
         <ActionMenu>
-          <RiDeleteBin6Line className="mx-2 cursor-pointer text-[#c83535] hover:text-[#cd8a8a]" />
-          <MdOutlineModeEdit className="mx-2 cursor-pointer text-gray-600 hover:text-gray-400" />
+          <RiDeleteBin6Line
+            className="mx-2 cursor-pointer text-[#c83535] hover:text-[#cd8a8a]"
+            onClick={() => deleteItem()}
+          />
+          <MdOutlineModeEdit
+            className="mx-2 cursor-pointer text-gray-600 hover:text-gray-400"
+            onClick={() => editItem()}
+          />
         </ActionMenu>
       </div>
     </div>

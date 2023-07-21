@@ -14,14 +14,7 @@ import { toast } from "react-hot-toast";
 import { FaGhost } from "react-icons/fa";
 import Head from "next/head";
 import { archivo } from "@/styles/customFonts";
-
-export interface ITopicInput {
-  id: string;
-  title: string;
-  linkToDocs: string;
-  category: string;
-  firstAnalogy: string;
-}
+// import { deleteTopicHandler } from "@/utils/deleteActions";
 
 function CategoryPage(props) {
   const router = useRouter();
@@ -440,61 +433,39 @@ function TopicEditorForm({
       },
     });
 
-  const { mutate: editTopic, isLoading: isUpdating } =
-    api.topic.update.useMutation({
-      onSuccess: () => {
-        setInput({
-          id: "",
-          title: "",
-          linkToDocs: "",
-          category: "",
-          firstAnalogy: "",
-        });
-        void ctx.topic.getByCategoryId.invalidate();
-        toast.success("Topic updated successfully.");
+  const { mutate: editTopic } = api.topic.update.useMutation({
+    onSuccess: () => {
+      setInput({
+        id: "",
+        title: "",
+        linkToDocs: "",
+        category: "",
+        firstAnalogy: "",
+      });
+      void ctx.topic.getByCategoryId.invalidate();
+      toast.success("Topic updated successfully.");
 
-        // setAddTopicShown(false);
-        setTopicEditor?.({
-          shown: false,
-          porpuse: null,
-        });
-      },
-      onError: (e) => {
-        const errorMessage = e.data?.zodError?.fieldErrors;
-        console.log(errorMessage);
-        if (errorMessage) {
-          if (errorMessage.url) {
-            toast.error(errorMessage?.url.join(" "));
-          }
-          if (errorMessage.title) {
-            toast.error(errorMessage?.title.join(" "));
-          }
-        } else {
-          toast.error("Something went wrong.");
+      // setAddTopicShown(false);
+      setTopicEditor?.({
+        shown: false,
+        porpuse: null,
+      });
+    },
+    onError: (e) => {
+      const errorMessage = e.data?.zodError?.fieldErrors;
+      console.log(errorMessage);
+      if (errorMessage) {
+        if (errorMessage.url) {
+          toast.error(errorMessage?.url.join(" "));
         }
-      },
-    });
-
-  const { mutate: deleteTopic, isLoading: isDeleting } =
-    api.topic.delete.useMutation({
-      onSuccess: () => {
-        setInput({
-          id: "",
-          title: "",
-          linkToDocs: "",
-          category: "",
-          firstAnalogy: "",
-        });
-        void ctx.topic.getByCategoryId.invalidate();
-        toast.success("Topic deleted successfully.");
-
-        // setAddTopicShown(false);
-        setTopicEditor?.({
-          shown: false,
-          porpuse: null,
-        });
-      },
-    });
+        if (errorMessage.title) {
+          toast.error(errorMessage?.title.join(" "));
+        }
+      } else {
+        toast.error("Something went wrong.");
+      }
+    },
+  });
 
   const formSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -521,12 +492,12 @@ function TopicEditorForm({
           },
         ],
       });
-      createActivityLogEntry({
-        entityType: "topic",
-        entityId: input.id,
-        entityTitle: input.title,
-        action: "created",
-      });
+      // createActivityLogEntry({
+      //   entityType: "topic",
+      //   entityId: input.id,
+      //   entityTitle: input.title,
+      //   action: "created",
+      // });
     } else if (topicEditor?.porpuse === "edit") {
       editTopic({
         title: input?.title,
@@ -549,45 +520,12 @@ function TopicEditorForm({
           },
         ],
       });
-      createActivityLogEntry({
-        entityType: "topic",
-        entityId: input.id,
-        entityTitle: input.title,
-        action: "updated",
-      });
-    }
-  };
-
-  interface IActivityLogProps {
-    entityType: "category" | "topic" | "analogy" | "comment";
-    entityId: string;
-    entityTitle: string;
-    action: "created" | "updated" | "deleted";
-  }
-
-  const { mutate: createEntry } = api.activity.create.useMutation();
-
-  const createActivityLogEntry = ({
-    entityType,
-    entityId,
-    entityTitle,
-    action,
-  }: IActivityLogProps) => {
-    createEntry({ entityType, entityId, entityTitle, action });
-  };
-
-  const deleteTopicHandler = () => {
-    try {
-      createActivityLogEntry({
-        entityType: "topic",
-        entityId: input.id,
-        entityTitle: input.title,
-        action: "deleted",
-      });
-      deleteTopic({ id: input.id });
-    } catch (e) {
-      toast.error("Something went wrong");
-      console.log(e);
+      // createActivityLogEntry({
+      //   entityType: "topic",
+      //   entityId: input.id,
+      //   entityTitle: input.title,
+      //   action: "updated",
+      // });
     }
   };
 
@@ -718,7 +656,7 @@ function TopicEditorForm({
             <button
               type="button"
               className="mx-3 mb-3 mt-2 inline-flex justify-center  px-4 py-2 font-semibold text-[#2a2a2e] transition-all hover:text-[#bc2f2f]"
-              onClick={deleteTopicHandler}
+              onClick={deleteTopicHandler(input)}
               disabled={isSubmitting}
             >
               Delete topic

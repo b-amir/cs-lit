@@ -5,7 +5,7 @@ import { z } from "zod";
 // import { signIn, signOut, useSession, } from "next-auth/react";
 
 
-import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "@/server/api/trpc";
 import { filterUserForClient } from "@/server/helpers/filterUserForClient";
 import { SessionContext, SessionProvider } from "next-auth/react";
 import { Session } from "inspector";
@@ -130,6 +130,17 @@ export const profileRouter = createTRPCRouter({
       return users;
     }
     ),
+
+  delete: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+
+      const user = await ctx.prisma.user.delete({
+        where: { id: input.id },
+      });
+
+      return user;
+    }),
 
 
 });

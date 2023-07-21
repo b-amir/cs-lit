@@ -109,4 +109,45 @@ export const categoriesRouter = createTRPCRouter({
       });
       return category;
     }),
+
+  update: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        name: z.string().min(3).max(32),
+        slug: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const category = await ctx.prisma.category.update({
+        where: { id: input.id },
+        data: {
+          name: input.name,
+          slug: input.slug,
+        },
+      });
+      return category;
+    }),
+
+  delete: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      // delete associated analogies first
+      await ctx.prisma.analogy.deleteMany({
+        where: { topic: { categoryId: input.id } },
+      });
+
+      // delete associated topics
+      await ctx.prisma.topic.deleteMany({
+        where: { categoryId: input.id },
+      });
+
+      const category = await ctx.prisma.category.delete({
+        where: { id: input.id },
+      });
+
+      return category;
+    }),
+
+
 });

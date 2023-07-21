@@ -322,4 +322,16 @@ export const analogiesRouter = createTRPCRouter({
 
 
 
+  delete: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+
+      const analogy = await ctx.prisma.analogy.delete({
+        where: { id: input.id },
+      });
+
+      return analogy;
+    }),
+
+
 });

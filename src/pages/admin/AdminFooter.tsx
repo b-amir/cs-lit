@@ -38,7 +38,7 @@ export function AdminFooter({
     >
       <div
         id="activity-log-header"
-        className={`${archivo.className} mx-auto flex h-[1.95rem] w-[calc(100%-1px)] cursor-pointer flex-row items-center justify-center border-r border-[#5555552a] bg-[#f1f1f1] text-sm font-bold shadow-sm transition-all hover:bg-[#fdfdfd] `}
+        className={`${archivo.className} mx-auto flex h-[1.95rem] w-[calc(100%-1px)] cursor-pointer flex-row items-center justify-center border-r border-[#5555551d] bg-[#f1f1f1] bg-gradient-to-t from-[#f3f3f3] to-[#eeeeee] text-sm font-bold shadow-sm transition-all hover:bg-[#fdfdfd] `}
         onClick={() => setAdminFooterCollapsed(!AdminFooterCollapsed)}
       >
         <TbActivity className="mb-0 mr-1 " /> Activity Log{" "}

@@ -232,6 +232,7 @@ enum ENTITY_TYPE {
     topic
     analogy
     comment
+    user
 }
 
 model Activity {
