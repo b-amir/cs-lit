@@ -6,8 +6,6 @@ import { SiTypescript } from "react-icons/si";
 import { SiJavascript } from "react-icons/si";
 import { TbBrandReact } from "react-icons/tb";
 import { IoLogoCss3 } from "react-icons/io";
-// import { UserSection } from "./UserSection";
-// import { Footer } from "./Footer";
 import { api } from "@/utils/api";
 import { useSession } from "next-auth/react";
 import { RiFlowChart, RiMenuAddFill } from "react-icons/ri";
@@ -15,9 +13,9 @@ import slugify from "slugify";
 import toast from "react-hot-toast";
 import { GrSquare } from "react-icons/gr";
 import { MdCategory } from "react-icons/md";
+import { addActivityLog } from "@/utils/addActivityLog";
 
 export function SidebarLeft(props: { username: any }) {
-  // const [userSectionShown, setUserSectionShown] = useState(false);
   const { data: sessionData, status } = useSession();
   const {
     data: categories,
@@ -34,6 +32,7 @@ export function SidebarLeft(props: { username: any }) {
     name: "",
     slug: "",
   });
+  const createActivityLogEntry = addActivityLog();
 
   const categorySlug = slugify(input.name, { lower: true });
 
@@ -42,6 +41,13 @@ export function SidebarLeft(props: { username: any }) {
       setInput({
         name: "",
         slug: "",
+      });
+
+      createActivityLogEntry({
+        entityType: "category",
+        entityId: "",
+        entityTitle: input.name,
+        action: "created",
       });
       void ctx.category.getAll.invalidate();
     },
@@ -103,18 +109,8 @@ export function SidebarLeft(props: { username: any }) {
                   alt={"CS LIT: like I'm 10"}
                   className="min-h-[50px] min-w-[100px]"
                 />
-                {/* <Logo /> */}
               </Link>
-              {/* <div className=" mt-0 flex cursor-pointer rounded-full border border-[#2A2A2E47] bg-[#ffffff71] p-2.5 transition-all hover:border-[#2A2A2E8a] hover:bg-white hover:shadow-sm">
-            <TbPencilMinus className="stroke-[#2A2A2E]" />
-          </div> */}
-              {/* a narrow div to act as a gradient bottom border */}
             </div>
-            {/* <div
-          id="gradient"
-          className="h-[2px] w-full bg-gradient-to-r from-[#ff0044] via-[#ff6a00] to-[#fc1500]"
-        /> */}
-
             <ul className="mb-auto mt-6 space-y-2 px-3 text-sm font-medium">
               {/* map through category items from database */}
               {categories?.pages?.map((page) =>
@@ -173,8 +169,6 @@ export function SidebarLeft(props: { username: any }) {
               disabled={isSubmitting}
             />
           </form>
-
-          {/* <Footer /> */}
         </aside>
       )}
     </>

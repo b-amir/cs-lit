@@ -8,7 +8,7 @@ import {
 // import type { User } from "@clerk/nextjs/api";
 import { TRPCError } from "@trpc/server";
 import { filterUserForClient } from "@/server/helpers/filterUserForClient";
-import { PrismaClient, type Category } from "@prisma/client";
+import { PrismaClient, type Category, Prisma } from "@prisma/client";
 import { NextPageContext } from "next";
 
 
@@ -24,19 +24,23 @@ export const categoriesRouter = createTRPCRouter({
   getAll: publicProcedure
     .input(
       z.object({
-        limit: z.number().min(1).max(100).nullish(),
+        limit: z.number(),
         cursor: z.string().nullish(),
-      }),
+        order: z.enum(["asc", "desc"]).nullish()
+      })
     )
     .query(async ({ ctx, input }) => {
-      const limit = input.limit ?? 10;
-      const { cursor } = input;
+
+      const limit = input.limit ?? 10
+      const { cursor } = input
+      const order = input.order ?? "asc"
+
       const items = await ctx.prisma.category.findMany({
         take: limit + 1,
         cursor: cursor ? { id: cursor } : undefined,
         orderBy: {
-          createdAt: 'asc',
-        },
+          createdAt: order as Prisma.SortOrder
+        }
       });
       let nextCursor: typeof cursor | undefined = undefined;
       if (items.length > limit) {

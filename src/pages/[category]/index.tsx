@@ -14,6 +14,7 @@ import { toast } from "react-hot-toast";
 import { FaGhost } from "react-icons/fa";
 import Head from "next/head";
 import { archivo } from "@/styles/customFonts";
+import { addActivityLog } from "@/utils/addActivityLog";
 // import { deleteTopicHandler } from "@/utils/deleteActions";
 
 function CategoryPage(props) {
@@ -467,6 +468,8 @@ export function TopicEditorForm({
     },
   });
 
+  const createActivityLogEntry = addActivityLog();
+
   const formSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -492,12 +495,12 @@ export function TopicEditorForm({
           },
         ],
       });
-      // createActivityLogEntry({
-      //   entityType: "topic",
-      //   entityId: input.id,
-      //   entityTitle: input.title,
-      //   action: "created",
-      // });
+      createActivityLogEntry({
+        entityType: "topic",
+        entityId: input.id,
+        entityTitle: input.title,
+        action: "created",
+      });
     } else if (topicEditor?.porpuse === "edit") {
       editTopic({
         title: input?.title,
@@ -520,12 +523,12 @@ export function TopicEditorForm({
           },
         ],
       });
-      // createActivityLogEntry({
-      //   entityType: "topic",
-      //   entityId: input.id,
-      //   entityTitle: input.title,
-      //   action: "updated",
-      // });
+      createActivityLogEntry({
+        entityType: "topic",
+        entityId: input.id,
+        entityTitle: input.title,
+        action: "updated",
+      });
     }
   };
 

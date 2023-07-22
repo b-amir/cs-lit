@@ -3,8 +3,8 @@ import { ActionMenu } from "./ActionMenu";
 import { useDeleteItem } from "@/hooks/useDeleteItem";
 
 import { archivo } from "@/styles/customFonts";
-import { LuList } from "react-icons/lu";
-import { MdAccessTime, MdOutlineModeEdit } from "react-icons/md";
+import { TbSortAscending2, TbSortDescending2 } from "react-icons/tb";
+import { MdOutlineModeEdit } from "react-icons/md";
 import { CgSpinner } from "react-icons/cg";
 import { RiDeleteBin6Line } from "react-icons/ri";
 
@@ -16,6 +16,8 @@ interface IListViewProps {
   isfetchingNextPage: boolean;
   setEditorModalInput: React.Dispatch<React.SetStateAction<any>>;
   setEditorModalShown: React.Dispatch<React.SetStateAction<boolean>>;
+  orderBy: string;
+  setOrderBy: React.Dispatch<React.SetStateAction<string>>;
 }
 export function ListView({
   data,
@@ -25,6 +27,7 @@ export function ListView({
   isfetchingNextPage,
   setEditorModalInput,
   setEditorModalShown,
+  setOrderBy,
 }: IListViewProps) {
   return (
     <div className=" relative z-20 mx-auto h-full  overflow-x-clip overflow-y-scroll  rounded-sm  bg-white px-0  transition-all ">
@@ -51,44 +54,10 @@ export function ListView({
             <input
               type="text"
               placeholder="Search"
-              className="mr-2 max-w-[60%] rounded-md border border-[#00000030] px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-gray-200"
+              className="mr-2 max-w-[60%] rounded-md border border-[#6e3c2024] px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#6e3d2047]"
             />
 
-            <div className="grid grid-cols-2 gap-2 rounded-md bg-[#00000030] px-[2.5px] py-0.5 text-sm text-[#2f2f2f]">
-              <div>
-                <input
-                  type="radio"
-                  name="option"
-                  id="all"
-                  value="All"
-                  className="peer hidden"
-                  checked
-                />
-                <label
-                  htmlFor="all"
-                  className=" flex cursor-pointer select-none flex-row items-center justify-center gap-1 rounded-md border border-transparent px-3 py-1 text-center peer-checked:border-[#0000006d] peer-checked:bg-gray-50 peer-checked:font-bold peer-checked:text-black peer-checked:shadow-sm"
-                >
-                  <LuList className="mb-[4px]" />
-                  All
-                </label>
-              </div>
-
-              <div>
-                <input
-                  type="radio"
-                  name="option"
-                  id="pending"
-                  value="Pending"
-                  className="peer hidden"
-                />
-                <label
-                  htmlFor="pending"
-                  className="flex cursor-pointer select-none flex-row items-center justify-center gap-1 rounded-md border border-transparent px-3 py-1 text-center peer-checked:border-[#0000006d] peer-checked:bg-gray-50 peer-checked:font-bold peer-checked:text-black peer-checked:shadow-sm"
-                >
-                  <MdAccessTime className="mb-[3px]" /> Pending
-                </label>
-              </div>
-            </div>
+            <RadioOptions setOrderBy={setOrderBy} />
           </div>
         </div>
         <div className=" flex w-full flex-col ">
@@ -122,6 +91,47 @@ export function ListView({
           )}
         </div>
       </>
+    </div>
+  );
+}
+
+function RadioOptions({ setOrderBy }) {
+  return (
+    <div className="grid grid-cols-2 gap-1 rounded-md bg-[#6e3c2024] px-[0] py-1 text-sm text-[#2f2f2f]">
+      <div>
+        <input
+          type="radio"
+          name="option"
+          id="newest"
+          value="newest"
+          className="peer hidden"
+          defaultChecked
+          onClick={() => setOrderBy("desc")}
+        />
+        <label
+          htmlFor="newest"
+          className="flex cursor-pointer select-none flex-row items-center justify-center gap-1 rounded-md border border-transparent px-3 py-1 text-center transition-all peer-checked:translate-x-1 peer-checked:border-[#00000045] peer-checked:bg-gray-50 peer-checked:font-bold peer-checked:text-gray-800 peer-checked:shadow-lg peer-checked:duration-200"
+        >
+          <TbSortDescending2 className="mb-[3px]" /> Newest
+        </label>
+      </div>
+      <div>
+        <input
+          type="radio"
+          name="option"
+          id="oldest"
+          value="oldest"
+          className="peer hidden"
+          onClick={() => setOrderBy("asc")}
+        />
+        <label
+          htmlFor="oldest"
+          className=" flex cursor-pointer select-none flex-row items-center justify-center gap-1 rounded-md border border-transparent px-3 py-1 text-center transition-all peer-checked:-translate-x-1 peer-checked:border-[#00000045] peer-checked:bg-gray-50 peer-checked:font-bold peer-checked:text-gray-800 peer-checked:shadow-sm peer-checked:duration-200"
+        >
+          <TbSortAscending2 className="mb-[4px]" />
+          Oldest
+        </label>
+      </div>
     </div>
   );
 }

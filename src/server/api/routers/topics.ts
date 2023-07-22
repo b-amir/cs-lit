@@ -5,7 +5,7 @@ import {
   protectedProcedure,
 } from "@/server/api/trpc";
 import { TRPCError } from "@trpc/server";
-import { PrismaClient, type Topic } from "@prisma/client";
+import { Prisma, PrismaClient, type Topic } from "@prisma/client";
 import { Session } from 'inspector';
 
 
@@ -46,19 +46,23 @@ export const topicsRouter = createTRPCRouter({
   getAll: publicProcedure
     .input(
       z.object({
-        limit: z.number().min(1).max(100).nullish(),
+        limit: z.number(),
         cursor: z.string().nullish(),
-      }),
+        order: z.enum(["asc", "desc"]).nullish()
+      })
     )
     .query(async ({ ctx, input }) => {
-      const limit = input.limit ?? 10;
-      const { cursor } = input;
+
+      const limit = input.limit ?? 10
+      const { cursor } = input
+      const order = input.order ?? "asc"
+
       const items = await ctx.prisma.topic.findMany({
         take: limit + 1,
         cursor: cursor ? { id: cursor } : undefined,
         orderBy: {
-          createdAt: 'asc',
-        },
+          createdAt: order as Prisma.SortOrder
+        }
       });
       let nextCursor: typeof cursor | undefined = undefined;
       if (items.length > limit) {
