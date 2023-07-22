@@ -2,10 +2,19 @@ import React, { useState } from "react";
 import { api } from "@/utils/api";
 import { PageLayout } from "@/components/layout";
 import Head from "next/head";
+
 import { PillsRow } from "../../components/Pills";
 import { ListView } from "./ListView";
 import { AdminSidePanel } from "./AdminSidePanel";
 import { AdminFooter } from "./AdminFooter";
+
+import {
+  EditorModal,
+  CategoryEditForm,
+  TopicEditForm,
+  AnalogyEditForm,
+  UserEditForm,
+} from "./EditorModal";
 
 export default function AdminPage(props) {
   const [AdminFooterCollapsed, setAdminFooterCollapsed] = useState(false);
@@ -115,6 +124,9 @@ export default function AdminPage(props) {
     }
   }
 
+  const [editorModalShown, setEditorModalShown] = useState(false);
+  const [editorModalInput, setEditorModalInput] = useState("");
+
   return (
     <>
       <Head>
@@ -154,6 +166,8 @@ export default function AdminPage(props) {
                 hasNextPage={getHasNextPage(activeSection)}
                 fetchNextPage={getFetchNextPage(activeSection)}
                 isFetchingNextPage={getIsFetchingNextPage(activeSection)}
+                setEditorModalInput={setEditorModalInput}
+                setEditorModalShown={setEditorModalShown}
               />
             </div>
 
@@ -164,6 +178,39 @@ export default function AdminPage(props) {
             setAdminFooterCollapsed={setAdminFooterCollapsed}
           />
         </div>
+
+        <EditorModal
+          editorModalShown={editorModalShown}
+          setEditorModalShown={setEditorModalShown}
+        >
+          {editorModalInput?.type === "Categories" ? (
+            <CategoryEditForm
+              editorModalInput={editorModalInput}
+              setEditorModalShown={setEditorModalShown}
+              setEditorModalInput={setEditorModalInput}
+            />
+          ) : editorModalInput?.type === "Topics" ? (
+            <TopicEditForm
+              editorModalInput={editorModalInput}
+              setEditorModalShown={setEditorModalShown}
+              setEditorModalInput={setEditorModalInput}
+            />
+          ) : editorModalInput?.type === "Analogies" ? (
+            <AnalogyEditForm
+              editorModalInput={editorModalInput}
+              setEditorModalShown={setEditorModalShown}
+              setEditorModalInput={setEditorModalInput}
+            />
+          ) : editorModalInput?.type === "Users" ? (
+            <UserEditForm
+              editorModalInput={editorModalInput}
+              setEditorModalShown={setEditorModalShown}
+              setEditorModalInput={setEditorModalInput}
+            />
+          ) : (
+            "hey"
+          )}
+        </EditorModal>
       </PageLayout>
     </>
   );

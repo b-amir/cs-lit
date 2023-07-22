@@ -182,6 +182,38 @@ export const analogiesRouter = createTRPCRouter({
       return analogy;
     }),
 
+  update: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        title: z.string(),
+        description: z.string(),
+        status: z.enum(["PUBLISHED", "PENDING", "REJECTED", "DELETED"]),
+        pinned: z.boolean(),
+        topicId: z.string(),
+        authorId: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+
+      const analogy = await ctx.prisma.analogy.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          title: input.title,
+          description: input.description,
+          status: input.status,
+          pinned: input.pinned,
+          authorId: input.authorId,
+          topicId: input.topicId,
+        },
+      });
+      return analogy;
+    }),
+
+
+
   deleteAllAnalogiesFromTopic: protectedProcedure
     .input(
       z.object({

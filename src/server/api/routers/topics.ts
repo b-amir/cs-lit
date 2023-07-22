@@ -197,13 +197,14 @@ export const topicsRouter = createTRPCRouter({
         id: z.string(),
         title: z.string().min(2).max(100),
         slug: z.string(),
-        category: z.object({
-          id: z.string(),
-        }),
+        // category: z.object({
+        //   id: z.string(),
+        // }),
         url: z.string().url(),
-        starter: z.object({
-          id: z.string(),
-        }),
+        // starter: z.object({
+        //   id: z.string(),
+        // }),
+        status: z.enum(["PUBLISHED", "PENDING", "REJECTED", "DELETED"]),
         // analogies: z.array(z.object({
         //   id: z.string(),
         //   description: z.string(),
@@ -218,13 +219,14 @@ export const topicsRouter = createTRPCRouter({
         data: {
           title: input.title,
           slug: input.slug,
-          category: {
-            connect: { id: input.category.id }, // Connect to an existing category using its ID
-          },
+          // category: {
+          //   connect: { id: input.category.id }, // Connect to an existing category using its ID
+          // },
           url: input.url,
-          starter: {
-            connect: { id: input.starter.id }, // Connect to an existing user using its ID
-          },
+          // starter: {
+          //   connect: { id: input.starter.id }, // Connect to an existing user using its ID
+          // },
+          status: input.status,
           // analogies: {
           //   // create first analogy and append to topic analogies array
           //   create: {

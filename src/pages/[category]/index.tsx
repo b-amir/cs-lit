@@ -376,7 +376,7 @@ function NewTopicToggleTrigger({
   );
 }
 
-function TopicEditorForm({
+export function TopicEditorForm({
   UrlCategory,
   data,
   input,

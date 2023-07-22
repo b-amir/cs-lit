@@ -131,6 +131,34 @@ export const profileRouter = createTRPCRouter({
     }
     ),
 
+  update: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        username: z.string(),
+        name: z.string(),
+        email: z.string(),
+        status: z.enum(["ACTIVE", "BANNED", "DELETED"]),
+        role: z.enum(["ADMIN", "EDITOR", "USER"]),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+
+      const user = await ctx.prisma.user.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          name: input.name,
+          username: input.username,
+          status: input.status,
+          email: input.email,
+          role: input.role,
+        },
+      });
+      return user;
+    }),
+
   delete: protectedProcedure
     .input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {

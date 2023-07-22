@@ -1,12 +1,12 @@
-import React from "react";
-import { LuList } from "react-icons/lu";
+import React, { useState } from "react";
+import { ActionMenu } from "./ActionMenu";
+import { useDeleteItem } from "@/hooks/useDeleteItem";
+
 import { archivo } from "@/styles/customFonts";
+import { LuList } from "react-icons/lu";
 import { MdAccessTime, MdOutlineModeEdit } from "react-icons/md";
 import { CgSpinner } from "react-icons/cg";
-import { ActionMenu } from "./ActionMenu";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { useDeleteItem } from "@/hooks/useDeleteItem";
-import { useUpdateItem } from "@/hooks/useUpdateItem";
 
 interface IListViewProps {
   title: string;
@@ -14,6 +14,8 @@ interface IListViewProps {
   hasNextPage: boolean | undefined;
   fetchNextPage: () => void;
   isfetchingNextPage: boolean;
+  setEditorModalInput: React.Dispatch<React.SetStateAction<any>>;
+  setEditorModalShown: React.Dispatch<React.SetStateAction<boolean>>;
 }
 export function ListView({
   data,
@@ -21,6 +23,8 @@ export function ListView({
   hasNextPage,
   fetchNextPage,
   isfetchingNextPage,
+  setEditorModalInput,
+  setEditorModalShown,
 }: IListViewProps) {
   return (
     <div className=" relative z-20 mx-auto h-full  overflow-x-clip overflow-y-scroll  rounded-sm  bg-white px-0  transition-all ">
@@ -91,7 +95,13 @@ export function ListView({
           <div className="flex w-full flex-col ">
             {data?.pages?.map((page) =>
               page?.items?.map((item) => (
-                <ListItemView key={item.id} item={item} title={title} />
+                <ListItemView
+                  key={item.id}
+                  item={item}
+                  title={title}
+                  setEditorModalInput={setEditorModalInput}
+                  setEditorModalShown={setEditorModalShown}
+                />
               ))
             )}
           </div>
@@ -110,18 +120,21 @@ export function ListView({
               </div>
             </button>
           )}
-          {/* {console.log("data:", data)} */}
         </div>
       </>
     </div>
   );
 }
 
-export function ListItemView({ item, title }) {
-  const [showActionMenuDots, setShowActionMenuDots] = React.useState(false);
+export function ListItemView({
+  item,
+  title,
+  setEditorModalInput,
+  setEditorModalShown,
+}) {
+  const [showActionMenuDots, setShowActionMenuDots] = useState(false);
 
   const deleteItem = useDeleteItem(item, title);
-  const editItem = useUpdateItem(item, title);
 
   return (
     <div
@@ -144,7 +157,10 @@ export function ListItemView({ item, title }) {
           />
           <MdOutlineModeEdit
             className="mx-2 cursor-pointer text-gray-600 hover:text-gray-400"
-            onClick={() => editItem()}
+            onClick={() => {
+              setEditorModalShown(true);
+              setEditorModalInput({ type: title, item: item });
+            }}
           />
         </ActionMenu>
       </div>

@@ -1,32 +1,34 @@
 import { api } from "@/utils/api";
 import { toast } from "react-hot-toast";
 import { addActivityLog } from "@/utils/addActivityLog";
-import { Input } from "postcss";
-import { useState } from "react";
 
 export interface ITopicInput {
   id: string;
   title: string;
   slug: string;
   name: string;
-  linkToDocs: string;
+  url: string;
   category: string;
   firstAnalogy: string;
+  description: string;
+  status: "PENDING" | "PUBLISHED" | "REJECTED" | "DELETED";
+  userStatus: "ACTIVE" | "BANNED" | "DELETED";
+  pinned: boolean;
+  topicId: string;
+  authorId: string;
+  email: string;
+  username: string;
+  role: "ADMIN" | "USER" | "EDITOR";
 }
 
 export function useUpdateItem(item: ITopicInput, type: string) {
-  const [input, setInput] = useState({
-    name: item.name,
-    slug: item.slug,
-  });
-
   const ctx = api.useContext();
 
   // adding activity log entry
   const createActivityLogEntry = addActivityLog();
 
   if (type === "Categories") {
-    // deleting category
+    // updating category
     const { mutate: updateCategory } = api.category.update.useMutation({
       onSuccess: () => {
         void ctx.category.getAll.invalidate();
@@ -47,7 +49,7 @@ export function useUpdateItem(item: ITopicInput, type: string) {
           action: "updated",
         });
 
-        updateCategory({ id: item.id, name: input.name, slug: Input.slug });
+        updateCategory({ id: item.id, name: item.name, slug: item.slug });
       } catch (e) {
         toast.error("Something went wrong");
         console.log(e);
@@ -57,38 +59,44 @@ export function useUpdateItem(item: ITopicInput, type: string) {
   }
 
   if (type === "Topics") {
-    // deleting topic
-    const { mutate: deleteTopic } = api.topic.delete.useMutation({
+    // updating topic
+    const { mutate: updateTopic } = api.topic.update.useMutation({
       onSuccess: () => {
         void ctx.topic.getAll.invalidate();
         void ctx.topic.getByCategoryId.invalidate();
-        toast.success("Topic deleted successfully.");
+        toast.success("Topic updated successfully.");
       },
     });
 
-    const deleteTopicHandler = () => {
+    const updateTopicHandler = () => {
       try {
         createActivityLogEntry({
           entityType: "topic",
           entityId: item.id,
           entityTitle: item.title,
-          action: "deleted",
+          action: "updated",
         });
-        deleteTopic({ id: item.id });
+        updateTopic({
+          id: item.id,
+          title: item.title,
+          slug: item.slug,
+          url: item.url,
+          status: item.status,
+        });
       } catch (e) {
         toast.error("Something went wrong");
         console.log(e);
       }
     };
-    return deleteTopicHandler;
+    return updateTopicHandler;
   }
 
   if (type === "Analogies") {
-    // deleting analogy
-    const { mutate: deleteAnalogy } = api.analogy.delete.useMutation({
+    // updating analogy
+    const { mutate: updateAnalogy } = api.analogy.update.useMutation({
       onSuccess: () => {
         void ctx.analogy.getAll.invalidate();
-        toast.success("Analogy deleted successfully.");
+        toast.success("Analogy updated successfully.");
       },
       onError: (e) => {
         toast.error("Something went wrong");
@@ -96,29 +104,38 @@ export function useUpdateItem(item: ITopicInput, type: string) {
       },
     });
 
-    const deleteAnalogyHandler = () => {
+    const updateAnalogyHandler = () => {
       try {
         createActivityLogEntry({
           entityType: "analogy",
           entityId: item.id,
           entityTitle: item.title,
-          action: "deleted",
+          action: "updated",
         });
-        deleteAnalogy({ id: item.id });
+
+        updateAnalogy({
+          id: item.id,
+          title: item.title,
+          description: item.description,
+          status: item.status,
+          pinned: item.pinned,
+          topicId: item.topicId,
+          authorId: item.authorId,
+        });
       } catch (e) {
         toast.error("Something went wrong");
         console.log(e);
       }
     };
-    return deleteAnalogyHandler;
+    return updateAnalogyHandler;
   }
 
   if (type === "Users") {
-    // deleting user
-    const { mutate: deleteUser } = api.profile.delete.useMutation({
+    // updating user
+    const { mutate: updateUser } = api.profile.update.useMutation({
       onSuccess: () => {
-        void ctx.profile.getAll.invalidate();
-        toast.success("User deleted successfully.");
+        void ctx.profile.getTopThree.invalidate();
+        toast.success("User updated successfully.");
       },
       onError: (e) => {
         toast.error("Something went wrong");
@@ -126,50 +143,28 @@ export function useUpdateItem(item: ITopicInput, type: string) {
       },
     });
 
-    const deleteUserHandler = () => {
+    const updateUserHandler = () => {
       try {
         createActivityLogEntry({
           entityType: "user",
           entityId: item.id,
           entityTitle: item.name,
-          action: "deleted",
+          action: "updated",
         });
-        deleteUser({ id: item.id });
+
+        updateUser({
+          id: item.id,
+          name: item.name,
+          email: item.email,
+          username: item.username,
+          role: item.role,
+          status: item.status,
+        });
       } catch (e) {
         toast.error("Something went wrong");
         console.log(e);
       }
     };
-    return deleteUserHandler;
+    return updateUserHandler;
   }
-
-  // if (type === "Comments") {
-  //   // deleting comment
-  //   const { mutate: deleteComment } = api.comment.delete.useMutation({
-  //     onSuccess: () => {
-  //       void ctx.comment.getAll.invalidate();
-  //       toast.success("Comment deleted successfully.");
-  //     },
-  //     onError: (e) => {
-  //       toast.error("Something went wrong");
-  //       console.log(e);
-  //     },
-  //   });
-
-  //   const deleteCommentHandler = () => {
-  //     try {
-  //       createActivityLogEntry({
-  //         entityType: "comment",
-  //         entityId: item.id,
-  //         entityTitle: item.title,
-  //         action: "deleted",
-  //       });
-  //       deleteComment({ id: item.id });
-  //     } catch (e) {
-  //       toast.error("Something went wrong");
-  //       console.log(e);
-  //     }
-  //   };
-  //   return deleteCommentHandler;
-  // }
 }
