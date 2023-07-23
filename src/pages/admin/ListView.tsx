@@ -20,6 +20,8 @@ interface IListViewProps {
   setEditorModalShown: React.Dispatch<React.SetStateAction<boolean>>;
   orderBy: string;
   setOrderBy: React.Dispatch<React.SetStateAction<string>>;
+  searchQuery: string;
+  setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
 }
 export function ListView({
   data,
@@ -30,6 +32,8 @@ export function ListView({
   setEditorModalInput,
   setEditorModalShown,
   setOrderBy,
+  searchQuery,
+  setSearchQuery,
 }: IListViewProps) {
   return (
     <div className=" relative z-20 mx-auto h-full  overflow-x-clip overflow-y-scroll  rounded-sm  bg-white px-0  transition-all ">
@@ -57,6 +61,8 @@ export function ListView({
               type="text"
               placeholder="Search"
               className="mr-2 max-w-[60%] rounded-md border border-[#6e3c2024] px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#6e3d2047]"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
 
             <RadioOptions setOrderBy={setOrderBy} />

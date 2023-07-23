@@ -59,6 +59,57 @@ export const categoriesRouter = createTRPCRouter({
     }),
 
 
+  getAllWithQuery: publicProcedure
+    .input(z.object({
+      query: z.string().max(64).nullish(),
+      limit: z.number(),
+      cursor: z.string().nullish(),
+      order: z.enum(["asc", "desc"]).nullish()
+    }))
+    .query(async ({ ctx, input }) => {
+      const limit = input.limit ?? 15
+      const { cursor } = input
+      const order = input.order ?? "asc"
+      const hasQuery = input.query ? true : false
+      const allItems = await ctx.prisma.category.findMany({
+        take: limit + 1,
+        cursor: cursor ? { id: cursor } : undefined,
+        orderBy: {
+          createdAt: order as Prisma.SortOrder
+        }
+      });
+      const searchedItems = await ctx.prisma.category.findMany({
+        take: limit + 1,
+        where: {
+          name: {
+            contains: input.query,
+          },
+        },
+        cursor: cursor ? { id: cursor } : undefined,
+        orderBy: {
+          createdAt: order as Prisma.SortOrder
+        }
+      });
+      const items = hasQuery ? searchedItems : allItems
+      let nextCursor: typeof cursor | undefined = undefined;
+      if (items.length > limit) {
+        const nextItem = items.pop();
+        nextCursor = nextItem?.id as typeof cursor;
+      }
+      return {
+        items,
+        total: await ctx.prisma.category.count(),
+        pageInfo: {
+          count: items.length,
+          hasNextPage: items.length > limit,
+          nextCursor,
+        },
+      };
+    }),
+
+
+
+
   getById: publicProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ ctx, input }) => {
@@ -83,6 +134,7 @@ export const categoriesRouter = createTRPCRouter({
       if (!category) throw new TRPCError({ code: "NOT_FOUND" });
       return category;
     }),
+
 
   getBySlug: publicProcedure
     .input(z.object({ slug: z.string() }))

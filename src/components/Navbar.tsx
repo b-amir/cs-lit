@@ -7,7 +7,6 @@ import { type ChangeEvent, useEffect, useRef, useState } from "react";
 import { animated, useSpring } from "@react-spring/web";
 import { useDebounce } from "@/hooks/useDebounce";
 import { CgSpinner } from "react-icons/cg";
-import { FaExclamationTriangle } from "react-icons/fa";
 
 export function Navbar() {
   const router = useRouter();
@@ -207,7 +206,8 @@ export function SearchBar() {
                 id="search-result-items"
                 className="flex w-full flex-col gap-6"
               >
-                {results?.length !== 0 &&
+                {debouncedSearch?.length > 1 &&
+                  results?.length !== 0 &&
                   results?.map((topic: any) => (
                     <li className="w-full" key={topic.id}>
                       <Link

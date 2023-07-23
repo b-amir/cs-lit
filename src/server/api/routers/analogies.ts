@@ -101,6 +101,54 @@ export const analogiesRouter = createTRPCRouter({
       };
     }),
 
+  getAllWithQuery: publicProcedure
+    .input(z.object({
+      query: z.string().max(64).nullish(),
+      limit: z.number(),
+      cursor: z.string().nullish(),
+      order: z.enum(["asc", "desc"]).nullish()
+    }))
+    .query(async ({ ctx, input }) => {
+      const limit = input.limit ?? 15
+      const { cursor } = input
+      const order = input.order ?? "asc"
+      const hasQuery = input.query ? true : false
+      const allItems = await ctx.prisma.analogy.findMany({
+        take: limit + 1,
+        cursor: cursor ? { id: cursor } : undefined,
+        orderBy: {
+          createdAt: order as Prisma.SortOrder
+        }
+      });
+      const searchedItems = await ctx.prisma.analogy.findMany({
+        take: limit + 1,
+        where: {
+          title: {
+            contains: input.query,
+          },
+        },
+        cursor: cursor ? { id: cursor } : undefined,
+        orderBy: {
+          createdAt: order as Prisma.SortOrder
+        }
+      });
+      const items = hasQuery ? searchedItems : allItems
+      let nextCursor: typeof cursor | undefined = undefined;
+      if (items.length > limit) {
+        const nextItem = items.pop();
+        nextCursor = nextItem?.id as typeof cursor;
+      }
+      return {
+        items: await analogiesWithUserAndTopicAndCategoryData(items),
+        total: await ctx.prisma.analogy.count(),
+        pageInfo: {
+          count: items.length,
+          hasNextPage: items.length > limit,
+          nextCursor,
+        },
+      };
+    }),
+
 
   getById: publicProcedure
     .input(z.object({ id: z.string() }))

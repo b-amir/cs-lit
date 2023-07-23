@@ -7,6 +7,7 @@ import { PillsRow } from "../../components/Pills";
 import { ListView } from "./ListView";
 import { AdminSidePanel } from "./AdminSidePanel";
 import { AdminFooter } from "./AdminFooter";
+import { useDebounce } from "@/hooks/useDebounce";
 
 import {
   EditorModal,
@@ -19,14 +20,21 @@ import {
 export default function AdminPage(props) {
   const [AdminFooterCollapsed, setAdminFooterCollapsed] = useState(false);
   const [orderBy, setOrderBy] = useState<"desc" | "asc" | null>("desc");
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const debouncedSearch = useDebounce(searchQuery, 500);
 
   const {
     data: categoriesData,
     hasNextPage: categoriesHasNextPage,
     fetchNextPage: fetchNextCategoryPage,
     isFetchingNextPage: isFetchingNextCategoryPage,
-  } = api.category.getAll.useInfiniteQuery(
-    { order: orderBy, limit: 15 },
+  } = api.category.getAllWithQuery.useInfiniteQuery(
+    {
+      query: debouncedSearch,
+      order: orderBy,
+      limit: 15,
+    },
     { getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor }
   );
 
@@ -35,8 +43,12 @@ export default function AdminPage(props) {
     hasNextPage: topicsHasNextPage,
     fetchNextPage: fetchNextTopicPage,
     isFetchingNextPage: isFetchingNextTopicPage,
-  } = api.topic.getAll.useInfiniteQuery(
-    { order: orderBy, limit: 15 },
+  } = api.topic.getAllWithQuery.useInfiniteQuery(
+    {
+      query: debouncedSearch,
+      order: orderBy,
+      limit: 15,
+    },
     { getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor }
   );
 
@@ -45,8 +57,12 @@ export default function AdminPage(props) {
     hasNextPage: analogiesHasNextPage,
     fetchNextPage: fetchNextAnalogyPage,
     isFetchingNextPage: isFetchingNextAnalogyPage,
-  } = api.analogy.getAll.useInfiniteQuery(
-    { order: orderBy, limit: 15 },
+  } = api.analogy.getAllWithQuery.useInfiniteQuery(
+    {
+      query: debouncedSearch,
+      order: orderBy,
+      limit: 15,
+    },
     { getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor }
   );
 
@@ -55,8 +71,12 @@ export default function AdminPage(props) {
     hasNextPage: usersHasNextPage,
     fetchNextPage: fetchNextUserPage,
     isFetchingNextPage: isFetchingNextUserPage,
-  } = api.profile.getAll.useInfiniteQuery(
-    { order: orderBy, limit: 15 },
+  } = api.profile.getAllWithQuery.useInfiniteQuery(
+    {
+      query: debouncedSearch,
+      order: orderBy,
+      limit: 15,
+    },
     { getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor }
   );
 
@@ -170,6 +190,8 @@ export default function AdminPage(props) {
                 setEditorModalInput={setEditorModalInput}
                 setEditorModalShown={setEditorModalShown}
                 setOrderBy={setOrderBy}
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
               />
             </div>
 
