@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { api } from "@/utils/api";
 import { TbUrgent } from "react-icons/tb";
 import { archivo } from "@/styles/customFonts";
 import { CgSpinner } from "react-icons/cg";
-import { MdDone, MdClose } from "react-icons/md";
+import { MdDone as Approve, MdClose as Dismiss } from "react-icons/md";
 import { ActionMenu } from "./ActionMenu";
+import { useUpdateItem } from "@/hooks/useUpdateItem";
 
 export function AdminSidePanel() {
   const {
     data: pendingData,
+
     hasNextPage: pendingsHasNextPage,
     fetchNextPage: fetchNextpendingPage,
     isFetchingNextPage: isFetchingNextpendingPage,
@@ -24,7 +26,7 @@ export function AdminSidePanel() {
     >
       <div
         id="urgent-header"
-        className="flex h-[96px] w-full flex-col justify-between  rounded-sm border-b border-b-[#5555552a] bg-gradient-to-br from-[#fff] to-[#f7f3ee00] px-6  py-4"
+        className="flex h-[96px] w-full select-none flex-col justify-between  rounded-sm border-b border-b-[#5555552a] bg-gradient-to-br from-[#fff] to-[#f7f3ee00] px-6  py-4"
       >
         <h1
           className={`${archivo.className}   flex flex-row items-center  gap-1 text-3xl font-bold`}
@@ -43,6 +45,16 @@ export function AdminSidePanel() {
           ))
         )}
 
+        {pendingData?.pages[0]?.items.length === 0 && (
+          <div className="flex w-full items-center justify-center ">
+            <p className="select-none py-10 text-sm text-gray-400">
+              Nothing is pending.
+            </p>
+          </div>
+        )}
+
+        {/* {console.log(pendingData)} */}
+
         {pendingsHasNextPage && (
           <button
             onClick={() => fetchNextpendingPage()}
@@ -52,7 +64,7 @@ export function AdminSidePanel() {
             <div className="flex w-full items-center justify-center border-t border-t-[#55555538] bg-transparent py-6 font-semibold text-gray-500 shadow-[0px_2px_3px_0px_#00000009_inset] transition-all duration-300 hover:bg-gradient-to-b hover:from-[#2c2c2c0c] hover:to-transparent hover:text-gray-800">
               {isFetchingNextpendingPage ? (
                 // TODO: fix spinning issue
-                <CgSpinner className="scale-150 transform  animate-spin " />
+                <CgSpinner className="animate-spin " />
               ) : (
                 "Load more"
               )}
@@ -65,32 +77,51 @@ export function AdminSidePanel() {
 }
 
 export function PendingItemView({ item }) {
-  const [showActionMenuDots, setShowActionMenuDots] = React.useState(false);
-  const [showExtendedActionMenu, setShowExtendedActionMenu] =
-    React.useState(false);
+  const [showActionMenuDots, setShowActionMenuDots] = useState(false);
+  const [showExtendedActionMenu, setShowExtendedActionMenu] = useState(false);
+  const [itemCopy, setItemCopy] = useState(null);
+
+  const itemType = item?.topicId ? "Analogies" : "Topics";
+  const updateItem = useUpdateItem(itemCopy, itemType);
+
+  const handleStatusUpdate = (newStatus: string) => {
+    setItemCopy({ ...item, status: newStatus });
+  };
+
+  useEffect(() => {
+    if (itemCopy) {
+      updateItem();
+      setItemCopy(null);
+    }
+  }, [itemCopy, updateItem]);
+
   return (
     <div
-      className=" flex h-8 w-full cursor-pointer flex-row items-center justify-between border-b-[1px] border-[#00000012] py-6 pl-6 transition-all hover:bg-[#00000012]"
+      className=" flex h-14 w-full cursor-pointer flex-row items-center justify-between border-b-[1px] border-[#00000012] py-6 pl-6 transition-all hover:bg-[#00000012]"
       // key={item.id}
       onMouseEnter={() => setShowActionMenuDots(true)}
       onMouseLeave={() => setShowActionMenuDots(false)}
     >
-      <div className="flex flex-row items-center overflow-clip overflow-ellipsis whitespace-nowrap">
+      <div className="flex flex-col items-start justify-start overflow-clip overflow-ellipsis whitespace-nowrap ">
         <h1
           className={`${
             showExtendedActionMenu ? "max-w-[10%]" : "w-full"
-          }  font  text-xs font-semibold`}
+          }  font  pt-2 text-xs font-semibold`}
         >
           {item.title ? item.title : item.name ? item.name : item.id}
         </h1>
-        <span className="ml-2 text-sm text-gray-500">
-          {item?.category ?? ""}
-        </span>
+        <span className="mt-1 text-xs text-gray-400">in {itemType}</span>
       </div>
       <div className={`${showActionMenuDots ? "visible " : "hidden"}  `}>
         <ActionMenu>
-          <MdClose className="mx-2 cursor-pointer text-gray-600 hover:text-gray-400" />
-          <MdDone className="mx-2 cursor-pointer text-gray-600 hover:text-gray-400" />
+          <Dismiss
+            className="mx-2 cursor-pointer text-gray-600 hover:text-gray-400"
+            onClick={() => handleStatusUpdate("REJECTED")}
+          />
+          <Approve
+            className="mx-2 cursor-pointer text-gray-600 hover:text-gray-400"
+            onClick={() => handleStatusUpdate("PUBLISHED")}
+          />
         </ActionMenu>
       </div>
     </div>

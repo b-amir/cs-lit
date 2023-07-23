@@ -64,6 +64,7 @@ export function useUpdateItem(item: ITopicInput, type: string) {
       onSuccess: () => {
         void ctx.topic.getAll.invalidate();
         void ctx.topic.getByCategoryId.invalidate();
+        void ctx.pending.getAll.invalidate();
         toast.success("Topic updated successfully.");
       },
     });
@@ -96,6 +97,7 @@ export function useUpdateItem(item: ITopicInput, type: string) {
     const { mutate: updateAnalogy } = api.analogy.update.useMutation({
       onSuccess: () => {
         void ctx.analogy.getAll.invalidate();
+        void ctx.pending.getAll.invalidate();
         toast.success("Analogy updated successfully.");
       },
       onError: (e) => {

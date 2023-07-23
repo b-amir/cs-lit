@@ -30,15 +30,15 @@ export function AdminFooter({
   return (
     <div
       id="admin-footer"
-      className={`absolute bottom-0 z-20 w-4/6 border-t border-t-[#cbcbcb]  bg-[#e1e1e1] transition-all ${
+      className={`absolute bottom-0 z-20 w-4/6 border-t border-t-[#cbcbcb]  bg-[#f7f7f7] transition-all ${
         AdminFooterCollapsed
           ? "h-8 shadow-sm"
-          : "h-[20dvh]  shadow-[0px_-1.5px_2px_0px_#00000010]"
+          : "h-[20dvh]  shadow-[0px_-1.5px_2px_1px_#00000008]"
       }`}
     >
       <div
         id="activity-log-header"
-        className={`${archivo.className} mx-auto flex h-[1.95rem] w-[calc(100%-1px)] cursor-pointer flex-row items-center justify-center border-r border-[#5555551d] bg-[#f1f1f1] bg-gradient-to-t from-[#f3f3f3] to-[#eeeeee] text-sm font-bold shadow-sm transition-all hover:bg-[#fdfdfd] `}
+        className={`${archivo.className} mx-auto flex h-[1.95rem] w-[calc(100%-1px)] cursor-pointer flex-row items-center justify-center border-b border-r border-b-[#4b4b4b3c] border-r-[#5555551d] bg-[#f1f1f1] bg-gradient-to-b from-[#f0f0f0] to-[#ffffff4f] text-sm font-bold shadow-sm transition-all hover:bg-[#dddddd] `}
         onClick={() => setAdminFooterCollapsed(!AdminFooterCollapsed)}
       >
         <TbActivity className="mb-0 mr-1 " /> Activity Log{" "}
@@ -69,7 +69,7 @@ export function AdminFooter({
                 <div className="flex w-full items-center justify-center  border-t border-t-[#55555538] bg-transparent py-2 font-semibold text-gray-500 shadow-[0px_2px_3px_0px_#00000009_inset] transition-all duration-300 hover:bg-gradient-to-b hover:from-[#2c2c2c0c] hover:to-transparent hover:text-gray-800">
                   {isFetchingNextActivityPage ? (
                     // TODO: fix spinning issue
-                    <CgSpinner className="scale-150 transform  animate-spin " />
+                    <CgSpinner className=" animate-spin " />
                   ) : (
                     "Load more"
                   )}

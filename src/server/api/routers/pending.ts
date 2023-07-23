@@ -51,7 +51,7 @@ export const pendingRouter = createTRPCRouter({
       }),
     )
     .query(async ({ ctx, input }) => {
-      const limit = input.limit ?? 5;
+      const limit = input.limit ?? 10;
       const { cursor } = input;
       const topics = await ctx.prisma.topic.findMany({
         take: limit + 1,

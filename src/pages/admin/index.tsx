@@ -26,7 +26,7 @@ export default function AdminPage(props) {
     fetchNextPage: fetchNextCategoryPage,
     isFetchingNextPage: isFetchingNextCategoryPage,
   } = api.category.getAll.useInfiniteQuery(
-    { order: orderBy, limit: 10 },
+    { order: orderBy, limit: 15 },
     { getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor }
   );
 
@@ -36,7 +36,7 @@ export default function AdminPage(props) {
     fetchNextPage: fetchNextTopicPage,
     isFetchingNextPage: isFetchingNextTopicPage,
   } = api.topic.getAll.useInfiniteQuery(
-    { order: orderBy, limit: 10 },
+    { order: orderBy, limit: 15 },
     { getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor }
   );
 
@@ -46,7 +46,7 @@ export default function AdminPage(props) {
     fetchNextPage: fetchNextAnalogyPage,
     isFetchingNextPage: isFetchingNextAnalogyPage,
   } = api.analogy.getAll.useInfiniteQuery(
-    { order: orderBy, limit: 10 },
+    { order: orderBy, limit: 15 },
     { getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor }
   );
 
@@ -56,7 +56,7 @@ export default function AdminPage(props) {
     fetchNextPage: fetchNextUserPage,
     isFetchingNextPage: isFetchingNextUserPage,
   } = api.profile.getAll.useInfiniteQuery(
-    { order: orderBy, limit: 10 },
+    { order: orderBy, limit: 15 },
     { getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor }
   );
 

@@ -4,9 +4,9 @@ import { useDeleteItem } from "@/hooks/useDeleteItem";
 
 import { archivo } from "@/styles/customFonts";
 import { TbSortAscending2, TbSortDescending2 } from "react-icons/tb";
-import { MdOutlineModeEdit } from "react-icons/md";
+import { MdOutlineModeEdit as Edit } from "react-icons/md";
 import { CgSpinner } from "react-icons/cg";
-import { RiDeleteBin6Line } from "react-icons/ri";
+import { RiDeleteBin6Line as Delete } from "react-icons/ri";
 
 interface IListViewProps {
   title: string;
@@ -79,10 +79,10 @@ export function ListView({
               onClick={() => fetchNextPage()}
               disabled={isfetchingNextPage}
             >
-              <div className="flex w-full items-center justify-center border-t border-t-[#55555538] bg-[#fff] py-6 font-semibold text-gray-500 shadow-[0px_2px_3px_0px_#00000010_inset] transition-all duration-300 hover:bg-gradient-to-b hover:from-[#efefef7b] hover:to-white hover:text-gray-800">
+              <div className="flex w-full items-center justify-center border-t border-t-[#5555551d] bg-[#fff] py-6 font-semibold text-gray-500 shadow-[0px_2px_20px_0px_#00000010_inset] transition-all duration-300 hover:bg-gradient-to-b hover:from-[#efefefb5] hover:to-white hover:text-gray-800">
                 {isfetchingNextPage ? (
                   // TODO: fix spinning issue
-                  <CgSpinner className="scale-150 transform  animate-spin " />
+                  <CgSpinner className=" animate-spin " />
                 ) : (
                   "Load more"
                 )}
@@ -110,7 +110,13 @@ function RadioOptions({ setOrderBy }) {
         />
         <label
           htmlFor="newest"
-          className="flex cursor-pointer select-none flex-row items-center justify-center gap-1 rounded-md border border-transparent px-3 py-1 text-center transition-all peer-checked:translate-x-1 peer-checked:border-[#00000045] peer-checked:bg-gray-50 peer-checked:font-bold peer-checked:text-gray-800 peer-checked:shadow-lg peer-checked:duration-200"
+          className="flex cursor-pointer select-none flex-row items-center
+           justify-center gap-1 rounded-md border border-transparent 
+           px-3 py-1 text-center transition-transform peer-checked:translate-x-1
+            peer-checked:border-[#00000045] 
+            peer-checked:bg-gradient-to-r peer-checked:from-[#fff] peer-checked:to-[#f0efef]
+             peer-checked:font-bold peer-checked:text-gray-800 
+             peer-checked:shadow-lg peer-checked:duration-200"
         >
           <TbSortDescending2 className="mb-[3px]" /> Newest
         </label>
@@ -126,7 +132,14 @@ function RadioOptions({ setOrderBy }) {
         />
         <label
           htmlFor="oldest"
-          className=" flex cursor-pointer select-none flex-row items-center justify-center gap-1 rounded-md border border-transparent px-3 py-1 text-center transition-all peer-checked:-translate-x-1 peer-checked:border-[#00000045] peer-checked:bg-gray-50 peer-checked:font-bold peer-checked:text-gray-800 peer-checked:shadow-sm peer-checked:duration-200"
+          className=" flex cursor-pointer select-none flex-row items-center 
+          justify-center gap-1 rounded-md border border-transparent px-3 py-1 
+          text-center transition-transform peer-checked:-translate-x-1
+           peer-checked:border-[#00000045] 
+           peer-checked:bg-gradient-to-l peer-checked:from-[#fff] peer-checked:to-[#f0efef]
+           peer-checked:font-bold peer-checked:text-gray-800 
+           peer-checked:shadow-sm peer-checked:duration-200
+           "
         >
           <TbSortAscending2 className="mb-[4px]" />
           Oldest
@@ -161,11 +174,11 @@ export function ListItemView({
       </div>
       <div className={`${showActionMenuDots ? "visible" : "hidden"} `}>
         <ActionMenu>
-          <RiDeleteBin6Line
+          <Delete
             className="mx-2 cursor-pointer text-[#c83535] hover:text-[#cd8a8a]"
             onClick={() => deleteItem()}
           />
-          <MdOutlineModeEdit
+          <Edit
             className="mx-2 cursor-pointer text-gray-600 hover:text-gray-400"
             onClick={() => {
               setEditorModalShown(true);

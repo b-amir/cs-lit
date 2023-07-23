@@ -17,7 +17,7 @@ export function EditorModal({
         <div
           id="editor-modal-bg"
           // full page modal
-          className="fixed inset-0 z-[9999]  flex  h-screen w-screen items-center justify-center  overflow-hidden bg-black bg-opacity-70 p-36 backdrop-blur-sm"
+          className="fixed inset-0 z-[9999]  m-auto  flex h-screen w-screen items-center  justify-center overflow-hidden bg-black bg-opacity-70 backdrop-blur-sm"
           aria-labelledby="modal-title"
           role="dialog"
           aria-modal="true"
@@ -26,7 +26,7 @@ export function EditorModal({
           <div
             id="editor-modal-box"
             // full page modal
-            className=" mx-auto my-auto flex  w-3/5 flex-col  overflow-clip rounded-[17px] bg-white shadow-md"
+            className=" mx-auto my-auto flex  w-2/5 flex-col  overflow-clip rounded-[17px] bg-white shadow-md"
             aria-labelledby="modal-title"
             role="dialog"
             aria-modal="true"

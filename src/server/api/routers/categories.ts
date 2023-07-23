@@ -31,7 +31,7 @@ export const categoriesRouter = createTRPCRouter({
     )
     .query(async ({ ctx, input }) => {
 
-      const limit = input.limit ?? 10
+      const limit = input.limit ?? 15
       const { cursor } = input
       const order = input.order ?? "asc"
 
