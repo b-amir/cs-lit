@@ -23,6 +23,13 @@ export const topicsWithCategoryData = async (topics: Topic[]) => {
   return topicsWithCategoryData;
 }
 
+export const getCategoryNameById = async (id: string) => {
+  const prisma = new PrismaClient();
+  const category = await prisma.category.findUnique({
+    where: { id: id },
+  });
+  return category?.name
+}
 
 export async function getUserNameById(id: string) {
   const prisma = new PrismaClient();
@@ -70,7 +77,7 @@ export const topicsRouter = createTRPCRouter({
         nextCursor = nextItem?.id as typeof cursor;
       }
       return {
-        items,
+        items: await topicsWithCategoryData(items),
         total: await ctx.prisma.topic.count(),
         pageInfo: {
           hasNextPage: items.length > limit,

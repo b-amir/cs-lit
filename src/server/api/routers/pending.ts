@@ -4,39 +4,8 @@ import {
   publicProcedure,
   protectedProcedure,
 } from "@/server/api/trpc";
-import { TRPCError } from "@trpc/server";
-import { PrismaClient, type Topic } from "@prisma/client";
-
-
-
-
-
-async function getPendingItems() {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-  const pendingItems = await prismaClient.$queryRaw(`
-  SELECT * FROM (
-    SELECT id, title, content, status, created_at, updated_at, 'topic' AS type
-    FROM topics
-    WHERE status = 'PENDING'
-
-    UNION
-
-    SELECT id, title, content, status, created_at, updated_at, 'analogy' AS type
-    FROM analogies
-    WHERE status = 'PENDING'
-
-    UNION
-
-    SELECT id, content, status, created_at, updated_at, 'comment' AS type
-    FROM comments
-    WHERE status = 'PENDING'
-  ) AS pending_items
-  ORDER BY created_at DESC;
-`);
-
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return pendingItems;
-}
+import { topicsWithCategoryData } from "./topics";
+import { analogiesWithUserAndTopicAndCategoryData } from "./analogies";
 
 
 export const pendingRouter = createTRPCRouter({
@@ -74,7 +43,10 @@ export const pendingRouter = createTRPCRouter({
         },
       });
 
-      const items = [...topics, ...analogies];
+      const topicsWithData = await topicsWithCategoryData(topics);
+      const analogiesWithData = await analogiesWithUserAndTopicAndCategoryData(analogies);
+
+      const items = [...topicsWithData, ...analogiesWithData];
       let nextCursor: typeof cursor | undefined = undefined;
       if (items.length > limit) {
         const nextItem = items.pop();

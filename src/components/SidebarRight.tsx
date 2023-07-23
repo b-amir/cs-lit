@@ -9,6 +9,7 @@ import { useWindowSize } from "@/hooks/useWindowSize";
 import { animated, useSpring } from "@react-spring/web";
 import { archivo } from "../styles/customFonts";
 import { IoIosArrowUp } from "react-icons/io";
+import { routeHandler } from "@/utils/routeHandler";
 
 export function SidebarRight(props: { username: any }) {
   const [userSectionShown, setUserSectionShown] = useState(false);
@@ -68,7 +69,8 @@ export function SidebarRight(props: { username: any }) {
                       // {AnalogiesData?.map((analogy: any) => (
                       <li key={analogy.id}>
                         <Link
-                          href={`/${analogy.category}/${analogy.topic}/${analogy.id}`}
+                          // href={`/${analogy.category}/${analogy.topic}/${analogy.id}`}
+                          href={`${routeHandler(analogy, "Analogies")}`}
                         >
                           <span
                             className={`ml-0 flex w-full flex-col items-center whitespace-nowrap rounded-sm ${

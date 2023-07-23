@@ -42,23 +42,29 @@ export const analogiesWithUserAndTopicData = async (analogies: Analogy[]) => {
   return analogiesWithUserAndTopicData;
 };
 
-export const analogyWithUserData = async (analogy: Analogy) => {
+export const analogiesWithUserAndTopicAndCategoryData = async (analogies: Analogy[]) => {
   const prisma = new PrismaClient();
-  const user = await prisma.user.findUnique({
-    where: { id: analogy.authorId },
-  });
-  return { ...analogy, user };
+  const analogiesWithUserAndTopicAndCategoryData = await Promise.all(
+    analogies.map(async (analogy) => {
+      const user = await prisma.user.findUnique({
+        where: { id: analogy.authorId },
+      });
+      const topic = await prisma.topic.findUnique({
+        where: { id: analogy.topicId },
+      });
+      const category = await prisma.category.findUnique({
+        where: { id: topic?.categoryId },
+      });
+      return { ...analogy, user, topic, category };
+    })
+  );
+  return analogiesWithUserAndTopicAndCategoryData;
 };
 
-export const analogiesRouter = createTRPCRouter({
-  // getAll: publicProcedure.query(async ({ ctx }) => {
-  //   const analogies = await ctx.prisma.analogy.findMany({
-  //     take: 100,
-  //     orderBy: [{ createdAt: "desc" }],
-  //   });
-  //   return analogiesWithUserAndTopicData(analogies);
-  // }),
 
+
+
+export const analogiesRouter = createTRPCRouter({
   getAll: publicProcedure
     .input(
       z.object({
@@ -86,7 +92,7 @@ export const analogiesRouter = createTRPCRouter({
         nextCursor = nextItem?.id as typeof cursor;
       }
       return {
-        items: await analogiesWithUserAndTopicData(items),
+        items: await analogiesWithUserAndTopicAndCategoryData(items),
         total: await ctx.prisma.analogy.count(),
         pageInfo: {
           hasNextPage: items.length > limit,

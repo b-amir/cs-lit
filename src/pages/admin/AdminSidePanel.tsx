@@ -6,6 +6,8 @@ import { CgSpinner } from "react-icons/cg";
 import { MdDone as Approve, MdClose as Dismiss } from "react-icons/md";
 import { ActionMenu } from "./ActionMenu";
 import { useUpdateItem } from "@/hooks/useUpdateItem";
+import Link from "next/link";
+import { routeHandler } from "@/utils/routeHandler";
 
 export function AdminSidePanel() {
   const {
@@ -103,13 +105,15 @@ export function PendingItemView({ item }) {
       onMouseLeave={() => setShowActionMenuDots(false)}
     >
       <div className="flex flex-col items-start justify-start overflow-clip overflow-ellipsis whitespace-nowrap ">
-        <h1
-          className={`${
-            showExtendedActionMenu ? "max-w-[10%]" : "w-full"
-          }  font  pt-2 text-xs font-semibold`}
-        >
-          {item.title ? item.title : item.name ? item.name : item.id}
-        </h1>
+        <Link href={`${routeHandler(item, itemType)}`}>
+          <h1
+            className={`${
+              showExtendedActionMenu ? "max-w-[10%]" : "w-full"
+            }  font  pt-2 text-xs font-semibold`}
+          >
+            {item.title ? item.title : item.name ? item.name : item.id}
+          </h1>
+        </Link>
         <span className="mt-1 text-xs text-gray-400">in {itemType}</span>
       </div>
       <div className={`${showActionMenuDots ? "visible " : "hidden"}  `}>

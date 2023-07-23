@@ -7,9 +7,11 @@ import { TbSortAscending2, TbSortDescending2 } from "react-icons/tb";
 import { MdOutlineModeEdit as Edit } from "react-icons/md";
 import { CgSpinner } from "react-icons/cg";
 import { RiDeleteBin6Line as Delete } from "react-icons/ri";
+import Link from "next/link";
+import { routeHandler } from "@/utils/routeHandler";
 
 interface IListViewProps {
-  title: string;
+  type: string;
   data: any;
   hasNextPage: boolean | undefined;
   fetchNextPage: () => void;
@@ -21,7 +23,7 @@ interface IListViewProps {
 }
 export function ListView({
   data,
-  title,
+  type,
   hasNextPage,
   fetchNextPage,
   isfetchingNextPage,
@@ -44,7 +46,7 @@ export function ListView({
             <h1
               className={` ${archivo.className}  flex flex-row items-center gap-1 text-3xl font-bold`}
             >
-              {title}
+              {type}
             </h1>
           </div>
           <div
@@ -67,7 +69,7 @@ export function ListView({
                 <ListItemView
                   key={item.id}
                   item={item}
-                  title={title}
+                  type={type}
                   setEditorModalInput={setEditorModalInput}
                   setEditorModalShown={setEditorModalShown}
                 />
@@ -151,13 +153,13 @@ function RadioOptions({ setOrderBy }) {
 
 export function ListItemView({
   item,
-  title,
+  type,
   setEditorModalInput,
   setEditorModalShown,
 }) {
   const [showActionMenuDots, setShowActionMenuDots] = useState(false);
 
-  const deleteItem = useDeleteItem(item, title);
+  const deleteItem = useDeleteItem(item, type);
 
   return (
     <div
@@ -167,9 +169,11 @@ export function ListItemView({
       onMouseLeave={() => setShowActionMenuDots(false)}
     >
       <div className="flex flex-row items-center overflow-clip overflow-ellipsis whitespace-nowrap">
-        <h1 className={`font text-sm font-bold`}>
-          {item.title ? item.title : item.name ? item.name : item.id}
-        </h1>
+        <Link href={`${routeHandler(item, type)}`}>
+          <h1 className={`font text-sm font-bold`}>
+            {item.title ? item.title : item.name ? item.name : item.id}
+          </h1>
+        </Link>
         <span className="ml-2 text-sm text-gray-500">{item?.status ?? ""}</span>
       </div>
       <div className={`${showActionMenuDots ? "visible" : "hidden"} `}>
@@ -182,7 +186,7 @@ export function ListItemView({
             className="mx-2 cursor-pointer text-gray-600 hover:text-gray-400"
             onClick={() => {
               setEditorModalShown(true);
-              setEditorModalInput({ type: title, item: item });
+              setEditorModalInput({ type: type, item: item });
             }}
           />
         </ActionMenu>

@@ -162,7 +162,7 @@ export default function AdminPage(props) {
               />
 
               <ListView
-                title={activeSection}
+                type={activeSection}
                 data={getData(activeSection)}
                 hasNextPage={getHasNextPage(activeSection)}
                 fetchNextPage={getFetchNextPage(activeSection)}
