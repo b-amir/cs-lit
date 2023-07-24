@@ -100,7 +100,7 @@ export function SidebarLeft(props: { username: any }) {
           aria-label="Sidebar"
         >
           <div className="align-around h-full overflow-y-auto bg-white px-0 pb-0 dark:bg-gray-800">
-            <div className=" border-b-1 mb-0 flex h-[90px] items-center justify-center gap-6 border border-x-0 border-t-0 bg-[#f8f8f8] py-5 pl-7 pr-9 shadow-sm">
+            <div className=" border-b-1 mb-0 flex h-[calc(90px+1.5px)] items-center justify-center gap-6 border border-x-0 border-t-0 bg-[#f8f8f8] py-5 pl-7 pr-9 shadow-sm">
               <Link href="/">
                 <Image
                   src={"/assets/logo16.svg"}

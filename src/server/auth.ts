@@ -11,6 +11,7 @@ import EmailProvider from "next-auth/providers/email";
 
 import { env } from "@/env.mjs";
 import { prisma } from "@/server/db";
+import { type USER_ROLE } from "@prisma/client";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -23,15 +24,33 @@ declare module "next-auth" {
     user: {
       id: string;
       // ...other properties
-      // role: UserRole;
+      role: USER_ROLE; // Update to use the USER_ROLE enum
     } & DefaultSession["user"];
   }
 
-  // interface User {
-  //   // ...other properties
-  //   // role: UserRole;
-  // }
+  interface User {
+    // ...other properties
+    role: USER_ROLE;
+  }
 }
+
+
+// // Create a type for the token
+// type AuthToken = {
+//   role?: USER_ROLE;
+//   // Add other relevant fields as needed
+// };
+
+// // Modify the session type to include the user role
+// type AuthSession = {
+//   user: {
+//     role: USER_ROLE;
+//     // Add other user fields as needed
+//   };
+// };
+
+
+
 
 /**
  * Options for NextAuth.js used to configure adapters, providers, callbacks, etc.
@@ -45,8 +64,22 @@ export const authOptions: NextAuthOptions = {
       user: {
         ...session.user,
         id: user.id,
+        role: user.role,
       },
     }),
+
+    // jwt: async ({ token, user, account, profile, isNewUser }: { user: User, token: AuthToken }) => {
+    //   if (user) {
+    //     token.role = user.role; // Map Prisma's USER_ROLE to token's role
+    //   }
+    //   return token;
+    // },
+    // session(session: AuthSession, token: AuthToken) {
+    //   session.user.role = token?.role || USER_ROLE.USER; // Set default role if not present
+    //   return session;
+    // },
+
+
   },
   adapter: PrismaAdapter(prisma),
   providers: [

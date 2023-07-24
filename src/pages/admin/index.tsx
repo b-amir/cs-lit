@@ -16,6 +16,8 @@ import {
   AnalogyEditForm,
   UserEditForm,
 } from "./EditorModal";
+import { useSession } from "next-auth/react";
+import { AiFillLock } from "react-icons/ai";
 
 export default function AdminPage(props) {
   const [AdminFooterCollapsed, setAdminFooterCollapsed] = useState(false);
@@ -148,6 +150,8 @@ export default function AdminPage(props) {
   const [editorModalShown, setEditorModalShown] = useState(false);
   const [editorModalInput, setEditorModalInput] = useState("");
 
+  const { data: sessionData, status } = useSession();
+
   return (
     <>
       <Head>
@@ -156,85 +160,95 @@ export default function AdminPage(props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <PageLayout>
-        <div
-          id="admin=page"
-          className="mt-[90px] flex h-[calc(100dvh-90px-2px)] w-full flex-col border border-y-[#5555552a]"
-        >
-          <div id="admin-page-columns" className=" flex ">
+        {sessionData?.user.role === "ADMIN" ? (
+          <>
             <div
-              id="admin-lists"
-              className={` w-3/4 overflow-x-clip overflow-y-clip border border-r-[#5555552a] pb-[92px] transition-all ${
-                AdminFooterCollapsed
-                  ? "h-[calc(100dvh-2rem-90px)]"
-                  : "h-[calc(100dvh-20dvh-90px)]"
-              }`}
+              id="admin=page"
+              className="mt-[90px] flex h-[calc(100dvh-90px-2px)] w-full flex-col border border-y-[#5555552a]"
             >
-              <PillsRow
-                pills={[
-                  "Categories",
-                  "Topics",
-                  "Users",
-                  "Analogies",
-                  "Comments",
-                ]}
-                setActiveSection={setActiveSection}
-                activeSection={activeSection}
-              />
+              <div id="admin-page-columns" className=" flex ">
+                <div
+                  id="admin-lists"
+                  className={` w-3/4 overflow-x-clip overflow-y-clip border border-r-[#5555552a] pb-[92px] transition-all ${
+                    AdminFooterCollapsed
+                      ? "h-[calc(100dvh-2rem-90px)]"
+                      : "h-[calc(100dvh-20dvh-90px)]"
+                  }`}
+                >
+                  <PillsRow
+                    pills={[
+                      "Categories",
+                      "Topics",
+                      "Users",
+                      "Analogies",
+                      "Comments",
+                    ]}
+                    setActiveSection={setActiveSection}
+                    activeSection={activeSection}
+                  />
 
-              <ListView
-                type={activeSection}
-                data={getData(activeSection)}
-                hasNextPage={getHasNextPage(activeSection)}
-                fetchNextPage={getFetchNextPage(activeSection)}
-                isFetchingNextPage={getIsFetchingNextPage(activeSection)}
-                setEditorModalInput={setEditorModalInput}
-                setEditorModalShown={setEditorModalShown}
-                setOrderBy={setOrderBy}
-                searchQuery={searchQuery}
-                setSearchQuery={setSearchQuery}
+                  <ListView
+                    type={activeSection}
+                    data={getData(activeSection)}
+                    hasNextPage={getHasNextPage(activeSection)}
+                    fetchNextPage={getFetchNextPage(activeSection)}
+                    isFetchingNextPage={getIsFetchingNextPage(activeSection)}
+                    setEditorModalInput={setEditorModalInput}
+                    setEditorModalShown={setEditorModalShown}
+                    setOrderBy={setOrderBy}
+                    searchQuery={searchQuery}
+                    setSearchQuery={setSearchQuery}
+                  />
+                </div>
+
+                <AdminSidePanel />
+              </div>
+              <AdminFooter
+                AdminFooterCollapsed={AdminFooterCollapsed}
+                setAdminFooterCollapsed={setAdminFooterCollapsed}
               />
             </div>
 
-            <AdminSidePanel />
+            <EditorModal
+              editorModalShown={editorModalShown}
+              setEditorModalShown={setEditorModalShown}
+            >
+              {editorModalInput?.type === "Categories" ? (
+                <CategoryEditForm
+                  editorModalInput={editorModalInput}
+                  setEditorModalShown={setEditorModalShown}
+                  setEditorModalInput={setEditorModalInput}
+                />
+              ) : editorModalInput?.type === "Topics" ? (
+                <TopicEditForm
+                  editorModalInput={editorModalInput}
+                  setEditorModalShown={setEditorModalShown}
+                  setEditorModalInput={setEditorModalInput}
+                />
+              ) : editorModalInput?.type === "Analogies" ? (
+                <AnalogyEditForm
+                  editorModalInput={editorModalInput}
+                  setEditorModalShown={setEditorModalShown}
+                  setEditorModalInput={setEditorModalInput}
+                />
+              ) : editorModalInput?.type === "Users" ? (
+                <UserEditForm
+                  editorModalInput={editorModalInput}
+                  setEditorModalShown={setEditorModalShown}
+                  setEditorModalInput={setEditorModalInput}
+                />
+              ) : (
+                "hey"
+              )}
+            </EditorModal>
+          </>
+        ) : (
+          <div className="flex select-none flex-col items-center justify-center text-gray-500">
+            {" "}
+            <AiFillLock />
+            <span className="mt-2">Unauthorized Access</span>
           </div>
-          <AdminFooter
-            AdminFooterCollapsed={AdminFooterCollapsed}
-            setAdminFooterCollapsed={setAdminFooterCollapsed}
-          />
-        </div>
-
-        <EditorModal
-          editorModalShown={editorModalShown}
-          setEditorModalShown={setEditorModalShown}
-        >
-          {editorModalInput?.type === "Categories" ? (
-            <CategoryEditForm
-              editorModalInput={editorModalInput}
-              setEditorModalShown={setEditorModalShown}
-              setEditorModalInput={setEditorModalInput}
-            />
-          ) : editorModalInput?.type === "Topics" ? (
-            <TopicEditForm
-              editorModalInput={editorModalInput}
-              setEditorModalShown={setEditorModalShown}
-              setEditorModalInput={setEditorModalInput}
-            />
-          ) : editorModalInput?.type === "Analogies" ? (
-            <AnalogyEditForm
-              editorModalInput={editorModalInput}
-              setEditorModalShown={setEditorModalShown}
-              setEditorModalInput={setEditorModalInput}
-            />
-          ) : editorModalInput?.type === "Users" ? (
-            <UserEditForm
-              editorModalInput={editorModalInput}
-              setEditorModalShown={setEditorModalShown}
-              setEditorModalInput={setEditorModalInput}
-            />
-          ) : (
-            "hey"
-          )}
-        </EditorModal>
+        )}
       </PageLayout>
     </>
   );

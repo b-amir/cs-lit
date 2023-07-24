@@ -5,13 +5,15 @@ import {
   protectedProcedure,
 } from "@/server/api/trpc";
 import { TRPCError } from "@trpc/server";
-import { Prisma, PrismaClient, type Topic } from "@prisma/client";
-import { Session } from 'inspector';
+import { type Prisma, PrismaClient, type Topic } from "@prisma/client";
+import { prisma } from "@/server/db"
 
+
+// const prisma = new PrismaClient();
 
 
 export const topicsWithCategoryData = async (topics: Topic[]) => {
-  const prisma = new PrismaClient();
+  // const prisma = new PrismaClient();
   const topicsWithCategoryData = await Promise.all(
     topics.map(async (topic) => {
       const category = await prisma.category.findUnique({
@@ -24,7 +26,7 @@ export const topicsWithCategoryData = async (topics: Topic[]) => {
 }
 
 export const getCategoryNameById = async (id: string) => {
-  const prisma = new PrismaClient();
+  // const prisma = new PrismaClient();
   const category = await prisma.category.findUnique({
     where: { id: id },
   });
@@ -32,7 +34,7 @@ export const getCategoryNameById = async (id: string) => {
 }
 
 export async function getUserNameById(id: string) {
-  const prisma = new PrismaClient();
+  // const prisma = new PrismaClient();
   const user = await prisma.user.findUnique({
     where: { id: id },
   });

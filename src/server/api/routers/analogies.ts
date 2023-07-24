@@ -11,9 +11,15 @@ import { filterUserForClient } from "@/server/helpers/filterUserForClient";
 import { PrismaClient, type Analogy, Prisma } from "@prisma/client";
 import { NextPageContext } from "next";
 import { Context } from "react";
+import { prisma } from "@/server/db"
+
+// const prisma = new PrismaClient();
+
+
+
 
 export const analogiesWithUserData = async (analogies: Analogy[]) => {
-  const prisma = new PrismaClient();
+  // const prisma = new PrismaClient();
   const analogiesWithUserData = await Promise.all(
     analogies.map(async (analogy) => {
       const user = await prisma.user.findUnique({
@@ -27,7 +33,7 @@ export const analogiesWithUserData = async (analogies: Analogy[]) => {
 
 
 export const analogiesWithUserAndTopicData = async (analogies: Analogy[]) => {
-  const prisma = new PrismaClient();
+  // const prisma = new PrismaClient();
   const analogiesWithUserAndTopicData = await Promise.all(
     analogies.map(async (analogy) => {
       const user = await prisma.user.findUnique({
@@ -43,7 +49,7 @@ export const analogiesWithUserAndTopicData = async (analogies: Analogy[]) => {
 };
 
 export const analogiesWithUserAndTopicAndCategoryData = async (analogies: Analogy[]) => {
-  const prisma = new PrismaClient();
+  // const prisma = new PrismaClient();
   const analogiesWithUserAndTopicAndCategoryData = await Promise.all(
     analogies.map(async (analogy) => {
       const user = await prisma.user.findUnique({

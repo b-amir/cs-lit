@@ -30,7 +30,7 @@ export function AdminFooter({
   return (
     <div
       id="admin-footer"
-      className={`absolute bottom-0 z-20 w-4/6 border-t border-t-[#cbcbcb]  bg-[#f7f7f7] transition-all ${
+      className={`absolute bottom-0 z-20 w-4/6 border-t border-t-[#cbcbcb]  bg-[#d5d5d5] transition-all ${
         AdminFooterCollapsed
           ? "h-8 shadow-sm"
           : "h-[20dvh]  shadow-[0px_-1.5px_2px_1px_#00000008]"

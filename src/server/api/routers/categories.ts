@@ -9,7 +9,6 @@ import {
 import { TRPCError } from "@trpc/server";
 import { filterUserForClient } from "@/server/helpers/filterUserForClient";
 import { PrismaClient, type Category, Prisma } from "@prisma/client";
-import { NextPageContext } from "next";
 
 
 export const categoriesRouter = createTRPCRouter({

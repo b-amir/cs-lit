@@ -16,7 +16,7 @@ export const UserSection = (props: {
 
   return (
     <>
-      <div className="border-b-1 top-0  mb-0 flex h-[90px] w-full flex-row items-center border  border-x-0 border-t-0 bg-[#F9F9F9] px-5 py-4 align-middle shadow-sm transition-all">
+      <div className="border-b-1 top-0  mb-0 flex h-[calc(90px+1.5px)] w-full flex-row items-center border  border-x-0 border-t-0 bg-[#F9F9F9] px-5 py-4 align-middle shadow-sm transition-all">
         <button
           type="button"
           className="top-0 mr-2 flex rounded-full bg-gray-800 text-sm focus:ring-4 focus:ring-gray-300"
