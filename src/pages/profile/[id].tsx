@@ -23,7 +23,7 @@ const ProfileFeed = (props: { userId: string }) => {
   }
 
   return (
-    <>
+    <div className="flex w-full flex-col items-center justify-center">
       {data.map((fullAnalogy) => (
         <AnalogyView
           analogy={{
@@ -40,7 +40,7 @@ const ProfileFeed = (props: { userId: string }) => {
           key={fullAnalogy.id}
         />
       ))}
-    </>
+    </div>
   );
 };
 
@@ -57,7 +57,7 @@ const ProfilePage: NextPage<{}> = () => {
     id: UrlId as string,
   });
 
-  if (isFetching) return <LoadingPage />;
+  // if (isFetching) return <LoadingPage />;
   if (!data) {
     return <div>User not found</div>;
   }
@@ -70,19 +70,30 @@ const ProfilePage: NextPage<{}> = () => {
       </Head>
       <PageLayout>
         <div
-          id="feed-header"
-          className="z-10 mx-auto mb-20 mt-20 flex max-w-[640px] flex-col items-start justify-between "
+          id="profile-page"
+          className="z-10 mx-auto mb-20 mt-32 flex max-w-[640px] flex-col items-start justify-between "
         >
-          <Image
-            src={data.profileImageUrl ?? "/default-profile.png"}
-            className="max-w-16 max-h-16 rounded-full"
-            alt={"Profile Picture"}
-            width={42}
-            height={42}
-          />
-          <p className="text-2xl font-bold text-[#2A2A2E]">
-            {data.name}'s Analogies
-          </p>
+          <div
+            id="profile-header"
+            className="flex w-full flex-col items-center justify-center"
+          >
+            <div className="mb-12 flex w-full flex-row  border-b-2 border-[#827c7c2b] px-2 py-10">
+              <Image
+                src={data.profileImageUrl ?? "/default-profile.png"}
+                className="max-w-14 -mt-1.5 mr-4 max-h-14 rounded-full"
+                alt={"Profile Picture"}
+                width={42}
+                height={42}
+              />
+
+              <p className="text-2xl font-bold text-[#343437]">
+                {data.name}
+                <span className="font-semibold text-[#535357]">
+                  &apos;s Analogies
+                </span>
+              </p>
+            </div>
+          </div>
           <ProfileFeed userId={data.id} />
         </div>
       </PageLayout>

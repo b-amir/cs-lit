@@ -15,6 +15,7 @@ export function Navbar() {
     category: UrlCategory,
     topic: UrlTopic,
     analogy: UrlAnalogyId,
+    id: UrlProfile,
   } = router.query;
 
   const { data: topicsData, isFetching: topicFetching } =
@@ -30,6 +31,13 @@ export function Navbar() {
   const { data: AnalogyData } = api.analogy.getSingleAnalogyById.useQuery({
     id: UrlAnalogyId as string,
   });
+
+  const { data: profileData } = api.profile.getProfileById.useQuery({
+    id: UrlProfile as string,
+  });
+
+  console.log("profileData", profileData);
+  console.log("urlProfile", UrlProfile);
 
   return (
     <nav className="fixed top-0 z-40 flex min-h-[90px] w-4/6 items-center justify-between border-b !border-[#ebe8e869] border-opacity-20 bg-transparent bg-gradient-to-b from-[#EBEAE8] to-[#ebeae84a] px-10 backdrop-blur-sm backdrop-filter">
@@ -88,6 +96,15 @@ export function Navbar() {
                     's Analogy
                   </span>
                 </Link>
+              </>
+            )}
+
+            {profileData && (
+              <>
+                <span className="mx-2 text-[#69696975]">/</span>
+                <span className="cursor-pointer font-semibold text-[#2A2A2E]">
+                  {profileData?.name || profileData?.email}
+                </span>
               </>
             )}
           </div>

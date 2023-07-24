@@ -7,6 +7,7 @@ import { api } from "@/utils/api";
 import Head from "next/head";
 import Link from "next/link";
 import { archivo } from "@/styles/customFonts";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 function TopicPage(props) {
   const router = useRouter();
@@ -16,6 +17,8 @@ function TopicPage(props) {
     api.topic.getBySlug.useQuery({
       slug: UrlTopic as string,
     });
+
+  const { data: sessionData, status } = useSession();
 
   const {
     data: topicAnalogies,
@@ -37,43 +40,56 @@ function TopicPage(props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <PageLayout>
-        <div
-          id="feed-header"
-          className="z-10 mx-auto mt-32 flex max-w-[640px] flex-col items-start justify-between overflow-clip overflow-ellipsis whitespace-nowrap"
-        >
-          <h1
-            className={`${archivo.className} px-5  text-5xl font-extrabold  tracking-tight text-[#2A2A2E] sm:text-[2rem]`}
+        <>
+          <div
+            id="feed-header"
+            className="z-10 mx-auto mt-32 flex max-w-[640px] flex-col items-start justify-between overflow-clip overflow-ellipsis whitespace-nowrap"
           >
-            {topicsData?.title}
-          </h1>
-          <br />
-          <div className="flex w-full max-w-[640px] flex-row justify-between px-6 py-1 align-middle text-sm text-[#808080] ">
-            <p className="grow-1 inline-flex">
-              {topicAnalogies?.length}
-              &nbsp;
-              {!topicAnalogies?.length && "No "}
-              {topicAnalogies?.length === 1 ? "analogy" : "analogies"}
-              &nbsp;for this topic.&nbsp;{" "}
-              <span className="cursor-pointer hover:text-[#555555]">
-                Add yours here!
-              </span>
-            </p>
-            <Link href={`${topicsData?.url}`} target="_blank">
-              <button className=" align-center justify-middle ml-auto flex grow-0 cursor-pointer items-center rounded-[17px] border border-transparent px-3 py-1 transition-all hover:border-[#d2d2d2] hover:bg-[#f0f0f0] hover:text-[#555555]">
-                <LuExternalLink /> &nbsp;Open docs
-              </button>
-            </Link>
+            <h1
+              className={`${archivo.className} px-5  text-5xl font-extrabold  tracking-tight text-[#2A2A2E] sm:text-[2rem]`}
+            >
+              {topicsData?.title}
+            </h1>
+            <br />
+            <div className="flex w-full max-w-[640px] flex-row justify-between px-6 py-1 align-middle text-sm text-[#808080] ">
+              <p className="grow-1 inline-flex">
+                {topicAnalogies?.length}
+                &nbsp;
+                {!topicAnalogies?.length && "No "}
+                {topicAnalogies?.length === 1 ? "analogy" : "analogies"}
+                &nbsp;for this topic.&nbsp;{" "}
+              </p>
+              <Link href={`${topicsData?.url}`} target="_blank">
+                <button className=" align-center justify-middle ml-auto flex grow-0 cursor-pointer items-center rounded-[17px] border border-transparent px-3 py-1 transition-all hover:border-[#d2d2d2] hover:bg-[#f0f0f0] hover:text-[#555555]">
+                  <LuExternalLink /> &nbsp;Open docs
+                </button>
+              </Link>
+            </div>
           </div>
-        </div>
 
-        <Feed topicAnalogies={topicAnalogies} />
+          <Feed topicAnalogies={topicAnalogies} />
 
-        <div className="mx-auto my-12 flex w-full max-w-[640px] select-none flex-row justify-center px-6 py-1 align-middle text-sm text-[#808080ae]">
-          <p className="grow-1 font-merriweathersans inline-flex text-lg font-light italic">
-            - You can totally add your own analogy here! -
-          </p>
-        </div>
-        <PostEditor topicId={topicsData?.id} topicTitle={topicsData?.title} />
+          <div className="mx-auto my-12 flex w-full max-w-[640px] select-none flex-row justify-center px-6 py-1 align-middle text-sm text-[#808080ae]">
+            <p className="grow-1 font-merriweathersans inline-flex text-lg font-light italic">
+              - You can totally add your own analogy here! -
+            </p>
+          </div>
+          {sessionData ? (
+            <PostEditor
+              topicId={topicsData?.id}
+              topicTitle={topicsData?.title}
+            />
+          ) : (
+            <div className="mx-auto mb-12 flex w-full max-w-[640px] select-none flex-row justify-center px-6 py-1 align-middle text-sm text-[#808080ae]">
+              <p
+                className="grow-1 font-merriweathersans -mt-6 inline-flex cursor-pointer text-lg font-semibold transition-all hover:text-gray-600"
+                onClick={() => signIn()}
+              >
+                Just sign in first.
+              </p>
+            </div>
+          )}
+        </>
       </PageLayout>
     </>
   );

@@ -6,7 +6,6 @@ import React, { useRef, useState } from "react";
 import { animated, useSpring } from "@react-spring/web";
 import { api } from "@/utils/api";
 import { LoadingPage } from "@/components/loading";
-import { useSession } from "next-auth/react";
 import { IoTimeOutline } from "react-icons/io5";
 import Link from "next/link";
 import slugify from "slugify";
@@ -15,11 +14,16 @@ import { FaGhost } from "react-icons/fa";
 import Head from "next/head";
 import { archivo } from "@/styles/customFonts";
 import { addActivityLog } from "@/utils/addActivityLog";
+import { AiFillLock } from "react-icons/ai";
+import { signIn, useSession } from "next-auth/react";
+
 // import { deleteTopicHandler } from "@/utils/deleteActions";
 
 function CategoryPage(props) {
   const router = useRouter();
   const UrlCategory = router.query.category as string;
+
+  const { data: sessionData, status } = useSession();
 
   const [input, setInput] = useState<ITopicInput>({
     id: "",
@@ -174,9 +178,11 @@ function CategoryPage(props) {
                       <th scope="col" className="px-6 py-3 text-center">
                         last update
                       </th>
-                      <th scope="col" className="px-6 py-3">
-                        <span className="sr-only">Edit</span>
-                      </th>
+                      {["ADMIN", "EDITOR"].includes(sessionData?.user.role) && (
+                        <th scope="col" className="px-6 py-3">
+                          <span className="sr-only">Edit</span>
+                        </th>
+                      )}
                     </tr>
                   </thead>
                   <tbody>
@@ -227,15 +233,19 @@ function CategoryPage(props) {
                         <td className="px-6 py-4 text-center ">
                           {new Date(topic.updatedAt).toLocaleDateString()}
                         </td>
-                        <td className="px-6 py-4 text-right">
-                          <a
-                            href="#"
-                            className="font-medium text-gray-400 hover:underline dark:text-gray-300"
-                            onClick={() => topicEditHandler(topic.id)}
-                          >
-                            Edit
-                          </a>
-                        </td>
+                        {["ADMIN", "EDITOR"].includes(
+                          sessionData?.user.role
+                        ) && (
+                          <td className="px-6 py-4 text-right">
+                            <a
+                              href="#"
+                              className="font-medium text-gray-400 hover:underline dark:text-gray-300"
+                              onClick={() => topicEditHandler(topic.id)}
+                            >
+                              Edit
+                            </a>
+                          </td>
+                        )}
                       </tr>
                     ))}
                   </tbody>
@@ -533,148 +543,167 @@ export function TopicEditorForm({
   };
 
   return (
-    <form
-      onSubmit={(e) => e.preventDefault()}
-      className="mx-auto flex max-w-[640px] flex-col items-start justify-center "
-    >
-      <div
-        id="add-topic-body"
-        className="mt-auto grid min-w-[640px] grid-cols-2 gap-x-6 gap-y-14 rounded-[12px] border border-[#c8c8c8] bg-[#ebeaea] px-6  py-6 transition-all duration-300 hover:border-[#c1c1c1]"
-      >
-        <div className="sm:col-span-1">
-          <label
-            htmlFor="title"
-            className="block text-sm font-medium text-gray-700"
+    <>
+      {["ADMIN", "EDITOR", "USER"].includes(sessionData?.user.role) ? (
+        <form
+          onSubmit={(e) => e.preventDefault()}
+          className="mx-auto flex max-w-[640px] flex-col items-start justify-center "
+        >
+          <div
+            id="add-topic-body"
+            className="mt-auto grid min-w-[640px] grid-cols-2 gap-x-6 gap-y-14 rounded-[12px] border border-[#c8c8c8] bg-[#ebeaea] px-6  py-6 transition-all duration-300 hover:border-[#c1c1c1]"
           >
-            Topic title
-          </label>
-          <div className="mt-1">
-            <input
-              id="title"
-              name="title"
-              className="mt-1 block w-full  max-w-[100%] rounded-[12px] border border-gray-300 px-3 py-2 shadow-sm !outline-none ring-0 focus:border-[#c1c1c1] focus:ring-[#c1c1c1] sm:text-sm"
-              placeholder="Ex: Closure"
-              defaultValue={""}
-              required
-              value={input?.title}
-              onChange={(event) =>
-                setInput({ ...input, title: event.target.value })
-              }
-              disabled={isSubmitting}
-            />
-          </div>
-          <p className="ml-2 mt-2.5 text-xs text-gray-500">
-            Must be a subject related to {UrlCategory}.
-          </p>
-        </div>
-        <div className="sm:col-span-1">
-          <label
-            htmlFor="link"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Link to docs
-          </label>
-          <div className="mt-1">
-            <input
-              id="link"
-              name="link"
-              className="mt-1 block w-full  max-w-[100%] rounded-[12px] border border-gray-300 px-3 py-2 shadow-sm !outline-none ring-0 focus:border-[#c1c1c1] focus:ring-[#c1c1c1] sm:text-sm"
-              placeholder="https://..."
-              defaultValue={""}
-              required
-              value={input?.linkToDocs}
-              onChange={(event) =>
-                setInput({ ...input, linkToDocs: event.target.value })
-              }
-              disabled={isSubmitting}
-            />
-          </div>
-          <p className="ml-2 mt-2.5 text-xs text-gray-500">
-            Provide a link to official documentations.
-          </p>
-        </div>
-        {topicEditor?.porpuse === "edit" ? (
-          ""
-        ) : (
-          <div className="sm:col-span-2">
-            {" "}
-            <label
-              htmlFor="about"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Your analogy for this topic{" "}
-              {topicEditor?.porpuse === "edit" ? "(Disabled when editing)" : ""}
-            </label>
-            <div className="group mt-1 w-full rounded-[12px] border border-gray-200 bg-gray-50 shadow-sm transition-all hover:border-[#c1c1c1] focus:border-[#c1c1c1] dark:border-gray-600 dark:bg-gray-700">
-              <div className="rounded-[12px] bg-white px-6 py-6 dark:bg-gray-800">
-                <label htmlFor="comment" className="sr-only">
-                  Add your analogy
-                </label>
-                <textarea
-                  id="comment"
-                  rows={4}
-                  className="w-full border-0 border-transparent bg-white px-0 text-sm text-[#2A2A2E] !outline-none  group-focus:border-[#c1c1c1] dark:bg-gray-800 dark:text-white dark:placeholder-gray-400"
-                  placeholder="Add your analogy ..."
+            <div className="sm:col-span-1">
+              <label
+                htmlFor="title"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Topic title
+              </label>
+              <div className="mt-1">
+                <input
+                  id="title"
+                  name="title"
+                  className="mt-1 block w-full  max-w-[100%] rounded-[12px] border border-gray-300 px-3 py-2 shadow-sm !outline-none ring-0 focus:border-[#c1c1c1] focus:ring-[#c1c1c1] sm:text-sm"
+                  placeholder="Ex: Closure"
+                  defaultValue={""}
                   required
-                  value={input?.firstAnalogy}
+                  value={input?.title}
                   onChange={(event) =>
-                    setInput({ ...input, firstAnalogy: event.target.value })
+                    setInput({ ...input, title: event.target.value })
                   }
-                  disabled={isSubmitting || topicEditor?.porpuse === "edit"}
-                ></textarea>
+                  disabled={isSubmitting}
+                />
               </div>
-              <div className="flex items-center justify-between border-t px-3 py-2 dark:border-gray-600">
-                <div className="flex space-x-1 pl-0 sm:pl-2">
-                  <button
-                    type="button"
-                    className=" font-small inline-flex cursor-pointer justify-center rounded p-2 text-xs text-gray-500 hover:bg-gray-100 hover:text-[#2A2A2E] dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
-                  >
-                    how to write markdown?
-                  </button>
-                </div>
-              </div>
+              <p className="ml-2 mt-2.5 text-xs text-gray-500">
+                Must be a subject related to {UrlCategory}.
+              </p>
             </div>
-            <p className="ml-6 mt-2.5 text-xs text-gray-500">
-              <ul>
-                <li className="list-disc py-1">
-                  Each topic must have at least one analogy to get started.
-                </li>
-                <li className="list-disc py-1">
-                  {/* define what an analogy is */}
-                  An analogy is a short explanation of a topic that helps you
-                  understand it better.
-                </li>
-                <li className="list-disc py-1">
-                  After submition, analogies must be verified by admins to be
-                  published.
-                </li>
-              </ul>
-            </p>
-          </div>
-        )}
-        <div className="flex w-full flex-row justify-end sm:col-span-2">
-          {isSubmitting && <LoadingPage />}
+            <div className="sm:col-span-1">
+              <label
+                htmlFor="link"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Link to docs
+              </label>
+              <div className="mt-1">
+                <input
+                  id="link"
+                  name="link"
+                  className="mt-1 block w-full  max-w-[100%] rounded-[12px] border border-gray-300 px-3 py-2 shadow-sm !outline-none ring-0 focus:border-[#c1c1c1] focus:ring-[#c1c1c1] sm:text-sm"
+                  placeholder="https://..."
+                  defaultValue={""}
+                  required
+                  value={input?.linkToDocs}
+                  onChange={(event) =>
+                    setInput({ ...input, linkToDocs: event.target.value })
+                  }
+                  disabled={isSubmitting}
+                />
+              </div>
+              <p className="ml-2 mt-2.5 text-xs text-gray-500">
+                Provide a link to official documentations.
+              </p>
+            </div>
+            {topicEditor?.porpuse === "edit" ? (
+              ""
+            ) : (
+              <div className="sm:col-span-2">
+                {" "}
+                <label
+                  htmlFor="about"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Your analogy for this topic{" "}
+                  {topicEditor?.porpuse === "edit"
+                    ? "(Disabled when editing)"
+                    : ""}
+                </label>
+                <div className="group mt-1 w-full rounded-[12px] border border-gray-200 bg-gray-50 shadow-sm transition-all hover:border-[#c1c1c1] focus:border-[#c1c1c1] dark:border-gray-600 dark:bg-gray-700">
+                  <div className="rounded-[12px] bg-white px-6 py-6 dark:bg-gray-800">
+                    <label htmlFor="comment" className="sr-only">
+                      Add your analogy
+                    </label>
+                    <textarea
+                      id="comment"
+                      rows={4}
+                      className="w-full border-0 border-transparent bg-white px-0 text-sm text-[#2A2A2E] !outline-none  group-focus:border-[#c1c1c1] dark:bg-gray-800 dark:text-white dark:placeholder-gray-400"
+                      placeholder="Add your analogy ..."
+                      required
+                      value={input?.firstAnalogy}
+                      onChange={(event) =>
+                        setInput({ ...input, firstAnalogy: event.target.value })
+                      }
+                      disabled={isSubmitting || topicEditor?.porpuse === "edit"}
+                    ></textarea>
+                  </div>
+                  <div className="flex items-center justify-between border-t px-3 py-2 dark:border-gray-600">
+                    <div className="flex space-x-1 pl-0 sm:pl-2">
+                      <button
+                        type="button"
+                        className=" font-small inline-flex cursor-pointer justify-center rounded p-2 text-xs text-gray-500 hover:bg-gray-100 hover:text-[#2A2A2E] dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
+                      >
+                        how to write markdown?
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <p className="ml-6 mt-2.5 text-xs text-gray-500">
+                  <ul>
+                    <li className="list-disc py-1">
+                      Each topic must have at least one analogy to get started.
+                    </li>
+                    <li className="list-disc py-1">
+                      {/* define what an analogy is */}
+                      An analogy is a short explanation of a topic that helps
+                      you understand it better.
+                    </li>
+                    <li className="list-disc py-1">
+                      After submition, analogies must be verified by admins to
+                      be published.
+                    </li>
+                  </ul>
+                </p>
+              </div>
+            )}
+            <div className="flex w-full flex-row justify-end sm:col-span-2">
+              {isSubmitting && <LoadingPage />}
 
-          {topicEditor?.porpuse === "edit" && (
-            <button
-              type="button"
-              className="mx-3 mb-3 mt-2 inline-flex justify-center  px-4 py-2 font-semibold text-[#2a2a2e] transition-all hover:text-[#bc2f2f]"
-              onClick={deleteTopicHandler(input)}
-              disabled={isSubmitting}
+              {topicEditor?.porpuse === "edit" && (
+                <button
+                  type="button"
+                  className="mx-3 mb-3 mt-2 inline-flex justify-center  px-4 py-2 font-semibold text-[#2a2a2e] transition-all hover:text-[#bc2f2f]"
+                  onClick={deleteTopicHandler(input)}
+                  disabled={isSubmitting}
+                >
+                  Delete topic
+                </button>
+              )}
+              <button
+                type="submit"
+                className="mx-3 mb-3 mt-2 inline-flex justify-center rounded-[12px] border border-[#77777711] bg-gradient-to-br from-[#e98908] to-[#ef6400] px-4 py-2 font-semibold text-white shadow-sm transition-all hover:shadow-md hover:brightness-125 focus:outline-none focus:ring-2 focus:ring-[#1d1d1d] focus:ring-offset-2"
+                onClick={formSubmitHandler}
+                disabled={isSubmitting}
+              >
+                Submit topic
+              </button>
+            </div>
+          </div>
+        </form>
+      ) : (
+        <div className="mt-auto grid min-h-[250px] min-w-[640px] grid-cols-1 gap-x-6 gap-y-14 rounded-[12px] border border-[#c8c8c8] bg-[#ebeaea] px-6  py-6 transition-all duration-300 hover:border-[#c1c1c1]">
+          <div className="flex select-none flex-col items-center justify-center text-gray-500">
+            {" "}
+            <AiFillLock />
+            <span
+              className="mt-2 cursor-pointer transition-all hover:text-gray-700"
+              onClick={() => signIn()}
             >
-              Delete topic
-            </button>
-          )}
-          <button
-            type="submit"
-            className="mx-3 mb-3 mt-2 inline-flex justify-center rounded-[12px] border border-[#77777711] bg-gradient-to-br from-[#e98908] to-[#ef6400] px-4 py-2 font-semibold text-white shadow-sm transition-all hover:shadow-md hover:brightness-125 focus:outline-none focus:ring-2 focus:ring-[#1d1d1d] focus:ring-offset-2"
-            onClick={formSubmitHandler}
-            disabled={isSubmitting}
-          >
-            Submit topic
-          </button>
+              Sign in to create a topic
+            </span>
+          </div>
         </div>
-      </div>
-    </form>
+      )}
+    </>
   );
 }
