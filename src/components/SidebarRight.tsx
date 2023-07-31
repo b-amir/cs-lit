@@ -82,7 +82,7 @@ export function SidebarRight(props: { username: any }) {
                             } px-3 py-2.5 pl-6  pt-3 text-xs font-normal  hover:bg-[#efefef84]`}
                           >
                             <span className="mb-1 self-start font-semibold text-gray-700">
-                              {analogy.topic.title}
+                              {analogy.topic?.title}
                             </span>
                             <span className="self-start text-xs font-light text-gray-500">
                               by{" "}

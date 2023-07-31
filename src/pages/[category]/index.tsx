@@ -41,7 +41,7 @@ function CategoryPage(props) {
 
   const contentRef = useRef(null);
   const animationProps = useSpring({
-    height: !topicEditor.shown ? 0 : 620,
+    height: !topicEditor.shown ? 0 : sessionData ? 620 : 150,
     config: {
       tension: 200,
       friction: 30,
@@ -283,7 +283,7 @@ function CategoryPage(props) {
         <div
           className={`z-30 flex w-full grow-0 flex-col items-center    px-20 text-[#2A2A2E] shadow-lg backdrop-blur-sm backdrop-filter ${
             topicEditor?.shown
-              ? "sticky bottom-0 max-h-[calc(100vh-90px-1px)] bg-[#2a2a2e3b]  pb-5 pt-7 shadow-[0px_-1px_6px_2px_#00000015,0px_0px_0px_1px_#00000030,0px_-11px_20px_2px_#00000005,0px_-20px_55px_0px_#00000005]"
+              ? "sticky bottom-0 h-full max-h-[calc(100vh-90px-1px)] bg-[#2a2a2e3b]  pb-5 pt-7 shadow-[0px_-1px_6px_2px_#00000015,0px_0px_0px_1px_#00000030,0px_-11px_20px_2px_#00000005,0px_-20px_55px_0px_#00000005]"
               : "sticky bottom-[-200px] bg-[#2a2a2e3b] pb-7 pt-9"
           }`}
         >
@@ -691,7 +691,7 @@ export function TopicEditorForm({
           </div>
         </form>
       ) : (
-        <div className="mt-auto grid min-h-[250px] min-w-[640px] grid-cols-1 gap-x-6 gap-y-14 rounded-[12px] border border-[#c8c8c8] bg-[#ebeaea] px-6  py-6 transition-all duration-300 hover:border-[#c1c1c1]">
+        <div className="mt-auto grid h-full  min-w-[640px] grid-cols-1 gap-x-6 gap-y-14 rounded-[12px] border border-[#c8c8c8] bg-[#ebeaea] px-6  py-6 transition-all duration-300 hover:border-[#c1c1c1]">
           <div className="flex select-none flex-col items-center justify-center text-gray-500">
             {" "}
             <AiFillLock />

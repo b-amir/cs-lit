@@ -47,7 +47,6 @@ export const analogiesWithUserAndTopicData = async (analogies: Analogy[]) => {
 };
 
 export const analogiesWithUserAndTopicAndCategoryData = async (analogies: Analogy[]) => {
-  // const prisma = new PrismaClient();
   const analogiesWithUserAndTopicAndCategoryData = await Promise.all(
     analogies.map(async (analogy) => {
       const user = await prisma.user.findUnique({
@@ -56,9 +55,9 @@ export const analogiesWithUserAndTopicAndCategoryData = async (analogies: Analog
       const topic = await prisma.topic.findUnique({
         where: { id: analogy.topicId },
       });
-      const category = await prisma.category.findUnique({
-        where: { id: topic?.categoryId },
-      });
+      const category = topic ? await prisma.category.findUnique({
+        where: { id: topic.categoryId },
+      }) : null;
       return { ...analogy, user, topic, category };
     })
   );
@@ -295,6 +294,7 @@ export const analogiesRouter = createTRPCRouter({
     }
     ),
 
+
   getAnalogyVotes: publicProcedure
     .input(
       z.object({
@@ -419,6 +419,18 @@ export const analogiesRouter = createTRPCRouter({
   delete: protectedProcedure
     .input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {
+      // first delete all the votes from analogy
+
+      await ctx.prisma.like.deleteMany({
+        where: {
+          analogyId: input.id,
+        },
+      });
+      await ctx.prisma.dislike.deleteMany({
+        where: {
+          analogyId: input.id,
+        },
+      });
 
       const analogy = await ctx.prisma.analogy.delete({
         where: { id: input.id },

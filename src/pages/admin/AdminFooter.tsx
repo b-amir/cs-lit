@@ -30,7 +30,7 @@ export function AdminFooter({
   return (
     <div
       id="admin-footer"
-      className={`absolute bottom-0 z-20 w-4/6 border-t border-t-[#cbcbcb]  bg-[#d5d5d5] transition-all ${
+      className={`absolute bottom-0 z-20 w-4/6 border-t border-t-[#cbcbcb]  bg-[#f0f0f0] transition-all ${
         AdminFooterCollapsed
           ? "h-8 shadow-sm"
           : "h-[20dvh]  shadow-[0px_-1.5px_2px_1px_#00000008]"
@@ -38,7 +38,9 @@ export function AdminFooter({
     >
       <div
         id="activity-log-header"
-        className={`${archivo.className} mx-auto flex h-[1.95rem] w-[calc(100%-1px)] cursor-pointer flex-row items-center justify-center border-b border-r border-b-[#4b4b4b3c] border-r-[#5555551d] bg-[#f1f1f1] bg-gradient-to-b from-[#f0f0f0] to-[#ffffff4f] text-sm font-bold shadow-sm transition-all hover:bg-[#dddddd] `}
+        className={`${archivo.className} mx-auto flex h-[1.95rem] w-[calc(100%-0px)] cursor-pointer flex-row items-center 
+        justify-center border-b border-b-[#4b4b4b3c] bg-[#d5d5d5] bg-gradient-to-t from-[#d5d5d5] to-[#e3e0e0] 
+        text-sm font-bold text-gray-700 shadow-sm transition-all hover:bg-[#dfdfdf]`}
         onClick={() => setAdminFooterCollapsed(!AdminFooterCollapsed)}
       >
         <TbActivity className="mb-0 mr-1 " /> Activity Log{" "}
