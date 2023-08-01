@@ -36,8 +36,8 @@ export function Navbar() {
     id: UrlProfile as string,
   });
 
-  console.log("profileData", profileData);
-  console.log("urlProfile", UrlProfile);
+  // console.log("profileData", profileData);
+  // console.log("urlProfile", UrlProfile);
 
   return (
     <nav className="fixed top-0 z-40 flex min-h-[90px] w-4/6 items-center justify-between border-b !border-[#ebe8e869] border-opacity-20 bg-transparent bg-gradient-to-b from-[#EBEAE8] to-[#ebeae84a] px-10 backdrop-blur-sm backdrop-filter">

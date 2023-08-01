@@ -114,7 +114,7 @@ export function SidebarRight(props: { username: any }) {
                 {TopThreeData?.map((user: any) => (
                   <>
                     {/* as long as user._count.analogies is not 0 */}
-                    {user._count.analogies !== 0 && (
+                    {user.analogiesCount !== 0 && (
                       <li key={user.id}>
                         <Link href={`/profile/${user.id}`}>
                           <span
@@ -126,11 +126,11 @@ export function SidebarRight(props: { username: any }) {
                             } px-3 py-2.5 pl-6  pt-3 text-xs font-normal  hover:bg-[#efefef84]`}
                           >
                             <span className="mb-1 self-start font-semibold text-gray-700">
-                              {user.name ? user.name : user.email}
+                              {user.name ? user.name : "unknown"}
                             </span>
                             <span className="self-start text-xs font-light text-gray-500">
-                              {user._count.analogies}{" "}
-                              {user._count.analogies === 1
+                              {user.analogiesCount}{" "}
+                              {user.analogiesCount === 1
                                 ? "analogy"
                                 : "analogies"}
                             </span>

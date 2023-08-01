@@ -6,10 +6,11 @@ import { z } from "zod";
 
 
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "@/server/api/trpc";
-import { filterUserForClient } from "@/server/helpers/filterUserForClient";
+import { filterUserForClient, filterUsersForClient } from "@/server/helpers/filterUserForClient";
 import { SessionContext, SessionProvider } from "next-auth/react";
 import { Session } from "inspector";
 import { prisma } from "@/server/db";
+import { Prisma } from "@prisma/client";
 // const { data: sessionData } = useSession();
 
 export const UsersAnalogyCount = async (userId: string) => {
@@ -155,14 +156,20 @@ export const profileRouter = createTRPCRouter({
 
 
   getTopThree: publicProcedure
-    // .input(z.object({ id: z.string() }))
-    .query(async ({ ctx, input }) => {
+    .query(async () => {
       const users = await prisma.user.findMany({
+        where: {
+          analogies: {
+            some: {
+              status: "PUBLISHED"
+            }
+          }
+        },
         include: {
           _count: {
             select: {
-              analogies: true
-            }
+              analogies: true,
+            },
           },
         },
         take: 3,
@@ -170,14 +177,13 @@ export const profileRouter = createTRPCRouter({
           // order by analogies count
           {
             analogies: {
-              _count: "desc"
-            }
-          }
+              _count: 'desc',
+            },
+          },
         ],
       });
-      return users;
-    }
-    ),
+      return filterUsersForClient(users);
+    }),
 
   update: protectedProcedure
     .input(
