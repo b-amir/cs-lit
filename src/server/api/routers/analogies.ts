@@ -3,6 +3,7 @@ import {
   createTRPCRouter,
   publicProcedure,
   protectedProcedure,
+  adminProcedure,
 } from "@/server/api/trpc";
 // import { clerkClient } from "@clerk/nextjs/server";
 // import type { User } from "@clerk/nextjs/api";
@@ -416,26 +417,12 @@ export const analogiesRouter = createTRPCRouter({
 
 
 
-  delete: protectedProcedure
+  delete: adminProcedure
     .input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {
-      // first delete all the votes from analogy
-
-      await ctx.prisma.like.deleteMany({
-        where: {
-          analogyId: input.id,
-        },
-      });
-      await ctx.prisma.dislike.deleteMany({
-        where: {
-          analogyId: input.id,
-        },
-      });
-
       const analogy = await ctx.prisma.analogy.delete({
         where: { id: input.id },
       });
-
       return analogy;
     }),
 

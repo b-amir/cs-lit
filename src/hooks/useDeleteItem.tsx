@@ -22,6 +22,7 @@ export function useDeleteItem(item: ITopicInput, type: string) {
     const { mutate: deleteTopic } = api.topic.delete.useMutation({
       onSuccess: () => {
         void ctx.topic.getAll.invalidate();
+        void ctx.topic.getAllWithQuery.invalidate();
         void ctx.topic.getByCategoryId.invalidate();
         toast.success("Topic deleted successfully.");
       },
@@ -49,6 +50,7 @@ export function useDeleteItem(item: ITopicInput, type: string) {
     const { mutate: deleteCategory } = api.category.delete.useMutation({
       onSuccess: () => {
         void ctx.category.getAll.invalidate();
+        void ctx.category.getAllWithQuery.invalidate();
         toast.success("Category deleted successfully.");
       },
       onError: (e) => {
@@ -79,6 +81,7 @@ export function useDeleteItem(item: ITopicInput, type: string) {
     const { mutate: deleteAnalogy } = api.analogy.delete.useMutation({
       onSuccess: () => {
         void ctx.analogy.getAll.invalidate();
+        void ctx.analogy.getAllWithQuery.invalidate();
         toast.success("Analogy deleted successfully.");
       },
       onError: (e) => {
@@ -109,6 +112,7 @@ export function useDeleteItem(item: ITopicInput, type: string) {
     const { mutate: deleteUser } = api.profile.delete.useMutation({
       onSuccess: () => {
         void ctx.profile.getAll.invalidate();
+        void ctx.profile.getAllWithQuery.invalidate();
         toast.success("User deleted successfully.");
       },
       onError: (e) => {

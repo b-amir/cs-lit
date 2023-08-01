@@ -173,7 +173,7 @@ model Like {
 
     voter     User    @relation(fields: [voterId], references: [id])
     voterId   String
-    analogy   Analogy @relation(fields: [analogyId], references: [id])
+    analogy   Analogy @relation(fields: [analogyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
     analogyId String
 
     @@unique([voterId, analogyId])
@@ -189,7 +189,7 @@ model Dislike {
 
     voter     User    @relation(fields: [voterId], references: [id])
     voterId   String
-    analogy   Analogy @relation(fields: [analogyId], references: [id])
+    analogy   Analogy @relation(fields: [analogyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
     analogyId String
 
     @@unique([voterId, analogyId])

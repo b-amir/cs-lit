@@ -3,6 +3,7 @@ import {
   createTRPCRouter,
   publicProcedure,
   protectedProcedure,
+  adminProcedure,
 } from "@/server/api/trpc";
 // import { clerkClient } from "@clerk/nextjs/server";
 // import type { User } from "@clerk/nextjs/api";
@@ -184,7 +185,7 @@ export const categoriesRouter = createTRPCRouter({
       return category;
     }),
 
-  delete: protectedProcedure
+  delete: adminProcedure
     .input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {
       // delete associated analogies first

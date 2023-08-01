@@ -5,7 +5,7 @@ import { z } from "zod";
 // import { signIn, signOut, useSession, } from "next-auth/react";
 
 
-import { createTRPCRouter, protectedProcedure, publicProcedure } from "@/server/api/trpc";
+import { adminProcedure, createTRPCRouter, protectedProcedure, publicProcedure } from "@/server/api/trpc";
 import { filterUserForClient, filterUsersForClient } from "@/server/helpers/filterUserForClient";
 import { SessionContext, SessionProvider } from "next-auth/react";
 import { Session } from "inspector";
@@ -213,7 +213,7 @@ export const profileRouter = createTRPCRouter({
       return user;
     }),
 
-  delete: protectedProcedure
+  delete: adminProcedure
     .input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {
 

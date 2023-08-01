@@ -3,6 +3,7 @@ import {
   createTRPCRouter,
   publicProcedure,
   protectedProcedure,
+  adminProcedure,
 } from "@/server/api/trpc";
 import { TRPCError } from "@trpc/server";
 import { type Prisma, PrismaClient, type Topic } from "@prisma/client";
@@ -302,7 +303,7 @@ export const topicsRouter = createTRPCRouter({
       return topic;
     }),
 
-  delete: protectedProcedure
+  delete: adminProcedure
     .input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {
       await ctx.prisma.analogy.deleteMany({

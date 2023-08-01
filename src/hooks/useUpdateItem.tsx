@@ -32,6 +32,7 @@ export function useUpdateItem(item: ITopicInput, type: string) {
     const { mutate: updateCategory } = api.category.update.useMutation({
       onSuccess: () => {
         void ctx.category.getAll.invalidate();
+        void ctx.category.getAllWithQuery.invalidate();
         toast.success("Category updated successfully.");
       },
       onError: (e) => {
@@ -63,6 +64,7 @@ export function useUpdateItem(item: ITopicInput, type: string) {
     const { mutate: updateTopic } = api.topic.update.useMutation({
       onSuccess: () => {
         void ctx.topic.getAll.invalidate();
+        void ctx.topic.getAllWithQuery.invalidate();
         void ctx.topic.getByCategoryId.invalidate();
         void ctx.pending.getAll.invalidate();
         toast.success("Topic updated successfully.");
@@ -97,6 +99,7 @@ export function useUpdateItem(item: ITopicInput, type: string) {
     const { mutate: updateAnalogy } = api.analogy.update.useMutation({
       onSuccess: () => {
         void ctx.analogy.getAll.invalidate();
+        void ctx.analogy.getAllWithQuery.invalidate();
         void ctx.pending.getAll.invalidate();
         toast.success("Analogy updated successfully.");
       },
@@ -137,6 +140,7 @@ export function useUpdateItem(item: ITopicInput, type: string) {
     const { mutate: updateUser } = api.profile.update.useMutation({
       onSuccess: () => {
         void ctx.profile.getTopThree.invalidate();
+        void ctx.profile.getAllWithQuery.invalidate();
         toast.success("User updated successfully.");
       },
       onError: (e) => {
