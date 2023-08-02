@@ -18,6 +18,7 @@ import {
 } from "./EditorModal";
 import { useSession } from "next-auth/react";
 import { AiFillLock } from "react-icons/ai";
+import { LoadingSpinner } from "@/components/loading";
 
 export default function AdminPage(props) {
   const [AdminFooterCollapsed, setAdminFooterCollapsed] = useState(false);
@@ -150,7 +151,7 @@ export default function AdminPage(props) {
   const [editorModalShown, setEditorModalShown] = useState(false);
   const [editorModalInput, setEditorModalInput] = useState("");
 
-  const { data: sessionData, status } = useSession();
+  const { data: sessionData, status: sessionStatus } = useSession();
 
   return (
     <>
@@ -160,7 +161,9 @@ export default function AdminPage(props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <PageLayout>
-        {sessionData?.user.role === "ADMIN" ? (
+        {sessionStatus === "loading" ? (
+          <LoadingSpinner />
+        ) : sessionData?.user.role === "ADMIN" ? (
           <>
             <div
               id="admin=page"

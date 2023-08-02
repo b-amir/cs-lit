@@ -27,7 +27,7 @@ export function SidebarLeft(props: { username: any }) {
       getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor,
     }
   );
-  const [showSidebar, setShowSidebar] = useState(true);
+  // const [showSidebar, setShowSidebar] = useState(true);
   const [input, setInput] = useState({
     name: "",
     slug: "",
@@ -93,7 +93,7 @@ export function SidebarLeft(props: { username: any }) {
 
   return (
     <>
-      {showSidebar && (
+      {/* {showSidebar && ( */}
         <aside
           id="logo-sidebar"
           className="fixed left-0 top-0 z-50 flex h-screen w-1/6 -translate-x-full flex-col place-content-stretch items-stretch justify-between border-r border-white bg-white pt-0 shadow-md transition-transform dark:border-gray-700 dark:bg-gray-800 sm:translate-x-0"
@@ -172,7 +172,7 @@ export function SidebarLeft(props: { username: any }) {
             </form>
           )}
         </aside>
-      )}
+      {/* )} */}
     </>
   );
 }
