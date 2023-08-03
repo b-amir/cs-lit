@@ -6,6 +6,8 @@ import { useSession } from "next-auth/react";
 import { archivo } from "../styles/customFonts";
 import { useEffect, useRef, useState } from "react";
 import { animated, useSpring, useTransition } from "@react-spring/web";
+import { FiArrowDown } from "react-icons/fi";
+import { IoSearch } from "react-icons/io5";
 
 const carouselItems = [
   {
@@ -96,21 +98,21 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <nav className="fixed top-0 flex h-[90px] w-full items-center justify-between bg-[#f7f7f700] px-28 pt-20 dark:bg-gray-800">
+      <nav className="fixed top-0 flex h-[90px] w-full items-center justify-between bg-[#f7f7f700] px-40 pt-20 dark:bg-gray-800">
         <div className="flex items-center justify-center gap-6">
           <Link href="/">
             <Image
               src={"/assets/logo16.svg"}
               width={180}
-              height={50}
+              height={0}
               alt={"CS LIT: like I'm 10"}
-              className="min-h-[50px] min-w-[100px]"
+              // className="min-h-[50px] min-w-[100px]"
             />
           </Link>
         </div>
         <div className="flex items-center justify-center gap-6">
           {/* user section */}
-          <div className="flex items-center gap-2 rounded-full border bg-[#ffffffc6] px-2 py-2 pr-4 shadow-sm transition-all hover:border-[#a2a2a28c] hover:shadow-sm">
+          <div className="flex items-center gap-2 rounded-full border bg-[#ffffff36] px-2 py-2 pr-4  backdrop-blur-sm transition-all duration-300 hover:border-[#5c2c1d91] ">
             <div className="flex items-center gap-2">
               <Link href="/profile">
                 <div className="flex items-center gap-2">
@@ -131,7 +133,7 @@ const Home: NextPage = () => {
         </div>
       </nav>
       <div
-        className="flex h-[calc(100dvh)] w-full  flex-col items-start justify-between bg-gradient-to-br from-white to-[#654a2e] px-28 
+        className="flex h-[calc(100dvh)] w-full  flex-col items-center justify-between bg-gradient-to-br from-white to-[#654a2e] px-40 
   pt-36 dark:bg-gray-800"
         style={{
           backgroundColor: "#fff",
@@ -140,47 +142,72 @@ const Home: NextPage = () => {
           backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 1200 800'%3E%3Cdefs%3E%3ClinearGradient id='a' gradientUnits='userSpaceOnUse' x1='600' y1='25' x2='600' y2='777'%3E%3Cstop offset='0' stop-color='%23FFFFFF'/%3E%3Cstop offset='1' stop-color='%23FFCCC9'/%3E%3C/linearGradient%3E%3ClinearGradient id='b' gradientUnits='userSpaceOnUse' x1='650' y1='25' x2='650' y2='777'%3E%3Cstop offset='0' stop-color='%23fffafa'/%3E%3Cstop offset='1' stop-color='%23fdbbb6'/%3E%3C/linearGradient%3E%3ClinearGradient id='c' gradientUnits='userSpaceOnUse' x1='700' y1='25' x2='700' y2='777'%3E%3Cstop offset='0' stop-color='%23fff6f5'/%3E%3Cstop offset='1' stop-color='%23fbaca3'/%3E%3C/linearGradient%3E%3ClinearGradient id='d' gradientUnits='userSpaceOnUse' x1='750' y1='25' x2='750' y2='777'%3E%3Cstop offset='0' stop-color='%23fff1f0'/%3E%3Cstop offset='1' stop-color='%23f79f92'/%3E%3C/linearGradient%3E%3ClinearGradient id='e' gradientUnits='userSpaceOnUse' x1='800' y1='25' x2='800' y2='777'%3E%3Cstop offset='0' stop-color='%23ffeceb'/%3E%3Cstop offset='1' stop-color='%23f39381'/%3E%3C/linearGradient%3E%3ClinearGradient id='f' gradientUnits='userSpaceOnUse' x1='850' y1='25' x2='850' y2='777'%3E%3Cstop offset='0' stop-color='%23ffe8e6'/%3E%3Cstop offset='1' stop-color='%23ee8871'/%3E%3C/linearGradient%3E%3ClinearGradient id='g' gradientUnits='userSpaceOnUse' x1='900' y1='25' x2='900' y2='777'%3E%3Cstop offset='0' stop-color='%23ffe3e2'/%3E%3Cstop offset='1' stop-color='%23e77e63'/%3E%3C/linearGradient%3E%3ClinearGradient id='h' gradientUnits='userSpaceOnUse' x1='950' y1='25' x2='950' y2='777'%3E%3Cstop offset='0' stop-color='%23ffdfdd'/%3E%3Cstop offset='1' stop-color='%23e07555'/%3E%3C/linearGradient%3E%3ClinearGradient id='i' gradientUnits='userSpaceOnUse' x1='1000' y1='25' x2='1000' y2='777'%3E%3Cstop offset='0' stop-color='%23ffdad8'/%3E%3Cstop offset='1' stop-color='%23d86d48'/%3E%3C/linearGradient%3E%3ClinearGradient id='j' gradientUnits='userSpaceOnUse' x1='1050' y1='25' x2='1050' y2='777'%3E%3Cstop offset='0' stop-color='%23ffd5d3'/%3E%3Cstop offset='1' stop-color='%23cf653c'/%3E%3C/linearGradient%3E%3ClinearGradient id='k' gradientUnits='userSpaceOnUse' x1='1100' y1='25' x2='1100' y2='777'%3E%3Cstop offset='0' stop-color='%23ffd1ce'/%3E%3Cstop offset='1' stop-color='%23c06036'/%3E%3C/linearGradient%3E%3ClinearGradient id='l' gradientUnits='userSpaceOnUse' x1='1150' y1='25' x2='1150' y2='777'%3E%3Cstop offset='0' stop-color='%23FFCCC9'/%3E%3Cstop offset='1' stop-color='%23AB5D36'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg fill-opacity='0.04'%3E%3Crect fill='url(%23a)' width='1200' height='800'/%3E%3Crect fill='url(%23b)' x='100' width='1100' height='800'/%3E%3Crect fill='url(%23c)' x='200' width='1000' height='800'/%3E%3Crect fill='url(%23d)' x='300' width='900' height='800'/%3E%3Crect fill='url(%23e)' x='400' width='800' height='800'/%3E%3Crect fill='url(%23f)' x='500' width='700' height='800'/%3E%3Crect fill='url(%23g)' x='600' width='600' height='800'/%3E%3Crect fill='url(%23h)' x='700' width='500' height='800'/%3E%3Crect fill='url(%23i)' x='800' width='400' height='800'/%3E%3Crect fill='url(%23j)' x='900' width='300' height='800'/%3E%3Crect fill='url(%23k)' x='1000' width='200' height='800'/%3E%3Crect fill='url(%23l)' x='1100' width='100' height='800'/%3E%3C/g%3E%3C/svg%3E")`,
         }}
       >
-        <div className="flex flex-col items-start justify-center gap-6">
-          <div className="flex flex-col items-center justify-center gap-6  py-12 pt-20">
-            <h1
-              className={`${archivo.className} flex flex-col items-start align-middle text-7xl font-bold text-gray-900 dark:text-white`}
-            >
-              <span>Explain</span>
-              <span className="flex flex-row items-center justify-center py-2 ">
-                {/* Use the carouselTransitions.map to loop through animated divs */}
-                {carouselTransitions((props, item) => (
-                  <animated.div
-                    key={item?.name}
-                    style={props}
-                    className=" h-16 w-24 whitespace-nowrap font-normal text-[#f77417]"
-                  >
-                    {item?.name}
-                  </animated.div>
-                ))}
-              </span>
-              <span>Like I&apos;m 10 </span>
-            </h1>
-          </div>
-          {/* <p className="text-start text-lg text-gray-500 dark:text-gray-400">
-            A collection of simple analogies to help you understand computer
-            science concepts.
-          </p> */}
-          <div className="flex flex-col items-start justify-center gap-2">
-            <div className="flex flex-col items-start justify-center gap-2">
-              <input
-                type="text"
-                className="h-[50px] w-[500px] rounded-lg border border-gray-300 px-4 text-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2 dark:text-white dark:focus:ring-white"
-                placeholder="Search for topics"
-              />
+        <div className="my-auto flex w-full flex-row justify-between gap-16">
+          <div className="center my-auto flex flex-col items-start justify-center gap-6">
+            <div className="flex flex-col items-center justify-center gap-6  py-12">
+              <h1
+                className={`${archivo.className} flex flex-col items-start align-middle text-7xl font-bold text-[#263238] dark:text-white`}
+              >
+                <span>Explain</span>
+                <span className="flex flex-row items-center justify-center py-2 ">
+                  {/* Use the carouselTransitions.map to loop through animated divs */}
+                  {carouselTransitions((props, item) => (
+                    <animated.div
+                      key={item?.name}
+                      style={props}
+                      className=" h-16 w-24 whitespace-nowrap font-normal text-[#ff7263]"
+                    >
+                      {item?.name}
+                    </animated.div>
+                  ))}
+                </span>
+                <span>Like I&apos;m 10 </span>
+              </h1>
             </div>
-            <p className="px-2 py-2 text-start text-sm text-gray-400 dark:text-gray-400">
-              What exactly is it? See an example.
-            </p>
+
+            <div className="flex flex-col items-start justify-center gap-2">
+              <div className="flex flex-col items-start justify-center gap-2">
+                {/* <input
+                  type="text"
+                  className="h-[50px] w-[500px] rounded-lg border border-gray-300 px-4 text-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2 dark:text-white dark:focus:ring-white"
+                  placeholder="Search for topics"
+                /> */}
+
+                <div className="relative mx-auto flex flex-row pt-2 text-[#263238]">
+                  <input
+                    type="search"
+                    name="search"
+                    className="h-[50px] w-[500px] rounded-lg border border-[#5c2c1d2a] px-4 pr-10 text-lg text-gray-900 focus:outline-none focus:ring-1 focus:ring-[#5c2c1d6a]  dark:text-white dark:focus:ring-white"
+                    placeholder="Search for topics"
+                  />
+                  <button type="submit" className="absolute right-4 top-6">
+                    <IoSearch className="scale-125 " />
+                  </button>
+                </div>
+              </div>
+              <p className="group  flex flex-row items-center justify-center px-2 py-2 text-sm  text-[#5c2c1dc4] dark:text-gray-400">
+                <span className="cursor-pointer transition-all duration-300 group-hover:translate-x-1">
+                  What exactly is it? See an example
+                </span>
+                <FiArrowDown className="mb-0.5 hidden -rotate-90 items-center transition-all duration-100  group-hover:block  group-hover:translate-x-2" />
+              </p>
+            </div>
           </div>
+          <Image
+            src="/assets/bulb2.svg"
+            width={550}
+            height={550}
+            alt={"lightbulb"}
+            className=" right-[10%] z-0 my-auto min-w-[500px]"
+          />
         </div>
         {/* stick to the bottom  */}
-        <div className=" bottom-0 flex w-full items-center justify-center py-12 text-sm font-semibold opacity-60">
-          Browse by category
+        {/* <div className=" bottom-0 flex w-full items-center justify-center py-12 text-sm font-semibold opacity-60"> */}
+        <div className="group bottom-0 z-10 flex h-20 w-full cursor-pointer flex-col items-center  justify-center px-2 py-4  text-[#5c2c1d7f]">
+          <span className="text-sm font-semibold transition-all duration-200 group-hover:-translate-y-2">
+            Browse by category
+          </span>
+          <FiArrowDown className="hidden animate-bounce duration-100 group-hover:block group-hover:-translate-y-2" />
         </div>
       </div>
     </>
