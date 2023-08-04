@@ -109,6 +109,7 @@ export default function SingleAnalogyPage() {
                 id: singleAnalogyData.id,
                 description: singleAnalogyData.description,
               }}
+              // needsLocationInfo
               author={{
                 name: singleAnalogyData.author?.name ?? "",
                 email: singleAnalogyData.author?.email ?? "",

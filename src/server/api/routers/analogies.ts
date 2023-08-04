@@ -49,6 +49,7 @@ export const analogiesWithUserAndTopicData = async (analogies: Analogy[]) => {
 
 export const analogiesWithUserAndTopicAndCategoryData = async (analogies: Analogy[]) => {
   const analogiesWithUserAndTopicAndCategoryData = await Promise.all(
+
     analogies.map(async (analogy) => {
       const user = await prisma.user.findUnique({
         where: { id: analogy.authorId },
@@ -65,6 +66,20 @@ export const analogiesWithUserAndTopicAndCategoryData = async (analogies: Analog
   return analogiesWithUserAndTopicAndCategoryData;
 };
 
+export const singleAnalogyWithUserAndTopicAndCategoryData = async (analogy: Analogy) => {
+  const user = await prisma.user.findUnique({
+    where: { id: analogy.authorId },
+  });
+  const topic = await prisma.topic.findUnique({
+    where: { id: analogy.topicId },
+  });
+  const category = topic ? await prisma.category.findUnique({
+    where: { id: topic.categoryId },
+  }) : null;
+  const singleAnalogyWithUserAndTopicAndCategoryData = { ...analogy, user, topic, category }
+
+  return singleAnalogyWithUserAndTopicAndCategoryData;
+}
 
 
 
@@ -164,7 +179,7 @@ export const analogiesRouter = createTRPCRouter({
       });
       if (!analogy) throw new TRPCError({ code: "NOT_FOUND" });
       // return (await addUsersDataToAnalogies([analogy]))[0];
-      return analogy;
+      return singleAnalogyWithUserAndTopicAndCategoryData(analogy);
     }),
 
   getAnalogiesByUserId: publicProcedure

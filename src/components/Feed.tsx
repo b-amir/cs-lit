@@ -1,31 +1,12 @@
 import { api } from "@/utils/api";
-import { AnalogyView } from "../components/AnalogyView";
-import { ANALOGY_STATUS } from "@prisma/client";
-
-interface AnalogyWithUser {
-  id: string;
-  description: string;
-  status: ANALOGY_STATUS;
-  pinned: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-  authorId: string;
-  topicId: string;
-  user:
-    | {
-        name: string;
-        email: string;
-        image: string;
-        id: string;
-      }
-    | undefined;
-}
+import AnalogyViewWithLink, { AnalogyView } from "../components/AnalogyView";
+import { type Analogy } from "@prisma/client";
 
 interface IFeedProps {
-  topicAnalogies?: AnalogyWithUser[] | undefined;
+  topicAnalogies: Analogy[];
 }
 
-export const Feed = ({ topicAnalogies }: IFeedProps) => {
+export const Feed: React.FC<IFeedProps> = ({ topicAnalogies }) => {
   // const {
   //   data,
   //   isLoading: analogiesLoading,
@@ -37,21 +18,15 @@ export const Feed = ({ topicAnalogies }: IFeedProps) => {
   return (
     <>
       <div id="analogies-array" className="flex flex-col items-center">
-        {topicAnalogies?.map((analogy) => (
-          <AnalogyView
-            analogy={{
-              id: analogy.id,
-              description: analogy.description,
-            }}
-            author={{
-              name: analogy.user?.name ?? "",
-              email: analogy.user?.email ?? "",
-              image: analogy.user?.image ?? "",
-              id: analogy.user?.id ?? "",
-            }}
-            {...analogy}
-            key={analogy.id}
-          />
+        {topicAnalogies?.map((analogy: Analogy) => (
+          <AnalogyViewWithLink key={analogy.id}>
+            <AnalogyView
+              analogy={{
+                id: analogy.id,
+              }}
+              key={analogy.id}
+            />
+          </AnalogyViewWithLink>
         ))}
       </div>
     </>
