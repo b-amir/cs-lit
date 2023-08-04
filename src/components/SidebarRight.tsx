@@ -141,7 +141,7 @@ export function SidebarRight(props: { username: any }) {
             </SidebarRightWidget>
           </ul>
         </div>
-        <Footer />
+        {/* <Footer /> */}
       </aside>
       {/* )} */}
     </>
