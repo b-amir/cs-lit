@@ -40,7 +40,7 @@ export function Pill({ title, setActiveSection, activeSection }: IPillProps) {
       id="single-pill"
       className={`flex cursor-pointer items-center justify-center rounded-[12px] border px-5 py-1 shadow-sm ${
         activeSection === title
-          ? "border-[#b5431a] bg-[#e95620] text-white "
+          ? "border-[#d15b4e] bg-[#ff7263] text-white "
           : "border-[#d1d1d1] bg-[#ffffff] text-[#2A2A2E]"
       }`}
       onClick={() => setActiveSection(title)}

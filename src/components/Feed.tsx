@@ -1,5 +1,6 @@
 import { api } from "@/utils/api";
-import AnalogyViewWithLink, { AnalogyView } from "../components/AnalogyView";
+import { AnalogyView } from "../components/AnalogyView";
+import AnalogyViewWithLink from "./AnalogyView";
 import { type Analogy } from "@prisma/client";
 
 interface IFeedProps {

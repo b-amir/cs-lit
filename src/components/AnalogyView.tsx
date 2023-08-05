@@ -8,6 +8,10 @@ import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { coldarkDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import React from "react";
+import { MultilineSkeleton } from "./Skeleton";
+import { SmallSkeleton } from "./Skeleton";
+import { MediumSkeleton } from "./Skeleton";
+import { AvatarSkeleton } from "./Skeleton";
 
 interface IAnalogyViewProps {
   analogy: {
@@ -18,13 +22,15 @@ interface IAnalogyViewProps {
 export const AnalogyView: React.FC<IAnalogyViewProps> = (props) => {
   const { analogy, needsLocationInfo = false } = props;
 
-  const { data: analogyVotesData } = api.analogy.getAnalogyVotes.useQuery({
-    analogyId: analogy.id,
-  });
+  const { data: analogyVotesData, status: votingStatus } =
+    api.analogy.getAnalogyVotes.useQuery({
+      analogyId: analogy.id,
+    });
 
-  const { data: analogyData } = api.analogy.getById.useQuery({
-    id: analogy.id,
-  });
+  const { data: analogyData, status: analogyStatus } =
+    api.analogy.getById.useQuery({
+      id: analogy.id,
+    });
 
   // console.log("analogyData:", analogyData);
 
@@ -40,6 +46,7 @@ export const AnalogyView: React.FC<IAnalogyViewProps> = (props) => {
     }
   }, [analogyVotesData]);
 
+  analogyStatus === "loading" && <div>Loading...</div>;
   return (
     <div
       key={analogy?.id}
@@ -54,134 +61,148 @@ export const AnalogyView: React.FC<IAnalogyViewProps> = (props) => {
       >
         <div className="flex items-center justify-between align-middle">
           <div className="flex items-center justify-between align-middle">
-            <Link
-              href={`/profile/${analogyData?.authorId}`}
-              className="flex items-center align-middle text-xs "
-            >
-              <Image
-                src={analogyData?.user?.image || "/assets/default-pp.svg"}
-                className="ml-1 mr-4 h-8 w-8 rounded-full ring-[3px] ring-[#b2b2b232] transition-all duration-300 hover:ring-[#80808073]"
-                alt={"Profile Picture"}
-                width={42}
-                height={42}
-              />
-            </Link>
-            <div>
-              <span className="mb-0.5 flex items-center justify-between align-middle font-normal  text-[#666666]">
-                <Link
-                  href={`/profile/${analogyData?.authorId}`}
-                  className="flex items-center align-middle text-sm transition-all hover:text-gray-800"
-                >
-                  {
-                    analogyData?.user?.name
-                      ? analogyData?.user?.name
-                      : analogyData?.user?.email
-                    // ? author?.email
-                    // : "Anonymous"
-                  }
-                </Link>
-                <span className="text-sm font-normal">&apos;s analogy</span>
-                {needsLocationInfo ? (
-                  <div className="mx-2 flex rounded-lg border bg-gray-100 px-3 py-1 text-xs text-gray-500">
-                    <span className="  font-normal ">about&nbsp;</span>
-                    <Link
-                      href={`/${analogyData?.category?.slug}/${analogyData?.topic?.slug}`}
-                      className="flex cursor-pointer  items-center  align-middle  font-semibold  transition-all hover:text-gray-800"
-                    >
-                      {analogyData?.topic?.title}
-                    </Link>
-                    <span className=" font-normal">&nbsp;in&nbsp;</span>
-                    <Link
-                      href={`/${analogyData?.category?.slug}`}
-                      className="flex  cursor-pointer  items-center align-middle  font-semibold   transition-all hover:text-gray-800"
-                    >
-                      {analogyData?.category?.name}
-                    </Link>
-                  </div>
-                ) : null}
-              </span>
+            {analogyStatus === "loading" ? (
+              <AvatarSkeleton />
+            ) : (
+              <Link
+                href={`/profile/${analogyData?.authorId}`}
+                className="flex items-center align-middle text-xs "
+              >
+                <Image
+                  src={analogyData?.user?.image || "/assets/default-pp.svg"}
+                  className="ml-1 mr-4 h-8 w-8 rounded-full ring-[3px] ring-[#b2b2b232] transition-all duration-300 hover:ring-[#80808073]"
+                  alt={"Profile Picture"}
+                  width={42}
+                  height={42}
+                />{" "}
+              </Link>
+            )}
 
-              <div className="flex items-start justify-start  text-xs text-[#878787]">
-                {
-                  // check if votingAverage is not NaN
-                  !isNaN(votingAverage) ? (
-                    <>
-                      {votingAverage === -2 ? (
-                        <span className="text-[#b95353]">
-                          Needs improvement
-                        </span>
-                      ) : votingAverage === -1 ? (
-                        <span>
-                          is&nbsp;
-                          <span className="text-[#ac7e46]">Half decent</span>
-                        </span>
-                      ) : votingAverage === 0 ? (
-                        <span>
-                          is&nbsp;
-                          <span className="text-[#38a169]">Appreciated</span>
-                        </span>
-                      ) : votingAverage === 1 ? (
-                        <span>
-                          is&nbsp;
-                          <span className="text-[#5ab2a9]">Awesome</span>
-                        </span>
-                      ) : votingAverage === 2 ? (
-                        <span>
-                          is&nbsp;
-                          <span className="text-[#3ba44e]">Superb</span>
-                        </span>
-                      ) : (
-                        <span></span>
-                      )}
-                    </>
-                  ) : (
-                    <>has no votes yet</>
-                  )
-                }
-              </div>
+            <div>
+              {analogyStatus === "loading" ? (
+                <MediumSkeleton />
+              ) : (
+                <div className="mb-0.5 flex items-center justify-between align-middle font-normal  text-[#666666]">
+                  <Link
+                    href={`/profile/${analogyData?.authorId}`}
+                    className="flex items-center align-middle text-sm transition-all hover:text-gray-800"
+                  >
+                    {
+                      analogyData?.user?.name
+                        ? analogyData?.user?.name
+                        : analogyData?.user?.email
+                      // ? author?.email
+                      // : "Anonymous"
+                    }
+                  </Link>
+                  <span className="text-sm font-normal">&apos;s analogy</span>
+                  {needsLocationInfo ? (
+                    <div className="mx-2 flex rounded-lg border bg-gray-100 px-3 py-1 text-xs text-gray-500">
+                      <span className="  font-normal ">about&nbsp;</span>
+                      <Link
+                        href={`/${analogyData?.category?.slug}/${analogyData?.topic?.slug}`}
+                        className="flex cursor-pointer  items-center  align-middle  font-semibold  transition-all hover:text-gray-800"
+                      >
+                        {analogyData?.topic?.title}
+                      </Link>
+                      <span className=" font-normal">&nbsp;in&nbsp;</span>
+                      <Link
+                        href={`/${analogyData?.category?.slug}`}
+                        className="flex  cursor-pointer  items-center align-middle  font-semibold   transition-all hover:text-gray-800"
+                      >
+                        {analogyData?.category?.name}
+                      </Link>
+                    </div>
+                  ) : null}
+                </div>
+              )}
+
+              {votingStatus === "loading" ? (
+                <SmallSkeleton />
+              ) : (
+                <div className="flex items-start justify-start  text-xs text-[#878787]">
+                  {
+                    // check if votingAverage is not NaN
+                    !isNaN(votingAverage) ? (
+                      <>
+                        {votingAverage === -2 ? (
+                          <span className="text-[#b95353]">
+                            Needs improvement
+                          </span>
+                        ) : votingAverage === -1 ? (
+                          <span>
+                            is&nbsp;
+                            <span className="text-[#ac7e46]">Half decent</span>
+                          </span>
+                        ) : votingAverage === 0 ? (
+                          <span>
+                            is&nbsp;
+                            <span className="text-[#38a169]">Appreciated</span>
+                          </span>
+                        ) : votingAverage === 1 ? (
+                          <span>
+                            is&nbsp;
+                            <span className="text-[#5ab2a9]">Awesome</span>
+                          </span>
+                        ) : votingAverage === 2 ? (
+                          <span>
+                            is&nbsp;
+                            <span className="text-[#3ba44e]">Superb</span>
+                          </span>
+                        ) : (
+                          <span></span>
+                        )}
+                      </>
+                    ) : (
+                      <>has no votes yet</>
+                    )
+                  }
+                </div>
+              )}
             </div>
           </div>
 
           <Voting analogyId={analogy.id} />
         </div>
       </div>
-      <div className="h-min-400 p-x8 w-full bg-white px-5 py-4">
-        <ReactMarkdown
-          className="prose-code:dark:text-gray-30 prose prose-pre:bg-[#101A25]"
-          // eslint-disable-next-line react/no-children-prop
-          children={analogyData?.description}
-          components={{
-            code({ node, inline, className, children, ...props }) {
-              const match = /language-(\w+)/.exec(className || "");
-              return !inline && match ? (
-                <SyntaxHighlighter
-                  {...props}
-                  // eslint-disable-next-line react/no-children-prop
-                  children={String(children).replace(/\n$/, "")}
-                  style={coldarkDark}
-                  // wrapLines={true}
-                  wrapLongLines={true}
-                  language={match[1]}
-                  // showLineNumbers={true}
-                  // showInlineLineNumbers={true}
-                  PreTag="div"
-                  customStyle={{
-                    padding: "1.1em",
-                  }}
-                />
-              ) : (
-                <code {...props} className={className}>
-                  {children}
-                </code>
-              );
-            },
-          }}
-        />
+
+      <div className="min-h-[120px] w-full bg-white px-8 pb-7 pt-5">
+        {analogyStatus === "loading" ? (
+          <MultilineSkeleton />
+        ) : (
+          <ReactMarkdown
+            className="prose-code:dark:text-gray-30 prose prose-pre:bg-[#101A25]"
+            // eslint-disable-next-line react/no-children-prop
+            children={analogyData?.description}
+            components={{
+              code({ node, inline, className, children, ...props }) {
+                const match = /language-(\w+)/.exec(className || "");
+                return !inline && match ? (
+                  <SyntaxHighlighter
+                    {...props}
+                    // eslint-disable-next-line react/no-children-prop
+                    children={String(children).replace(/\n$/, "")}
+                    style={coldarkDark}
+                    wrapLongLines={true}
+                    language={match[1]}
+                    PreTag="div"
+                    customStyle={{
+                      padding: "1.1em",
+                    }}
+                  />
+                ) : (
+                  <code {...props} className={className}>
+                    {children}
+                  </code>
+                );
+              },
+            }}
+          />
+        )}
       </div>
     </div>
   );
 };
-
 interface IAnalogyViewWithLinkProps {
   children?: React.ReactNode;
 }
@@ -206,5 +227,4 @@ const AnalogyViewWithLink: React.FC<IAnalogyViewWithLinkProps> = ({
     <>{wrappedChildren}</>
   );
 };
-
 export default AnalogyViewWithLink;

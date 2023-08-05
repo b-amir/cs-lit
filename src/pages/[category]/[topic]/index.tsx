@@ -8,25 +8,23 @@ import Head from "next/head";
 import Link from "next/link";
 import { archivo } from "@/styles/customFonts";
 import { signIn, signOut, useSession } from "next-auth/react";
+import { AnalogySkeleton, TableSkeleton } from "@/components/Skeleton";
 
 function TopicPage(props) {
   const router = useRouter();
   const { category: UrlCategory, topic: UrlTopic } = router.query;
 
-  const { data: topicsData, isFetching: topicFetching } =
+  const { data: topicsData, status: topicFetchingStatus } =
     api.topic.getBySlug.useQuery({
       slug: UrlTopic as string,
     });
 
-  const { data: sessionData, status } = useSession();
+  const { data: sessionData } = useSession();
 
-  const {
-    data: topicAnalogies,
-    isLoading: analogiesLoading,
-    refetch: refetchAnalogies,
-  } = api.analogy.getAnalogiesByTopicId.useQuery({
-    id: topicsData?.id as string,
-  });
+  const { data: topicAnalogies, status: analogiesFetchingStatus } =
+    api.analogy.getAnalogiesByTopicId.useQuery({
+      id: topicsData?.id as string,
+    });
 
   return (
     <>
@@ -45,11 +43,15 @@ function TopicPage(props) {
             id="feed-header"
             className="z-10 mx-auto mt-32 flex max-w-[640px] flex-col items-start justify-between overflow-clip overflow-ellipsis whitespace-nowrap"
           >
-            <h1
-              className={`${archivo.className} px-5  text-5xl font-extrabold  tracking-tight text-[#2A2A2E] sm:text-[2rem]`}
-            >
-              {topicsData?.title}
-            </h1>
+            {topicFetchingStatus === "loading" ? (
+              <div className=" mb-4  h-8 w-1/4 animate-pulse rounded-lg bg-[#b4b4b49f]" />
+            ) : (
+              <h1
+                className={`${archivo.className} px-5  text-5xl font-extrabold  tracking-tight text-[#2A2A2E] sm:text-[2rem]`}
+              >
+                {topicsData?.title}
+              </h1>
+            )}
             <br />
             <div className="flex w-full max-w-[640px] flex-row justify-between px-6 py-1 align-middle text-sm text-[#808080] ">
               <p className="grow-1 inline-flex">
@@ -66,8 +68,15 @@ function TopicPage(props) {
               </Link>
             </div>
           </div>
-
-          <Feed topicAnalogies={topicAnalogies} />
+          {analogiesFetchingStatus === "loading" ? (
+            <>
+              <AnalogySkeleton />
+              <AnalogySkeleton />
+              <AnalogySkeleton />
+            </>
+          ) : (
+            <Feed topicAnalogies={topicAnalogies} />
+          )}
 
           <div className="mx-auto my-12 flex w-full max-w-[640px] select-none flex-row justify-center px-6 py-1 align-middle text-sm text-[#808080ae]">
             <p className="grow-1 font-merriweathersans inline-flex text-lg font-light italic">

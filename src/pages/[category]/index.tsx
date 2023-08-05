@@ -5,7 +5,7 @@ import { IoClose, IoCloseSharp } from "react-icons/io5";
 import React, { useRef, useState } from "react";
 import { animated, useSpring } from "@react-spring/web";
 import { api } from "@/utils/api";
-import { LoadingPage } from "@/components/loading";
+import { CornerLoading } from "@/components/loading";
 import { IoTimeOutline } from "react-icons/io5";
 import Link from "next/link";
 import slugify from "slugify";
@@ -16,6 +16,7 @@ import { archivo } from "@/styles/customFonts";
 import { addActivityLog } from "@/utils/addActivityLog";
 import { AiFillLock } from "react-icons/ai";
 import { signIn, useSession } from "next-auth/react";
+import { MediumSkeleton, TableSkeleton } from "@/components/Skeleton";
 
 // import { deleteTopicHandler } from "@/utils/deleteActions";
 
@@ -48,12 +49,15 @@ function CategoryPage(props) {
     },
   });
 
-  const { data: categoryData, isFetching: categoryFetching } =
-    api.category.getBySlug.useQuery({
-      slug: UrlCategory,
-    });
+  const {
+    data: categoryData,
+    isFetching: categoryFetching,
+    status: categoryFetchingStatus,
+  } = api.category.getBySlug.useQuery({
+    slug: UrlCategory,
+  });
 
-  const { data: topicsData, isFetching: topicsFetching } =
+  const { data: topicsData, status: topicsFetchingStatus } =
     api.topic.getByCategoryId.useQuery({
       id: categoryData?.id as string,
     });
@@ -82,10 +86,6 @@ function CategoryPage(props) {
     return <div>Category not found</div>;
   }
 
-  // if (topicsFetching) return <LoadingPage />;
-  if (!topicsData) {
-    return <div />;
-  }
   return (
     <>
       <Head>
@@ -99,7 +99,7 @@ function CategoryPage(props) {
               ----------------------------------------  */}
         <div
           className={`grow-1 w-full pt-[90px] [overflow:overlay] ${
-            topicsData.length > 5
+            topicsData && topicsData.length > 5
               ? " min-h-[calc(100dvh-0px)]"
               : " min-h-[calc(100dvh-160px)]"
           }`}
@@ -108,11 +108,15 @@ function CategoryPage(props) {
                       header
                 ------------------  */}
           <div className="mx-auto mb-0  mt-10 flex max-w-[640px] flex-col justify-between px-3 ">
-            <h1
-              className={`${archivo.className} mb-4 items-start justify-start  text-5xl font-extrabold  tracking-tight text-[#2A2A2E] sm:text-[2rem]`}
-            >
-              {categoryData?.name}
-            </h1>
+            {categoryFetchingStatus === "loading" ? (
+              <div className=" mb-4  h-8 w-1/4 animate-pulse rounded-lg bg-[#b4b4b49f]" />
+            ) : (
+              <h1
+                className={`${archivo.className} mb-4 items-start justify-start  text-5xl font-extrabold  tracking-tight text-[#2A2A2E] sm:text-[2rem]`}
+              >
+                {categoryData?.name}
+              </h1>
+            )}
             <div className="flex flex-row items-end place-self-end text-sm font-semibold text-[#2A2A2E]">
               <div className="mr-0 inline-flex items-center">
                 <label htmlFor="sort-by" className="min-w-fit">
@@ -161,10 +165,9 @@ function CategoryPage(props) {
                 ------------------  */}
           <div className="mx-auto mb-12 mt-8 flex w-[640px] ">
             {/* table */}
-            {categoryFetching && <LoadingPage />}
-            {topicsFetching && <LoadingPage />}
-
-            {topicsData.length > 0 ? (
+            {categoryFetching && <CornerLoading />}
+            {topicsFetchingStatus === "loading" && <TableSkeleton />}
+            {topicsFetchingStatus === "success" && topicsData.length > 0 ? (
               <div className="relative overflow-x-auto rounded-[12px] border border-[#cdcdcd7d] shadow-sm ">
                 <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
                   <thead className="border-b bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
@@ -251,7 +254,8 @@ function CategoryPage(props) {
                   </tbody>
                 </table>
               </div>
-            ) : (
+            ) : null}
+            {topicsFetchingStatus === "success" && topicsData.length <= 0 ? (
               <div className="font-merriweathersans mx-auto mt-[20%] flex h-full flex-col items-center justify-center gap-10 text-lg font-semibold text-[#8c8c8cdd]">
                 <FaGhost className="text-9xl  text-[#a3a3a380]" />
                 <span>
@@ -269,7 +273,7 @@ function CategoryPage(props) {
                   </span>
                 </span>
               </div>
-            )}
+            ) : null}
           </div>
 
           {/*  ------------------
@@ -667,7 +671,7 @@ export function TopicEditorForm({
               </div>
             )}
             <div className="flex w-full flex-row justify-end sm:col-span-2">
-              {isSubmitting && <LoadingPage />}
+              {isSubmitting && <CornerLoading />}
 
               {topicEditor?.porpuse === "edit" && (
                 <button
@@ -681,7 +685,7 @@ export function TopicEditorForm({
               )}
               <button
                 type="submit"
-                className="mx-3 mb-3 mt-2 inline-flex justify-center rounded-[12px] border border-[#77777711] bg-gradient-to-br from-[#e98908] to-[#ef6400] px-4 py-2 font-semibold text-white shadow-sm transition-all hover:shadow-md hover:brightness-125 focus:outline-none focus:ring-2 focus:ring-[#1d1d1d] focus:ring-offset-2"
+                className="mx-3 mb-3 mt-2 inline-flex justify-center rounded-[12px] border border-[#77777711] bg-gradient-to-br from-[#ff8263] to-[#ff7263]  px-4 py-2 font-semibold text-white shadow-sm transition-all hover:shadow-md hover:brightness-125 focus:outline-none focus:ring-2 focus:ring-[#1d1d1d] focus:ring-offset-2"
                 onClick={formSubmitHandler}
                 disabled={isSubmitting}
               >

@@ -2,20 +2,25 @@ import Head from "next/head";
 import { api } from "@/utils/api";
 import { PageLayout } from "@/components/layout";
 import { AnalogyView } from "../../../../components/AnalogyView";
-import { LoadingPage } from "@/components/loading";
+import { LoadingSpinner } from "@/components/loading";
 import { FaArrowLeft } from "react-icons/fa";
 import { RiImageLine } from "react-icons/ri";
 import { AiOutlineLink } from "react-icons/ai";
 import { LuExternalLink } from "react-icons/lu";
 
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { archivo } from "@/styles/customFonts";
 
 export default function SingleAnalogyPage() {
   const [aboutIsHidden, setAboutIsHidden] = useState(true);
   const router = useRouter();
+  const domainName =
+    // avoid the ReferenceError and get the domain name of the current URL in the browser environment
+    typeof window !== "undefined"
+      ? window.location.origin.replace(/^https?:\/\//, "")
+      : "";
 
   const {
     category: UrlCategory,
@@ -25,11 +30,10 @@ export default function SingleAnalogyPage() {
 
   api.analogy.getAll.useQuery();
 
-  const { data: singleAnalogyData } = api.analogy.getSingleAnalogyById.useQuery(
-    {
+  const { data: singleAnalogyData, status } =
+    api.analogy.getSingleAnalogyById.useQuery({
       id: UrlAnalogyId as string,
-    }
-  );
+    });
 
   const { data: categoryData, isFetching: categoryFetching } =
     api.category.getBySlug.useQuery({
@@ -41,8 +45,8 @@ export default function SingleAnalogyPage() {
       slug: UrlTopic as string,
     });
 
-  if (!singleAnalogyData) {
-    return <LoadingPage />;
+  if (status === "loading") {
+    return <LoadingSpinner />;
   }
 
   return (
@@ -99,8 +103,8 @@ export default function SingleAnalogyPage() {
               </span>{" "}
               <br />
               <span className="text-sm text-[#efefefa7]">
-                <span className="font-bold text-[#efefefb6]">CS-LIT</span>
-                .vercel.com
+                {/* <span className="font-bold text-[#efefefb6]">CS-LIT</span> */}
+                {domainName}
               </span>
             </div>
 

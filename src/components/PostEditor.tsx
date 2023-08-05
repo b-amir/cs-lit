@@ -3,7 +3,7 @@ import { api } from "@/utils/api";
 import { useSession } from "next-auth/react";
 
 import { useState } from "react";
-import { LoadingPage } from "./loading";
+import { LoadingSpinner } from "./loading";
 
 export const PostEditor = ({
   topicId,
@@ -13,7 +13,7 @@ export const PostEditor = ({
   topicTitle?: string;
 }) => {
   // const { user, isLoaded: userLoaded, isSignedIn } = useUser();
-  const { data: sessionData, status } = useSession();
+  const { data: sessionData, sessionStatus } = useSession();
 
   const { mutate, isLoading: isPosting } = api.analogy.create.useMutation({
     onSuccess: () => {
@@ -33,7 +33,7 @@ export const PostEditor = ({
   });
 
   const ctx = api.useContext();
-  if (status === "loading") return <LoadingPage />;
+  if (sessionStatus === "loading") return <LoadingSpinner />;
 
   if (sessionData && !sessionData.user) {
     return <>Please sign in to post</>;
@@ -83,7 +83,7 @@ export const PostEditor = ({
                   })
                 }
                 type="submit"
-                className="mx-1 my-1 inline-flex select-none justify-center rounded-[12px] border border-[#51320a43] bg-gradient-to-br from-[#e98908] to-[#ef6400] px-4 py-1.5 text-sm font-semibold text-white shadow-sm transition-all hover:shadow-md hover:brightness-125 focus:outline-none focus:ring-2 focus:ring-[#1d1d1d] focus:ring-offset-2"
+                className="mx-1 my-1 inline-flex select-none justify-center rounded-[12px] border border-[#51320a43] bg-gradient-to-br from-[#ff8263] to-[#ff7263] px-4 py-1.5 text-sm font-semibold text-white shadow-sm transition-all hover:shadow-md hover:brightness-125 focus:outline-none focus:ring-2 focus:ring-[#1d1d1d] focus:ring-offset-2"
               >
                 Post analogy
               </button>

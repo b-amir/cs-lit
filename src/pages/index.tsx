@@ -1,19 +1,20 @@
 import { type NextPage } from "next";
-import { PageLayout } from "@/components/layout";
 import Link from "next/link";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { archivo } from "../styles/customFonts";
-import { useEffect, useRef, useState } from "react";
-import { animated, useSpring, useTransition } from "@react-spring/web";
+import { useEffect, useState } from "react";
+import { animated, useTransition } from "@react-spring/web";
 import { FiArrowDown } from "react-icons/fi";
 import { IoSearch } from "react-icons/io5";
 import { api } from "@/utils/api";
 import { getCategoryIcon } from "@/utils/getCategoryIcon";
-import AnalogyViewWithLink, { AnalogyView } from "@/components/AnalogyView";
-import { Footer } from "@/components/Footer";
+import { AnalogyView } from "@/components/AnalogyView";
+import AnalogyViewWithLink from "@/components/AnalogyView";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { AiOutlineLink } from "react-icons/ai";
+import { HomeCategorySkeleton } from "@/components/Skeleton";
+import { HomeUserSkeleton } from "@/components/Skeleton";
 
 const carouselItems = [
   {
@@ -39,7 +40,7 @@ const carouselItems = [
 ];
 
 const Home: NextPage = () => {
-  const { data: sessionData } = useSession();
+  const { data: sessionData, status: sessionStatus } = useSession();
   const [currentCarouselItems, setCurrentCarouselItems] = useState([
     carouselItems[0],
     carouselItems[1],
@@ -104,7 +105,7 @@ const Home: NextPage = () => {
 
   const {
     data: categories,
-    isLoading: categoriesLoading,
+    status: categoriesFetchingStatus,
     refetch: refetchCategories,
   } = api.category.getAll.useInfiniteQuery(
     { limit: 15 },
@@ -123,7 +124,7 @@ const Home: NextPage = () => {
         <div className="flex items-center justify-center gap-6">
           <Link href="/">
             <Image
-              src={"/assets/logo16.svg"}
+              src={"/assets/logo17.svg"}
               width={180}
               height={0}
               alt={"CS LIT: like I'm 10"}
@@ -133,27 +134,32 @@ const Home: NextPage = () => {
         </div>
         <div className="flex items-center justify-center gap-6">
           {/* user section */}
-          <div
-            className="flex items-center gap-2 rounded-full border border-[#5c2c1d2b] bg-[#ffffff36] px-2 py-2 pr-4  backdrop-blur-sm transition-all duration-300 
+          {sessionStatus === "loading" ? (
+            <HomeUserSkeleton />
+          ) : (
+            <div
+              className="flex items-center gap-2 rounded-full border border-[#5c2c1d2b] bg-[#ffffff36] px-2 py-2 pr-4  backdrop-blur-sm transition-all duration-300 
           hover:border-[#5c2c1d91] "
-          >
-            <div className="flex items-center gap-2">
-              <Link href="/profile">
-                <div className="flex items-center gap-2">
-                  <Image
-                    src={sessionData?.user.image}
-                    width={30}
-                    height={30}
-                    alt={"profile picture"}
-                    className="rounded-full"
-                  />
-                  <span className="hidden sm:block">
-                    {sessionData?.user.name}
-                  </span>
-                </div>
-              </Link>
+            >
+              <div className="flex items-center gap-2">
+                <Link href="/profile">
+                  <div className="flex items-center gap-2">
+                    <Image
+                      src={sessionData?.user.image}
+                      width={30}
+                      height={30}
+                      alt={"profile picture"}
+                      className="rounded-full"
+                    />
+
+                    <span className="hidden sm:block">
+                      {sessionData?.user.name}
+                    </span>
+                  </div>
+                </Link>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </nav>
       <div
@@ -270,30 +276,33 @@ const Home: NextPage = () => {
           >
             So far we have these categories:
           </h2>
-
-          <ul className="grid h-4/6 w-full grid-cols-3 grid-rows-4 gap-6 text-lg font-normal">
-            {/* map through category items from database */}
-            {categories?.pages?.map((page) =>
-              page?.items?.map((category) => (
-                <li key={category.id}>
-                  <Link
-                    className="p group flex max-w-md flex-row items-center justify-center overflow-x-clip overflow-ellipsis rounded-xl
-                              border border-[#16161d26] bg-[#6267774f] px-6 py-7 
+          {categoriesFetchingStatus === "loading" ? (
+            <HomeCategorySkeleton />
+          ) : (
+            <ul className="grid h-4/6 w-full grid-cols-3 grid-rows-4 gap-6 text-lg font-normal">
+              {/* map through category items from database */}
+              {categories?.pages?.map((page) =>
+                page?.items?.map((category) => (
+                  <li key={category.id}>
+                    <Link
+                      className="p group flex max-w-md flex-row items-center justify-center overflow-x-clip overflow-ellipsis rounded-xl
+                                border border-[#16161d26] bg-[#6267774f] px-6 py-7 
                               text-[#2A2A2E] shadow-sm backdrop-blur-sm transition-all duration-300 hover:border-[#d4d4d4d5]
                             hover:bg-[#d4d4d4a3] hover:shadow-md "
-                    // onClick={() => {}}
-                    href={`/${category.slug}`}
-                  >
-                    {getCategoryIcon(category?.slug)}
+                      // onClick={() => {}}
+                      href={`/${category.slug}`}
+                    >
+                      {getCategoryIcon(category?.slug)}
 
-                    <span className="ml-4 flex-1 whitespace-nowrap  transition-all duration-300 group-hover:-translate-x-0.5">
-                      {category.name}
-                    </span>
-                  </Link>
-                </li>
-              ))
-            )}
-          </ul>
+                      <span className="ml-4 flex-1 whitespace-nowrap  transition-all duration-300 group-hover:-translate-x-0.5">
+                        {category.name}
+                      </span>
+                    </Link>
+                  </li>
+                ))
+              )}
+            </ul>
+          )}
           <p className="font-regular mx-auto my-12 flex  h-1/6 flex-row items-center justify-center text-sm text-[#292626a9]">
             If you find a category missing, you can add it via GitHub
             contribution. It&apos;s an open-sourced project.
@@ -323,40 +332,19 @@ const Home: NextPage = () => {
             id="vertical-line"
             className="mx-auto my-1 flex h-12 w-[1px] flex-col items-center justify-center bg-[#5c2c1d2b]"
           />
-          <div className="mx-auto my-[-4px] flex flex-row rounded-3xl border-[1px] border-[#5c2c1d2b] bg-[#5c2c1d09] p-10 ">
+          <div
+            className="mx-auto my-[-4px] flex flex-row rounded-3xl border-[1px] border-[#5c2c1d2b] bg-[#5c2c1d09] p-10 "
+            style={{
+              backgroundImage: "url(/assets/noise.webp)",
+              backgroundBlendMode: "overlay",
+            }}
+          >
             <AnalogyViewWithLink>
               <AnalogyView
-                needsLocationInfo
-                // analogy={{
-                //   id: "seiydzNj",
-                // topic: {
-                //   title: "closure",
-                // },
-                // category: {
-                //   name: "javascript",
-                // },
-                // description: "hey",
-                // }}
-                // {...analogy}
-                // author={{
-                //   name: "Amir Bazgir",
-                //   email: "theamirm@gmail.com",
-                //   image: "https://avatars.githubusercontent.com/u/30746832?v=4",
-                //   id: "ewHJFy3",
-                // }}
-                // key="seiydzNj"
-
                 analogy={{
                   id: analogyData?.id,
-                  description: analogyData?.description,
                 }}
-                author={{
-                  name: analogyData?.user?.name ?? "",
-                  email: analogyData?.user?.email ?? "",
-                  image: analogyData?.user?.image ?? "",
-                  id: analogyData?.user?.id ?? "",
-                }}
-                {...analogyData}
+                needsLocationInfo
                 key={analogyData?.id}
               />
             </AnalogyViewWithLink>
@@ -390,15 +378,19 @@ const Home: NextPage = () => {
 
       <footer
         id="footer-section"
-        className="mx-auto flex w-full flex-row items-center justify-center bg-[#263238] px-12 py-6 shadow-inner shadow-[#1d262b]"
+        className="mx-auto flex w-full flex-row items-center justify-center bg-[#1a2329] px-12 py-6 shadow-inner shadow-[#1d262b]"
+        style={{
+          backgroundImage: "url(/assets/noise.webp)",
+          backgroundBlendMode: "overlay",
+        }}
       >
         <Image
           id="grayscaled-logo"
-          src="/assets/logo16.svg"
+          src="/assets/logo-bw.svg"
           width={100}
           height={100}
           alt="logo"
-          className="mr-6  opacity-70 brightness-200 grayscale"
+          className="mr-6  "
         />
         <div
           id="vertical-line"

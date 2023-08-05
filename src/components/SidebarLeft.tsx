@@ -15,19 +15,18 @@ import { GrSquare } from "react-icons/gr";
 import { MdCategory } from "react-icons/md";
 import { addActivityLog } from "@/utils/addActivityLog";
 import { getCategoryIcon } from "@/utils/getCategoryIcon";
+import { MultilineSkeleton } from "./Skeleton";
+import { SidebarCategorySkeleton } from "./Skeleton";
 
 export function SidebarLeft(props: { username: any }) {
-  const { data: sessionData, status } = useSession();
-  const {
-    data: categories,
-    isLoading: categoriesLoading,
-    refetch: refetchCategories,
-  } = api.category.getAll.useInfiniteQuery(
-    { limit: 15 },
-    {
-      getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor,
-    }
-  );
+  const { data: sessionData } = useSession();
+  const { data: categories, status: categoryFetchingStatus } =
+    api.category.getAll.useInfiniteQuery(
+      { limit: 15 },
+      {
+        getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor,
+      }
+    );
   // const [showSidebar, setShowSidebar] = useState(true);
   const [input, setInput] = useState({
     name: "",
@@ -83,7 +82,7 @@ export function SidebarLeft(props: { username: any }) {
           <div className=" border-b-1 mb-0 flex h-[calc(90px+1.5px)] items-center justify-center gap-6 border border-x-0 border-t-0 bg-[#f8f8f8] py-5 pl-7 pr-9 shadow-sm">
             <Link href="/">
               <Image
-                src={"/assets/logo16.svg"}
+                src={"/assets/logo17.svg"}
                 width={130}
                 height={50}
                 alt={"CS LIT: like I'm 10"}
@@ -91,25 +90,29 @@ export function SidebarLeft(props: { username: any }) {
               />
             </Link>
           </div>
-          <ul className="mb-auto mt-6 space-y-2 px-3 text-sm font-medium">
-            {/* map through category items from database */}
-            {categories?.pages?.map((page) =>
-              page?.items?.map((category) => (
-                <li key={category.id}>
-                  <Link
-                    className="flex items-center rounded-lg p-2 text-[#2A2A2E] hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                    // onClick={() => {}}
-                    href={`/${category.slug}`}
-                  >
-                    {getCategoryIcon(category?.slug)}
-                    <span className="ml-3 flex-1 whitespace-nowrap">
-                      {category.name}
-                    </span>
-                  </Link>
-                </li>
-              ))
-            )}
-          </ul>
+          {categoryFetchingStatus === "loading" ? (
+            <SidebarCategorySkeleton />
+          ) : (
+            <ul className="mb-auto mt-6 space-y-2 px-3 text-sm font-medium">
+              {/* map through category items from database */}
+              {categories?.pages?.map((page) =>
+                page?.items?.map((category) => (
+                  <li key={category.id}>
+                    <Link
+                      className="flex items-center rounded-lg p-2 text-[#2A2A2E] hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                      // onClick={() => {}}
+                      href={`/${category.slug}`}
+                    >
+                      {getCategoryIcon(category?.slug)}
+                      <span className="text-truncate elip ml-3 flex-1 overflow-x-clip text-ellipsis whitespace-nowrap">
+                        {category.name}
+                      </span>
+                    </Link>
+                  </li>
+                ))
+              )}
+            </ul>
+          )}
         </div>
 
         {["ADMIN", "EDITOR"].includes(sessionData?.user.role) && (
