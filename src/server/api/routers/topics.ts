@@ -144,17 +144,57 @@ export const topicsRouter = createTRPCRouter({
       };
     }),
 
+  // getByCategoryId: publicProcedure
+  //   .input(z.object({ id: z.string() }))
+  //   .query(async ({ ctx, input }) => {
+  //     const topics = await ctx.prisma.topic.findMany({
+  //       where: {
+  //         categoryId: input.id,
+  //       },
+  //       take: 10,
+  //       orderBy: [{ createdAt: "desc" }],
+  //     });
+  //     return topics;
+  //   }),
+
+
   getByCategoryId: publicProcedure
-    .input(z.object({ id: z.string() }))
+    .input(
+      z.object({
+        id: z.string(),
+        limit: z.number(),
+        cursor: z.string().nullish(),
+        order: z.enum(["asc", "desc"]).nullish()
+      }))
     .query(async ({ ctx, input }) => {
-      const topics = await ctx.prisma.topic.findMany({
+
+      const limit = input.limit ?? 15
+      const { cursor } = input
+      const order = input.order ?? "asc"
+
+      const items = await ctx.prisma.topic.findMany({
+        take: limit + 1,
+        cursor: cursor ? { id: cursor } : undefined,
         where: {
           categoryId: input.id,
         },
-        take: 10,
-        orderBy: [{ createdAt: "desc" }],
+        orderBy: {
+          createdAt: order as Prisma.SortOrder
+        }
       });
-      return topics;
+      let nextCursor: typeof cursor | undefined = undefined;
+      if (items.length > limit) {
+        const nextItem = items.pop();
+        nextCursor = nextItem?.id as typeof cursor;
+      }
+      return {
+        items,
+        total: await ctx.prisma.topic.count(),
+        pageInfo: {
+          hasNextPage: items.length > limit,
+          nextCursor,
+        },
+      };
     }),
 
   getById: publicProcedure

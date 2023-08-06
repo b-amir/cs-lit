@@ -1,6 +1,6 @@
 import { PageLayout } from "@/components/layout";
 import { useRouter } from "next/router";
-import { CgFolderAdd } from "react-icons/cg";
+import { CgFolderAdd, CgSpinner } from "react-icons/cg";
 import { IoClose } from "react-icons/io5";
 import React, { useRef, useState } from "react";
 import { animated, useSpring } from "@react-spring/web";
@@ -33,6 +33,7 @@ function CategoryPage(props) {
     category: "",
     firstAnalogy: "",
   });
+  const [orderBy, setOrderBy] = useState<"desc" | "asc" | null>("desc");
 
   // const [addTopicShown, setAddTopicShown] = useState(false);
   const [topicEditor, setTopicEditor] = useState({
@@ -57,10 +58,20 @@ function CategoryPage(props) {
     slug: UrlCategory,
   });
 
-  const { data: topicsData, status: topicsFetchingStatus } =
-    api.topic.getByCategoryId.useQuery({
+  const {
+    data: topicsData,
+    status: topicsFetchingStatus,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = api.topic.getByCategoryId.useInfiniteQuery(
+    {
       id: categoryData?.id as string,
-    });
+      order: orderBy,
+      limit: 10,
+    },
+    { getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor }
+  );
 
   const topicEditHandler = (topicId: string) => {
     // open NewTopicForm with the selected topic values as default to be changed and saved again
@@ -102,7 +113,7 @@ function CategoryPage(props) {
               ----------------------------------------  */}
         <div
           className={`grow-1 w-full pt-[90px] [overflow:overlay] ${
-            topicsData && topicsData.length > 5
+            topicsData && topicsData.pages.length > 5
               ? " min-h-[calc(100dvh-0px)]"
               : " min-h-[calc(100dvh-160px)]"
           }`}
@@ -142,12 +153,17 @@ function CategoryPage(props) {
                   }}
                   id="sort-by"
                   name="sort-by"
+                  onChange={() =>
+                    setOrderBy(orderBy === "desc" ? "asc" : "desc")
+                  }
                   // className="bg-gray-50 border border-gray-300 text-[#2A2A2E] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 
-                  className="mx-2 inline-flex cursor-pointer appearance-none flex-row items-end rounded-[12px] border border-[#d2d2d28e] bg-[#ffffffc1] px-3 py-1 text-sm transition-all hover:border-[#c8c8c8] hover:bg-[#ffffff]"
+                  className="mx-2 inline-flex cursor-pointer appearance-none flex-row items-end 
+                  rounded-[12px] border border-[#d2d2d28e] bg-[#ffffffc1] px-3 py-1 text-sm 
+                  transition-all hover:border-[#c8c8c8] hover:bg-[#ffffff]"
                 >
-                  <option>Recent</option>
-                  <option>Alphabetical</option>
+                  <option value="newest">Newest</option>
+                  <option value="oldest">Oldest</option>
                 </select>
               </div>
               <button
@@ -170,7 +186,8 @@ function CategoryPage(props) {
             {/* table */}
             {categoryFetching && <CornerLoading />}
             {topicsFetchingStatus === "loading" && <TableSkeleton />}
-            {topicsFetchingStatus === "success" && topicsData.length > 0 ? (
+            {topicsFetchingStatus === "success" &&
+            topicsData.pages.length > 0 ? (
               <div className="relative w-full overflow-x-auto rounded-[12px] border  border-[#cdcdcd7d] shadow-sm">
                 <table className="w-full  text-left text-sm text-gray-500 dark:text-gray-400">
                   <thead className="border-b bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
@@ -192,49 +209,72 @@ function CategoryPage(props) {
                     </tr>
                   </thead>
                   <tbody>
-                    {topicsData?.map((topic) => (
-                      <tr
-                        key={topic.id}
-                        className="border-b bg-white  hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800"
-                      >
-                        <Link
-                          href={`${UrlCategory}/${topic.slug}`}
-                          className=""
+                    {topicsData?.pages?.map((page) =>
+                      page?.items?.map((topic) => (
+                        <tr
+                          key={topic.id}
+                          className="border-b bg-white  hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800"
                         >
-                          {" "}
-                          <th
-                            scope="row"
-                            className="max-w-[360px] cursor-pointer overflow-clip overflow-ellipsis whitespace-nowrap px-6 py-6 text-base font-medium text-[#2A2A2E] dark:text-white"
+                          <Link
+                            href={`${UrlCategory}/${topic.slug}`}
+                            className=""
                           >
-                            {topic.title}
-                          </th>
-                        </Link>
-                        <td className="px-6 py-4">
-                          {getStatusIcon(topic.status)}
-                        </td>
-                        <td className="px-6 py-4 text-center ">
-                          {new Date(topic.updatedAt).toLocaleDateString()}
-                        </td>
-                        {["ADMIN", "EDITOR"].includes(
-                          sessionData?.user.role
-                        ) && (
-                          <td className="px-6 py-4 text-right">
-                            <a
-                              href="#"
-                              className="font-medium text-gray-400 hover:underline dark:text-gray-300"
-                              onClick={() => topicEditHandler(topic.id)}
+                            <th
+                              scope="row"
+                              className="max-w-[360px] cursor-pointer overflow-clip overflow-ellipsis whitespace-nowrap px-6 py-6 text-base font-medium text-[#2A2A2E] dark:text-white"
                             >
-                              Edit
-                            </a>
+                              {topic.title}
+                            </th>
+                          </Link>
+                          <td className="px-6 py-4">
+                            {getStatusIcon(topic.status)}
                           </td>
-                        )}
-                      </tr>
-                    ))}
+                          <td className="px-6 py-4 text-center ">
+                            {new Date(topic.updatedAt).toLocaleDateString()}
+                          </td>
+                          {["ADMIN", "EDITOR"].includes(
+                            sessionData?.user.role
+                          ) && (
+                            <td className="px-6 py-4 text-right">
+                              <a
+                                href="#"
+                                className="font-medium text-gray-400 hover:underline dark:text-gray-300"
+                                onClick={() => topicEditHandler(topic.id)}
+                              >
+                                Edit
+                              </a>
+                            </td>
+                          )}
+                        </tr>
+                      ))
+                    )}
                   </tbody>
                 </table>
+
+                {hasNextPage && (
+                  <button
+                    onClick={() => fetchNextPage()}
+                    disabled={isFetchingNextPage}
+                    className="w-full"
+                  >
+                    <div
+                      className="flex w-full items-center justify-center border-t border-t-[#5555551d] bg-[#fff] 
+                    py-6 font-semibold text-gray-500 shadow-[0px_2px_20px_0px_#00000010_inset] transition-all duration-300 
+                    hover:bg-gradient-to-b hover:from-[#efefefb5] hover:to-white hover:text-gray-800"
+                    >
+                      {isFetchingNextPage ? (
+                        <CgSpinner className=" animate-spin " />
+                      ) : (
+                        "Load more"
+                      )}
+                    </div>
+                  </button>
+                )}
               </div>
             ) : null}
-            {topicsFetchingStatus === "success" && topicsData.length <= 0 ? (
+
+            {topicsFetchingStatus === "success" &&
+            topicsData.pages.length <= 0 ? (
               <div className="font-merriweathersans mx-auto mt-[20%] flex h-full flex-col items-center justify-center gap-10 text-lg font-semibold text-[#8c8c8cdd]">
                 <FaGhost className="text-9xl  text-[#a3a3a380]" />
                 <span>
