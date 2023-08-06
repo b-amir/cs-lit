@@ -1,7 +1,7 @@
 import { type NextPage } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { archivo } from "../styles/customFonts";
 import { useEffect, useState } from "react";
 import { animated, useTransition } from "@react-spring/web";
@@ -148,31 +148,36 @@ const Home: NextPage = () => {
             <HomeUserSkeleton />
           ) : (
             <div
-              className="flex items-center gap-2 rounded-full border border-[#5c2c1d2b] bg-[#ffffff36] px-2 py-2 pr-4  
+              className="flex items-center gap-2 rounded-full border border-[#5c2c1d2b] bg-[#ffffff36] px-2 py-2   pr-4 
               backdrop-blur-sm transition-all duration-300  hover:border-[#5c2c1d91] hover:bg-[#ff73631c]"
             >
               <div className="flex items-center gap-2">
-                <Link href={`/profile/${sessionData?.user?.id}`}>
-                  <div className="flex items-center gap-2">
-                    <Image
-                      src={
-                        sessionData?.user?.image
-                          ? sessionData?.user?.image
-                          : "/assets/defaultpp.svg"
-                      }
-                      width={30}
-                      height={30}
-                      alt={"profile picture"}
-                      className="rounded-full"
-                    />
-
-                    <span className="hidden sm:block">
-                      {sessionData?.user.name
-                        ? sessionData?.user.name
-                        : sessionData?.user.email}
-                    </span>
-                  </div>
-                </Link>
+                <div className="flex items-center gap-2">
+                  <Image
+                    src={
+                      sessionData?.user?.image
+                        ? sessionData?.user?.image
+                        : "/assets/defaultpp.svg"
+                    }
+                    width={30}
+                    height={30}
+                    alt={"profile picture"}
+                    className="rounded-full"
+                  />
+                  {sessionData ? (
+                    <Link href={`/profile/${sessionData?.user?.id}`}>
+                      <span className="hidden sm:block">
+                        {sessionData?.user.name
+                          ? sessionData?.user.name
+                          : sessionData?.user.email}
+                      </span>
+                    </Link>
+                  ) : (
+                    <div className="cursor-pointer" onClick={() => signIn()}>
+                      Login
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           )}
@@ -302,8 +307,8 @@ const Home: NextPage = () => {
                   <li key={category.id}>
                     <Link
                       className="p group flex  flex-row items-center justify-center overflow-x-clip 
-                                rounded-2xl border border-[#16161d26] bg-[#6267776e] bg-gradient-to-tr from-[#d6e2f638] to-[#e9e9e93d] px-6 py-9
-                              text-[#2A2A2E]  backdrop-blur-sm transition-transform duration-300  hover:-translate-x-0.5 hover:-translate-y-0.5
+                               rounded-2xl border border-[#d5d9df33] bg-[#6267776e] bg-gradient-to-tr from-[#d6e2f638] to-[#e9e9e93d] px-6 py-9 text-[#2A2A2E]
+                              shadow-sm  backdrop-blur-sm transition-transform duration-300  hover:-translate-x-0.5 hover:-translate-y-0.5
                             hover:border-[#d4d4d4d5] hover:bg-[#d4d4d4a3] hover:shadow-md"
                       // onClick={() => {}}
                       href={`/${category.slug}`}
@@ -451,12 +456,18 @@ const Home: NextPage = () => {
                     <div>
                       <div className="mb-0.5 flex items-center justify-between align-middle font-normal  text-[#666666]">
                         <Link
-                          href={`/profile/${sessionData?.user.id}`}
+                          href={
+                            sessionData
+                              ? `/profile/${sessionData?.user.id}`
+                              : "https://en.wikipedia.org/wiki/Albert_Einstein"
+                          }
                           className="flex items-center align-middle text-sm transition-all hover:text-gray-800"
                         >
                           {sessionData?.user.name
                             ? sessionData?.user?.name
-                            : sessionData?.user?.email}
+                            : sessionData?.user?.email
+                            ? sessionData?.user?.email
+                            : "Albert Einstein"}
                         </Link>
                         <span className="text-sm font-normal">
                           &apos;s analogy

@@ -25,7 +25,20 @@ const MyApp: AppType<{ session: Session | null }> = ({
         />
         <link rel="icon" href="/assets/favicon.svg" />
       </Head>
-      <Toaster />
+      <Toaster
+        toastOptions={{
+          className: "toast",
+          style: {
+            color: "#fff",
+            fontSize: "0.9rem",
+            maxWidth: "fit-content",
+            borderRadius: "17px",
+            backgroundColor: "#2A2A2E",
+            // paddingLeft: "25px",
+            // paddingRight: "25px",
+          },
+        }}
+      />
       <Component {...pageProps} />
     </SessionProvider>
   );

@@ -1,9 +1,10 @@
 import { api } from "@/utils/api";
 // import { useUser } from "@clerk/nextjs";
 import { useSession } from "next-auth/react";
+import toast from "react-hot-toast";
 
 import { useState } from "react";
-import { LoadingSpinner } from "./loading";
+import { CornerLoading } from "./loading";
 
 export const PostEditor = ({
   topicId,
@@ -13,7 +14,7 @@ export const PostEditor = ({
   topicTitle?: string;
 }) => {
   // const { user, isLoaded: userLoaded, isSignedIn } = useUser();
-  const { data: sessionData, sessionStatus } = useSession();
+  const { data: sessionData, status: sessionStatus } = useSession();
 
   const { mutate, isLoading: isPosting } = api.analogy.create.useMutation({
     onSuccess: () => {
@@ -23,6 +24,25 @@ export const PostEditor = ({
         topicId: "",
       });
       void ctx.analogy.getAll.invalidate();
+      void ctx.analogy.getAnalogiesByTopicId.invalidate();
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+
+      toast.success("You posted your analogy!");
+    },
+    onError: (e) => {
+      const errorMessage = e.data?.zodError?.fieldErrors;
+      console.log(errorMessage);
+      if (errorMessage) {
+        if (errorMessage.description) {
+          toast.error(errorMessage?.description.join(" "));
+        } else {
+          toast.error("Something went wrong.");
+        }
+      }
     },
   });
 
@@ -33,7 +53,7 @@ export const PostEditor = ({
   });
 
   const ctx = api.useContext();
-  if (sessionStatus === "loading") return <LoadingSpinner />;
+  if (sessionStatus === "loading") return <CornerLoading />;
 
   if (sessionData && !sessionData.user) {
     return <>Please sign in to post</>;
@@ -83,9 +103,13 @@ export const PostEditor = ({
                   })
                 }
                 type="submit"
-                className="mx-1 my-1 inline-flex select-none justify-center rounded-[12px] border border-[#51320a43] bg-gradient-to-br from-[#ff8263] to-[#ff7263] px-4 py-1.5 text-sm font-semibold text-white shadow-sm transition-all hover:shadow-md hover:brightness-125 focus:outline-none focus:ring-2 focus:ring-[#1d1d1d] focus:ring-offset-2"
+                className="group  flex flex-row justify-center rounded-xl
+                border border-[#5c2c1d2b] bg-[#ff7263] px-6 py-1.5 text-sm font-semibold text-[#ffffffd3] shadow-sm transition-all
+                duration-200 [text-shadow:_0_1px_0_rgb(0_0_0_/_10%)] hover:border-[#5c2c1d66] hover:shadow-md"
               >
-                Post analogy
+                <span className="cursor-pointer transition-transform duration-300 group-hover:-translate-x-0.5 group-hover:[text-shadow:_0_2px_0_rgb(0_0_0_/_15%)]">
+                  Post analogy
+                </span>
               </button>
             </div>
           </div>

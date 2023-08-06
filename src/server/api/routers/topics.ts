@@ -206,13 +206,13 @@ export const topicsRouter = createTRPCRouter({
   create: protectedProcedure
     .input(
       z.object({
-        title: z.string().min(2).max(100),
+        title: z.string().min(2, "Title is too short!").max(100, "Title is too long!"),
         slug: z.string(),
         id: z.string(),
         category: z.object({
           id: z.string(),
         }),
-        url: z.string().url(),
+        url: z.string().url("Please provide a valid URL to docs."),
         starter: z.object({
           id: z.string(),
         }),
