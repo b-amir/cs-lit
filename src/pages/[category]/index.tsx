@@ -204,7 +204,7 @@ function CategoryPage(props) {
                           {" "}
                           <th
                             scope="row"
-                            className="cursor-pointer overflow-clip overflow-ellipsis whitespace-nowrap px-6 py-6 text-base font-medium text-[#2A2A2E] dark:text-white"
+                            className="max-w-[360px] cursor-pointer overflow-clip overflow-ellipsis whitespace-nowrap px-6 py-6 text-base font-medium text-[#2A2A2E] dark:text-white"
                           >
                             {topic.title}
                           </th>
@@ -426,6 +426,9 @@ export function TopicEditorForm({
           if (errorMessage.title) {
             toast.error(errorMessage?.title.join(" "));
           }
+          if (errorMessage.analogies) {
+            toast.error(errorMessage?.analogies.join(" "));
+          }
         } else {
           toast.error("Something went wrong.");
         }
@@ -459,6 +462,9 @@ export function TopicEditorForm({
         }
         if (errorMessage.title) {
           toast.error(errorMessage?.title.join(" "));
+        }
+        if (errorMessage.analogies) {
+          toast.error(errorMessage?.analogies.join(" "));
         }
       } else {
         toast.error("Something went wrong.");

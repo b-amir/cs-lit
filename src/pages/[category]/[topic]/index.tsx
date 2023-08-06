@@ -65,7 +65,7 @@ function TopicPage(props) {
               </p>
               <Link href={`${topicsData?.url}`} target="_blank">
                 <button className=" align-center justify-middle ml-auto flex grow-0 cursor-pointer items-center rounded-[17px] border border-transparent px-3 py-1 transition-all hover:border-[#d2d2d2] hover:bg-[#f0f0f0] hover:text-[#555555]">
-                  <LuExternalLink /> &nbsp;Open docs
+                  <LuExternalLink className="mb-0.5" /> &nbsp;Official docs
                 </button>
               </Link>
             </div>

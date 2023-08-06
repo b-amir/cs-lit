@@ -18,7 +18,7 @@ export const Feed: React.FC<IFeedProps> = ({ topicAnalogies }) => {
   // if (!data) return <>Something went wrong. no data</>;
   return (
     <>
-      <div id="analogies-array" className="flex flex-col items-center">
+      <div id="analogies-array" className="flex flex-col items-center px-16">
         {topicAnalogies?.map((analogy: Analogy) => (
           <AnalogyViewWithLink key={analogy.id}>
             <AnalogyView

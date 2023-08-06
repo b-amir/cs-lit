@@ -12,6 +12,11 @@ import { MultilineSkeleton } from "./Skeleton";
 import { SmallSkeleton } from "./Skeleton";
 import { MediumSkeleton } from "./Skeleton";
 import { AvatarSkeleton } from "./Skeleton";
+import { CgComment } from "react-icons/cg";
+import { AiOutlineLink } from "react-icons/ai";
+import { HiOutlineChatAlt } from "react-icons/hi";
+import { getStatusIcon } from "@/utils/getStatusIcon";
+import { HiOutlineDotsVertical } from "react-icons/hi";
 
 interface IAnalogyViewProps {
   analogy: {
@@ -55,7 +60,8 @@ export const AnalogyView: React.FC<IAnalogyViewProps> = (props) => {
       // className="my-2 block min-w-[500px] max-w-sm rounded-s border border-gray-200 bg-white p-6 shadow transition-all hover:bg-gray-100 dark:border-gray-700  dark:bg-gray-800 dark:hover:bg-gray-700"
     >
       <div
-        className="border-b-1 w-full cursor-default border border-x-0 border-t-0 border-gray-200 bg-[#F9F9F9] px-5 py-4"
+        className="border-b-1 w-full cursor-default border border-x-0 border-t-0 border-gray-200 bg-[#F9F9F9] px-5 py-4 
+        shadow-[inset_0px_-3px_1px_0px_#00000003]"
         onClick={(e) => {
           e.preventDefault();
         }}
@@ -97,24 +103,6 @@ export const AnalogyView: React.FC<IAnalogyViewProps> = (props) => {
                     }
                   </Link>
                   <span className="text-sm font-normal">&apos;s analogy</span>
-                  {needsLocationInfo ? (
-                    <div className="mx-2 flex rounded-lg border bg-gray-100 px-3 py-1 text-xs text-gray-500">
-                      <span className="  font-normal ">about&nbsp;</span>
-                      <Link
-                        href={`/${analogyData?.category?.slug}/${analogyData?.topic?.slug}`}
-                        className="flex cursor-pointer  items-center  align-middle  font-semibold  transition-all hover:text-gray-800"
-                      >
-                        {analogyData?.topic?.title}
-                      </Link>
-                      <span className=" font-normal">&nbsp;in&nbsp;</span>
-                      <Link
-                        href={`/${analogyData?.category?.slug}`}
-                        className="flex  cursor-pointer  items-center align-middle  font-semibold   transition-all hover:text-gray-800"
-                      >
-                        {analogyData?.category?.name}
-                      </Link>
-                    </div>
-                  ) : null}
                 </div>
               )}
 
@@ -167,7 +155,7 @@ export const AnalogyView: React.FC<IAnalogyViewProps> = (props) => {
         </div>
       </div>
 
-      <div className="min-h-[120px] w-full bg-white px-8 pb-7 pt-5">
+      <div className="min-h-[120px] w-full  bg-white px-8 pb-7 pt-5">
         {analogyStatus === "loading" ? (
           <MultilineSkeleton />
         ) : (
@@ -200,6 +188,49 @@ export const AnalogyView: React.FC<IAnalogyViewProps> = (props) => {
             }}
           />
         )}
+      </div>
+
+      <div
+        className="flex h-12 w-full cursor-default items-center justify-start rounded-b-[17px] border-t 
+      bg-gray-50 px-1 shadow-[inset_0px_3px_1px_0px_#00000003]"
+        onClick={(e) => {
+          e.preventDefault();
+        }}
+      >
+        <span className="flex shrink-0 grow">
+          {needsLocationInfo ? (
+            <div className="mx-2 flex rounded-lg border bg-gray-100 px-3 py-1 text-xs text-gray-500 hover:border-gray-300 hover:bg-[#e9e9e988]">
+              <span className="  font-normal ">about&nbsp;</span>
+              <Link
+                href={`/${analogyData?.category?.slug}/${analogyData?.topic?.slug}`}
+                className="flex cursor-pointer  items-center  align-middle  font-semibold  transition-all hover:text-gray-800"
+              >
+                {analogyData?.topic?.title}
+              </Link>
+              <span className=" font-normal">&nbsp;in&nbsp;</span>
+              <Link
+                href={`/${analogyData?.category?.slug}`}
+                className="flex  cursor-pointer  items-center align-middle  font-semibold   transition-all hover:text-gray-800"
+              >
+                {analogyData?.category?.name}
+              </Link>
+            </div>
+          ) : null}
+
+          <span className="mx-2 flex cursor-pointer rounded-lg border bg-indigo-50 px-3 py-1 text-xs text-indigo-600 hover:border-indigo-300 hover:bg-indigo-100">
+            <AiOutlineLink className="mr-2 mt-0.5 scale-125" /> reference
+          </span>
+          <span className="mx-2 flex cursor-pointer rounded-lg border bg-cyan-50 px-3 py-1 text-xs text-cyan-600 hover:border-cyan-300 hover:bg-cyan-100">
+            <HiOutlineChatAlt className="mr-2 mt-0.5 scale-125" /> 3
+          </span>
+          <span>{getStatusIcon(analogyData?.status)}</span>
+        </span>
+
+        <span className="shrink grow-0">
+          <span className="mx-2 flex cursor-pointer rounded-lg border border-transparent bg-gray-50 p-1 text-xs text-gray-600 hover:border-gray-300 hover:bg-gray-100">
+            <HiOutlineDotsVertical className="mt-0.5 scale-125" />{" "}
+          </span>
+        </span>
       </div>
     </div>
   );

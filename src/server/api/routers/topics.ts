@@ -213,7 +213,7 @@ export const topicsRouter = createTRPCRouter({
   create: protectedProcedure
     .input(
       z.object({
-        title: z.string().min(2, "Title is too short!").max(100, "Title is too long!"),
+        title: z.string().min(2, "Title is too short!").max(32, "Title is too long!"),
         slug: z.string(),
         id: z.string(),
         category: z.object({
@@ -225,7 +225,7 @@ export const topicsRouter = createTRPCRouter({
         }),
         analogies: z.array(z.object({
           id: z.string(),
-          description: z.string(),
+          description: z.string().min(120, "Analogy must be at least 120 characters").max(63206, "your analogy is too long!"),
         })),
       })
     )

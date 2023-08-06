@@ -99,17 +99,20 @@ export function PendingItemView({ item }) {
 
   return (
     <div
-      className=" flex h-14 w-full cursor-pointer flex-row items-center justify-between border-b-[1px] border-[#00000012] py-6 pl-6 transition-all hover:bg-[#00000012]"
+      className=" flex h-14 w-full cursor-pointer flex-row items-center  justify-between border-b-[1px] border-[#00000012] py-6 pl-6 transition-all hover:bg-[#00000012]"
       // key={item.id}
       onMouseEnter={() => setShowActionMenuDots(true)}
       onMouseLeave={() => setShowActionMenuDots(false)}
     >
-      <div className="flex flex-col items-start justify-start overflow-clip overflow-ellipsis whitespace-nowrap ">
-        <Link href={`${routeHandler(item, itemType)}`}>
+      <div className="flex flex-col items-start justify-start overflow-clip ">
+        <Link
+          href={`${routeHandler(item, itemType)}  `}
+          className="w-11/12 overflow-clip overflow-ellipsis whitespace-nowrap"
+        >
           <h1
             className={`${
               showExtendedActionMenu ? "max-w-[10%]" : "w-full"
-            }  font  pt-2 text-xs font-semibold`}
+            }  font  truncate  pt-2 text-xs font-semibold`}
           >
             {item.title ? item.title : item.name ? item.name : item.id}
           </h1>

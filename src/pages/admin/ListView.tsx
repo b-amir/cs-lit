@@ -9,6 +9,7 @@ import { CgSpinner } from "react-icons/cg";
 import { RiDeleteBin6Line as Delete } from "react-icons/ri";
 import Link from "next/link";
 import { routeHandler } from "@/utils/routeHandler";
+import { getStatusIcon } from "@/utils/getStatusIcon";
 
 interface IListViewProps {
   type: string;
@@ -176,12 +177,14 @@ export function ListItemView({
     >
       <div className="flex flex-row items-center overflow-clip overflow-ellipsis whitespace-nowrap">
         <Link href={`${routeHandler(item, type)}`}>
-          <h1 className={`font text-sm font-bold`}>
+          <h1 className={`font max-w-[360px] truncate text-sm font-bold`}>
             {item.title ? item.title : item.name ? item.name : item.id}
           </h1>
         </Link>
-        <span className="ml-2 text-sm text-gray-500">{item?.status ?? ""}</span>
       </div>
+      <span className={`${showActionMenuDots ? "hidden" : "visible"} mr-14`}>
+        {getStatusIcon(item.status)}
+      </span>
       <div className={`${showActionMenuDots ? "visible" : "hidden"} `}>
         <ActionMenu>
           <Delete
