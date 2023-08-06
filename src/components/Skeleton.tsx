@@ -54,7 +54,7 @@ export function TableSkeleton(): React.ReactNode {
   return (
     <div
       id="table-skeleton"
-      className="flex h-3/5 w-[640px] animate-pulse flex-col items-start justify-start gap-4  rounded-[12px] border border-[#cdcdcd7d] bg-gray-50 px-4 py-5 shadow-sm "
+      className="flex h-3/5 w-full animate-pulse  flex-col items-start justify-start gap-4 rounded-[12px]  border border-[#cdcdcd7d] bg-gray-50 px-6 pb-10 pt-12 shadow-sm "
     >
       <div className="my-0.5 flex h-4 w-8/12 animate-pulse justify-between rounded-md  bg-gray-200 align-middle" />
       <div className="my-0.5 flex h-4 w-6/12 animate-pulse justify-between rounded-md  bg-gray-200 align-middle" />
@@ -77,9 +77,9 @@ export function SidebarCategorySkeleton() {
 
 export function AnalogySkeleton() {
   return (
-    <div className="mx-auto my-7 flex w-full max-w-[640px] flex-row justify-between px-6 py-1 align-middle text-sm text-[#808080]">
+    <div className="mx-auto my-7 flex w-full  flex-row justify-between px-16 py-1 align-middle text-sm text-[#808080]">
       <div
-        className="flex h-60 w-[640px] animate-pulse flex-col items-start justify-start gap-4  
+        className="flex h-56 w-full  animate-pulse flex-col items-start justify-start gap-4  
     rounded-[17px] border border-[#cdcdcd7d] bg-gray-50  pb-5 shadow-sm "
       >
         <div className="mb-0.5 flex h-14 w-full animate-pulse justify-between rounded-t-[17px]  border-b bg-gray-100 align-middle" />

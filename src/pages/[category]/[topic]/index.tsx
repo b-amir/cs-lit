@@ -43,19 +43,19 @@ function TopicPage(props) {
         <>
           <div
             id="feed-header"
-            className="z-10 mx-auto mt-32 flex max-w-[640px] flex-col items-start justify-between overflow-clip overflow-ellipsis whitespace-nowrap"
+            className="z-10 mx-auto mt-32 flex w-full flex-col items-start justify-between overflow-clip overflow-ellipsis whitespace-nowrap px-16"
           >
             {topicFetchingStatus === "loading" ? (
               <div className=" mb-4  h-8 w-1/4 animate-pulse rounded-lg bg-[#b4b4b49f]" />
             ) : (
               <h1
-                className={`${archivo.className} px-5  text-5xl font-extrabold  tracking-tight text-[#2A2A2E] sm:text-[2rem]`}
+                className={`${archivo.className}   text-5xl font-extrabold  tracking-tight text-[#2A2A2E] sm:text-[2rem]`}
               >
                 {topicsData?.title}
               </h1>
             )}
             <br />
-            <div className="flex w-full max-w-[640px] flex-row justify-between px-6 py-1 align-middle text-sm text-[#808080] ">
+            <div className="flex w-full flex-row justify-between py-1 align-middle text-sm text-[#808080] ">
               <p className="grow-1 inline-flex">
                 {topicAnalogies?.length}
                 &nbsp;
@@ -80,7 +80,7 @@ function TopicPage(props) {
             <Feed topicAnalogies={topicAnalogies} />
           )}
 
-          <div className="mx-auto my-12 flex w-full max-w-[640px] select-none flex-row justify-center px-6 py-1 align-middle text-sm text-[#808080ae]">
+          <div className="mx-auto my-12 flex w-full select-none flex-row justify-center px-6 py-1 align-middle text-sm text-[#808080ae]">
             <p className="grow-1 font-merriweathersans inline-flex text-lg font-light italic">
               - You can totally add your own analogy here! -
             </p>
@@ -91,7 +91,7 @@ function TopicPage(props) {
               topicTitle={topicsData?.title}
             />
           ) : (
-            <div className="mx-auto mb-12 flex w-full max-w-[640px] select-none flex-row justify-center px-6 py-1 align-middle text-sm text-[#808080ae]">
+            <div className="mx-auto mb-12 flex w-full  select-none flex-row justify-center px-6 py-1 align-middle text-sm text-[#808080ae]">
               <p
                 className="grow-1 font-merriweathersans -mt-6 inline-flex cursor-pointer text-lg font-semibold transition-all hover:text-gray-600"
                 onClick={() => signIn()}

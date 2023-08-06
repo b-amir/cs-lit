@@ -23,7 +23,7 @@ const ProfileFeed = (props: { userId: string }) => {
   }
 
   return (
-    <div className="flex w-full flex-col items-center justify-center">
+    <div className="flex w-full flex-col items-center justify-center px-16">
       {analogyData.map((analogy) => (
         <AnalogyView
           analogy={{
@@ -70,27 +70,29 @@ const ProfilePage: NextPage<object> = () => {
       <PageLayout>
         <div
           id="profile-page"
-          className="z-10 mx-auto mb-20 mt-32 flex max-w-[640px] flex-col items-start justify-between"
+          className="z-10 mx-auto mb-20 flex w-full flex-col items-start justify-between "
         >
           <div
             id="profile-header"
             className="mt-0 flex w-full flex-col items-center justify-center"
           >
-            <div className="mb-12 flex w-full flex-row  border-b-2 border-[#827c7c2b] px-2 py-10">
-              <Image
-                src={profileData.profileImageUrl ?? "/assets/defaultpp.svg"}
-                className="max-w-14 -mt-1.5 mr-4 max-h-14 rounded-full"
-                alt={"Profile Picture"}
-                width={42}
-                height={42}
-              />
+            <div className="mb-12 w-full border-b-2  border-[#827c7c2b]   ">
+              <div className="flex w-full flex-row  bg-gradient-to-tr from-[#ff73631a] to-transparent px-24 pb-12  pt-32">
+                <Image
+                  src={profileData.profileImageUrl ?? "/assets/defaultpp.svg"}
+                  className="max-w-14 -mt-1.5 mr-4 max-h-14 rounded-full ring-1 ring-[#827c7cb8]"
+                  alt={"Profile Picture"}
+                  width={42}
+                  height={42}
+                />
 
-              <p className="text-2xl font-bold text-[#343437]">
-                {profileData?.name ? profileData?.name : profileData?.email}
-                <span className="font-semibold text-[#535357]">
-                  &apos;s Analogies
-                </span>
-              </p>
+                <p className=" text-2xl font-bold text-[#343437]">
+                  {profileData?.name ? profileData?.name : profileData?.email}
+                  <span className="font-semibold text-[#535357]">
+                    &apos;s Analogies
+                  </span>
+                </p>
+              </div>
             </div>
           </div>
           <ProfileFeed userId={profileData.id} />

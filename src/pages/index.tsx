@@ -307,9 +307,11 @@ const Home: NextPage = () => {
                   <li key={category.id}>
                     <Link
                       className="p group flex  flex-row items-center justify-center overflow-x-clip 
-                               rounded-2xl border border-[#d5d9df33] bg-[#6267776e] bg-gradient-to-tr from-[#d6e2f638] to-[#e9e9e93d] px-6 py-9 text-[#2A2A2E]
-                              shadow-sm  backdrop-blur-sm transition-transform duration-300  hover:-translate-x-0.5 hover:-translate-y-0.5
-                            hover:border-[#d4d4d4d5] hover:bg-[#d4d4d4a3] hover:shadow-md"
+                                rounded-2xl border border-[#d5d9df33] bg-[#d6e2f60b] bg-gradient-to-tr 
+                                from-[#d6e2f60b] via-[#d6e2f60b] to-[#d4d4d432] px-6 py-9 text-[#2A2A2E]
+                                shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.15)_0px_1px_1px_0px] 
+                                backdrop-blur-lg transition-shadow  duration-300  hover:-translate-y-0.5
+                              hover:border-[#d4d4d4d5] hover:bg-[#d4d4d4a3] hover:shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]"
                       // onClick={() => {}}
                       href={`/${category.slug}`}
                     >
@@ -335,7 +337,7 @@ const Home: NextPage = () => {
         id="example-section"
         className="flex h-screen w-full flex-row bg-[#fff1f0]"
       >
-        <div className=" mx-auto my-auto flex h-full max-w-[calc(3*100vw/4)] flex-col items-center justify-center text-[#292626]">
+        <div className=" mx-auto my-auto flex h-full w-full max-w-[calc(100vw*7/12)] flex-col items-center justify-center text-[#292626]">
           <h2
             className={`${archivo.className} mx-auto my-3 flex  flex-row justify-center text-3xl font-bold`}
           >
@@ -355,7 +357,7 @@ const Home: NextPage = () => {
             className="mx-auto my-1 flex h-12 w-[1px] flex-col items-center justify-center bg-[#5c2c1d2b]"
           />
           <div
-            className="mx-auto my-[-4px] flex flex-row rounded-3xl border-[1px] border-[#5c2c1d2b] bg-[#5c2c1d09] p-10 "
+            className="mx-auto my-[-4px] flex w-full flex-row rounded-3xl border-[1px] border-[#5c2c1d2b] bg-[#5c2c1d09] px-5 py-10 "
             // style={{
             //   backgroundImage: `url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%232c1d2b' fill-opacity='0.05' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E")`,
             //   backgroundColor: "#f9eae9",
@@ -402,7 +404,7 @@ const Home: NextPage = () => {
         id="share-section"
         className="flex h-screen w-full flex-row bg-[#ffffff]"
       >
-        <div className=" mx-auto my-auto flex h-full max-w-[calc(3*100vw/4)] flex-col items-center justify-center text-[#292626]">
+        <div className=" mx-auto my-auto flex h-full  max-w-[calc(100vw*7/12)] flex-col items-center justify-center text-[#292626]">
           <h2
             className={`${archivo.className} mx-auto my-3 mb-12  flex  flex-row justify-center text-3xl font-bold`}
           >
@@ -431,7 +433,7 @@ const Home: NextPage = () => {
               </button>
             </div>
 
-            <div className=" relative z-20 mx-5 my-5 w-[640px] overflow-clip rounded-[17px] border border-gray-200 bg-white px-0 py-0 shadow-lg transition-all hover:border-[#c1c1c1] ">
+            <div className=" relative z-20  my-5 w-full overflow-clip rounded-[17px] border border-gray-200 bg-white px-0 py-0 shadow-lg transition-all hover:border-[#c1c1c1] ">
               <div className="border-b-1 w-full cursor-default border border-x-0 border-t-0 border-gray-200 bg-[#F9F9F9] px-5 py-4">
                 <div className="flex items-center justify-between align-middle">
                   <div className="flex items-center justify-between align-middle">

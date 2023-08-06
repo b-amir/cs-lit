@@ -1,12 +1,11 @@
 import { PageLayout } from "@/components/layout";
 import { useRouter } from "next/router";
 import { CgFolderAdd } from "react-icons/cg";
-import { IoClose, IoCloseSharp } from "react-icons/io5";
+import { IoClose } from "react-icons/io5";
 import React, { useRef, useState } from "react";
 import { animated, useSpring } from "@react-spring/web";
 import { api } from "@/utils/api";
 import { CornerLoading } from "@/components/loading";
-import { IoTimeOutline } from "react-icons/io5";
 import Link from "next/link";
 import slugify from "slugify";
 import { toast } from "react-hot-toast";
@@ -16,7 +15,8 @@ import { archivo } from "@/styles/customFonts";
 import { addActivityLog } from "@/utils/addActivityLog";
 import { AiFillLock } from "react-icons/ai";
 import { signIn, useSession } from "next-auth/react";
-import { MediumSkeleton, TableSkeleton } from "@/components/Skeleton";
+import { TableSkeleton } from "@/components/Skeleton";
+import { getStatusIcon } from "@/utils/getStatusIcon";
 
 // import { deleteTopicHandler } from "@/utils/deleteActions";
 
@@ -110,7 +110,7 @@ function CategoryPage(props) {
           {/*  ------------------
                       header
                 ------------------  */}
-          <div className="mx-auto mb-0  mt-10 flex max-w-[640px] flex-col justify-between px-3 ">
+          <div className="mx-auto mb-0  mt-10 flex flex-col justify-between px-16 ">
             {categoryFetchingStatus === "loading" ? (
               <div className=" mb-4  h-8 w-1/4 animate-pulse rounded-lg bg-[#b4b4b49f]" />
             ) : (
@@ -166,16 +166,16 @@ function CategoryPage(props) {
           {/*  ------------------
                     topics list
                 ------------------  */}
-          <div className="mx-auto mb-12 mt-8 flex w-[640px] ">
+          <div className="mx-auto mb-12 mt-8 flex px-16 ">
             {/* table */}
             {categoryFetching && <CornerLoading />}
             {topicsFetchingStatus === "loading" && <TableSkeleton />}
             {topicsFetchingStatus === "success" && topicsData.length > 0 ? (
-              <div className="relative overflow-x-auto rounded-[12px] border border-[#cdcdcd7d] shadow-sm ">
-                <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
+              <div className="relative w-full overflow-x-auto rounded-[12px] border  border-[#cdcdcd7d] shadow-sm">
+                <table className="w-full  text-left text-sm text-gray-500 dark:text-gray-400">
                   <thead className="border-b bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
-                      <th scope="col" className="w-[375px] px-6 py-3">
+                      <th scope="col" className="w-full px-6 py-3">
                         Topic
                       </th>
                       <th scope="col" className="px-6 py-3">
@@ -195,7 +195,7 @@ function CategoryPage(props) {
                     {topicsData?.map((topic) => (
                       <tr
                         key={topic.id}
-                        className="border-b bg-white hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800"
+                        className="border-b bg-white  hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800"
                       >
                         <Link
                           href={`${UrlCategory}/${topic.slug}`}
@@ -204,37 +204,13 @@ function CategoryPage(props) {
                           {" "}
                           <th
                             scope="row"
-                            className=" min-w-[375px] max-w-[375px] cursor-pointer overflow-clip overflow-ellipsis whitespace-nowrap px-6 py-6 text-base font-medium text-[#2A2A2E] dark:text-white"
+                            className="cursor-pointer overflow-clip overflow-ellipsis whitespace-nowrap px-6 py-6 text-base font-medium text-[#2A2A2E] dark:text-white"
                           >
                             {topic.title}
                           </th>
                         </Link>
                         <td className="px-6 py-4">
-                          {(() => {
-                            switch (topic.status) {
-                              // case "PUBLISHED":
-                              //   return (
-                              //     <IoMdCheckmark className="text-xl text-[#26b852]" />
-                              //   );
-                              case "PENDING":
-                                return (
-                                  <IoTimeOutline className="text-md h-[24px] w-[24px] rounded-full bg-[#fffddd] p-[2px] text-[#aa8a3f]" />
-                                  // <span className="rounded-[9px] bg-[#fffddd] px-3 text-xs font-semibold text-[#aa8a3f]">
-                                  // Pending
-                                  // </span>
-                                );
-                              case "REJECTED":
-                                return (
-                                  <IoCloseSharp className="text-lg text-[#ce742f]" />
-                                );
-                              case "DELETED":
-                                return (
-                                  <IoCloseSharp className="text-lg text-[#ce742f]" />
-                                );
-                              default:
-                                return null;
-                            }
-                          })()}
+                          {getStatusIcon(topic.status)}
                         </td>
                         <td className="px-6 py-4 text-center ">
                           {new Date(topic.updatedAt).toLocaleDateString()}
@@ -288,7 +264,7 @@ function CategoryPage(props) {
                         CREATE NEW TOPIC
              ----------------------------------------  */}
         <div
-          className={`z-30 flex w-full grow-0 flex-col items-center    px-20 text-[#2A2A2E] shadow-lg backdrop-blur-sm backdrop-filter ${
+          className={`z-30 flex w-full grow-0 flex-col items-center    px-16 text-[#2A2A2E] shadow-lg backdrop-blur-sm backdrop-filter ${
             topicEditor?.shown
               ? "sticky bottom-0 h-full max-h-[calc(100vh-90px-1px)] bg-[#2a2a2e3b]  pb-5 pt-7 shadow-[0px_-1px_6px_2px_#00000015,0px_0px_0px_1px_#00000030,0px_-11px_20px_2px_#00000005,0px_-20px_55px_0px_#00000005]"
               : "sticky bottom-[-200px] bg-[#2a2a2e3b] pb-7 pt-9"
@@ -308,7 +284,11 @@ function CategoryPage(props) {
           {/*  ------------------
                        main form
                   ------------------  */}
-          <animated.div style={animationProps} ref={contentRef}>
+          <animated.div
+            style={animationProps}
+            ref={contentRef}
+            className="w-full"
+          >
             {topicEditor.shown && (
               <TopicEditorForm
                 UrlCategory={UrlCategory}
@@ -352,7 +332,8 @@ function NewTopicToggleTrigger({
   return (
     <div
       id="add-topic-header"
-      className={` mb-4 inline-flex w-[640px] cursor-pointer flex-row items-center  rounded-[12px] border border-[#dcdcdca1] bg-[#efefef]  px-10 text-xl font-bold shadow-sm transition-all duration-300  hover:border-[#8b8b8ba5]  hover:bg-[#ffffff]    ${
+      className={` mb-4 inline-flex w-full cursor-pointer flex-row items-center  rounded-[12px] border border-[#dcdcdca1] bg-[#efefef]  
+      px-10 text-xl font-bold shadow-sm transition-all duration-300  hover:border-[#8b8b8ba5]  hover:bg-[#ffffff]    ${
         topicEditor?.shown ? "py-6 " : "py-6 "
       } `}
       onClick={() => {
@@ -386,7 +367,7 @@ function NewTopicToggleTrigger({
         </h2>
       </span>
       <IoClose
-        className={`transform cursor-pointer text-2xl text-[#737373] transition-transform delay-500 duration-200 hover:text-black ${
+        className={`mb-1 transform cursor-pointer text-2xl text-[#737373] transition-transform delay-500 duration-200 hover:text-black ${
           topicEditor?.shown ? "" : "rotate-45"
         }`}
       />
@@ -554,11 +535,11 @@ export function TopicEditorForm({
       {["ADMIN", "EDITOR", "USER"].includes(sessionData?.user.role) ? (
         <form
           onSubmit={(e) => e.preventDefault()}
-          className="mx-auto flex max-w-[640px] flex-col items-start justify-center "
+          className="mx-auto flex w-full flex-col items-start justify-center "
         >
           <div
             id="add-topic-body"
-            className="mt-auto grid min-w-[640px] grid-cols-2 gap-x-6 gap-y-14 rounded-[12px] border border-[#c8c8c8] bg-[#ebeaea] px-6  py-6 transition-all duration-300 hover:border-[#c1c1c1]"
+            className="mt-auto grid w-full grid-cols-2 gap-x-6 gap-y-14 rounded-[12px] border border-[#c8c8c8] bg-[#ebeaea] px-6  py-6 transition-all duration-300 hover:border-[#c1c1c1]"
           >
             <div className="sm:col-span-1">
               <label
@@ -702,7 +683,7 @@ export function TopicEditorForm({
           </div>
         </form>
       ) : (
-        <div className="mt-auto grid h-full  min-w-[640px] grid-cols-1 gap-x-6 gap-y-14 rounded-[12px] border border-[#c8c8c8] bg-[#ebeaea] px-6  py-6 transition-all duration-300 hover:border-[#c1c1c1]">
+        <div className="mt-auto grid h-full   grid-cols-1 gap-x-6 gap-y-14 rounded-[12px] border border-[#c8c8c8] bg-[#ebeaea] px-6  py-6 transition-all duration-300 hover:border-[#c1c1c1]">
           <div className="flex select-none flex-col items-center justify-center text-gray-500">
             {" "}
             <AiFillLock />

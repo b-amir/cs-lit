@@ -128,17 +128,21 @@ export function CategoryEditForm({
           className="flex h-12 w-full flex-row items-center justify-end  pb-4 pt-14 "
         >
           <button
-            className="px-2 py-2 font-semibold text-gray-500 transition-all hover:underline"
+            className="px-2 py-2 pr-5 text-sm font-semibold text-gray-500 transition-all hover:underline"
             onClick={() => setEditorModalShown(false)}
           >
             cancel
           </button>
 
           <button
-            className="mx-3 mb-3 mt-2 inline-flex justify-center rounded-[12px] border border-[#77777711] bg-gradient-to-br from-[#e98908] to-[#ef6400] px-4 py-2 font-semibold text-white shadow-sm transition-all hover:shadow-md hover:brightness-125 focus:outline-none focus:ring-2 focus:ring-[#1d1d1d] focus:ring-offset-2"
             onClick={handleSave}
+            className="group  flex flex-row justify-center rounded-xl
+            border border-[#5c2c1d2b] bg-[#ff7263] px-6 py-1.5 text-sm font-semibold text-[#ffffffd3] shadow-sm transition-all
+            duration-200 [text-shadow:_0_1px_0_rgb(0_0_0_/_10%)] hover:border-[#5c2c1d66] hover:shadow-md"
           >
-            save
+            <span className="cursor-pointer transition-transform duration-300 group-hover:-translate-x-0.5 group-hover:[text-shadow:_0_2px_0_rgb(0_0_0_/_15%)]">
+              Save
+            </span>
           </button>
         </div>
       </form>
@@ -259,17 +263,21 @@ export function TopicEditForm({
           className="flex h-12 w-full flex-row items-center justify-end  pb-4 pt-14 "
         >
           <button
-            className="px-2 py-2 font-semibold text-gray-500 transition-all hover:underline"
+            className="px-2 py-2 pr-5 text-sm font-semibold text-gray-500 transition-all hover:underline"
             onClick={() => setEditorModalShown(false)}
           >
             cancel
           </button>
 
           <button
-            className="mx-3 mb-3 mt-2 inline-flex justify-center rounded-[12px] border border-[#77777711] bg-gradient-to-br from-[#e98908] to-[#ef6400] px-4 py-2 font-semibold text-white shadow-sm transition-all hover:shadow-md hover:brightness-125 focus:outline-none focus:ring-2 focus:ring-[#1d1d1d] focus:ring-offset-2"
             onClick={handleSave}
+            className="group  flex flex-row justify-center rounded-xl
+            border border-[#5c2c1d2b] bg-[#ff7263] px-6 py-1.5 text-sm font-semibold text-[#ffffffd3] shadow-sm transition-all
+            duration-200 [text-shadow:_0_1px_0_rgb(0_0_0_/_10%)] hover:border-[#5c2c1d66] hover:shadow-md"
           >
-            save
+            <span className="cursor-pointer transition-transform duration-300 group-hover:-translate-x-0.5 group-hover:[text-shadow:_0_2px_0_rgb(0_0_0_/_15%)]">
+              Save
+            </span>
           </button>
         </div>
       </form>
@@ -399,17 +407,21 @@ export function AnalogyEditForm({
           className="flex h-12 w-full flex-row items-center justify-end  pb-4 pt-14 "
         >
           <button
-            className="px-2 py-2 font-semibold text-gray-500 transition-all hover:underline"
+            className="px-2 py-2 pr-5 text-sm font-semibold text-gray-500 transition-all hover:underline"
             onClick={() => setEditorModalShown(false)}
           >
             cancel
           </button>
 
           <button
-            className="mx-3 mb-3 mt-2 inline-flex justify-center rounded-[12px] border border-[#77777711] bg-gradient-to-br from-[#e98908] to-[#ef6400] px-4 py-2 font-semibold text-white shadow-sm transition-all hover:shadow-md hover:brightness-125 focus:outline-none focus:ring-2 focus:ring-[#1d1d1d] focus:ring-offset-2"
             onClick={handleSave}
+            className="group  flex flex-row justify-center rounded-xl
+            border border-[#5c2c1d2b] bg-[#ff7263] px-6 py-1.5 text-sm font-semibold text-[#ffffffd3] shadow-sm transition-all
+            duration-200 [text-shadow:_0_1px_0_rgb(0_0_0_/_10%)] hover:border-[#5c2c1d66] hover:shadow-md"
           >
-            save
+            <span className="cursor-pointer transition-transform duration-300 group-hover:-translate-x-0.5 group-hover:[text-shadow:_0_2px_0_rgb(0_0_0_/_15%)]">
+              Save
+            </span>
           </button>
         </div>
       </form>
@@ -548,17 +560,21 @@ export function UserEditForm({
           className="flex h-12 w-full flex-row items-center justify-end  pb-4 pt-14 "
         >
           <button
-            className="px-2 py-2 font-semibold text-gray-500 transition-all hover:underline"
+            className="px-2 py-2 pr-5 text-sm font-semibold text-gray-500 transition-all hover:underline"
             onClick={() => setEditorModalShown(false)}
           >
             cancel
           </button>
 
           <button
-            className="mx-3 mb-3 mt-2 inline-flex justify-center rounded-[12px] border border-[#77777711] bg-gradient-to-br from-[#e98908] to-[#ef6400] px-4 py-2 font-semibold text-white shadow-sm transition-all hover:shadow-md hover:brightness-125 focus:outline-none focus:ring-2 focus:ring-[#1d1d1d] focus:ring-offset-2"
             onClick={handleSave}
+            className="group  flex flex-row justify-center rounded-xl
+            border border-[#5c2c1d2b] bg-[#ff7263] px-6 py-1.5 text-sm font-semibold text-[#ffffffd3] shadow-sm transition-all
+            duration-200 [text-shadow:_0_1px_0_rgb(0_0_0_/_10%)] hover:border-[#5c2c1d66] hover:shadow-md"
           >
-            save
+            <span className="cursor-pointer transition-transform duration-300 group-hover:-translate-x-0.5 group-hover:[text-shadow:_0_2px_0_rgb(0_0_0_/_15%)]">
+              Save
+            </span>
           </button>
         </div>
       </form>

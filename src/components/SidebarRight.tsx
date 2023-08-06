@@ -15,7 +15,7 @@ export function SidebarRight(props: { username: any }) {
   const [userSectionShown, setUserSectionShown] = useState(false);
 
   const { data: AnalogiesData } = api.analogy.getAll.useInfiniteQuery(
-    { limit: 5 },
+    { limit: 5, order: "desc" },
     {}
   );
   const { data: TopThreeData } = api.profile.getTopThree.useQuery();

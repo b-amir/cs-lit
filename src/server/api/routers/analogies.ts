@@ -11,6 +11,7 @@ import { TRPCError } from "@trpc/server";
 import { filterUserForClient } from "@/server/helpers/filterUserForClient";
 import { type Analogy, type Prisma } from "@prisma/client";
 import { prisma } from "@/server/db"
+import { getTopicNameById, getUserNameById } from "./topics";
 
 // const prisma = new PrismaClient();
 
@@ -250,7 +251,7 @@ export const analogiesRouter = createTRPCRouter({
 
       const analogy = await ctx.prisma.analogy.create({
         data: {
-          title: input.title,
+          title: `${await getTopicNameById(input.topicId)} by ${await getUserNameById(authorId)}`,
           authorId,
           description: input.description,
           topicId: input.topicId,

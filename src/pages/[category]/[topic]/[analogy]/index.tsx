@@ -68,7 +68,7 @@ export default function SingleAnalogyPage() {
         <div className="mx-auto flex h-[calc(100dvh-0px)] max-w-[720px] flex-col justify-between pt-40">
           <div
             id="nav-share"
-            className="mb-8 flex min-w-[640px] flex-row justify-between text-[#2A2A2E]"
+            className="mb-8 flex w-full flex-row justify-between text-[#2A2A2E]"
           >
             <button
               onClick={() => router.back()}
@@ -144,7 +144,7 @@ export default function SingleAnalogyPage() {
         {!aboutIsHidden && (
           <div
             id="what-is-footer"
-            className="border-t-1 mt-auto w-full min-w-[640px] border border-x-0 border-b-0 bg-[#2a2a2e3b]  px-20 pb-14 pt-12 text-[#656565]"
+            className="border-t-1 mt-auto w-full  border border-x-0 border-b-0 bg-[#2a2a2e3b]  px-20 pb-14 pt-12 text-[#656565]"
           >
             <span
               className={`${archivo.className}  font-extrabold`}

@@ -60,8 +60,8 @@ export const PostEditor = ({
   } else {
     return (
       <>
-        <form onSubmit={(e) => e.preventDefault()}>
-          <div className="mx-auto my-5 mb-16 w-full max-w-[640px] rounded-[17px] border border-gray-200 bg-gray-50 transition-all hover:border-[#c1c1c1] focus:border-[#c1c1c1] dark:border-gray-600 dark:bg-gray-700">
+        <form onSubmit={(e) => e.preventDefault()} className="px-16">
+          <div className=" mx-auto my-5 mb-16 w-full rounded-[17px] border border-gray-200 bg-gray-50 transition-all hover:border-[#c1c1c1] focus:border-[#c1c1c1] dark:border-gray-600 dark:bg-gray-700">
             <div className="rounded-[17px] bg-white px-6 pt-6 dark:bg-gray-800">
               <label htmlFor="comment" className="sr-only">
                 Add your analogy

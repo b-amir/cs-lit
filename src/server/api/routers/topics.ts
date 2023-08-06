@@ -42,6 +42,13 @@ export async function getUserNameById(id: string) {
   return user?.name ? user?.name : user?.email
 }
 
+export async function getTopicNameById(id: string) {
+  // const prisma = new PrismaClient();
+  const topic = await prisma.topic.findUnique({
+    where: { id: id },
+  });
+  return topic?.title
+}
 
 export const topicsRouter = createTRPCRouter({
   // getAll: publicProcedure.query(async ({ ctx }) => {

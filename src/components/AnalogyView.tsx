@@ -50,7 +50,8 @@ export const AnalogyView: React.FC<IAnalogyViewProps> = (props) => {
   return (
     <div
       key={analogy?.id}
-      className=" relative z-20 mx-5 my-5 w-[640px] overflow-clip rounded-[17px] border border-gray-200 bg-white px-0 py-0 shadow-lg transition-all hover:border-[#c1c1c1] "
+      className=" z-20  mx-auto my-5 flex  w-full max-w-[880px] flex-col overflow-clip rounded-[17px] 
+      border border-gray-200 bg-white px-0 py-0 shadow-lg transition-all hover:border-[#c1c1c1] "
       // className="my-2 block min-w-[500px] max-w-sm rounded-s border border-gray-200 bg-white p-6 shadow transition-all hover:bg-gray-100 dark:border-gray-700  dark:bg-gray-800 dark:hover:bg-gray-700"
     >
       <div
@@ -171,7 +172,7 @@ export const AnalogyView: React.FC<IAnalogyViewProps> = (props) => {
           <MultilineSkeleton />
         ) : (
           <ReactMarkdown
-            className="prose-code:dark:text-gray-30 prose prose-pre:bg-[#101A25]"
+            className="prose-code:dark:text-gray-30 prose text-ellipsis break-words prose-pre:bg-[#101A25]"
             // eslint-disable-next-line react/no-children-prop
             children={analogyData?.description}
             components={{
@@ -222,7 +223,9 @@ const AnalogyViewWithLink: React.FC<IAnalogyViewWithLinkProps> = ({
   });
 
   return analogyLink ? (
-    <Link href={analogyLink}>{wrappedChildren}</Link>
+    <Link href={analogyLink} className="w-full ">
+      {wrappedChildren}
+    </Link>
   ) : (
     <>{wrappedChildren}</>
   );
