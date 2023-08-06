@@ -69,7 +69,7 @@ export const AnalogyView: React.FC<IAnalogyViewProps> = (props) => {
                 className="flex items-center align-middle text-xs "
               >
                 <Image
-                  src={analogyData?.user?.image || "/assets/default-pp.svg"}
+                  src={analogyData?.user?.image || "/assets/defaultpp.svg"}
                   className="ml-1 mr-4 h-8 w-8 rounded-full ring-[3px] ring-[#b2b2b232] transition-all duration-300 hover:ring-[#80808073]"
                   alt={"Profile Picture"}
                   width={42}

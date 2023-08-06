@@ -1,11 +1,11 @@
 export const routeHandler = (item, type) => {
   if (type === "Topics") {
-    return `/${item.category?.name}/${item.title}`;
+    return `/${item.category?.name}/${item.slug}`;
   } else if (type === "Categories") {
     return `/${item.slug}`;
   } else if (type === "Users") {
     return `/profile/${item.id}`;
   } else if (type === "Analogies") {
-    return `/${item.category?.name}/${item.topic?.title}/${item.id}`;
+    return `/${item.category?.slug}/${item.topic?.slug}/${item.id}`;
   } else return;
 };

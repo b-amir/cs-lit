@@ -75,7 +75,8 @@ export function SidebarLeft(props: { username: any }) {
       {/* {showSidebar && ( */}
       <aside
         id="logo-sidebar"
-        className="fixed left-0 top-0 z-50 flex h-screen w-1/6 -translate-x-full flex-col place-content-stretch items-stretch justify-between border-r border-white bg-white pt-0 shadow-md transition-transform dark:border-gray-700 dark:bg-gray-800 sm:translate-x-0"
+        className="fixed left-0 top-0 z-50 flex h-screen w-1/6 -translate-x-full flex-col place-content-stretch items-stretch 
+        justify-between border-r border-white bg-white pt-0 shadow-md transition-transform dark:border-gray-700 dark:bg-gray-800 sm:translate-x-0"
         aria-label="Sidebar"
       >
         <div className="align-around h-full overflow-y-auto bg-white px-0 pb-0 dark:bg-gray-800">
@@ -104,7 +105,7 @@ export function SidebarLeft(props: { username: any }) {
                       href={`/${category.slug}`}
                     >
                       {getCategoryIcon(category?.slug)}
-                      <span className="text-truncate elip ml-3 flex-1 overflow-x-clip text-ellipsis whitespace-nowrap">
+                      <span className="elip ml-3 flex-1 overflow-x-clip truncate text-ellipsis whitespace-nowrap">
                         {category.name}
                       </span>
                     </Link>

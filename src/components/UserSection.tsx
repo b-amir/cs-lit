@@ -25,7 +25,7 @@ export const UserSection = (props: {
         >
           {sessionData ? (
             <Image
-              src={sessionData?.user.image || "/assets/avatar.webp"}
+              src={sessionData?.user.image || "/assets/defaultpp.svg"}
               className="min-h-15 min-w-15 rounded-full ring-1 ring-gray-300 "
               width={36}
               height={36}

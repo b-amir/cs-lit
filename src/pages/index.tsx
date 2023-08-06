@@ -13,8 +13,10 @@ import { AnalogyView } from "@/components/AnalogyView";
 import AnalogyViewWithLink from "@/components/AnalogyView";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { AiOutlineLink } from "react-icons/ai";
-import { HomeCategorySkeleton } from "@/components/Skeleton";
+import { AvatarSkeleton, HomeCategorySkeleton } from "@/components/Skeleton";
 import { HomeUserSkeleton } from "@/components/Skeleton";
+import Head from "next/head";
+import { RiImageLine } from "react-icons/ri";
 
 const carouselItems = [
   {
@@ -120,6 +122,14 @@ const Home: NextPage = () => {
 
   return (
     <>
+      <Head>
+        <title>CS Like I&apos;m 10!</title>
+        <meta
+          name="description"
+          content="Explain Computer science like I'm 10 Years Old!"
+        />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <nav className=" top-0 flex h-[90px] w-full items-center justify-between bg-[#f7f7f700] px-40 pt-20 dark:bg-gray-800">
         <div className="flex items-center justify-center gap-6">
           <Link href="/">
@@ -138,14 +148,18 @@ const Home: NextPage = () => {
             <HomeUserSkeleton />
           ) : (
             <div
-              className="flex items-center gap-2 rounded-full border border-[#5c2c1d2b] bg-[#ffffff36] px-2 py-2 pr-4  backdrop-blur-sm transition-all duration-300 
-          hover:border-[#5c2c1d91] "
+              className="flex items-center gap-2 rounded-full border border-[#5c2c1d2b] bg-[#ffffff36] px-2 py-2 pr-4  
+              backdrop-blur-sm transition-all duration-300  hover:border-[#5c2c1d91] hover:bg-[#ff73631c]"
             >
               <div className="flex items-center gap-2">
-                <Link href="/profile">
+                <Link href={`/profile/${sessionData?.user?.id}`}>
                   <div className="flex items-center gap-2">
                     <Image
-                      src={sessionData?.user.image}
+                      src={
+                        sessionData?.user?.image
+                          ? sessionData?.user?.image
+                          : "/assets/defaultpp.svg"
+                      }
                       width={30}
                       height={30}
                       alt={"profile picture"}
@@ -153,7 +167,9 @@ const Home: NextPage = () => {
                     />
 
                     <span className="hidden sm:block">
-                      {sessionData?.user.name}
+                      {sessionData?.user.name
+                        ? sessionData?.user.name
+                        : sessionData?.user.email}
                     </span>
                   </div>
                 </Link>
@@ -270,7 +286,7 @@ const Home: NextPage = () => {
           alt="lighthouse"
           className="absolute  bottom-0 z-0 mb-0 flex min-h-[450px] max-w-[calc(1*100vw/4)]  select-none flex-col"
         />
-        <div className="absolute right-0 mx-24 my-10 flex h-full max-w-[calc(3*100vw/4)] flex-col text-[#292626]">
+        <div className="absolute right-0 mx-24 my-10 flex h-full max-w-[calc(3*100vw/5)] flex-col text-[#292626]">
           <h2
             className={`${archivo.className} mx-auto my-14 flex h-1/6  flex-row justify-center text-3xl font-bold`}
           >
@@ -285,16 +301,16 @@ const Home: NextPage = () => {
                 page?.items?.map((category) => (
                   <li key={category.id}>
                     <Link
-                      className="p group flex max-w-md flex-row items-center justify-center overflow-x-clip overflow-ellipsis rounded-xl
-                                border border-[#16161d26] bg-[#6267774f] px-6 py-7 
-                              text-[#2A2A2E] shadow-sm backdrop-blur-sm transition-all duration-300 hover:border-[#d4d4d4d5]
-                            hover:bg-[#d4d4d4a3] hover:shadow-md "
+                      className="p group flex  flex-row items-center justify-center overflow-x-clip 
+                                rounded-2xl border border-[#16161d26] bg-[#6267776e] bg-gradient-to-tr from-[#d6e2f638] to-[#e9e9e93d] px-6 py-9
+                              text-[#2A2A2E]  backdrop-blur-sm transition-transform duration-300  hover:-translate-x-0.5 hover:-translate-y-0.5
+                            hover:border-[#d4d4d4d5] hover:bg-[#d4d4d4a3] hover:shadow-md"
                       // onClick={() => {}}
                       href={`/${category.slug}`}
                     >
                       {getCategoryIcon(category?.slug)}
 
-                      <span className="ml-4 flex-1 whitespace-nowrap  transition-all duration-300 group-hover:-translate-x-0.5">
+                      <span className="ml-4 flex-1 truncate text-ellipsis  whitespace-nowrap font-semibold transition-all duration-200 hover:text-[#37373b]">
                         {category.name}
                       </span>
                     </Link>
@@ -309,6 +325,7 @@ const Home: NextPage = () => {
           </p>
         </div>
       </div>
+
       <div
         id="example-section"
         className="flex h-screen w-full flex-row bg-[#fff1f0]"
@@ -334,10 +351,10 @@ const Home: NextPage = () => {
           />
           <div
             className="mx-auto my-[-4px] flex flex-row rounded-3xl border-[1px] border-[#5c2c1d2b] bg-[#5c2c1d09] p-10 "
-            style={{
-              backgroundImage: "url(/assets/noise.webp)",
-              backgroundBlendMode: "overlay",
-            }}
+            // style={{
+            //   backgroundImage: `url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%232c1d2b' fill-opacity='0.05' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E")`,
+            //   backgroundColor: "#f9eae9",
+            // }}
           >
             <AnalogyViewWithLink>
               <AnalogyView
@@ -365,7 +382,7 @@ const Home: NextPage = () => {
           />
 
           <button
-            className="font-regular text-md group mx-auto mb-3 mt-[-4px] flex flex-row items-center justify-center 
+            className="font-regular text-md group mx-auto mb-3 mt-[-4px] flex flex-row content-center items-center  justify-center
           rounded-xl border border-[#5c2c1d2b] bg-[#ffffff98] px-8 py-2 text-sm font-semibold text-[#292626a9] shadow-sm
           transition-all duration-200 hover:border-[#5c2c1d66] hover:px-8 hover:shadow-md dark:text-gray-400"
           >
@@ -376,13 +393,117 @@ const Home: NextPage = () => {
         </div>
       </div>
 
+      <div
+        id="share-section"
+        className="flex h-screen w-full flex-row bg-[#ffffff]"
+      >
+        <div className=" mx-auto my-auto flex h-full max-w-[calc(3*100vw/4)] flex-col items-center justify-center text-[#292626]">
+          <h2
+            className={`${archivo.className} mx-auto my-3 mb-12  flex  flex-row justify-center text-3xl font-bold`}
+          >
+            Share your insights within your social circles
+          </h2>
+
+          <p className="font-regular text-md mx-auto my-3 flex w-3/4 flex-row items-center justify-center text-center text-[#292626a9]">
+            The thought structure that helped you understand this complex topic
+            could add value to the world. Share it with your friends!
+          </p>
+          <div
+            id="vertical-line"
+            className="mx-auto my-1 flex h-12 w-[1px] flex-col items-center justify-center bg-[#5c2c1d2b]"
+          />
+          <div className="mb-20 mt-[-4px] flex flex-col rounded-[23px] bg-[#e8e5e2] bg-gradient-to-bl from-[#1e7cba] to-[#7c1db3] px-5 py-5">
+            <div className="flex w-full flex-row items-center justify-end px-5 py-4 text-white">
+              Share As:{" "}
+              <button className="mx-2 inline-flex flex-row items-center rounded-[12px] border border-[#d2d2d28e] bg-[#ffffffc1] px-3 py-1 text-sm text-gray-800 transition-all hover:border-[#c8c8c8] hover:bg-[#ffffff]">
+                <RiImageLine className="mr-1" />
+                Image{" "}
+              </button>{" "}
+              or{" "}
+              <button className="mx-2 inline-flex flex-row items-center rounded-[12px] border border-[#d2d2d28e] bg-[#ffffffc1] px-3 py-1 text-sm text-gray-800 transition-all hover:border-[#c8c8c8] hover:bg-[#ffffff]">
+                <AiOutlineLink className="mr-1" />
+                Link
+              </button>
+            </div>
+
+            <div className=" relative z-20 mx-5 my-5 w-[640px] overflow-clip rounded-[17px] border border-gray-200 bg-white px-0 py-0 shadow-lg transition-all hover:border-[#c1c1c1] ">
+              <div className="border-b-1 w-full cursor-default border border-x-0 border-t-0 border-gray-200 bg-[#F9F9F9] px-5 py-4">
+                <div className="flex items-center justify-between align-middle">
+                  <div className="flex items-center justify-between align-middle">
+                    {sessionStatus === "loading" ? (
+                      <AvatarSkeleton />
+                    ) : (
+                      <div className="flex items-center align-middle text-xs ">
+                        <Image
+                          src={
+                            sessionData?.user?.image
+                              ? sessionData?.user?.image
+                              : "/assets/defaultpp.svg"
+                          }
+                          className="ml-1 mr-4 h-8 w-8 rounded-full ring-[3px] ring-[#b2b2b232] transition-all duration-300 hover:ring-[#80808073]"
+                          alt={"Profile Picture"}
+                          width={42}
+                          height={42}
+                        />{" "}
+                      </div>
+                    )}
+
+                    <div>
+                      <div className="mb-0.5 flex items-center justify-between align-middle font-normal  text-[#666666]">
+                        <Link
+                          href={`/profile/${sessionData?.user.id}`}
+                          className="flex items-center align-middle text-sm transition-all hover:text-gray-800"
+                        >
+                          {sessionData?.user.name
+                            ? sessionData?.user?.name
+                            : sessionData?.user?.email}
+                        </Link>
+                        <span className="text-sm font-normal">
+                          &apos;s analogy
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className=" mx-auto min-h-[120px] w-full bg-white px-8 pb-7 pt-5">
+                A revolutionary idea on how to escape from the clutches of
+                Vim&apos;s mysterious world...
+              </div>
+            </div>
+          </div>
+
+          <button
+            className="font-regular text-md text-md group mx-auto mb-1 flex flex-row content-center  items-center
+          justify-center rounded-xl border border-[#5c2c1d2b] bg-[#ff7263] px-8 py-3 font-semibold text-[#ffffffd3] shadow-sm
+          transition-all duration-200 hover:border-[#5c2c1d66] hover:px-8 hover:shadow-md dark:text-gray-400"
+          >
+            <span
+              className="cursor-pointer transition-all duration-300 group-hover:-translate-x-0.5"
+              onClick={() => {
+                const categorySection =
+                  document.getElementById("category-section");
+                categorySection?.scrollIntoView({ behavior: "smooth" });
+              }}
+            >
+              Start Contributing!
+            </span>
+          </button>
+
+          <p className="font-regular mx-auto my-7 mb-12 flex flex-row  items-center justify-center text-xs text-[#474343a9]">
+            ( It&apos;s 100% free and open-source! )
+          </p>
+        </div>
+      </div>
+
       <footer
         id="footer-section"
-        className="mx-auto flex w-full flex-row items-center justify-center bg-[#1a2329] px-12 py-6 shadow-inner shadow-[#1d262b]"
-        style={{
-          backgroundImage: "url(/assets/noise.webp)",
-          backgroundBlendMode: "overlay",
-        }}
+        className="mx-auto flex w-full flex-row items-center justify-center border-t border-t-[#ffffff] bg-[#263238] px-12 py-6 shadow-inner shadow-[#1d262b]"
+        // style={{
+        //   backgroundImage: "url(/assets/noise.webp)",
+        //   backgroundBlendMode: "overlay",
+        // }}
       >
         <Image
           id="grayscaled-logo"
@@ -394,9 +515,9 @@ const Home: NextPage = () => {
         />
         <div
           id="vertical-line"
-          className="mx-auto my-1 mr-6 flex h-16 w-[1px] flex-col items-center justify-center bg-[#e5e1e047]"
+          className=" my-1 flex h-16 w-[1px] flex-col items-center justify-center bg-[#e5e1e031]"
         />
-        <div className="mx-auto flex w-full flex-col  text-xs  text-[#dadadac1]">
+        <div className="ml-6 flex  flex-col  text-xs  text-[#dadadac1]">
           <div className="inline-flex ">
             <FaLinkedin className="mr-1.5 mt-0.5" />
             <span className="mr-1">Hey, I&apos;m</span>
