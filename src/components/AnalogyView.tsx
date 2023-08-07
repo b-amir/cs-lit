@@ -191,50 +191,22 @@ export const AnalogyView: React.FC<IAnalogyViewProps> = (props) => {
       </div>
 
       <div
+        id="analogy-chin"
         className="flex h-12 w-full cursor-default items-center justify-start rounded-b-[17px] border-t 
       bg-gray-50 px-1 shadow-[inset_0px_3px_1px_0px_#00000003]"
         onClick={(e) => {
           e.preventDefault();
         }}
       >
-        <span className="flex shrink-0 grow">
-          {needsLocationInfo ? (
-            <div className="mx-2 flex rounded-lg border bg-gray-100 px-3 py-1 text-xs text-gray-500 hover:border-gray-300 hover:bg-[#e9e9e988]">
-              <span className="  font-normal ">about&nbsp;</span>
-              <Link
-                href={`/${analogyData?.category?.slug}/${analogyData?.topic?.slug}`}
-                className="flex cursor-pointer  items-center  align-middle  font-semibold  transition-all hover:text-gray-800"
-              >
-                {analogyData?.topic?.title}
-              </Link>
-              <span className=" font-normal">&nbsp;in&nbsp;</span>
-              <Link
-                href={`/${analogyData?.category?.slug}`}
-                className="flex  cursor-pointer  items-center align-middle  font-semibold   transition-all hover:text-gray-800"
-              >
-                {analogyData?.category?.name}
-              </Link>
-            </div>
-          ) : null}
-
-          <span className="mx-2 flex cursor-pointer rounded-lg border bg-indigo-50 px-3 py-1 text-xs text-indigo-600 hover:border-indigo-300 hover:bg-indigo-100">
-            <AiOutlineLink className="mr-2 mt-0.5 scale-125" /> reference
-          </span>
-          <span className="mx-2 flex cursor-pointer rounded-lg border bg-cyan-50 px-3 py-1 text-xs text-cyan-600 hover:border-cyan-300 hover:bg-cyan-100">
-            <HiOutlineChatAlt className="mr-2 mt-0.5 scale-125" /> 3
-          </span>
-          <span>{getStatusIcon(analogyData?.status)}</span>
-        </span>
-
-        <span className="shrink grow-0">
-          <span className="mx-2 flex cursor-pointer rounded-lg border border-transparent bg-gray-50 p-1 text-xs text-gray-600 hover:border-gray-300 hover:bg-gray-100">
-            <HiOutlineDotsVertical className="mt-0.5 scale-125" />{" "}
-          </span>
-        </span>
+        <AnalogyInfoRow
+          needsLocationInfo={needsLocationInfo}
+          analogyData={analogyData}
+        />
       </div>
     </div>
   );
 };
+
 interface IAnalogyViewWithLinkProps {
   children?: React.ReactNode;
 }
@@ -262,3 +234,53 @@ const AnalogyViewWithLink: React.FC<IAnalogyViewWithLinkProps> = ({
   );
 };
 export default AnalogyViewWithLink;
+
+interface IAnalogyInfoRowProps {
+  needsLocationInfo: boolean;
+  analogyData: object;
+}
+export function AnalogyInfoRow({
+  needsLocationInfo,
+  analogyData,
+}: IAnalogyInfoRowProps) {
+  return (
+    <div
+      id="analogy-info-row"
+      className="flex h-12 w-full cursor-default items-center justify-start"
+    >
+      <span className="flex shrink-0 grow">
+        {needsLocationInfo ? (
+          <div className="mx-2 flex rounded-lg border bg-gray-100 px-3 py-1 text-xs text-gray-500 hover:border-gray-300 hover:bg-[#e9e9e988]">
+            <span className="  font-normal ">about&nbsp;</span>
+            <Link
+              href={`/${analogyData?.category?.slug}/${analogyData?.topic?.slug}`}
+              className="flex cursor-pointer  items-center  align-middle  font-semibold  transition-all hover:text-gray-800"
+            >
+              {analogyData?.topic?.title}
+            </Link>
+            <span className=" font-normal">&nbsp;in&nbsp;</span>
+            <Link
+              href={`/${analogyData?.category?.slug}`}
+              className="flex  cursor-pointer  items-center align-middle  font-semibold   transition-all hover:text-gray-800"
+            >
+              {analogyData?.category?.name}
+            </Link>
+          </div>
+        ) : null}
+
+        <span className="mx-2 flex cursor-pointer rounded-lg border bg-indigo-50 px-3 py-1 text-xs text-indigo-600 hover:border-indigo-300 hover:bg-indigo-100">
+          <AiOutlineLink className="mr-2 mt-0.5 scale-125" /> reference
+        </span>
+        <span className="mx-2 flex cursor-pointer rounded-lg border bg-cyan-50 px-3 py-1 text-xs text-cyan-600 hover:border-cyan-300 hover:bg-cyan-100">
+          <HiOutlineChatAlt className="mr-2 mt-0.5 scale-125" /> 3
+        </span>
+        <span>{getStatusIcon(analogyData?.status)}</span>
+      </span>
+      <span className="shrink grow-0">
+        <span className="mx-2 flex cursor-pointer rounded-lg border border-transparent p-1 text-xs text-gray-600 hover:border-gray-300 hover:bg-gray-100">
+          <HiOutlineDotsVertical className="mt-0.5 scale-125" />{" "}
+        </span>
+      </span>{" "}
+    </div>
+  );
+}

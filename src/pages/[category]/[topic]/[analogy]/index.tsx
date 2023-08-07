@@ -1,26 +1,24 @@
 import Head from "next/head";
 import { api } from "@/utils/api";
 import { PageLayout } from "@/components/layout";
-import { AnalogyView } from "../../../../components/AnalogyView";
+import { AnalogyInfoRow, AnalogyView } from "@/components/AnalogyView";
 import { LoadingSpinner } from "@/components/loading";
 import { FaArrowLeft } from "react-icons/fa";
 import { RiImageLine } from "react-icons/ri";
 import { AiOutlineLink } from "react-icons/ai";
 import { LuExternalLink } from "react-icons/lu";
-
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { archivo } from "@/styles/customFonts";
+import Image from "next/image";
+import toast from "react-hot-toast";
+import { Comment } from "@prisma/client";
+import { CgSpinner } from "react-icons/cg";
+import { RelativeTime } from "../../../../utils/relativeTime";
 
 export default function SingleAnalogyPage() {
-  const [aboutIsHidden, setAboutIsHidden] = useState(true);
   const router = useRouter();
-  const domainName =
-    // avoid the ReferenceError and get the domain name of the current URL in the browser environment
-    typeof window !== "undefined"
-      ? window.location.origin.replace(/^https?:\/\//, "")
-      : "";
 
   const {
     category: UrlCategory,
@@ -35,15 +33,13 @@ export default function SingleAnalogyPage() {
       id: UrlAnalogyId as string,
     });
 
-  const { data: categoryData, isFetching: categoryFetching } =
-    api.category.getBySlug.useQuery({
-      slug: UrlCategory as string,
-    });
+  const { data: categoryData } = api.category.getBySlug.useQuery({
+    slug: UrlCategory as string,
+  });
 
-  const { data: topicsData, isFetching: topicFetching } =
-    api.topic.getBySlug.useQuery({
-      slug: UrlTopic as string,
-    });
+  const { data: topicsData } = api.topic.getBySlug.useQuery({
+    slug: UrlTopic as string,
+  });
 
   if (status === "loading") {
     return <LoadingSpinner />;
@@ -65,114 +61,322 @@ export default function SingleAnalogyPage() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <PageLayout>
-        <div className="mx-auto flex h-[calc(100dvh-0px)] max-w-[720px] flex-col justify-between pt-40">
-          <div
-            id="nav-share"
-            className="mb-8 flex w-full flex-row justify-between text-[#2A2A2E]"
-          >
-            <button
-              onClick={() => router.back()}
-              className="align-center justify-middle group mr-auto inline-flex cursor-pointer flex-row items-center justify-center rounded-[12px] border border-transparent px-0 py-1 align-middle transition-all"
-            >
-              <FaArrowLeft className="mr-2  transition-all group-hover:-translate-x-0.5 " />
-              back
-            </button>
-            <div className="flex flex-row items-center">
-              {/* <FiShare />  */}
-              Share As:{" "}
-              <button className="mx-2 inline-flex flex-row items-center rounded-[12px] border border-[#d2d2d28e] bg-[#ffffffc1] px-3 py-1 text-sm transition-all hover:border-[#c8c8c8] hover:bg-[#ffffff]">
-                <RiImageLine className="mr-1" />
-                Image{" "}
-              </button>{" "}
-              or{" "}
-              <button className="mx-2 inline-flex flex-row items-center rounded-[12px] border border-[#d2d2d28e] bg-[#ffffffc1] px-3 py-1 text-sm transition-all hover:border-[#c8c8c8] hover:bg-[#ffffff]">
-                <AiOutlineLink className="mr-1" />
-                Link
-              </button>
-            </div>
-          </div>
-          <div
-            id="single-analogy"
-            className="mb-auto rounded-[23px] bg-[#e8e5e2] bg-gradient-to-bl from-[#1e7cba] to-[#7c1db3] px-5 py-5"
-          >
-            {/* <div
-            id="single-analogy"
-            className="mb-auto rounded-[23px] bg-[#e8e5e2] bg-gradient-to-bl from-[#7a09d7] from-10%  via-[#b018f6] via-30% to-[#e00e46] to-90% px-5 py-5 "
-          > */}
-            <div className="flex flex-row justify-between px-7 pb-1 pt-8 align-baseline">
-              <span className="text-lg font-semibold text-[#efefefc7]">
-                {categoryData?.name} {topicsData && "/"} {topicsData?.title}
-              </span>{" "}
-              <br />
-              <span className="text-sm text-[#efefefa7]">
-                {/* <span className="font-bold text-[#efefefb6]">CS-LIT</span> */}
-                {domainName}
-              </span>
-            </div>
-
-            <AnalogyView
-              analogy={{
-                id: singleAnalogyData.id,
-                description: singleAnalogyData.description,
-              }}
-              // needsLocationInfo
-              author={{
-                name: singleAnalogyData.author?.name ?? "",
-                email: singleAnalogyData.author?.email ?? "",
-                image: singleAnalogyData.author?.image ?? "",
-                id: singleAnalogyData.author?.id ?? "",
-              }}
-            />
-          </div>
-          <div
-            className="group flex cursor-pointer flex-col items-center py-8 text-[#a7a7a7]"
-            onClick={() => {
-              setAboutIsHidden(false);
-              setTimeout(() => {
-                window.scrollTo({
-                  top: document.getElementById("what-is-footer")?.offsetTop,
-                  behavior: "smooth",
-                });
-              }, 10);
-            }}
-          >
-            <span className="mb-1 text-xs transition-all hover:text-[#2A2A2E]">
-              About this website
-            </span>{" "}
-          </div>
+        <div className="mx-auto flex  max-w-[720px] flex-col justify-between pt-40">
+          <NavShare router={router} />
+          <MainSection
+            categoryData={categoryData}
+            topicsData={topicsData}
+            singleAnalogyData={singleAnalogyData}
+          />
+          <InfoSection singleAnalogyData={singleAnalogyData} />
+          <CommentSection analogyId={singleAnalogyData?.id} />
         </div>
-        {!aboutIsHidden && (
-          <div
-            id="what-is-footer"
-            className="border-t-1 mt-auto w-full  border border-x-0 border-b-0 bg-[#2a2a2e3b]  px-20 pb-14 pt-12 text-[#656565]"
-          >
-            <span
-              className={`${archivo.className}  font-extrabold`}
-              // className="font-archivo font-extrabold"
-            >
-              {" "}
-              What is CS LIT?
-            </span>{" "}
-            <br />
-            <br />
-            <span className="text-sm ">
-              CS LIT is an abbreviation for Computer Science Like I&apos;m Ten.
-              It simplifies computer science education for all ages through a
-              collaborative learning environment. Explore complex concepts with
-              ease and gain valuable experience in this field.
-            </span>
-            <br />
-            <br />{" "}
-            <Link href="/">
-              <span className="inline-flex cursor-pointer flex-row text-sm font-semibold hover:underline ">
-                {" "}
-                <LuExternalLink className="mr-1 mt-0.5" /> See more analogies
-                like this
-              </span>
-            </Link>
-          </div>
-        )}
+        <AboutWebsite />
       </PageLayout>
+    </>
+  );
+}
+
+function NavShare(router) {
+  return (
+    <div
+      id="nav-share"
+      className="mb-8 flex w-full flex-row justify-between text-[#2A2A2E]"
+    >
+      <button
+        onClick={() => router.back()}
+        className="align-center justify-middle group mr-auto inline-flex cursor-pointer flex-row items-center justify-center rounded-[12px] border border-transparent px-0 py-1 align-middle transition-all"
+      >
+        <FaArrowLeft className="mr-2  transition-all group-hover:-translate-x-0.5 " />
+        back
+      </button>
+      <div className="flex flex-row items-center">
+        {/* <FiShare />  */}
+        Share As:{" "}
+        <button className="mx-2 inline-flex flex-row items-center rounded-[12px] border border-[#d2d2d28e] bg-[#ffffffc1] px-3 py-1 text-sm transition-all hover:border-[#c8c8c8] hover:bg-[#ffffff]">
+          <RiImageLine className="mr-1" />
+          Image{" "}
+        </button>{" "}
+        or{" "}
+        <button className="mx-2 inline-flex flex-row items-center rounded-[12px] border border-[#d2d2d28e] bg-[#ffffffc1] px-3 py-1 text-sm transition-all hover:border-[#c8c8c8] hover:bg-[#ffffff]">
+          <AiOutlineLink className="mr-1" />
+          Link
+        </button>
+      </div>
+    </div>
+  );
+}
+
+interface IMainSectionProps {
+  categoryData?: {
+    name: string;
+  };
+  topicsData?: {
+    title: string;
+  };
+  singleAnalogyData: {
+    id: string;
+  };
+}
+function MainSection({
+  categoryData,
+  topicsData,
+  singleAnalogyData,
+}: IMainSectionProps) {
+  const domainName =
+    // avoid the ReferenceError and get the domain name of the current URL in the browser environment
+    typeof window !== "undefined"
+      ? window.location.origin.replace(/^https?:\/\//, "")
+      : "";
+
+  return (
+    <div
+      id="single-analogy"
+      className="mb-auto rounded-[23px] bg-[#e8e5e2] bg-gradient-to-bl from-[#1e7cba] to-[#7c1db3] px-5 py-5"
+    >
+      <div className="flex flex-row justify-between px-7 pb-1 pt-8 align-baseline">
+        <span className="text-lg font-semibold text-[#efefefc7]">
+          {categoryData?.name} {topicsData && "/"} {topicsData?.title}
+        </span>{" "}
+        <br />
+        <span className="text-sm text-[#efefefa7]">{domainName}</span>
+      </div>
+
+      <AnalogyView
+        analogy={{
+          id: singleAnalogyData.id,
+        }}
+      />
+    </div>
+  );
+}
+
+function InfoSection({ singleAnalogyData }) {
+  return (
+    <div className="mb-auto mt-8 rounded-[23px] bg-[#d7d7d7]  px-6 py-2">
+      <AnalogyInfoRow
+        needsLocationInfo={false}
+        analogyData={singleAnalogyData}
+      />
+    </div>
+  );
+}
+
+function CommentSection({ analogyId }) {
+  const [commentInput, setCommentInput] = useState({
+    content: "",
+    analogyId: "",
+  });
+
+  const {
+    data: comments,
+    status: commentsFetchingStatus,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = api.comment.getByAnalogyId.useInfiniteQuery(
+    {
+      id: analogyId as string,
+      order: "desc",
+      limit: 10,
+    },
+    { getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor }
+  );
+
+  const ctx = api.useContext();
+
+  const { mutate, isLoading: isPosting } = api.comment.create.useMutation({
+    onSuccess: () => {
+      setCommentInput({
+        content: "",
+        analogyId: "",
+      });
+      // void ctx.comment.getAllWithQuery.invalidate();
+      void ctx.comment.getByAnalogyId.invalidate();
+
+      window.scrollTo({
+        top: document.getElementById("comments-section")?.offsetTop - 90,
+        behavior: "smooth",
+      });
+
+      toast.success("You posted your comment!");
+    },
+    onError: (e) => {
+      const errorMessage = e.data?.zodError?.fieldErrors;
+      console.log(errorMessage);
+      if (errorMessage) {
+        if (errorMessage.content) {
+          toast.error(errorMessage?.content.join(" "));
+        } else {
+          toast.error("Something went wrong.");
+        }
+      }
+    },
+  });
+
+  return (
+    <div
+      id="comments-section"
+      className="mb-auto mt-8 rounded-[23px] bg-[#d7d7d7] px-6 py-2"
+    >
+      <h2 className="text-md p-3 font-bold text-[#2A2A2E]">Comments</h2>
+      <div id="comments">
+        {comments?.pages?.map((page) =>
+          page?.items?.map((comment: Comment) => (
+            <div
+              key={comment.id}
+              id="single-comment"
+              className="mb-3 rounded-lg border border-transparent bg-[#f0f0f0] px-2 py-2 duration-200 hover:border-gray-300"
+            >
+              <div className="flex items-center gap-1">
+                <div
+                  id="commentor"
+                  className="inline-flex cursor-pointer  gap-2 rounded-md px-1 py-1 transition-all hover:bg-white"
+                >
+                  <Image
+                    id="avatar"
+                    src="/assets/defaultpp.svg"
+                    width={18}
+                    height={18}
+                    alt="avatar"
+                  />
+                  <div
+                    id="name"
+                    className="mt-0.5 text-xs font-semibold text-slate-700"
+                  >
+                    {comment.commenterId}
+                  </div>
+                </div>
+                <div
+                  id="time"
+                  className="mt-0.5 text-xs font-normal text-slate-400"
+                >
+                  {RelativeTime(comment.createdAt)}
+                </div>
+              </div>
+              <div id="comment-body" className="prose p-1 px-2 text-sm">
+                {comment.content}
+              </div>
+            </div>
+          ))
+        )}
+
+        {hasNextPage && (
+          <button
+            onClick={() => fetchNextPage()}
+            disabled={isFetchingNextPage}
+            className="w-full"
+          >
+            <div
+              className="flex w-full items-center justify-center  border-t-[#5555551d] 
+                    py-6 font-semibold text-gray-500 transition-all duration-300 
+                    hover:text-gray-800"
+            >
+              {isFetchingNextPage ? (
+                <CgSpinner className=" animate-spin " />
+              ) : (
+                "Load more"
+              )}
+            </div>
+          </button>
+        )}
+
+        <div id="comment-editor">
+          <form
+            action=""
+            className="my-4 flex flex-col hover:border-gray-400 focus:shadow-sm"
+          >
+            <textarea
+              id="comment-input"
+              className={`w-full cursor-pointer resize-none  ${
+                commentInput.content.trim() === ""
+                  ? "rounded-md"
+                  : "rounded-t-md"
+              } border border-[#ffffff45]  bg-[#ffffff45] 
+            px-3 py-2 text-sm placeholder-gray-500 transition-all duration-200 
+          hover:bg-[#ffffff6c] focus:cursor-text focus:bg-white 
+            focus:outline-none`}
+              placeholder="Write your comment here..."
+              rows={commentInput.content.trim() === "" ? 1 : 3}
+              value={commentInput.content}
+              onChange={(e) =>
+                setCommentInput({
+                  ...commentInput,
+                  content: e.target.value,
+                })
+              }
+            />
+
+            {commentInput.content.trim() === "" ? null : (
+              <button
+                type="submit"
+                className="w-full rounded-b-md border-t border-[#55545432] border-gray-300  
+              bg-gray-100 py-2 text-sm font-semibold text-gray-500 transition-all hover:bg-gray-200 "
+                onClick={(e) => {
+                  e.preventDefault();
+                  mutate({
+                    content: commentInput.content,
+                    analogyId: analogyId as string,
+                  });
+                }}
+              >
+                send
+              </button>
+            )}
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function AboutWebsite() {
+  const [aboutIsHidden, setAboutIsHidden] = useState(true);
+
+  return (
+    <>
+      <div
+        className="group flex cursor-pointer flex-col items-center py-8 text-[#a7a7a7]"
+        onClick={() => {
+          setAboutIsHidden(!aboutIsHidden);
+          setTimeout(() => {
+            window.scrollTo({
+              top: document.getElementById("what-is-footer")?.offsetTop,
+              behavior: "smooth",
+            });
+          }, 10);
+        }}
+      >
+        <span className="mb-1 text-xs transition-all hover:text-[#2A2A2E]">
+          About this website
+        </span>{" "}
+      </div>
+      {!aboutIsHidden && (
+        <div
+          id="what-is-footer"
+          className="border-t-1 mt-auto w-full  border border-x-0 border-b-0 bg-[#2a2a2e3b]  px-20 pb-14 pt-12 text-[#656565]"
+        >
+          <span className={`${archivo.className}  font-extrabold`}>
+            What is CS LIT?
+          </span>
+          <br />
+          <br />
+          <span className="text-sm ">
+            CS LIT is an abbreviation for Computer Science Like I&apos;m Ten. It
+            simplifies computer science education for all ages through a
+            collaborative learning environment. Explore complex concepts with
+            ease and gain valuable experience in this field.
+          </span>
+          <br />
+          <br />
+          <Link href="/">
+            <span className="inline-flex cursor-pointer flex-row text-sm font-semibold hover:underline ">
+              <LuExternalLink className="mr-1 mt-0.5" /> See more analogies like
+              this
+            </span>
+          </Link>
+        </div>
+      )}
     </>
   );
 }

@@ -52,9 +52,14 @@ function TopicPage(props) {
       <PageLayout>
         <>
           <div
-            id="feed-header"
-            className="z-10 mx-auto mt-32 flex w-full flex-col items-start justify-between overflow-clip overflow-ellipsis whitespace-nowrap px-16"
+            className="mb-14 flex w-full  flex-col border-b border-gray-300 bg-gradient-to-tr from-[#ff73631a] via-transparent to-transparent 
+          px-24 pb-6 pt-32"
           >
+            {/* <div
+            id="feed-header"
+            
+            className="z-10 mx-auto mt-32 flex w-full flex-col items-start justify-between overflow-clip overflow-ellipsis whitespace-nowrap px-16"
+          > */}
             {topicFetchingStatus === "loading" ? (
               <div className=" mb-4  h-8 w-1/4 animate-pulse rounded-lg bg-[#b4b4b49f]" />
             ) : (
@@ -67,10 +72,10 @@ function TopicPage(props) {
             <br />
             <div className="flex w-full flex-row justify-between py-1 align-middle text-sm text-[#808080] ">
               <p className="grow-1 inline-flex">
-                {topicAnalogies?.length}
+                {topicAnalogies?.pages.length}
                 &nbsp;
-                {!topicAnalogies?.length && "No "}
-                {topicAnalogies?.length === 1 ? "analogy" : "analogies"}
+                {!topicAnalogies?.pages.length && "No "}
+                {topicAnalogies?.pages.length === 1 ? "analogy" : "analogies"}
                 &nbsp;for this topic.&nbsp;{" "}
               </p>
               <Link href={`${topicsData?.url}`} target="_blank">
@@ -80,6 +85,7 @@ function TopicPage(props) {
               </Link>
             </div>
           </div>
+
           {analogiesFetchingStatus === "loading" ? (
             <>
               <AnalogySkeleton />
