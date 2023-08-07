@@ -83,7 +83,11 @@ export function PendingItemView({ item }) {
   const [showExtendedActionMenu, setShowExtendedActionMenu] = useState(false);
   const [itemCopy, setItemCopy] = useState(null);
 
-  const itemType = item?.topicId ? "Analogies" : "Topics";
+  const itemType = item?.topicId
+    ? "Analogies"
+    : item?.analogyId
+    ? "Comments"
+    : "Topics";
   const updateItem = useUpdateItem(itemCopy, itemType);
 
   const handleStatusUpdate = (newStatus: string) => {
@@ -114,7 +118,13 @@ export function PendingItemView({ item }) {
               showExtendedActionMenu ? "max-w-[10%]" : "w-full"
             }  font  truncate  pt-2 text-xs font-semibold`}
           >
-            {item.title ? item.title : item.name ? item.name : item.id}
+            {item.title
+              ? item.title
+              : item.content
+              ? item.content
+              : item.name
+              ? item.name
+              : item.id}
           </h1>
         </Link>
         <span className="mt-1 text-xs text-gray-400">in {itemType}</span>

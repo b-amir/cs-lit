@@ -581,3 +581,104 @@ export function UserEditForm({
     </>
   );
 }
+
+export function CommentEditForm({
+  editorModalInput,
+  setEditorModalShown,
+  setEditorModalInput,
+}) {
+  const { item, type } = editorModalInput;
+  const updateItem = useUpdateItem(item, type);
+
+  // editorModalInput.item,
+  // editorModalInput.type
+
+  const handleSave = (e) => {
+    //prevent default
+    e.preventDefault();
+    setEditorModalShown(false);
+    updateItem();
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    setEditorModalInput((prev) => {
+      return {
+        ...prev,
+        item: {
+          ...prev.item,
+          [name]: value,
+        },
+      };
+    });
+  };
+
+  return (
+    <>
+      <form id="editor-modal-body" className="h-full px-8 py-8">
+        <div className="mb-4">
+          <label
+            htmlFor="content"
+            className="mb-2 block text-sm font-bold text-gray-700"
+          >
+            Content
+          </label>
+          <input
+            type="text"
+            name="content"
+            id="content"
+            defaultValue={editorModalInput?.item?.content ?? ""}
+            onChange={handleChange}
+            placeholder="Enter content"
+            className="focus:shadow-outline mb-2 w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none"
+          />
+        </div>
+        <div className="mb-4">
+          <label
+            htmlFor="status"
+            className="mb-2 block text-sm font-bold text-gray-700"
+          >
+            Status
+          </label>
+          <select
+            name="status"
+            id="status"
+            defaultValue={editorModalInput?.item?.status ?? ""}
+            onChange={handleChange}
+            className="focus:shadow-outline mb-2 w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none"
+          >
+            <option value="PENDING"> Pending</option>
+            <option value="PUBLISHED">Published</option>
+            <option value="REJECTED">Rejected</option>
+            <option value="DELETED">Deleted</option>
+          </select>
+        </div>
+
+        <div
+          id="editor-modal-buttons"
+          // align items at right
+          className="flex h-12 w-full flex-row items-center justify-end  pb-4 pt-14 "
+        >
+          <button
+            className="px-2 py-2 pr-5 text-sm font-semibold text-gray-500 transition-all hover:underline"
+            onClick={() => setEditorModalShown(false)}
+          >
+            cancel
+          </button>
+
+          <button
+            onClick={handleSave}
+            className="group  flex flex-row justify-center rounded-xl
+            border border-[#5c2c1d2b] bg-[#ff7263] px-6 py-1.5 text-sm font-semibold text-[#ffffffd3] shadow-sm transition-all
+            duration-200 [text-shadow:_0_1px_0_rgb(0_0_0_/_10%)] hover:border-[#5c2c1d66] hover:shadow-md"
+          >
+            <span className="cursor-pointer transition-transform duration-300 group-hover:-translate-x-0.5 group-hover:[text-shadow:_0_2px_0_rgb(0_0_0_/_15%)]">
+              Save
+            </span>
+          </button>
+        </div>
+      </form>
+    </>
+  );
+}

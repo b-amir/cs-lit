@@ -178,7 +178,13 @@ export function ListItemView({
       <div className="flex flex-row items-center overflow-clip overflow-ellipsis whitespace-nowrap">
         <Link href={`${routeHandler(item, type)}`}>
           <h1 className={`font max-w-[360px] truncate text-sm font-bold`}>
-            {item.title ? item.title : item.name ? item.name : item.id}
+            {item.title
+              ? item.title
+              : item.content
+              ? item.content
+              : item.name
+              ? item.name
+              : item.id}
           </h1>
         </Link>
       </div>

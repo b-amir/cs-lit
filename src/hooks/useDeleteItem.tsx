@@ -6,6 +6,7 @@ export interface ITopicInput {
   id: string;
   title: string;
   name: string;
+  content: string;
   linkToDocs: string;
   category: string;
   firstAnalogy: string;
@@ -138,33 +139,35 @@ export function useDeleteItem(item: ITopicInput, type: string) {
     return deleteUserHandler;
   }
 
-  // if (type === "Comments") {
-  //   // deleting comment
-  //   const { mutate: deleteComment } = api.comment.delete.useMutation({
-  //     onSuccess: () => {
-  //       void ctx.comment.getAll.invalidate();
-  //       toast.success("Comment deleted successfully.");
-  //     },
-  //     onError: (e) => {
-  //       toast.error("Something went wrong");
-  //       console.log(e);
-  //     },
-  //   });
+  if (type === "Comments") {
+    // deleting comment
+    const { mutate: deleteComment } = api.comment.delete.useMutation({
+      onSuccess: () => {
+        void ctx.comment.getAllWithQuery.invalidate();
+        void ctx.comment.getByAnalogyId.invalidate();
 
-  //   const deleteCommentHandler = () => {
-  //     try {
-  //       createActivityLogEntry({
-  //         entityType: "comment",
-  //         entityId: item.id,
-  //         entityTitle: item.title,
-  //         action: "deleted",
-  //       });
-  //       deleteComment({ id: item.id });
-  //     } catch (e) {
-  //       toast.error("Something went wrong");
-  //       console.log(e);
-  //     }
-  //   };
-  //   return deleteCommentHandler;
-  // }
+        toast.success("Comment deleted successfully.");
+      },
+      onError: (e) => {
+        toast.error("Something went wrong");
+        console.log(e);
+      },
+    });
+
+    const deleteCommentHandler = () => {
+      try {
+        createActivityLogEntry({
+          entityType: "comment",
+          entityId: item.id,
+          entityTitle: item.content,
+          action: "deleted",
+        });
+        deleteComment({ id: item.id });
+      } catch (e) {
+        toast.error("Something went wrong");
+        console.log(e);
+      }
+    };
+    return deleteCommentHandler;
+  }
 }

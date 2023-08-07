@@ -15,6 +15,7 @@ import {
   TopicEditForm,
   AnalogyEditForm,
   UserEditForm,
+  CommentEditForm,
 } from "./EditorModal";
 import { useSession } from "next-auth/react";
 import { AiFillLock } from "react-icons/ai";
@@ -83,9 +84,19 @@ export default function AdminPage(props) {
     { getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor }
   );
 
-  // const { data: commentsData, isFetching: commentsAreFetching } =
-  //   api.comment.getAll.useQuery();
-
+  const {
+    data: commentsData,
+    hasNextPage: commentsHasNextPage,
+    fetchNextPage: fetchNextCommentPage,
+    isFetchingNextPage: isFetchingNextCommentPage,
+  } = api.comment.getAllWithQuery.useInfiniteQuery(
+    {
+      query: debouncedSearch,
+      order: orderBy,
+      limit: 15,
+    },
+    { getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor }
+  );
   const [activeSection, setActiveSection] = useState("Categories");
 
   function getData(activeSection: string) {
@@ -98,6 +109,8 @@ export default function AdminPage(props) {
         return analogiesData;
       case "Users":
         return usersData;
+      case "Comments":
+        return commentsData;
       default:
         return [];
     }
@@ -113,6 +126,8 @@ export default function AdminPage(props) {
         return analogiesHasNextPage;
       case "Users":
         return usersHasNextPage;
+      case "Comments":
+        return commentsHasNextPage;
       default:
         return false;
     }
@@ -128,6 +143,8 @@ export default function AdminPage(props) {
         return fetchNextAnalogyPage;
       case "Users":
         return fetchNextUserPage;
+      case "Comments":
+        return fetchNextCommentPage;
       default:
         return;
     }
@@ -143,6 +160,8 @@ export default function AdminPage(props) {
         return isFetchingNextAnalogyPage;
       case "Users":
         return isFetchingNextUserPage;
+      case "Comments":
+        return isFetchingNextCommentPage;
       default:
         return false;
     }
@@ -243,8 +262,14 @@ export default function AdminPage(props) {
                   setEditorModalShown={setEditorModalShown}
                   setEditorModalInput={setEditorModalInput}
                 />
+              ) : editorModalInput?.type === "Comments" ? (
+                <CommentEditForm
+                  editorModalInput={editorModalInput}
+                  setEditorModalShown={setEditorModalShown}
+                  setEditorModalInput={setEditorModalInput}
+                />
               ) : (
-                "hey"
+                "There's an error"
               )}
             </EditorModal>
           </>

@@ -15,9 +15,12 @@ export interface ITopicInput {
   userStatus: "ACTIVE" | "BANNED" | "DELETED";
   pinned: boolean;
   topicId: string;
+  analogyId: string;
+  commenterId: string;
   authorId: string;
   email: string;
   username: string;
+  content: string;
   role: "ADMIN" | "USER" | "EDITOR";
 }
 
@@ -172,5 +175,39 @@ export function useUpdateItem(item: ITopicInput, type: string) {
       }
     };
     return updateUserHandler;
+  }
+
+  if (type === "Comments") {
+    // updating topic
+    const { mutate: updateComment } = api.comment.update.useMutation({
+      onSuccess: () => {
+        void ctx.comment.getAllWithQuery.invalidate();
+        void ctx.comment.getByAnalogyId.invalidate();
+        void ctx.pending.getAll.invalidate();
+        toast.success("Comment updated successfully.");
+      },
+    });
+
+    const updateTopicHandler = () => {
+      try {
+        createActivityLogEntry({
+          entityType: "comment",
+          entityId: item.id,
+          entityTitle: item.content,
+          action: "updated",
+        });
+        updateComment({
+          id: item.id,
+          content: item.content,
+          status: item.status,
+          analogyId: item.analogyId,
+          commenterId: item.commenterId,
+        });
+      } catch (e) {
+        toast.error("Something went wrong");
+        console.log(e);
+      }
+    };
+    return updateTopicHandler;
   }
 }

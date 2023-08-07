@@ -6,6 +6,7 @@ import {
 } from "@/server/api/trpc";
 import { topicsWithCategoryData } from "./topics";
 import { analogiesWithUserAndTopicAndCategoryData } from "./analogies";
+import { commentsWithUserData } from "./comments";
 
 
 export const pendingRouter = createTRPCRouter({
@@ -42,11 +43,22 @@ export const pendingRouter = createTRPCRouter({
           createdAt: 'desc',
         },
       });
+      const comments = await ctx.prisma.comment.findMany({
+        take: limit + 1,
+        cursor: cursor ? { id: cursor } : undefined,
+        where: {
+          status: 'PENDING'
+        },
+        orderBy: {
+          createdAt: 'desc',
+        },
+      });
 
       const topicsWithData = await topicsWithCategoryData(topics);
       const analogiesWithData = await analogiesWithUserAndTopicAndCategoryData(analogies);
+      const commentsWithData = await commentsWithUserData(comments)
 
-      const items = [...topicsWithData, ...analogiesWithData];
+      const items = [...topicsWithData, ...analogiesWithData, ...commentsWithData];
       let nextCursor: typeof cursor | undefined = undefined;
       if (items.length > limit) {
         const nextItem = items.pop();
