@@ -155,12 +155,12 @@ export const AnalogyView: React.FC<IAnalogyViewProps> = (props) => {
         </div>
       </div>
 
-      <div className="min-h-[120px] w-full  bg-white px-8 pb-7 pt-5">
+      <div className="min-h-[120px] w-full  bg-white px-8 pb-12 pt-8">
         {analogyStatus === "loading" ? (
           <MultilineSkeleton />
         ) : (
           <ReactMarkdown
-            className="prose-code:dark:text-gray-30 prose text-ellipsis break-words prose-pre:bg-[#101A25]"
+            className="prose-code:dark:text-gray-30 prose mx-auto text-ellipsis break-words prose-pre:bg-[#101A25]"
             // eslint-disable-next-line react/no-children-prop
             children={analogyData?.description}
             components={{

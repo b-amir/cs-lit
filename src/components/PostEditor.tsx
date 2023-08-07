@@ -24,7 +24,7 @@ export const PostEditor = ({
         topicId: "",
       });
       void ctx.analogy.getAll.invalidate();
-      void ctx.analogy.getAnalogiesByTopicId.invalidate();
+      void ctx.analogy.getByTopicId.invalidate();
 
       window.scrollTo({
         top: 0,

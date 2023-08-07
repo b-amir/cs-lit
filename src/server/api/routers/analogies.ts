@@ -225,17 +225,56 @@ export const analogiesRouter = createTRPCRouter({
     ),
 
 
-  getAnalogiesByTopicId: publicProcedure
-    .input(z.object({ id: z.string() }))
+  // getAnalogiesByTopicId: publicProcedure
+  //   .input(z.object({ id: z.string() }))
+  //   .query(async ({ ctx, input }) => {
+  //     const analogies = await ctx.prisma.analogy.findMany({
+  //       where: {
+  //         topicId: input.id,
+  //       },
+  //       take: 10,
+  //       orderBy: [{ createdAt: "desc" }],
+  //     });
+  //     return analogiesWithUserData(analogies);
+  //   }),
+
+  getByTopicId: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        limit: z.number(),
+        cursor: z.string().nullish(),
+        order: z.enum(["asc", "desc"]).nullish()
+      }))
     .query(async ({ ctx, input }) => {
-      const analogies = await ctx.prisma.analogy.findMany({
+
+      const limit = input.limit ?? 15
+      const { cursor } = input
+      const order = input.order ?? "asc"
+
+      const items = await ctx.prisma.analogy.findMany({
+        take: limit + 1,
+        cursor: cursor ? { id: cursor } : undefined,
         where: {
           topicId: input.id,
         },
-        take: 10,
-        orderBy: [{ createdAt: "desc" }],
+        orderBy: {
+          createdAt: order as Prisma.SortOrder
+        }
       });
-      return analogiesWithUserData(analogies);
+      let nextCursor: typeof cursor | undefined = undefined;
+      if (items.length > limit) {
+        const nextItem = items.pop();
+        nextCursor = nextItem?.id as typeof cursor;
+      }
+      return {
+        items,
+        total: await ctx.prisma.topic.count(),
+        pageInfo: {
+          hasNextPage: items.length > limit,
+          nextCursor,
+        },
+      };
     }),
 
   create: protectedProcedure

@@ -21,10 +21,20 @@ function TopicPage(props) {
 
   const { data: sessionData } = useSession();
 
-  const { data: topicAnalogies, status: analogiesFetchingStatus } =
-    api.analogy.getAnalogiesByTopicId.useQuery({
+  const {
+    data: topicAnalogies,
+    status: analogiesFetchingStatus,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = api.analogy.getByTopicId.useInfiniteQuery(
+    {
       id: topicsData?.id as string,
-    });
+      order: "desc",
+      limit: 10,
+    },
+    { getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor }
+  );
 
   return (
     <>
@@ -77,7 +87,12 @@ function TopicPage(props) {
               <AnalogySkeleton />
             </>
           ) : (
-            <Feed topicAnalogies={topicAnalogies} />
+            <Feed
+              topicAnalogies={topicAnalogies}
+              hasNextPage={hasNextPage}
+              fetchNextPage={fetchNextPage}
+              isFetchingNextPage={isFetchingNextPage}
+            />
           )}
 
           <div className="mx-auto my-12 flex w-full select-none flex-row justify-center px-6 py-1 align-middle text-sm text-[#808080ae]">
