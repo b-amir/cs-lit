@@ -6,7 +6,20 @@ import {
   adminProcedure,
 } from "@/server/api/trpc";
 import { type Comment, type Prisma } from "@prisma/client";
+import { prisma } from "@/server/db"
 
+
+export const commentsWithUserData = async (comments: Comment[]) => {
+  const commentsWithUserData = await Promise.all(
+    comments.map(async (comment) => {
+      const user = await prisma.user.findUnique({
+        where: { id: comment.commenterId },
+      });
+      return { ...comment, user };
+    })
+  );
+  return commentsWithUserData;
+};
 
 export const commentsRouter = createTRPCRouter({
 
@@ -91,9 +104,14 @@ export const commentsRouter = createTRPCRouter({
         const nextItem = items.pop();
         nextCursor = nextItem?.id as typeof cursor;
       }
+      const totalCommentsForAnalogy = await ctx.prisma.comment.count({
+        where: {
+          analogyId: input.id,
+        },
+      });
       return {
-        items,
-        total: await ctx.prisma.comment.count(),
+        items: await commentsWithUserData(items),
+        total: totalCommentsForAnalogy,
         pageInfo: {
           hasNextPage: items.length > limit,
           nextCursor,

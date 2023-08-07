@@ -226,27 +226,33 @@ function CommentSection({ analogyId }) {
             <div
               key={comment.id}
               id="single-comment"
-              className="mb-3 rounded-lg border border-transparent bg-[#f0f0f0] px-2 py-2 duration-200 hover:border-gray-300"
+              className="mb-3 rounded-lg border border-transparent bg-[#f0f0f0] px-2 py-2 duration-200 hover:bg-[#f6f6f6] "
             >
               <div className="flex items-center gap-1">
-                <div
+                <Link
+                  href={`/profile/${comment.commenterId}`}
                   id="commentor"
-                  className="inline-flex cursor-pointer  gap-2 rounded-md px-1 py-1 transition-all hover:bg-white"
+                  className="inline-flex cursor-pointer  gap-2 rounded-md px-2 py-1 transition-all hover:bg-white"
                 >
                   <Image
                     id="avatar"
-                    src="/assets/defaultpp.svg"
+                    src={
+                      comment?.user?.image
+                        ? comment?.user?.image
+                        : "/assets/defaultpp.svg"
+                    }
                     width={18}
                     height={18}
                     alt="avatar"
+                    className="rounded-full"
                   />
                   <div
                     id="name"
                     className="mt-0.5 text-xs font-semibold text-slate-700"
                   >
-                    {comment.commenterId}
+                    {comment.user.name ? comment.user.name : comment.user.email}
                   </div>
-                </div>
+                </Link>
                 <div
                   id="time"
                   className="mt-0.5 text-xs font-normal text-slate-400"
@@ -336,7 +342,7 @@ function AboutWebsite() {
   return (
     <>
       <div
-        className="group flex cursor-pointer flex-col items-center py-8 text-[#a7a7a7]"
+        className="group mt-14 flex cursor-pointer flex-col items-center py-8 text-[#a7a7a7]"
         onClick={() => {
           setAboutIsHidden(!aboutIsHidden);
           setTimeout(() => {

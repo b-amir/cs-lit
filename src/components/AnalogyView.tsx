@@ -243,6 +243,16 @@ export function AnalogyInfoRow({
   needsLocationInfo,
   analogyData,
 }: IAnalogyInfoRowProps) {
+  const { data: comments, status: commentsFetchingStatus } =
+    api.comment.getByAnalogyId.useInfiniteQuery(
+      {
+        id: analogyData?.id as string,
+        order: "desc",
+        limit: 10,
+      },
+      {}
+    );
+
   return (
     <div
       id="analogy-info-row"
@@ -271,9 +281,15 @@ export function AnalogyInfoRow({
         <span className="mx-2 flex cursor-pointer rounded-lg border bg-indigo-50 px-3 py-1 text-xs text-indigo-600 hover:border-indigo-300 hover:bg-indigo-100">
           <AiOutlineLink className="mr-2 mt-0.5 scale-125" /> reference
         </span>
-        <span className="mx-2 flex cursor-pointer rounded-lg border bg-cyan-50 px-3 py-1 text-xs text-cyan-600 hover:border-cyan-300 hover:bg-cyan-100">
-          <HiOutlineChatAlt className="mr-2 mt-0.5 scale-125" /> 3
-        </span>
+        {comments?.pages[0]?.total > 0 ? (
+          <Link
+            href={`/${analogyData?.category?.slug}/${analogyData?.topic?.slug}/${analogyData.id}`}
+            className="mx-2 flex cursor-pointer rounded-lg border bg-cyan-50 px-3 py-1 text-xs text-cyan-600 hover:border-cyan-300 hover:bg-cyan-100"
+          >
+            <HiOutlineChatAlt className="mr-2 mt-0.5 scale-125" />{" "}
+            {comments?.pages ? comments?.pages[0]?.total : 0}
+          </Link>
+        ) : null}
         <span>{getStatusIcon(analogyData?.status)}</span>
       </span>
       <span className="shrink grow-0">
