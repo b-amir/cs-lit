@@ -10,9 +10,12 @@ import { animated, useSpring } from "@react-spring/web";
 import { archivo } from "../styles/customFonts";
 import { IoIosArrowUp } from "react-icons/io";
 import { routeHandler } from "@/utils/routeHandler";
+import { useSession } from "next-auth/react";
+import { AiFillControl } from "react-icons/ai";
 
 export function SidebarRight(props: { username: any }) {
   const [userSectionShown, setUserSectionShown] = useState(false);
+  const { data: sessionData } = useSession();
 
   const { data: AnalogiesData } = api.analogy.getAll.useInfiniteQuery(
     { limit: 5, order: "desc" },
@@ -141,6 +144,15 @@ export function SidebarRight(props: { username: any }) {
             </SidebarRightWidget>
           </ul>
         </div>
+        {["ADMIN", "EDITOR"].includes(sessionData?.user.role) && (
+          <Link
+            href="/admin"
+            className=" mx-4 mb-4 flex items-center space-y-2 overflow-x-clip 
+            truncate text-ellipsis whitespace-nowrap rounded-lg p-2 px-3 text-sm font-medium text-[#2A2A2E] hover:bg-gray-100"
+          >
+            <AiFillControl className="mb-0.5 mr-2 scale-125" /> Admin panel
+          </Link>
+        )}
         {/* <Footer /> */}
       </aside>
       {/* )} */}

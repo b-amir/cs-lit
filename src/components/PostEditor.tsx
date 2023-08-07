@@ -84,12 +84,14 @@ export const PostEditor = ({
             </div>
             <div className="flex items-center justify-between border-t px-3 py-2 dark:border-gray-600">
               <div className="flex space-x-1 pl-0 sm:pl-2">
-                <button
+                <a
+                  href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet"
+                  target="_blank"
                   type="button"
                   className=" font-small inline-flex cursor-pointer select-none justify-center rounded p-2 text-xs text-gray-500 hover:bg-gray-100 hover:text-[#2A2A2E] dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
                 >
                   how to write markdown?
-                </button>
+                </a>
               </div>
               <button
                 // dont refresh the page on submit

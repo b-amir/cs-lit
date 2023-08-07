@@ -357,7 +357,7 @@ const Home: NextPage = () => {
             className="mx-auto my-1 flex h-12 w-[1px] flex-col items-center justify-center bg-[#5c2c1d2b]"
           />
           <div
-            className="mx-auto my-[-4px] flex w-full flex-row rounded-3xl border-[1px] border-[#5c2c1d2b] bg-[#5c2c1d09] px-5 py-10 "
+            className="mx-auto my-[-4px] flex w-full max-w-[760px] flex-row rounded-3xl border-[1px] border-[#5c2c1d2b] bg-[#5c2c1d09] px-5 py-10 "
             // style={{
             //   backgroundImage: `url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%232c1d2b' fill-opacity='0.05' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E")`,
             //   backgroundColor: "#f9eae9",
@@ -419,7 +419,7 @@ const Home: NextPage = () => {
             id="vertical-line"
             className="mx-auto my-1 flex h-12 w-[1px] flex-col items-center justify-center bg-[#5c2c1d2b]"
           />
-          <div className="mb-20 mt-[-4px] flex flex-col rounded-[23px] bg-[#e8e5e2] bg-gradient-to-bl from-[#1e7cba] to-[#7c1db3] px-5 py-5">
+          <div className="mb-20 mt-[-4px] flex w-full  max-w-[760px] flex-col rounded-[23px] bg-[#e8e5e2] bg-gradient-to-bl from-[#1e7cba] to-[#7c1db3] px-5 py-5">
             <div className="flex w-full flex-row items-center justify-end px-5 py-4 text-white">
               Share As:{" "}
               <button className="mx-2 inline-flex flex-row items-center rounded-[12px] border border-[#d2d2d28e] bg-[#ffffffc1] px-3 py-1 text-sm text-gray-800 transition-all hover:border-[#c8c8c8] hover:bg-[#ffffff]">
@@ -536,20 +536,29 @@ const Home: NextPage = () => {
             <span className="mr-1">Hey, I&apos;m</span>
             <a
               className="inline-flex  flex-wrap font-semibold hover:underline"
-              href="#"
+              href="https://www.linkedin.com/in/amirbazgir/"
+              target="_blank"
             >
               Amir Bazgir,
             </a>
           </div>
 
-          <div className="inline-flex  py-1">
+          <a
+            href="https://github.com/b-amir?tab=repositories"
+            target="_blank"
+            className="inline-flex py-1 hover:underline"
+          >
             <AiOutlineLink className="mr-1.5 mt-0.5" />
             And I make quirky things on the internet.
-          </div>
+          </a>
           <div className="inline-flex  ">
             <FaGithub className="mr-1.5 mt-0.5" />
             <span className="mr-1"> You can</span>
-            <a href="#" className="inline-flex font-semibold hover:underline">
+            <a
+              href="https://github.com/b-amir/cs-lit"
+              target="_blank"
+              className="inline-flex font-semibold hover:underline"
+            >
               <span className="mr-1">contribute</span>
             </a>
             <span>to this project.</span>

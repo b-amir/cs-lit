@@ -7,6 +7,7 @@ import { IoIosArrowUp } from "react-icons/io";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { MdDone, MdClose, MdOutlineOpenInNew } from "react-icons/md";
 import { date } from "zod";
+import { RelativeTime } from "@/utils/relativeTime";
 
 export interface IAdminFooterProps {
   AdminFooterCollapsed: boolean;
@@ -103,7 +104,7 @@ export function ActivityItemView({ item }) {
         </h1>
       </div>
       <span className="ml-2 text-xs text-gray-500">
-        {new Date(item.timestamp).toLocaleString()}
+        {RelativeTime(item.timestamp)}
       </span>
     </div>
   );

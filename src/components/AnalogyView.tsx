@@ -12,11 +12,11 @@ import { MultilineSkeleton } from "./Skeleton";
 import { SmallSkeleton } from "./Skeleton";
 import { MediumSkeleton } from "./Skeleton";
 import { AvatarSkeleton } from "./Skeleton";
-import { CgComment } from "react-icons/cg";
 import { AiOutlineLink } from "react-icons/ai";
 import { HiOutlineChatAlt } from "react-icons/hi";
 import { getStatusIcon } from "@/utils/getStatusIcon";
 import { HiOutlineDotsVertical } from "react-icons/hi";
+import { RelativeTime } from "@/utils/relativeTime";
 
 interface IAnalogyViewProps {
   analogy: {
@@ -55,7 +55,7 @@ export const AnalogyView: React.FC<IAnalogyViewProps> = (props) => {
   return (
     <div
       key={analogy?.id}
-      className=" z-20  mx-auto my-5 flex  w-full max-w-[880px] flex-col overflow-clip rounded-[17px] 
+      className=" z-20  mx-auto my-5 flex  w-full max-w-[705px] flex-col overflow-clip rounded-[17px] 
       border border-gray-200 bg-white px-0 py-0 shadow-lg transition-all hover:border-[#c1c1c1] "
       // className="my-2 block min-w-[500px] max-w-sm rounded-s border border-gray-200 bg-white p-6 shadow transition-all hover:bg-gray-100 dark:border-gray-700  dark:bg-gray-800 dark:hover:bg-gray-700"
     >
@@ -254,7 +254,7 @@ const AnalogyViewWithLink: React.FC<IAnalogyViewWithLinkProps> = ({
   });
 
   return analogyLink ? (
-    <Link href={analogyLink} className="w-full ">
+    <Link href={analogyLink} className="mx-auto w-full max-w-[705px]">
       {wrappedChildren}
     </Link>
   ) : (

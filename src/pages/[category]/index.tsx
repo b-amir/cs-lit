@@ -17,6 +17,7 @@ import { AiFillLock } from "react-icons/ai";
 import { signIn, useSession } from "next-auth/react";
 import { TableSkeleton } from "@/components/Skeleton";
 import { getStatusIcon } from "@/utils/getStatusIcon";
+import { RelativeTime } from "@/utils/relativeTime";
 
 // import { deleteTopicHandler } from "@/utils/deleteActions";
 
@@ -229,8 +230,9 @@ function CategoryPage(props) {
                           <td className="px-6 py-4">
                             {getStatusIcon(topic.status)}
                           </td>
-                          <td className="px-6 py-4 text-center ">
-                            {new Date(topic.updatedAt).toLocaleDateString()}
+                          <td className="w-3/12 px-1 py-4 text-center text-xs">
+                            {RelativeTime(topic.updatedAt)}
+                            {/* {new Date(topic.updatedAt).toLocaleDateString()} */}
                           </td>
                           {["ADMIN", "EDITOR"].includes(
                             sessionData?.user.role
@@ -673,12 +675,14 @@ export function TopicEditorForm({
                   </div>
                   <div className="flex items-center justify-between border-t px-3 py-2 dark:border-gray-600">
                     <div className="flex space-x-1 pl-0 sm:pl-2">
-                      <button
+                      <a
+                        href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet"
+                        target="_blank"
                         type="button"
                         className=" font-small inline-flex cursor-pointer justify-center rounded p-2 text-xs text-gray-500 hover:bg-gray-100 hover:text-[#2A2A2E] dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
                       >
                         how to write markdown?
-                      </button>
+                      </a>
                     </div>
                   </div>
                 </div>

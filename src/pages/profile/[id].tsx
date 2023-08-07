@@ -1,7 +1,7 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import { api } from "@/utils/api";
-import { AnalogyView } from "@/components/AnalogyView";
+import AnalogyViewWithLink, { AnalogyView } from "@/components/AnalogyView";
 import { PageLayout } from "@/components/layout";
 import { generateSSGHelper } from "@/server/helpers/ssgHelper";
 import { LoadingSpinner } from "@/components/loading";
@@ -25,13 +25,15 @@ const ProfileFeed = (props: { userId: string }) => {
   return (
     <div className="flex w-full flex-col items-center justify-center px-16">
       {analogyData.map((analogy) => (
-        <AnalogyView
-          analogy={{
-            id: analogy.id,
-          }}
-          needsLocationInfo
-          key={analogy.id}
-        />
+        <AnalogyViewWithLink key={analogy.id}>
+          <AnalogyView
+            analogy={{
+              id: analogy.id,
+            }}
+            needsLocationInfo
+            key={analogy.id}
+          />
+        </AnalogyViewWithLink>
       ))}
     </div>
   );
