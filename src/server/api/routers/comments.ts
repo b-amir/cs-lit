@@ -64,7 +64,7 @@ export const commentsRouter = createTRPCRouter({
       }
       return {
         items: await commentsWithUserData(items),
-        total: await ctx.prisma.analogy.count(),
+        total: await ctx.prisma.comment.count(),
         pageInfo: {
           count: items.length,
           hasNextPage: items.length > limit,

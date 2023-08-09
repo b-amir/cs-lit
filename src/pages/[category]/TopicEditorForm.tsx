@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { api } from "@/utils/api";
 import slugify from "slugify";
 import { AiFillLock } from "react-icons/ai";
@@ -8,6 +8,7 @@ import { EditorLayout } from "@/components/EditorLayout";
 import { useUpdateItem } from "@/hooks/useUpdateItem";
 import { useCreateItem } from "@/hooks/useCreateItem";
 import { useDeleteItem } from "@/hooks/useDeleteItem";
+import { animated, useSpring } from "@react-spring/web";
 
 interface ITopicEditorFormProps {
   UrlCategory: string;
@@ -137,6 +138,19 @@ function TopicEditorBody({
   topicEditorState,
   UrlCategory,
 }: ITopicEditorBodyProps) {
+  // --- animation setup for reference ---> //
+  const contentRef = useRef(null);
+  const animationProps = useSpring({
+    height: input?.hasReference ? 0 : 80,
+    opacity: input?.hasReference ? 0 : 1,
+    visibility: input?.hasReference ? "hidden" : "visible",
+    config: {
+      // fast animation
+      duration: 100,
+      // smooth animation
+    },
+  });
+
   return (
     <>
       <div className="sm:col-span-1">
@@ -198,7 +212,7 @@ function TopicEditorBody({
             Your analogy for this topic
           </label>
           <div className="group mt-1 w-full rounded-[12px] border border-gray-200 bg-gray-50 shadow-sm transition-all hover:border-[#c1c1c1] focus:border-[#c1c1c1] dark:border-gray-600 dark:bg-gray-700">
-            <div className="rounded-[12px] bg-white px-6 py-6 dark:bg-gray-800">
+            <div className="rounded-[12px] bg-white px-6 pb-2 pt-6 dark:bg-gray-800">
               <label htmlFor="comment" className="sr-only">
                 Add your analogy
               </label>
@@ -231,22 +245,80 @@ function TopicEditorBody({
               </div>
             </div>
           </div>
-          <p className="ml-6 mt-2.5 text-xs text-gray-500">
-            <ul>
-              <li className="list-disc py-1">
-                Each topic must have at least one analogy to get started.
-              </li>
-              <li className="list-disc py-1">
-                {/* define what an analogy is */}
-                An analogy is a short explanation of a topic that helps you
-                understand it better.
-              </li>
-              <li className="list-disc py-1">
-                After submition, analogies must be verified by admins to be
-                published.
-              </li>
-            </ul>
-          </p>
+          {/* {input?.hasReference ? null : ( */}
+          <animated.div
+            style={animationProps}
+            ref={contentRef}
+            className="z-0 select-none"
+          >
+            <p className="ml-6 mt-2.5 text-xs text-gray-500">
+              <ul>
+                <li className="list-disc py-1">
+                  Each topic must have at least one analogy to get started.
+                </li>
+                <li className="list-disc py-1">
+                  {/* define what an analogy is */}
+                  An analogy is a short explanation of a topic that helps you
+                  understand it better.
+                </li>
+                <li className="list-disc py-1">
+                  After submition, analogies must be verified by admins to be
+                  published.
+                </li>
+              </ul>
+            </p>
+          </animated.div>
+          {/* )} */}
+
+          {/* a checkmark to indicate if analogy has a reference link */}
+          <div className=" mt-4 flex w-fit items-center rounded-lg px-2 py-1 transition-all duration-200 hover:bg-gray-50">
+            <input
+              id="hasReference"
+              name="hasReference"
+              type="checkbox"
+              className="h-4 w-4 rounded border-gray-300 text-[#2A2A2E] accent-[#6b6b6b] focus:ring-[#c1c1c1]"
+              onChange={(e) =>
+                setInput({
+                  ...input,
+                  hasReference: e.target.checked,
+                })
+              }
+              // disabled={isSubmitting}
+            />
+            <label
+              htmlFor="hasReference"
+              className="ml-2 block cursor-pointer text-sm text-gray-900 "
+            >
+              This analogy has a reference link.
+            </label>
+          </div>
+
+          {/* the reference link */}
+          {input?.hasReference && (
+            <div className="z-10 mt-4 sm:col-span-1">
+              <label
+                htmlFor="reference"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Reference link
+              </label>
+              <div className="mt-1">
+                <input
+                  id="reference"
+                  name="reference"
+                  className="mt-1 block w-full  max-w-[800px] rounded-[12px] border border-gray-300 px-3 py-2 shadow-sm !outline-none ring-0 focus:border-[#c1c1c1] focus:ring-[#c1c1c1] sm:text-sm"
+                  placeholder="https://..."
+                  defaultValue={input?.reference ?? ""}
+                  required
+                  onChange={handleChange}
+                  // disabled={isSubmitting}
+                />
+              </div>
+              <p className="ml-2 mt-2.5 text-xs text-gray-500">
+                Link to the original source (video, article, etc.).
+              </p>
+            </div>
+          )}
         </div>
       )}
     </>

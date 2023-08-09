@@ -145,6 +145,7 @@ model Analogy {
 
     title       String
     description String
+    reference   String?
     status      ANALOGY_STATUS @default(PENDING)
     pinned      Boolean        @default(false)
 

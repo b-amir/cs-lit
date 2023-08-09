@@ -243,6 +243,23 @@ export function AnalogyInfoRow({
   needsLocationInfo,
   analogyData,
 }: IAnalogyInfoRowProps) {
+  // --- no infoRow if there's no item to show --- //
+  // const [visibleItems, setVisibleItems] = useState(0);
+  // useEffect(() => {
+  //   if (needsLocationInfo) {
+  //     setVisibleItems((prev) => prev + 1);
+  //   }
+  //   if (analogyData?.reference) {
+  //     setVisibleItems((prev) => prev + 1);
+  //   }
+  //   if (analogyData?.comments?.length > 0) {
+  //     setVisibleItems((prev) => prev + 1);
+  //   }
+  //   if (analogyData?.status !== "PUBLISHED") {
+  //     setVisibleItems((prev) => prev + 1);
+  //   }
+  // }, []);
+
   const { data: comments, status: commentsFetchingStatus } =
     api.comment.getByAnalogyId.useInfiniteQuery(
       {
@@ -254,49 +271,71 @@ export function AnalogyInfoRow({
     );
 
   return (
-    <div
-      id="analogy-info-row"
-      className="flex h-12 w-full cursor-default items-center justify-start"
-    >
-      <span className="flex shrink-0 grow">
-        {needsLocationInfo ? (
-          <div className="mx-2 flex rounded-lg border bg-gray-100 px-3 py-1 text-xs text-gray-500 hover:border-gray-300 hover:bg-[#e9e9e988]">
-            <span className="  font-normal ">about&nbsp;</span>
-            <Link
-              href={`/${analogyData?.category?.slug}/${analogyData?.topic?.slug}`}
-              className="flex cursor-pointer  items-center  align-middle  font-semibold  transition-all hover:text-gray-800"
-            >
-              {analogyData?.topic?.title}
-            </Link>
-            <span className=" font-normal">&nbsp;in&nbsp;</span>
-            <Link
-              href={`/${analogyData?.category?.slug}`}
-              className="flex  cursor-pointer  items-center align-middle  font-semibold   transition-all hover:text-gray-800"
-            >
-              {analogyData?.category?.name}
-            </Link>
-          </div>
-        ) : null}
-
-        <span className="mx-2 flex cursor-pointer rounded-lg border bg-indigo-50 px-3 py-1 text-xs text-indigo-600 hover:border-indigo-300 hover:bg-indigo-100">
-          <AiOutlineLink className="mr-2 mt-0.5 scale-125" /> reference
-        </span>
-        {comments?.pages[0]?.total > 0 ? (
+    <>
+      {/* {visibleItems > 0 ? ( */}
+      <div
+        id="analogy-info-row"
+        className="flex h-12 w-full cursor-default items-center justify-start"
+      >
+        <span className="flex shrink-0 grow">
           <Link
             href={`/${analogyData?.category?.slug}/${analogyData?.topic?.slug}/${analogyData.id}`}
-            className="mx-2 flex cursor-pointer rounded-lg border bg-cyan-50 px-3 py-1 text-xs text-cyan-600 hover:border-cyan-300 hover:bg-cyan-100"
+            className="mx-2 flex rounded-lg border bg-gray-100 px-3 py-1 text-xs text-gray-500 hover:border-gray-300 hover:bg-[#e9e9e988]"
           >
-            <HiOutlineChatAlt className="mr-2 mt-0.5 scale-125" />{" "}
-            {comments?.pages ? comments?.pages[0]?.total : 0}
+            {analogyData && RelativeTime(analogyData.createdAt)}
           </Link>
-        ) : null}
-        <span>{getStatusIcon(analogyData?.status)}</span>
-      </span>
-      <span className="shrink grow-0">
-        <span className="mx-2 flex cursor-pointer rounded-lg border border-transparent p-1 text-xs text-gray-600 hover:border-gray-300 hover:bg-gray-100">
-          <HiOutlineDotsVertical className="mt-0.5 scale-125" />{" "}
+
+          {/* where analogy is posted */}
+          {needsLocationInfo ? (
+            <div className="mx-2 flex rounded-lg border bg-gray-100 px-3 py-1 text-xs text-gray-500 hover:border-gray-300 hover:bg-[#e9e9e988]">
+              <span className="  font-normal ">about&nbsp;</span>
+              <Link
+                href={`/${analogyData?.category?.slug}/${analogyData?.topic?.slug}`}
+                className="flex cursor-pointer  items-center  align-middle  font-semibold  transition-all hover:text-gray-800"
+              >
+                {analogyData?.topic?.title}
+              </Link>
+              <span className=" font-normal">&nbsp;in&nbsp;</span>
+              <Link
+                href={`/${analogyData?.category?.slug}`}
+                className="flex  cursor-pointer  items-center align-middle  font-semibold   transition-all hover:text-gray-800"
+              >
+                {analogyData?.category?.name}
+              </Link>
+            </div>
+          ) : null}
+
+          {/* wether there's a reference */}
+          {analogyData?.reference ? (
+            <Link
+              href={`${analogyData?.reference}`}
+              className="mx-2 flex cursor-pointer rounded-lg border bg-indigo-50 px-3 py-1 text-xs text-indigo-600 hover:border-indigo-300 hover:bg-indigo-100"
+            >
+              <AiOutlineLink className="mr-2 mt-0.5 scale-125" /> reference
+            </Link>
+          ) : null}
+
+          {/* if analogy has comments */}
+          {comments?.pages[0]?.total > 0 ? (
+            <Link
+              href={`/${analogyData?.category?.slug}/${analogyData?.topic?.slug}/${analogyData.id}`}
+              className="mx-2 flex cursor-pointer rounded-lg border bg-cyan-50 px-3 py-1 text-xs text-cyan-600 hover:border-cyan-300 hover:bg-cyan-100"
+            >
+              <HiOutlineChatAlt className="mr-2 mt-0.5 scale-125" />{" "}
+              {comments?.pages ? comments?.pages[0]?.total : 0}
+            </Link>
+          ) : null}
+
+          {/* if status is not published */}
+          <span>{getStatusIcon(analogyData?.status)}</span>
         </span>
-      </span>{" "}
-    </div>
+        <span className="shrink grow-0">
+          <span className="mx-2 flex cursor-pointer rounded-lg border border-transparent p-1 text-xs text-gray-600 hover:border-gray-300 hover:bg-gray-100">
+            <HiOutlineDotsVertical className="mt-0.5 scale-125" />{" "}
+          </span>
+        </span>{" "}
+      </div>
+      {/* ) : null} */}
+    </>
   );
 }

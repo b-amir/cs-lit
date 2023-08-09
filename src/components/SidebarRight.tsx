@@ -172,7 +172,7 @@ export function SidebarRightWidget(props: PropsWithChildren<any>) {
   });
 
   return (
-    <li className="mx-auto mb-6 flex h-full w-[100%] flex-col overflow-hidden rounded-[0px] border-y bg-[#F9F9F9] pb-0 shadow-sm ">
+    <li className="mx-auto mb-6 flex h-full w-[100%] flex-col overflow-hidden rounded-[0px] border-y bg-[#F9F9F9] pb-0 ">
       <div
         onClick={props.onShow}
         id="sidebar-widget-title"

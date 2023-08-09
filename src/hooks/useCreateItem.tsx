@@ -21,6 +21,7 @@ export interface ITopicInput {
   topicId: string;
   authorId: string;
   categoryId: string;
+  reference: string;
   email: string;
   username: string;
   linkToDocs: string;
@@ -136,7 +137,13 @@ export function useCreateItem(item: ITopicInput, type: string) {
           slug: topicSlug,
           category: item.category,
           starter: { id: sessionData?.user?.id! },
-          analogies: [{ id: "", description: item.firstAnalogy }],
+          analogies: [
+            {
+              id: "",
+              description: item.firstAnalogy,
+              reference: item.reference,
+            },
+          ],
         });
       } catch (e) {
         toast.error("Something went wrong");

@@ -116,7 +116,7 @@ export default function CategoryPage() {
 
             {/* show a list of topics */}
             {topicsFetchingStatus === "success" &&
-            topicsData.pages.length > 0 ? (
+            topicsData?.pages[0]?.items.length > 0 ? (
               <TopicsList
                 topicsData={topicsData}
                 UrlCategory={UrlCategory}
@@ -130,7 +130,7 @@ export default function CategoryPage() {
 
             {/* if there's no topics */}
             {topicsFetchingStatus === "success" &&
-            topicsData.pages.length <= 0 ? (
+            topicsData?.pages[0]?.items.length <= 0 ? (
               <NoTopics
                 topicEditorState={topicEditorState}
                 setTopicEditorState={setTopicEditorState}
@@ -215,10 +215,10 @@ function NoTopics({
   setTopicEditorState,
 }: INoTopicsProps): React.ReactNode {
   return (
-    <div className="font-merriweathersans mx-auto mt-[20%] flex h-full flex-col items-center  justify-center gap-10 text-lg font-semibold text-[#8c8c8cdd]">
+    <div className="font-merriweathersans mx-auto my-auto mt-12 flex h-full flex-col items-center  justify-center gap-10 text-lg font-semibold text-[#8c8c8cdd]">
       <FaGhost className="text-9xl text-[#a3a3a380]" />
       <span>
-        No topics yet.
+        No topics yet.{" "}
         <span
           className="cursor-pointer hover:text-[#4a4a4add]"
           onClick={() => {
@@ -316,7 +316,7 @@ function FormTrigger({
           url: "",
           slug: "",
           category: categoryData,
-          analogies: [{ id: "", description: "" }],
+          analogies: [{ id: "", description: "", reference: "" }],
           starter: { id: "" },
         });
       }}

@@ -259,13 +259,14 @@ export const topicsRouter = createTRPCRouter({
         category: z.object({
           id: z.string(),
         }),
-        url: z.string().url("Please provide a valid URL to docs."),
+        url: z.string().url("Please provide a valid URL to docs"),
         starter: z.object({
           id: z.string(),
         }),
         analogies: z.array(z.object({
           id: z.string(),
           description: z.string().min(120, "Analogy must be at least 120 characters").max(63206, "your analogy is too long!"),
+          reference: z.string().url("Please provide a valid URL"),
         })),
       })
     )
@@ -287,6 +288,7 @@ export const topicsRouter = createTRPCRouter({
               // title: input.analogies[0]?.title || "",
               title: `${input.title} by ${await getUserNameById(input.starter.id)}`,
               description: input.analogies[0]?.description || "",
+              reference: input.analogies[0]?.reference || "",
               author: {
                 connect: { id: input.starter.id }, // Connect to an existing user using its ID
               },
