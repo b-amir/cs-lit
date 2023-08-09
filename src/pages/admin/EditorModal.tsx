@@ -158,11 +158,7 @@ export function TopicEditForm({
   const { item, type } = editorModalInput;
   const updateItem = useUpdateItem(item, type);
 
-  // editorModalInput.item,
-  // editorModalInput.type
-
   const handleSave = (e) => {
-    //prevent default
     e.preventDefault();
     setEditorModalShown(false);
     updateItem();

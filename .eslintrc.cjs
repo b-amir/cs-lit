@@ -20,6 +20,7 @@ const config = {
   },
   plugins: ["@typescript-eslint"],
   extends: ["next/core-web-vitals", "plugin:@typescript-eslint/recommended"],
+
   rules: {
     "@typescript-eslint/consistent-type-imports": [
       "warn",
@@ -30,6 +31,7 @@ const config = {
     ],
     "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
   },
+  ignorePatterns: ["node_modules", ".next", "out"],
 };
 
 module.exports = config;
