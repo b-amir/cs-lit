@@ -16,6 +16,9 @@ import toast from "react-hot-toast";
 import { type Comment } from "@prisma/client";
 import { CgSpinner } from "react-icons/cg";
 import { RelativeTime } from "../../../../utils/relativeTime";
+import ReactMarkdown from "react-markdown";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { coy } from "react-syntax-highlighter/dist/cjs/styles/prism";
 
 export default function SingleAnalogyPage() {
   const router = useRouter();
@@ -77,7 +80,7 @@ export default function SingleAnalogyPage() {
   );
 }
 
-function NavShare(router) {
+function NavShare({ router }) {
   return (
     <div
       id="nav-share"
@@ -261,8 +264,38 @@ function CommentSection({ analogyId }) {
                   {RelativeTime(comment.createdAt)}
                 </div>
               </div>
-              <div id="comment-body" className="prose p-1 px-2 text-sm">
-                {comment.content}
+              <div
+                id="comment-body"
+                className="prose px-2 py-2 text-sm prose-code:whitespace-pre-wrap prose-code:break-words prose-code:rounded-md prose-code:bg-[#FDFDFD] prose-code:px-2 prose-code:py-1 prose-code:text-gray-500"
+              >
+                <ReactMarkdown
+                  className="prose-code:dark:text-gray-30 prose mx-auto  text-ellipsis break-words prose-pre:bg-[#FDFDFD] prose-pre:p-0"
+                  // eslint-disable-next-line react/no-children-prop
+                  children={comment.content}
+                  components={{
+                    code({ node, inline, className, children, ...props }) {
+                      const match = /language-(\w+)/.exec(className || "");
+                      return !inline && match ? (
+                        <SyntaxHighlighter
+                          {...props}
+                          // eslint-disable-next-line react/no-children-prop
+                          children={String(children).replace(/\n$/, "")}
+                          style={coy}
+                          wrapLongLines={true}
+                          language={match[1]}
+                          PreTag="div"
+                          customStyle={{
+                            padding: "1.1em",
+                          }}
+                        />
+                      ) : (
+                        <code {...props} className={className}>
+                          {children}
+                        </code>
+                      );
+                    },
+                  }}
+                />
               </div>
             </div>
           ))

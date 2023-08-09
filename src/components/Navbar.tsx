@@ -45,7 +45,7 @@ export function Navbar() {
         <div className=" flex h-10 items-start  justify-start rounded-full bg-[#EBEAE800] px-0 py-1 backdrop-blur-none backdrop-filter-none">
           <div className="my-auto inline-flex text-sm">
             <Link href="/">
-              <TiHome className="mt-[0px] cursor-pointer !text-lg text-[#2A2A2E]" />
+              <TiHome className="mt-[0px] cursor-pointer !text-lg text-[#2A2A2E] transition-all hover:text-black" />
             </Link>
 
             {router.pathname === "/admin" && (
@@ -59,13 +59,13 @@ export function Navbar() {
 
             {categoryData && (
               <>
-                <span className="mx-2 text-[#69696975]">/</span>
+                <span className="mx-2 text-[#69696975] ">/</span>
                 <Link
                   href={`/${UrlCategory}`}
-                  className="max-w-[10rem] truncate"
+                  className="max-w-[calc(7vw)] truncate  "
                 >
                   <span
-                    className={` cursor-pointer text-[#2A2A2E] ${
+                    className={` cursor-pointer text-[#2A2A2E] transition-all hover:text-black ${
                       !UrlTopic && "font-semibold"
                     }`}
                   >
@@ -76,13 +76,13 @@ export function Navbar() {
             )}
             {topicsData && (
               <>
-                <span className="mx-2 text-[#69696975]">/</span>
+                <span className="mx-2 text-[#69696975]  ">/</span>
                 <Link
                   href={`/${UrlCategory}/${UrlTopic}`}
-                  className="max-w-[14rem] truncate"
+                  className="max-w-[calc(11vw)] truncate "
                 >
                   <span
-                    className={`cursor-pointer text-[#2A2A2E] ${
+                    className={`cursor-pointer text-[#2A2A2E] transition-all hover:text-black ${
                       !UrlAnalogyId && "font-semibold"
                     }`}
                   >
@@ -94,8 +94,11 @@ export function Navbar() {
             {AnalogyData && (
               <>
                 <span className="mx-2 text-[#69696975]">/</span>
-                <Link href={`/${UrlCategory}/${UrlTopic}`}>
-                  <span className="cursor-pointer font-semibold text-[#2A2A2E]">
+                <Link
+                  href={`/${UrlCategory}/${UrlTopic}`}
+                  className="max-w-[calc(12vw)] truncate"
+                >
+                  <span className="cursor-pointer font-semibold text-[#2A2A2E] transition-all hover:text-black">
                     {AnalogyData?.author?.name
                       ? AnalogyData?.author?.name
                       : AnalogyData?.author?.email}
