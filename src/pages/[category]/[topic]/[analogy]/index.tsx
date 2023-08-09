@@ -13,7 +13,7 @@ import Link from "next/link";
 import { archivo } from "@/styles/customFonts";
 import Image from "next/image";
 import toast from "react-hot-toast";
-import { Comment } from "@prisma/client";
+import { type Comment } from "@prisma/client";
 import { CgSpinner } from "react-icons/cg";
 import { RelativeTime } from "../../../../utils/relativeTime";
 
@@ -26,7 +26,7 @@ export default function SingleAnalogyPage() {
     analogy: UrlAnalogyId,
   } = router.query;
 
-  api.analogy.getAll.useQuery();
+  // api.analogy.getAll.useQuery();
 
   const { data: singleAnalogyData, status } =
     api.analogy.getSingleAnalogyById.useQuery({
@@ -134,11 +134,12 @@ function MainSection({
       id="single-analogy"
       className="mb-auto rounded-[23px] bg-[#e8e5e2] bg-gradient-to-bl from-[#1e7cba] to-[#7c1db3] px-5 py-5"
     >
-      <div className="flex flex-row justify-between px-7 pb-1 pt-8 align-baseline">
-        <span className="text-lg font-semibold text-[#efefefc7]">
-          {categoryData?.name} {topicsData && "/"} {topicsData?.title}
+      <div className="flex flex-row justify-between px-7 pb-1 pt-8 ">
+        <span className="flex flex-row text-sm font-semibold text-[#efefefc7]">
+          <span className="max-w-[8rem] truncate">{categoryData?.name}</span>
+          <span className="mx-2"> {topicsData && "/"}</span>
+          <span className="max-w-[16rem] truncate">{topicsData?.title}</span>
         </span>{" "}
-        <br />
         <span className="text-sm text-[#efefefa7]">{domainName}</span>
       </div>
 

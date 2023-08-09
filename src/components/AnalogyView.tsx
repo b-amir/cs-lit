@@ -17,6 +17,7 @@ import { HiOutlineChatAlt } from "react-icons/hi";
 import { getStatusIcon } from "@/utils/getStatusIcon";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { RelativeTime } from "@/utils/relativeTime";
+import router from "next/router";
 
 interface IAnalogyViewProps {
   analogy: {
@@ -64,6 +65,7 @@ export const AnalogyView: React.FC<IAnalogyViewProps> = (props) => {
         shadow-[inset_0px_-3px_1px_0px_#00000003]"
         onClick={(e) => {
           e.preventDefault();
+          e.stopPropagation();
         }}
       >
         <div className="flex items-center justify-between align-middle">
@@ -196,6 +198,7 @@ export const AnalogyView: React.FC<IAnalogyViewProps> = (props) => {
       bg-gray-50 px-1 shadow-[inset_0px_3px_1px_0px_#00000003]"
         onClick={(e) => {
           e.preventDefault();
+          e.stopPropagation();
         }}
       >
         <AnalogyInfoRow
@@ -260,6 +263,15 @@ export function AnalogyInfoRow({
   //   }
   // }, []);
 
+  // --- if info row is placed outside analogyView,
+  //     then it has to get url params router rather than analogyData --- //
+  const {
+    category: UrlCategory,
+    topic: UrlTopic,
+    analogy: UrlAnalogyId,
+    id: UrlProfile,
+  } = router.query;
+
   const { data: comments, status: commentsFetchingStatus } =
     api.comment.getByAnalogyId.useInfiniteQuery(
       {
@@ -279,7 +291,9 @@ export function AnalogyInfoRow({
       >
         <span className="flex shrink-0 grow">
           <Link
-            href={`/${analogyData?.category?.slug}/${analogyData?.topic?.slug}/${analogyData.id}`}
+            href={`/${analogyData?.category?.slug ?? UrlCategory}/${
+              analogyData?.topic?.slug ?? UrlTopic
+            }/${analogyData?.id ?? UrlAnalogyId}`}
             className="mx-2 flex rounded-lg border bg-gray-100 px-3 py-1 text-xs text-gray-500 hover:border-gray-300 hover:bg-[#e9e9e988]"
           >
             {analogyData && RelativeTime(analogyData.createdAt)}
@@ -287,18 +301,18 @@ export function AnalogyInfoRow({
 
           {/* where analogy is posted */}
           {needsLocationInfo ? (
-            <div className="mx-2 flex rounded-lg border bg-gray-100 px-3 py-1 text-xs text-gray-500 hover:border-gray-300 hover:bg-[#e9e9e988]">
+            <div className="mx-2 flex max-w-[15rem] overflow-clip truncate text-ellipsis rounded-lg border bg-gray-100 px-3 py-1 text-xs text-gray-500 hover:border-gray-300 hover:bg-[#e9e9e988]">
               <span className="  font-normal ">about&nbsp;</span>
               <Link
                 href={`/${analogyData?.category?.slug}/${analogyData?.topic?.slug}`}
-                className="flex cursor-pointer  items-center  align-middle  font-semibold  transition-all hover:text-gray-800"
+                className="flex max-w-[5rem] cursor-pointer items-center  overflow-clip text-ellipsis  align-middle  font-semibold  transition-all hover:text-gray-800"
               >
                 {analogyData?.topic?.title}
               </Link>
               <span className=" font-normal">&nbsp;in&nbsp;</span>
               <Link
                 href={`/${analogyData?.category?.slug}`}
-                className="flex  cursor-pointer  items-center align-middle  font-semibold   transition-all hover:text-gray-800"
+                className="flex  max-w-[5rem] cursor-pointer  items-center truncate align-middle  font-semibold   transition-all hover:text-gray-800"
               >
                 {analogyData?.category?.name}
               </Link>
@@ -318,7 +332,9 @@ export function AnalogyInfoRow({
           {/* if analogy has comments */}
           {comments?.pages[0]?.total > 0 ? (
             <Link
-              href={`/${analogyData?.category?.slug}/${analogyData?.topic?.slug}/${analogyData.id}`}
+              href={`/${analogyData?.category?.slug ?? UrlCategory}/${
+                analogyData?.topic?.slug ?? UrlTopic
+              }/${analogyData?.id ?? UrlAnalogyId}`}
               className="mx-2 flex cursor-pointer rounded-lg border bg-cyan-50 px-3 py-1 text-xs text-cyan-600 hover:border-cyan-300 hover:bg-cyan-100"
             >
               <HiOutlineChatAlt className="mr-2 mt-0.5 scale-125" />{" "}

@@ -60,9 +60,12 @@ export function Navbar() {
             {categoryData && (
               <>
                 <span className="mx-2 text-[#69696975]">/</span>
-                <Link href={`/${UrlCategory}`}>
+                <Link
+                  href={`/${UrlCategory}`}
+                  className="max-w-[10rem] truncate"
+                >
                   <span
-                    className={`cursor-pointer text-[#2A2A2E] ${
+                    className={` cursor-pointer text-[#2A2A2E] ${
                       !UrlTopic && "font-semibold"
                     }`}
                   >
@@ -74,7 +77,10 @@ export function Navbar() {
             {topicsData && (
               <>
                 <span className="mx-2 text-[#69696975]">/</span>
-                <Link href={`/${UrlCategory}/${UrlTopic}`}>
+                <Link
+                  href={`/${UrlCategory}/${UrlTopic}`}
+                  className="max-w-[14rem] truncate"
+                >
                   <span
                     className={`cursor-pointer text-[#2A2A2E] ${
                       !UrlAnalogyId && "font-semibold"

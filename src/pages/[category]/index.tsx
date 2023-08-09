@@ -244,7 +244,7 @@ function CategoryHeader({
         <div className=" mb-4 h-8 w-1/4 animate-pulse rounded-lg bg-[#b4b4b49f]" /> // category name skeleton
       ) : (
         <h1
-          className={`${archivo.className} mb-4 items-start justify-start text-5xl font-extrabold tracking-tight text-[#2A2A2E] sm:text-[2rem]`}
+          className={`${archivo.className} mb-4 max-w-[720px] items-start justify-start truncate whitespace-pre-wrap break-words text-5xl font-extrabold tracking-tight text-[#2A2A2E] sm:text-[2rem]`}
         >
           {categoryData?.name}
         </h1>

@@ -64,7 +64,7 @@ function TopicPage(props) {
               <div className=" mb-4  h-8 w-1/4 animate-pulse rounded-lg bg-[#b4b4b49f]" />
             ) : (
               <h1
-                className={`${archivo.className}   text-5xl font-extrabold  tracking-tight text-[#2A2A2E] sm:text-[2rem]`}
+                className={`${archivo.className}  max-w-[720px] truncate whitespace-pre-wrap break-words text-5xl font-extrabold  tracking-tight text-[#2A2A2E] sm:text-[2rem]`}
               >
                 {topicsData?.title}
               </h1>

@@ -1,10 +1,4 @@
-import { set } from "nprogress";
-import React, {
-  type Dispatch,
-  type SetStateAction,
-  useState,
-  use,
-} from "react";
+import React from "react";
 import { RiDeleteBin6Line as Delete } from "react-icons/ri";
 
 interface IEditorLayoutProps {

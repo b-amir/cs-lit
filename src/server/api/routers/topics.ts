@@ -266,7 +266,7 @@ export const topicsRouter = createTRPCRouter({
         analogies: z.array(z.object({
           id: z.string(),
           description: z.string().min(120, "Analogy must be at least 120 characters").max(63206, "your analogy is too long!"),
-          reference: z.string().url("Please provide a valid URL"),
+          reference: z.string().url("Please provide a valid URL").nullish(),
         })),
       })
     )
