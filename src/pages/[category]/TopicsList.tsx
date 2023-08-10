@@ -26,8 +26,9 @@ export interface ITopicsListProps {
   >;
   setTopicEditorState: React.Dispatch<
     React.SetStateAction<{
+      entity: null | "analogy" | "topic";
       shown: boolean;
-      purpose: "create" | "edit" | null;
+      purpose: "Create" | "Edit" | null;
     }>
   >;
 }
@@ -93,7 +94,11 @@ export function TopicsList({
                         className="font-medium text-gray-400 hover:underline dark:text-gray-300"
                         onClick={(e) => {
                           e.preventDefault();
-                          setTopicEditorState({ shown: true, purpose: "edit" });
+                          setTopicEditorState({
+                            entity: "topic",
+                            shown: true,
+                            purpose: "Edit",
+                          });
                           setTopicInput((prev) => {
                             return {
                               ...prev,

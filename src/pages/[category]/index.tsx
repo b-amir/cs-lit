@@ -1,7 +1,6 @@
 import { PageLayout } from "@/components/layout";
 import { useRouter } from "next/router";
 import { CgFolderAdd } from "react-icons/cg";
-import { IoClose } from "react-icons/io5";
 import React, { useRef, useState } from "react";
 import { animated, useSpring } from "@react-spring/web";
 import { api } from "@/utils/api";
@@ -14,11 +13,13 @@ import { TableSkeleton } from "@/components/Skeleton";
 import { TopicEditorForm } from "./TopicEditorForm";
 import { TopicsList } from "./TopicsList";
 import { type Topic, type Category } from "@prisma/client";
+import { FormTrigger } from "../../components/FormTrigger";
 
 export default function CategoryPage() {
   const [topicEditorState, setTopicEditorState] = useState({
+    entity: "topic" as null | "topic",
     shown: false,
-    purpose: null as null | "edit" | "create",
+    purpose: null as null | "Edit" | "Create",
   });
 
   const { data: sessionData } = useSession();
@@ -72,8 +73,16 @@ export default function CategoryPage() {
     },
   });
 
-  console.log("topicsData", topicsData);
-  console.log("topicInput", topicInput);
+  // --- a basic object that's passed to the form state whenever trigger is clicked --- //
+  const newInput = {
+    id: "",
+    title: "",
+    url: "",
+    slug: "",
+    category: categoryData,
+    analogies: [{ id: "", description: "", reference: "" }],
+    starter: { id: "" },
+  };
 
   return (
     <>
@@ -145,14 +154,14 @@ export default function CategoryPage() {
             topicEditorState.shown
               ? "sticky bottom-0 h-full max-h-[calc(100vh-90px-1px)] bg-[#2a2a2e3b] pb-5 pt-7 shadow-[0px_-1px_6px_2px_#00000015,0px_0px_0px_1px_#00000030,0px_-11px_20px_2px_#00000005,0px_-20px_55px_0px_#00000005]"
               : "sticky bottom-[-200px] bg-[#2a2a2e3b] pb-7 pt-9"
-          } ${topicEditorState.purpose === "edit" ? "" : ""}
+          } ${topicEditorState.purpose === "Edit" ? "" : ""}
               ?`}
         >
           <FormTrigger
-            setTopicInput={setTopicInput}
-            topicEditorState={topicEditorState}
-            setTopicEditorState={setTopicEditorState}
-            categoryData={categoryData as Category}
+            setInput={setTopicInput}
+            editorState={topicEditorState}
+            setEditorState={setTopicEditorState}
+            newInput={newInput}
           />
 
           <animated.div
@@ -177,17 +186,6 @@ export default function CategoryPage() {
 
 // ------------------ COMPONENTS ------------------
 
-interface IFormTriggerProps {
-  setTopicInput: React.Dispatch<React.SetStateAction<Topic>>;
-  categoryData: Category;
-  topicEditorState: { shown: boolean; purpose: "create" | "edit" | null };
-  setTopicEditorState: React.Dispatch<
-    React.SetStateAction<{
-      shown: boolean;
-      purpose: "create" | "edit" | null;
-    }>
-  >;
-}
 interface ICategoryHeaderProps {
   categoryFetchingStatus: string;
   categoryData: Category;
@@ -196,16 +194,16 @@ interface ICategoryHeaderProps {
   setTopicEditorState: React.Dispatch<
     React.SetStateAction<{
       shown: boolean;
-      purpose: "create" | "edit" | null;
+      purpose: "Create" | "Edit" | null;
     }>
   >;
 }
 interface INoTopicsProps {
-  topicEditorState: { shown: boolean; purpose: "create" | "edit" | null };
+  topicEditorState: { shown: boolean; purpose: "Create" | "Edit" | null };
   setTopicEditorState: React.Dispatch<
     React.SetStateAction<{
       shown: boolean;
-      purpose: "create" | "edit" | null;
+      purpose: "Create" | "Edit" | null;
     }>
   >;
 }
@@ -222,7 +220,7 @@ function NoTopics({
         <span
           className="cursor-pointer hover:text-[#4a4a4add]"
           onClick={() => {
-            setTopicEditorState({ shown: true, purpose: "create" });
+            setTopicEditorState({ shown: true, purpose: "Create" });
           }}
         >
           Create one!
@@ -281,60 +279,13 @@ function CategoryHeader({
         <button
           // create topic button
           onClick={() =>
-            setTopicEditorState({ shown: true, purpose: "create" })
+            setTopicEditorState({ shown: true, purpose: "Create" })
           }
           className="mx-2 inline-flex flex-row items-center rounded-[12px] border border-[#d2d2d28e] bg-[#ffffffc1] px-3 py-1.5 text-sm transition-all hover:border-[#c8c8c8] hover:bg-[#ffffff]"
         >
           <CgFolderAdd className="mb-0.5 mr-2" /> Create topic
         </button>
       </div>
-    </div>
-  );
-}
-function FormTrigger({
-  setTopicInput,
-  topicEditorState,
-  setTopicEditorState,
-  categoryData,
-}: IFormTriggerProps) {
-  return (
-    <div
-      id="add-topic-header"
-      className={` mb-4 inline-flex w-full cursor-pointer flex-row items-center rounded-[12px] border border-[#dcdcdca1] bg-[#efefef] 
- px-10 text-xl font-bold shadow-sm transition-all duration-300 hover:border-[#8b8b8ba5] hover:bg-[#ffffff] ${
-   topicEditorState.shown ? "py-6 " : "py-6 "
- } `}
-      onClick={() => {
-        setTopicEditorState?.({
-          shown: !topicEditorState.shown,
-          purpose: "create",
-        });
-
-        setTopicInput({
-          id: "",
-          title: "",
-          url: "",
-          slug: "",
-          category: categoryData,
-          analogies: [{ id: "", description: "", reference: "" }],
-          starter: { id: "" },
-        });
-      }}
-    >
-      <CgFolderAdd className="mb-1.5 mr-2.5" />
-      <span className=" grow select-none">
-        <h2>
-          {topicEditorState.purpose === "edit"
-            ? "Edit topic"
-            : "Create new topic"}
-        </h2>
-      </span>
-      {/* rotate icon between X and + */}
-      <IoClose
-        className={`mb-1 transform cursor-pointer text-2xl text-[#737373] transition-transform delay-500 duration-200 hover:text-black ${
-          topicEditorState.shown ? "" : "rotate-45"
-        }`}
-      />
     </div>
   );
 }

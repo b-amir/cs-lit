@@ -83,6 +83,7 @@ export function useDeleteItem(item: ITopicInput, type: string) {
       onSuccess: () => {
         void ctx.analogy.getAll.invalidate();
         void ctx.analogy.getAllWithQuery.invalidate();
+        void ctx.analogy.getByTopicId.invalidate();
         toast.success("Analogy deleted successfully.");
       },
       onError: (e) => {

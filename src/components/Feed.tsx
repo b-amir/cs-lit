@@ -16,6 +16,8 @@ export const Feed: React.FC<IFeedProps> = ({
   hasNextPage,
   fetchNextPage,
   isFetchingNextPage,
+  setAnalogyInput,
+  setAnalogyEditorState,
 }) => {
   // const {
   //   data,
@@ -38,6 +40,8 @@ export const Feed: React.FC<IFeedProps> = ({
                   id: analogy.id,
                 }}
                 key={analogy.id}
+                setAnalogyInput={setAnalogyInput}
+                setAnalogyEditorState={setAnalogyEditorState}
               />
             </AnalogyViewWithLink>
           ))

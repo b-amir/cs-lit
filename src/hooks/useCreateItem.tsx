@@ -117,7 +117,15 @@ export function useCreateItem(item: ITopicInput, type: string) {
             toast.error(errorMessage?.analogies.join(" "));
           }
         } else {
-          toast.error("Something went wrong.");
+          if (
+            e.message.includes(
+              "Unique constraint failed on the fields: (`slug`)"
+            )
+          ) {
+            toast.error("A topic with the same name already exists.");
+          } else {
+            toast.error("Something went wrong.");
+          }
         }
       },
     });
@@ -153,44 +161,62 @@ export function useCreateItem(item: ITopicInput, type: string) {
     return createTopicHandler;
   }
 
-  // if (type === "Analogies") {
-  //   // updating analogy
-  //   const { mutate: updateAnalogy } = api.analogy.update.useMutation({
-  //     onSuccess: () => {
-  //       void ctx.analogy.getAll.invalidate();
-  //       toast.success("Analogy updated successfully.");
-  //     },
-  //     onError: (e) => {
-  //       toast.error("Something went wrong");
-  //       console.log(e);
-  //     },
-  //   });
+  if (type === "Analogies") {
+    // creating analogy
+    const { mutate: createAnalogy } = api.analogy.create.useMutation({
+      onSuccess: () => {
+        void ctx.analogy.getAll.invalidate();
+        void ctx.analogy.getByTopicId.invalidate();
 
-  //   const updateAnalogyHandler = () => {
-  //     try {
-  //       createActivityLogEntry({
-  //         entityType: "analogy",
-  //         entityId: item.id,
-  //         entityTitle: item.title,
-  //         action: "updated",
-  //       });
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
 
-  //       updateAnalogy({
-  //         id: item.id,
-  //         title: item.title,
-  //         description: item.description,
-  //         status: item.status,
-  //         pinned: item.pinned,
-  //         topicId: item.topicId,
-  //         authorId: item.authorId,
-  //       });
-  //     } catch (e) {
-  //       toast.error("Something went wrong");
-  //       console.log(e);
-  //     }
-  //   };
-  //   return updateAnalogyHandler;
-  // }
+        toast.success("Analogy created successfully.");
+      },
+      onError: (e) => {
+        const errorMessage = e.data?.zodError?.fieldErrors;
+        console.log(errorMessage);
+        if (errorMessage) {
+          if (errorMessage.description) {
+            toast.error(errorMessage?.description.join(" "));
+          }
+          if (errorMessage.reference) {
+            toast.error(errorMessage?.reference.join(" "));
+          } else {
+            toast.error("Something went wrong.");
+          }
+        }
+      },
+    });
+
+    const createAnalogyHandler = () => {
+      try {
+        createActivityLogEntry({
+          entityType: "analogy",
+          entityId: "",
+          entityTitle: "",
+          action: "created",
+        });
+
+        createAnalogy({
+          id: item.id,
+          title: item.title,
+          description: item.description,
+          reference: item.reference,
+          status: item.status,
+          pinned: item.pinned,
+          topicId: item.topicId,
+          authorId: item.authorId,
+        });
+      } catch (e) {
+        toast.error("Something went wrong");
+        console.log(e);
+      }
+    };
+    return createAnalogyHandler;
+  }
 
   // if (type === "Users") {
   //   // updating user

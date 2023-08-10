@@ -18,6 +18,7 @@ import { getStatusIcon } from "@/utils/getStatusIcon";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { RelativeTime } from "@/utils/relativeTime";
 import router from "next/router";
+import { useSession } from "next-auth/react";
 
 interface IAnalogyViewProps {
   analogy: {
@@ -26,7 +27,12 @@ interface IAnalogyViewProps {
   needsLocationInfo?: boolean;
 }
 export const AnalogyView: React.FC<IAnalogyViewProps> = (props) => {
-  const { analogy, needsLocationInfo = false } = props;
+  const {
+    setAnalogyInput,
+    setAnalogyEditorState,
+    analogy,
+    needsLocationInfo = false,
+  } = props;
 
   const { data: analogyVotesData, status: votingStatus } =
     api.analogy.getAnalogyVotes.useQuery({
@@ -204,6 +210,8 @@ export const AnalogyView: React.FC<IAnalogyViewProps> = (props) => {
         <AnalogyInfoRow
           needsLocationInfo={needsLocationInfo}
           analogyData={analogyData}
+          setAnalogyInput={setAnalogyInput}
+          setAnalogyEditorState={setAnalogyEditorState}
         />
       </div>
     </div>
@@ -245,6 +253,8 @@ interface IAnalogyInfoRowProps {
 export function AnalogyInfoRow({
   needsLocationInfo,
   analogyData,
+  setAnalogyInput,
+  setAnalogyEditorState,
 }: IAnalogyInfoRowProps) {
   // --- no infoRow if there's no item to show --- //
   // const [visibleItems, setVisibleItems] = useState(0);
@@ -271,6 +281,8 @@ export function AnalogyInfoRow({
     analogy: UrlAnalogyId,
     id: UrlProfile,
   } = router.query;
+
+  const { data: sessionData } = useSession();
 
   const { data: comments, status: commentsFetchingStatus } =
     api.comment.getByAnalogyId.useInfiniteQuery(
@@ -346,9 +358,38 @@ export function AnalogyInfoRow({
           <span>{getStatusIcon(analogyData?.status)}</span>
         </span>
         <span className="shrink grow-0">
-          <span className="mx-2 flex cursor-pointer rounded-lg border border-transparent p-1 text-xs text-gray-600 hover:border-gray-300 hover:bg-gray-100">
-            <HiOutlineDotsVertical className="mt-0.5 scale-125" />{" "}
-          </span>
+          {sessionData &&
+            ["ADMIN", "EDITOR"].includes(sessionData?.user.role) && (
+              <a
+                href="#"
+                className="font-medium text-gray-400 hover:underline dark:text-gray-300"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setAnalogyEditorState({
+                    entity: "analogy",
+                    shown: true,
+                    purpose: "Edit",
+                  });
+                  setAnalogyInput((prev) => {
+                    return {
+                      ...prev,
+                      id: analogyData.id,
+                      title: analogyData.title,
+                      description: analogyData.description,
+                      reference: analogyData.reference,
+                      status: analogyData.status,
+                      pinned: analogyData.pinned,
+                      topicId: analogyData.topicId,
+                      authorId: analogyData.authorId,
+                    };
+                  });
+                }}
+              >
+                <span className="mx-2 flex cursor-pointer rounded-lg border border-transparent p-1 text-xs text-gray-600 hover:border-gray-300 hover:bg-gray-100">
+                  <HiOutlineDotsVertical className="mt-0.5 scale-125" />{" "}
+                </span>
+              </a>
+            )}
         </span>{" "}
       </div>
       {/* ) : null} */}

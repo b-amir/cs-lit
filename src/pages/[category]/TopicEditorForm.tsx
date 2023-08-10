@@ -1,14 +1,14 @@
 import React, { useRef } from "react";
 import { api } from "@/utils/api";
 import slugify from "slugify";
-import { AiFillLock } from "react-icons/ai";
-import { signIn, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { type Topic } from "@prisma/client";
 import { EditorLayout } from "@/components/EditorLayout";
 import { useUpdateItem } from "@/hooks/useUpdateItem";
 import { useCreateItem } from "@/hooks/useCreateItem";
 import { useDeleteItem } from "@/hooks/useDeleteItem";
 import { animated, useSpring } from "@react-spring/web";
+import { NotSignedIn } from "../../components/NotSignedIn";
 
 interface ITopicEditorFormProps {
   UrlCategory: string;
@@ -17,12 +17,12 @@ interface ITopicEditorFormProps {
   setInput: React.Dispatch<React.SetStateAction<Topic>>;
   topicEditorState: {
     shown: boolean;
-    purpose: "create" | "edit" | null;
+    purpose: "Create" | "Edit" | null;
   };
   setTopicEditorState: React.Dispatch<
     React.SetStateAction<{
       shown: boolean;
-      purpose: "create" | "edit" | null;
+      purpose: "Create" | "Edit" | null;
     }>
   >;
 }
@@ -32,7 +32,7 @@ interface ITopicEditorBodyProps {
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   topicEditorState: {
     shown: boolean;
-    purpose: "create" | "edit" | null;
+    purpose: "Create" | "Edit" | null;
   };
   UrlCategory: string;
 }
@@ -55,21 +55,21 @@ export function TopicEditorForm({
   const updateItem = useUpdateItem(item, type);
   const handleUpdate = (e) => {
     e.preventDefault();
-    setTopicEditorState({ shown: false, purpose: null });
+    setTopicEditorState({ entity: "topic", shown: false, purpose: null });
     updateItem();
   };
 
   const createItem = useCreateItem(item, type);
   const handleCreate = (e) => {
     e.preventDefault();
-    setTopicEditorState({ shown: false, purpose: null });
+    setTopicEditorState({ entity: "topic", shown: false, purpose: null });
     createItem();
   };
 
   const deleteItem = useDeleteItem(item, type);
   const handleDelete = (e) => {
     e.preventDefault();
-    setTopicEditorState({ shown: false, purpose: null });
+    setTopicEditorState({ entity: "topic", shown: false, purpose: null });
     deleteItem();
   };
 
@@ -112,21 +112,6 @@ export function TopicEditorForm({
           )}
         </>
       ) : null}
-    </div>
-  );
-}
-function NotSignedIn() {
-  return (
-    <div className="mt-auto grid h-full   grid-cols-1 gap-x-6 gap-y-14 rounded-[12px] border border-[#c8c8c8] bg-[#ebeaea] px-6  py-6 transition-all duration-300 hover:border-[#c1c1c1]">
-      <div className="flex select-none flex-col items-center justify-center text-gray-500">
-        <AiFillLock />
-        <span
-          className="mt-2 cursor-pointer transition-all hover:text-gray-700"
-          onClick={() => signIn()}
-        >
-          Sign in to create a topic
-        </span>
-      </div>
     </div>
   );
 }
@@ -203,7 +188,7 @@ function TopicEditorBody({
       </div>
 
       {/* in creation mode, immediately add first analogy so the topic is not empty */}
-      {topicEditorState?.purpose === "create" && (
+      {topicEditorState?.purpose === "Create" && (
         <div className="sm:col-span-2">
           <label
             htmlFor="about"
@@ -229,7 +214,7 @@ function TopicEditorBody({
                     firstAnalogy: event.target.value,
                   })
                 }
-                // disabled={isSubmitting || editorLayoutState?.purpose === "edit"}
+                // disabled={isSubmitting || editorLayoutState?.purpose === "Edit"}
               ></textarea>
             </div>
             <div className="flex items-center justify-between border-t px-3 py-2 dark:border-gray-600">

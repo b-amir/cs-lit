@@ -101,14 +101,22 @@ export function useUpdateItem(item: ITopicInput, type: string) {
     // updating analogy
     const { mutate: updateAnalogy } = api.analogy.update.useMutation({
       onSuccess: () => {
+        void ctx.analogy.getByTopicId.reset();
         void ctx.analogy.getAll.invalidate();
         void ctx.analogy.getAllWithQuery.invalidate();
         void ctx.pending.getAll.invalidate();
         toast.success("Analogy updated successfully.");
       },
       onError: (e) => {
-        toast.error("Something went wrong");
-        console.log(e);
+        const errorMessage = e.data?.zodError?.fieldErrors;
+        console.log(errorMessage);
+        if (errorMessage) {
+          if (errorMessage.description) {
+            toast.error(errorMessage?.description.join(" "));
+          } else {
+            toast.error("Something went wrong.");
+          }
+        }
       },
     });
 

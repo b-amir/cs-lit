@@ -280,9 +280,10 @@ export const analogiesRouter = createTRPCRouter({
   create: protectedProcedure
     .input(
       z.object({
-        title: z.string(),
+        // title: z.string(),
         description: z.string().min(120, "Analogy must be at least 120 characters").max(63206, "your analogy is too long!"),
         topicId: z.string(),
+        reference: z.string().url("Please provide a valid URL").nullish(),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -293,6 +294,7 @@ export const analogiesRouter = createTRPCRouter({
           title: `${await getTopicNameById(input.topicId)} by ${await getUserNameById(authorId)}`,
           authorId,
           description: input.description,
+          reference: input.reference ?? null,
           topicId: input.topicId,
         },
       });
