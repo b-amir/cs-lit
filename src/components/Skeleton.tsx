@@ -77,9 +77,9 @@ export function SidebarCategorySkeleton() {
 
 export function AnalogySkeleton() {
   return (
-    <div className="mx-auto my-7 flex w-full  flex-row justify-between px-16 py-1 align-middle text-sm text-[#808080]">
+    <div className="mx-auto my-7 flex w-full    flex-row justify-between px-16 py-1 align-middle text-sm text-[#808080]">
       <div
-        className="flex h-56 w-full  animate-pulse flex-col items-start justify-start gap-4  
+        className="mx-auto flex h-56 w-full  max-w-[705px] animate-pulse flex-col items-start justify-start 
     rounded-[17px] border border-[#cdcdcd7d] bg-gray-50  pb-5 shadow-sm "
       >
         <div className="mb-0.5 flex h-14 w-full animate-pulse justify-between rounded-t-[17px]  border-b bg-gray-100 align-middle" />
@@ -99,6 +99,18 @@ export function CommentSkeleton() {
         <div className="mb-3 h-3 w-1/6 animate-pulse rounded-lg  bg-[#dddddd] px-2 py-2  " />{" "}
       </div>
       <div className="mb-3 h-3 w-11/12 animate-pulse rounded-lg  bg-[#dddddd] px-2 py-2  " />
+    </div>
+  );
+}
+
+export function UserSkeleton() {
+  return (
+    <div className="flex w-full ">
+      <div className="my-auto  mr-2 h-10 w-10 animate-pulse rounded-full  bg-[#D9D9D9] px-2  " />
+      <div className="my-auto flex flex-col items-start justify-center">
+        <div className="my-1 h-3 w-24 animate-pulse rounded-lg  bg-[#dddddd] px-2 py-2  " />
+        <div className="my-1 h-2 w-16 animate-pulse rounded-lg  bg-[#dddddd] px-2 py-2  " />
+      </div>
     </div>
   );
 }

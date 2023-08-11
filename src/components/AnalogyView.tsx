@@ -17,7 +17,7 @@ import { HiOutlineChatAlt } from "react-icons/hi";
 import { getStatusIcon } from "@/utils/getStatusIcon";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { RelativeTime } from "@/utils/relativeTime";
-import router from "next/router";
+import router, { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 
 interface IAnalogyViewProps {
@@ -279,6 +279,9 @@ export function AnalogyInfoRow({
 
   // --- if info row is placed outside analogyView,
   //     then it has to get url params router rather than analogyData --- //
+
+  const router = useRouter();
+
   const {
     category: UrlCategory,
     topic: UrlTopic,
