@@ -8,6 +8,7 @@ import { HiOutlineDotsVertical } from "react-icons/hi";
 import { MdDone, MdClose, MdOutlineOpenInNew } from "react-icons/md";
 import { date } from "zod";
 import { RelativeTime } from "@/utils/relativeTime";
+import { LoadMoreButton } from "@/components/LoadMoreButton";
 
 export interface IAdminFooterProps {
   AdminFooterCollapsed: boolean;
@@ -20,9 +21,9 @@ export function AdminFooter({
 }: IAdminFooterProps) {
   const {
     data: activityData,
-    hasNextPage: activityHasNextPage,
-    fetchNextPage: fetchNextActivityPage,
-    isFetchingNextPage: isFetchingNextActivityPage,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
   } = api.activity.getAll.useInfiniteQuery(
     {},
     { getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor }
@@ -63,21 +64,11 @@ export function AdminFooter({
               ))
             )}
 
-            {activityHasNextPage && (
-              <button
-                onClick={() => fetchNextActivityPage()}
-                disabled={isFetchingNextActivityPage}
-                className="w-full"
-              >
-                <div className="flex w-full items-center justify-center  border-t border-t-[#55555538] bg-transparent py-2 font-semibold text-gray-500 shadow-[0px_2px_3px_0px_#00000009_inset] transition-all duration-300 hover:bg-gradient-to-b hover:from-[#2c2c2c0c] hover:to-transparent hover:text-gray-800">
-                  {isFetchingNextActivityPage ? (
-                    // TODO: fix spinning issue
-                    <CgSpinner className=" animate-spin " />
-                  ) : (
-                    "Load more"
-                  )}
-                </div>
-              </button>
+            {hasNextPage && (
+              <LoadMoreButton
+                fetchNextPage={fetchNextPage}
+                isFetchingNextPage={isFetchingNextPage}
+              />
             )}
           </div>
         </div>

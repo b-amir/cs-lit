@@ -32,6 +32,7 @@ export const AnalogyView: React.FC<IAnalogyViewProps> = (props) => {
     setAnalogyEditorState,
     analogy,
     needsLocationInfo = false,
+    needsInfoRow = true,
   } = props;
 
   const { data: analogyVotesData, status: votingStatus } =
@@ -49,13 +50,14 @@ export const AnalogyView: React.FC<IAnalogyViewProps> = (props) => {
   const [votingAverage, setVotingAverage] = useState(0);
 
   useEffect(() => {
-    if (analogyVotesData) {
-      const totalVotes = analogyVotesData.likes + analogyVotesData.dislikes;
-      const voteDifference = analogyVotesData.likes - analogyVotesData.dislikes;
-      const voteAverage = voteDifference / totalVotes;
-      const analogyReputation = Math.round(voteAverage * 2);
-      setVotingAverage(analogyReputation);
+    if (!analogyVotesData) {
+      return;
     }
+    const totalVotes = analogyVotesData.likes + analogyVotesData.dislikes;
+    const voteDifference = analogyVotesData.likes - analogyVotesData.dislikes;
+    const voteAverage = voteDifference / totalVotes;
+    const analogyReputation = Math.round(voteAverage * 2);
+    setVotingAverage(analogyReputation);
   }, [analogyVotesData]);
 
   analogyStatus === "loading" && <div>Loading...</div>;
@@ -120,7 +122,9 @@ export const AnalogyView: React.FC<IAnalogyViewProps> = (props) => {
                 <div className="flex items-start justify-start  text-xs text-[#878787]">
                   {
                     // check if votingAverage is not NaN
-                    !isNaN(votingAverage) ? (
+                    isNaN(votingAverage) ? (
+                      <>has no votes yet</>
+                    ) : (
                       <>
                         {votingAverage === -2 ? (
                           <span className="text-[#b95353]">
@@ -147,11 +151,9 @@ export const AnalogyView: React.FC<IAnalogyViewProps> = (props) => {
                             <span className="text-[#3ba44e]">Superb</span>
                           </span>
                         ) : (
-                          <span></span>
+                          <span />
                         )}
                       </>
-                    ) : (
-                      <>has no votes yet</>
                     )
                   }
                 </div>
@@ -198,22 +200,24 @@ export const AnalogyView: React.FC<IAnalogyViewProps> = (props) => {
         )}
       </div>
 
-      <div
-        id="analogy-chin"
-        className="flex h-12 w-full cursor-default items-center justify-start rounded-b-[17px] border-t 
+      {needsInfoRow ? (
+        <div
+          id="analogy-chin"
+          className="flex h-12 w-full cursor-default items-center justify-start rounded-b-[17px] border-t 
       bg-gray-50 px-1 shadow-[inset_0px_3px_1px_0px_#00000003]"
-        onClick={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-        }}
-      >
-        <AnalogyInfoRow
-          needsLocationInfo={needsLocationInfo}
-          analogyData={analogyData}
-          setAnalogyInput={setAnalogyInput}
-          setAnalogyEditorState={setAnalogyEditorState}
-        />
-      </div>
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+          }}
+        >
+          <AnalogyInfoRow
+            needsLocationInfo={needsLocationInfo}
+            analogyData={analogyData}
+            setAnalogyInput={setAnalogyInput}
+            setAnalogyEditorState={setAnalogyEditorState}
+          />
+        </div>
+      ) : null}
     </div>
   );
 };

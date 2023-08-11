@@ -90,3 +90,15 @@ export function AnalogySkeleton() {
     </div>
   );
 }
+
+export function CommentSkeleton() {
+  return (
+    <div className="mb-3 animate-pulse rounded-lg bg-[#f0f0f0]  px-3 py-3   ">
+      <div className="flex">
+        <div className="mb-3 mr-2 h-3 w-3 animate-pulse rounded-lg  bg-[#dddddd] px-2 py-2  " />
+        <div className="mb-3 h-3 w-1/6 animate-pulse rounded-lg  bg-[#dddddd] px-2 py-2  " />{" "}
+      </div>
+      <div className="mb-3 h-3 w-11/12 animate-pulse rounded-lg  bg-[#dddddd] px-2 py-2  " />
+    </div>
+  );
+}

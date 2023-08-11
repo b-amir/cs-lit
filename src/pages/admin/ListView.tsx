@@ -10,6 +10,7 @@ import { RiDeleteBin6Line as Delete } from "react-icons/ri";
 import Link from "next/link";
 import { routeHandler } from "@/utils/routeHandler";
 import { getStatusIcon } from "@/utils/getStatusIcon";
+import { LoadMoreButton } from "@/components/LoadMoreButton";
 
 interface IListViewProps {
   type: string;
@@ -29,7 +30,7 @@ export function ListView({
   type,
   hasNextPage,
   fetchNextPage,
-  isfetchingNextPage,
+  isFetchingNextPage,
   setEditorModalInput,
   setEditorModalShown,
   setOrderBy,
@@ -84,19 +85,10 @@ export function ListView({
             )}
           </div>
           {hasNextPage && (
-            <button
-              onClick={() => fetchNextPage()}
-              disabled={isfetchingNextPage}
-            >
-              <div className="flex w-full items-center justify-center border-t border-t-[#5555551d] bg-[#fff] py-6 font-semibold text-gray-500 shadow-[0px_2px_20px_0px_#00000010_inset] transition-all duration-300 hover:bg-gradient-to-b hover:from-[#efefefb5] hover:to-white hover:text-gray-800">
-                {isfetchingNextPage ? (
-                  // TODO: fix spinning issue
-                  <CgSpinner className=" animate-spin " />
-                ) : (
-                  "Load more"
-                )}
-              </div>
-            </button>
+            <LoadMoreButton
+              fetchNextPage={fetchNextPage}
+              isFetchingNextPage={isFetchingNextPage}
+            />
           )}
         </div>
       </>

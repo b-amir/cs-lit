@@ -6,6 +6,7 @@ import { getStatusIcon } from "@/utils/getStatusIcon";
 import { RelativeTime } from "@/utils/relativeTime";
 import { type Topic } from "@prisma/client";
 import { useSession } from "next-auth/react";
+import { LoadMoreButton } from "@/components/LoadMoreButton";
 
 export interface ITopicsListProps {
   topicsData: { pages: { items: Topic[] }[] };
@@ -124,19 +125,10 @@ export function TopicsList({
 
       {/* Load more button */}
       {hasNextPage && (
-        <button
-          onClick={() => fetchNextPage()}
-          disabled={isFetchingNextPage}
-          className="w-full"
-        >
-          <div className="flex w-full items-center justify-center border-t border-t-[#5555551d] bg-[#fff]  py-6 font-semibold text-gray-500 shadow-[0px_2px_20px_0px_#00000010_inset] transition-all duration-300 hover:bg-gradient-to-b hover:from-[#efefefb5] hover:to-white hover:text-gray-800">
-            {isFetchingNextPage ? (
-              <CgSpinner className=" animate-spin " />
-            ) : (
-              "Load more"
-            )}
-          </div>
-        </button>
+        <LoadMoreButton
+          fetchNextPage={fetchNextPage}
+          isFetchingNextPage={isFetchingNextPage}
+        />
       )}
     </div>
   );

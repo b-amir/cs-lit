@@ -215,7 +215,7 @@ model Comment {
 
     commenter   User    @relation(fields: [commenterId], references: [id])
     commenterId String
-    analogy     Analogy @relation(fields: [analogyId], references: [id])
+    analogy     Analogy @relation(fields: [analogyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
     analogyId   String
 
     @@index([commenterId])

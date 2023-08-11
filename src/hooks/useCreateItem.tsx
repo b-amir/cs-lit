@@ -116,16 +116,12 @@ export function useCreateItem(item: ITopicInput, type: string) {
           if (errorMessage.analogies) {
             toast.error(errorMessage?.analogies.join(" "));
           }
+        } else if (
+          e.message.includes("Unique constraint failed on the fields: (`slug`)")
+        ) {
+          toast.error("A topic with the same name already exists.");
         } else {
-          if (
-            e.message.includes(
-              "Unique constraint failed on the fields: (`slug`)"
-            )
-          ) {
-            toast.error("A topic with the same name already exists.");
-          } else {
-            toast.error("Something went wrong.");
-          }
+          toast.error("Something went wrong.");
         }
       },
     });
@@ -155,7 +151,7 @@ export function useCreateItem(item: ITopicInput, type: string) {
         });
       } catch (e) {
         toast.error("Something went wrong");
-        console.log(e);
+        // console.log(e);
       }
     };
     return createTopicHandler;
@@ -184,9 +180,9 @@ export function useCreateItem(item: ITopicInput, type: string) {
           }
           if (errorMessage.reference) {
             toast.error(errorMessage?.reference.join(" "));
-          } else {
-            toast.error("Something went wrong.");
           }
+        } else {
+          toast.error("Something went wrong.");
         }
       },
     });
@@ -216,6 +212,53 @@ export function useCreateItem(item: ITopicInput, type: string) {
       }
     };
     return createAnalogyHandler;
+  }
+
+  if (type === "Comments") {
+    // creating comment
+    const { mutate: createComment } = api.comment.create.useMutation({
+      onSuccess: () => {
+        void ctx.comment.getByAnalogyId.invalidate();
+
+        window.scrollTo({
+          top: document.getElementById("comments-section")?.offsetTop - 90,
+          behavior: "smooth",
+        });
+
+        toast.success("You posted your comment!");
+      },
+      onError: (e) => {
+        const errorMessage = e.data?.zodError?.fieldErrors;
+        console.log(errorMessage);
+        if (errorMessage) {
+          if (errorMessage.content) {
+            toast.error(errorMessage?.content.join(" "));
+          } else {
+            toast.error("Something went wrong.");
+          }
+        }
+      },
+    });
+
+    const createCommentHandler = () => {
+      try {
+        createActivityLogEntry({
+          entityType: "comment",
+          entityId: "",
+          entityTitle: "",
+          action: "created",
+        });
+
+        createComment({
+          content: item.content,
+          analogyId: item.analogyId,
+        });
+      } catch (e) {
+        toast.error("Something went wrong");
+        console.log(e);
+      }
+    };
+    return createCommentHandler;
   }
 
   // if (type === "Users") {

@@ -8,14 +8,14 @@ import { ActionMenu } from "./ActionMenu";
 import { useUpdateItem } from "@/hooks/useUpdateItem";
 import Link from "next/link";
 import { routeHandler } from "@/utils/routeHandler";
+import { LoadMoreButton } from "@/components/LoadMoreButton";
 
 export function AdminSidePanel() {
   const {
     data: pendingData,
-
-    hasNextPage: pendingsHasNextPage,
-    fetchNextPage: fetchNextpendingPage,
-    isFetchingNextPage: isFetchingNextpendingPage,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
   } = api.pending.getAll.useInfiniteQuery(
     {},
     { getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor }
@@ -57,21 +57,11 @@ export function AdminSidePanel() {
 
         {/* {console.log(pendingData)} */}
 
-        {pendingsHasNextPage && (
-          <button
-            onClick={() => fetchNextpendingPage()}
-            disabled={isFetchingNextpendingPage}
-            className="w-full"
-          >
-            <div className="flex w-full items-center justify-center border-t border-t-[#55555538] bg-transparent py-6 font-semibold text-gray-500 shadow-[0px_2px_3px_0px_#00000009_inset] transition-all duration-300 hover:bg-gradient-to-b hover:from-[#2c2c2c0c] hover:to-transparent hover:text-gray-800">
-              {isFetchingNextpendingPage ? (
-                // TODO: fix spinning issue
-                <CgSpinner className="animate-spin " />
-              ) : (
-                "Load more"
-              )}
-            </div>
-          </button>
+        {hasNextPage && (
+          <LoadMoreButton
+            fetchNextPage={fetchNextPage}
+            isFetchingNextPage={isFetchingNextPage}
+          />
         )}
       </div>
     </div>

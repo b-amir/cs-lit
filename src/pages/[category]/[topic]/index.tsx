@@ -16,7 +16,7 @@ import { type Analogy } from "@prisma/client";
 
 function TopicPage(props) {
   const router = useRouter();
-  const { category: UrlCategory, topic: UrlTopic } = router.query;
+  const { topic: UrlTopic } = router.query;
 
   const [analogyEditorState, setAnalogyEditorState] = useState({
     entity: "analogy" as null | "analogy",
@@ -69,6 +69,7 @@ function TopicPage(props) {
     // reference: "",
   };
 
+  const analogiesCount = topicAnalogies?.pages[0].items.length;
   // console.log("topicAnalogies", topicAnalogies);
   // console.log("analogyInput", analogyInput);
 
@@ -109,12 +110,9 @@ function TopicPage(props) {
             <br />
             <div className="flex w-full flex-row justify-between py-1 align-middle text-sm text-[#808080] ">
               <p className="grow-1 inline-flex">
-                {topicAnalogies?.pages[0].items.length}
+                {analogiesCount ? analogiesCount : "No"}
                 &nbsp;
-                {!topicAnalogies?.pages[0].items.length && "No "}
-                {topicAnalogies?.pages[0].items.length === 1
-                  ? "analogy"
-                  : "analogies"}
+                {analogiesCount === 1 ? "analogy" : "analogies"}
                 &nbsp;for this topic.&nbsp;{" "}
               </p>
               <Link href={`${topicsData?.url}`} target="_blank">
@@ -156,8 +154,7 @@ function TopicPage(props) {
             analogyEditorState.shown
               ? "sticky bottom-0 h-full max-h-[calc(100vh-90px-1px)] bg-[#2a2a2e3b] pb-5 pt-7 shadow-[0px_-1px_6px_2px_#00000015,0px_0px_0px_1px_#00000030,0px_-11px_20px_2px_#00000005,0px_-20px_55px_0px_#00000005]"
               : "sticky bottom-[-200px] bg-[#2a2a2e3b] pb-7 pt-9"
-          } ${analogyEditorState.purpose === "Edit" ? "" : ""}
-                        ?`}
+          }  `}
         >
           <FormTrigger
             setInput={setAnalogyInput}

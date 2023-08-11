@@ -3,6 +3,7 @@ import { AnalogyView } from "../components/AnalogyView";
 import AnalogyViewWithLink from "./AnalogyView";
 import { type Analogy } from "@prisma/client";
 import { CgSpinner } from "react-icons/cg";
+import { LoadMoreButton } from "./LoadMoreButton";
 
 interface IFeedProps {
   topicAnalogies: Analogy[];
@@ -48,23 +49,10 @@ export const Feed: React.FC<IFeedProps> = ({
         )}
 
         {hasNextPage && (
-          <button
-            onClick={() => fetchNextPage()}
-            disabled={isFetchingNextPage}
-            className="w-full"
-          >
-            <div
-              className="flex w-full items-center justify-center  border-t-[#5555551d] 
-                    py-6 font-semibold text-gray-500 transition-all duration-300 
-                    hover:text-gray-800"
-            >
-              {isFetchingNextPage ? (
-                <CgSpinner className=" animate-spin " />
-              ) : (
-                "Load more"
-              )}
-            </div>
-          </button>
+          <LoadMoreButton
+            fetchNextPage={fetchNextPage}
+            isFetchingNextPage={isFetchingNextPage}
+          />
         )}
       </div>
     </>

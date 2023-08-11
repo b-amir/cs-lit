@@ -38,8 +38,8 @@ export const AnalogyEditorForm = ({
   const createItem = useCreateItem(item, type);
   const handleCreate = (e) => {
     e.preventDefault();
-    setAnalogyEditorState({ entity: "analogy", shown: false, purpose: null });
     createItem();
+    setAnalogyEditorState({ entity: "analogy", shown: false, purpose: null });
   };
 
   const deleteItem = useDeleteItem(item, type);
