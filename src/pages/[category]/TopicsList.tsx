@@ -46,9 +46,9 @@ export function TopicsList({
   const { data: sessionData } = useSession();
 
   return (
-    <div className="relative w-full overflow-x-auto rounded-[12px] border border-[#cdcdcd7d] shadow-sm">
+    <div className="relative w-full overflow-x-auto rounded-[12px] border border-[#cdcdcd7d] bg-gray-50 shadow-sm">
       <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
-        <thead className="border-b bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+        <thead className="border-b  text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
           <tr>
             <th scope="col" className="w-full px-6 py-3">
               Topic
@@ -122,7 +122,6 @@ export function TopicsList({
           )}
         </tbody>
       </table>
-
       {/* Load more button */}
       {hasNextPage && (
         <LoadMoreButton

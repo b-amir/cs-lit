@@ -183,24 +183,73 @@ export const analogiesRouter = createTRPCRouter({
       return singleAnalogyWithUserAndTopicAndCategoryData(analogy);
     }),
 
+
   getAnalogiesByUserId: publicProcedure
     .input(
       z.object({
         userId: z.string(),
-      })
-    )
-    .query(({ ctx, input }) =>
-      ctx.prisma.analogy
-        .findMany({
-          where: {
-            authorId: input.userId,
-          },
-          take: 10,
-          orderBy: [{ createdAt: "desc" }],
-        })
-        // .then(addUsersDataToAnalogies)
-        .then(analogiesWithUserData)
-    ),
+        limit: z.number(),
+        cursor: z.string().nullish(),
+        order: z.enum(["asc", "desc"]).nullish()
+      }))
+    .query(async ({ ctx, input }) => {
+
+      const limit = input.limit ?? 15
+      const { cursor } = input
+      const order = input.order ?? "asc"
+      const totalPublished = await ctx.prisma.analogy.count({
+        where: {
+          authorId: input.userId,
+          status: "PUBLISHED"
+        }
+      });
+      const publishedItems = await ctx.prisma.analogy.findMany({
+        take: limit + 1,
+        cursor: cursor ? { id: cursor } : undefined,
+        where: {
+          authorId: input.userId,
+          status: "PUBLISHED"
+        },
+        orderBy: {
+          createdAt: order as Prisma.SortOrder
+        }
+      }).then(analogiesWithUserData);
+
+      const allItems = await ctx.prisma.analogy.findMany({
+        take: limit + 1,
+        cursor: cursor ? { id: cursor } : undefined,
+        where: {
+          authorId: input.userId,
+        },
+        orderBy: {
+          createdAt: order as Prisma.SortOrder
+        }
+      }).then(analogiesWithUserData);
+
+      let items = publishedItems;
+      const isAdmin = ctx.session?.user.role === "ADMIN";
+      const itemsCurrentUserStarted = allItems?.filter(item => item.authorId === ctx.session?.user.id);
+      const hasAccessToUnpublished = isAdmin || itemsCurrentUserStarted.length
+
+      if (hasAccessToUnpublished) {
+        items = allItems;
+      }
+      let nextCursor: typeof cursor | undefined = undefined;
+      if (items.length > limit) {
+        const nextItem = items.pop();
+        nextCursor = nextItem?.id as typeof cursor;
+      }
+
+      return {
+        items,
+        total: totalPublished,
+        pageInfo: {
+          hasNextPage: items.length > limit,
+          nextCursor,
+        },
+      };
+    }),
+
 
   getSingleAnalogyById: publicProcedure
     .input(
@@ -242,6 +291,7 @@ export const analogiesRouter = createTRPCRouter({
     .input(
       z.object({
         id: z.string(),
+        viewerId: z.string().nullish(),
         limit: z.number(),
         cursor: z.string().nullish(),
         order: z.enum(["asc", "desc"]).nullish()
@@ -251,8 +301,26 @@ export const analogiesRouter = createTRPCRouter({
       const limit = input.limit ?? 15
       const { cursor } = input
       const order = input.order ?? "asc"
+      const totalPublished = await ctx.prisma.analogy.count({
+        where: {
+          topicId: input.id,
+          status: "PUBLISHED"
+        }
+      });
 
-      const items = await ctx.prisma.analogy.findMany({
+      const publishedItems = await ctx.prisma.analogy.findMany({
+        take: limit + 1,
+        cursor: cursor ? { id: cursor } : undefined,
+        where: {
+          topicId: input.id,
+          status: "PUBLISHED"
+        },
+        orderBy: {
+          createdAt: order as Prisma.SortOrder
+        }
+      })
+
+      const allItems = await ctx.prisma.analogy.findMany({
         take: limit + 1,
         cursor: cursor ? { id: cursor } : undefined,
         where: {
@@ -262,20 +330,59 @@ export const analogiesRouter = createTRPCRouter({
           createdAt: order as Prisma.SortOrder
         }
       });
+
+      const publishedItems_plus_ViewersUnpublishedItems = await ctx.prisma.analogy.findMany({
+        take: limit + 1,
+        cursor: cursor ? { id: cursor } : undefined,
+        where: {
+          OR: [
+            {
+              topicId: input.id,
+              authorId: input.viewerId,
+              status: {
+                not: "PUBLISHED"
+              }
+            },
+            {
+              topicId: input.id,
+              status: "PUBLISHED"
+            }
+          ]
+        },
+        orderBy: {
+          createdAt: order as Prisma.SortOrder
+        }
+      });
+
+      let items;
+      const isAdmin = ctx.session?.user.role === "ADMIN";
+      if (input.viewerId && publishedItems_plus_ViewersUnpublishedItems.length > 0) {
+        items = publishedItems_plus_ViewersUnpublishedItems
+      }
+      if (isAdmin) {
+        items = allItems;
+      }
+      if (!input.viewerId) { items = publishedItems }
+
       let nextCursor: typeof cursor | undefined = undefined;
       if (items.length > limit) {
         const nextItem = items.pop();
         nextCursor = nextItem?.id as typeof cursor;
       }
+
+
       return {
         items,
-        total: await ctx.prisma.topic.count(),
+        total: totalPublished,
         pageInfo: {
           hasNextPage: items.length > limit,
           nextCursor,
         },
       };
     }),
+
+
+
 
   create: protectedProcedure
     .input(

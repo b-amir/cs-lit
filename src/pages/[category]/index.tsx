@@ -57,6 +57,7 @@ export default function CategoryPage() {
   } = api.topic.getByCategoryId.useInfiniteQuery(
     {
       id: categoryData?.id as string,
+      viewerId: sessionData?.user?.id as string,
       order: orderBy,
       limit: 10,
     },
@@ -125,7 +126,7 @@ export default function CategoryPage() {
 
             {/* show a list of topics */}
             {topicsFetchingStatus === "success" &&
-            topicsData?.pages[0]?.items.length > 0 ? (
+            topicsData?.pages[0]?.items?.length > 0 ? (
               <TopicsList
                 topicsData={topicsData}
                 UrlCategory={UrlCategory}
@@ -139,7 +140,7 @@ export default function CategoryPage() {
 
             {/* if there's no topics */}
             {topicsFetchingStatus === "success" &&
-            topicsData?.pages[0]?.items.length <= 0 ? (
+            topicsData?.pages[0]?.items?.length <= 0 ? (
               <NoTopics
                 topicEditorState={topicEditorState}
                 setTopicEditorState={setTopicEditorState}

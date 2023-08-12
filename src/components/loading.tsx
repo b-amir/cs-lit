@@ -31,3 +31,19 @@ export const CornerLoading = () => {
     </div>
   );
 };
+
+export const InlineLoading = () => {
+  return (
+    <div className="">
+      <LoadingSpinner size={16} />
+    </div>
+  );
+};
+
+export const CenteredLoading = () => {
+  return (
+    <div className="flex w-full flex-col items-center justify-center p-16">
+      <LoadingSpinner size={16} />
+    </div>
+  );
+};

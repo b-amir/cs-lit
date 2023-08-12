@@ -4,37 +4,69 @@ import { api } from "@/utils/api";
 import AnalogyViewWithLink, { AnalogyView } from "@/components/AnalogyView";
 import { PageLayout } from "@/components/layout";
 import { generateSSGHelper } from "@/server/helpers/ssgHelper";
-import { LoadingSpinner } from "@/components/loading";
+import { CornerLoading } from "@/components/loading";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { LoadMoreButton } from "@/components/LoadMoreButton";
+import { useSession } from "next-auth/react";
 
 // this is a page that is renderd when a user visits /profile/[id]
 // the point of this page is to show a user's profile and all analogies that they created
 
 const ProfileFeed = (props: { userId: string }) => {
-  const { data: analogyData, status: analogyFetchingStatus } =
-    api.analogy.getAnalogiesByUserId.useQuery({
-      userId: props.userId,
-    });
+  const { data: sessionData } = useSession();
+  const isAdmin = sessionData?.user.role === "ADMIN" || "EDITOR";
+  const isAuthor = sessionData?.user.id === props.userId;
+  const canSeeUnpublished = isAdmin || isAuthor;
 
-  if (analogyFetchingStatus === "loading") return <LoadingSpinner />;
-  if (!analogyData || analogyData.length === 0) {
+  const getAnalogiesByUserId = canSeeUnpublished
+    ? "getAllAnalogiesByUserId"
+    : "getPublishedAnalogiesByUserId";
+
+  const {
+    data: analogyData,
+    status: analogyFetchingStatus,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = api.analogy.getAnalogiesByUserId.useInfiniteQuery(
+    {
+      userId: props.userId,
+      order: "desc",
+      limit: 10,
+    },
+    { getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor }
+  );
+
+  if (analogyFetchingStatus === "loading") return <CornerLoading />;
+  if (!analogyData || analogyData?.pages[0]?.length === 0) {
     return <>User has not posted any analogies.</>;
   }
 
   return (
     <div className="flex w-full flex-col items-center justify-center px-16">
-      {analogyData.map((analogy) => (
-        <AnalogyViewWithLink key={analogy.id}>
-          <AnalogyView
-            analogy={{
-              id: analogy.id,
-            }}
-            needsLocationInfo
-            key={analogy.id}
-          />
-        </AnalogyViewWithLink>
-      ))}
+      {analogyData?.pages?.map((page) =>
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        page?.items?.map((analogy: Analogy) => (
+          // {topicAnalogies?.map((analogy: Analogy) => (
+          <AnalogyViewWithLink key={analogy.id}>
+            <AnalogyView
+              analogy={{
+                id: analogy.id,
+              }}
+              needsLocationInfo
+              key={analogy.id}
+            />
+          </AnalogyViewWithLink>
+        ))
+      )}
+
+      {hasNextPage && (
+        <LoadMoreButton
+          fetchNextPage={fetchNextPage}
+          isFetchingNextPage={isFetchingNextPage}
+        />
+      )}
     </div>
   );
 };
@@ -53,7 +85,7 @@ const ProfilePage: NextPage<object> = () => {
       id: UrlId as string,
     });
 
-  if (profileFetchingStatus === "loading") return <LoadingSpinner />;
+  if (profileFetchingStatus === "loading") return <CornerLoading />;
   if (profileFetchingStatus === "error") return <div>User not found</div>;
 
   return (

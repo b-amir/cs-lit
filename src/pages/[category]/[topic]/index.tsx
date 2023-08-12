@@ -46,6 +46,7 @@ function TopicPage(props) {
   } = api.analogy.getByTopicId.useInfiniteQuery(
     {
       id: topicsData?.id as string,
+      viewerId: sessionData?.user?.id as string,
       order: "desc",
       limit: 10,
     },
@@ -69,9 +70,7 @@ function TopicPage(props) {
     // reference: "",
   };
 
-  const analogiesCount = topicAnalogies?.pages[0].items.length;
-  // console.log("topicAnalogies", topicAnalogies);
-  // console.log("analogyInput", analogyInput);
+  const analogiesCount = topicAnalogies?.pages[0].total;
 
   return (
     <>
@@ -112,6 +111,9 @@ function TopicPage(props) {
               <p className="grow-1 inline-flex">
                 {analogiesCount ? analogiesCount : "No"}
                 &nbsp;
+                {
+                  sessionData?.user.role === "ADMIN" ? "published " : "" // admin can see unpublished analogies too. hence adding "published" so it's not confusing.
+                }
                 {analogiesCount === 1 ? "analogy" : "analogies"}
                 &nbsp;for this topic.&nbsp;{" "}
               </p>
