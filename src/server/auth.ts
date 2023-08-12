@@ -8,6 +8,7 @@ import {
 import DiscordProvider from "next-auth/providers/discord";
 import GithubProvider from "next-auth/providers/github";
 import EmailProvider from "next-auth/providers/email";
+import GoogleProvider from "next-auth/providers/google"
 
 import { env } from "@/env.mjs";
 import { prisma } from "@/server/db";
@@ -84,12 +85,32 @@ export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   pages: {
     signIn: '/auth/login',
-    signOut: '/auth/logout',
-    error: '/auth/error', // Error code passed in query string as ?error=
-    verifyRequest: '/auth/verify-request', // (used for check email message)
-    newUser: '/auth/new-user', // New users will be directed here on first sign in (leave the property out if not of interest)
+    // signOut: '/auth/logout',
+    // error: '/auth/error', // Error code passed in query string as ?error=
+    // verifyRequest: '/auth/verify-request', // (used for check email message)
+    // newUser: '/auth/new-user', // New users will be directed here on first sign in (leave the property out if not of interest)
   },
   providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_ID,
+      clientSecret: process.env.GOOGLE_SECRET,
+      httpOptions: {
+        timeout: 40000,
+      },
+      authorization: {
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code"
+        }
+      }
+    }),
+
+    GithubProvider({
+      clientId: env.GITHUB_CLIENT_ID,
+      clientSecret: env.GITHUB_CLIENT_SECRET,
+    }),
+
     DiscordProvider({
       clientId: env.DISCORD_CLIENT_ID,
       clientSecret: env.DISCORD_CLIENT_SECRET,
@@ -104,11 +125,6 @@ export const authOptions: NextAuthOptions = {
      *
      * @see https://next-auth.js.org/providers/github
      */
-
-    GithubProvider({
-      clientId: env.GITHUB_CLIENT_ID,
-      clientSecret: env.GITHUB_CLIENT_SECRET,
-    }),
 
     EmailProvider({
       server: {
@@ -128,7 +144,6 @@ export const authOptions: NextAuthOptions = {
         },
       } : {}),
     }),
-
 
   ],
 };

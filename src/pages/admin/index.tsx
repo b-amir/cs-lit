@@ -274,7 +274,10 @@ export default function AdminPage(props) {
             </EditorModal>
           </>
         ) : (
-          <div className="flex select-none flex-col items-center justify-center text-gray-500">
+          <div
+            // className="flex select-none flex-col items-center justify-center text-gray-500"
+            className="mt-[90px] flex h-[calc(100dvh-90px-2px)] w-full flex-col items-center justify-center border border-y-[#5555552a] text-gray-500"
+          >
             {" "}
             <AiFillLock />
             <span className="mt-2">Unauthorized Access</span>

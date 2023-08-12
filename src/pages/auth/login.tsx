@@ -5,18 +5,40 @@ import Link from "next/link";
 import Image from "next/image";
 import { FaArrowLeft } from "react-icons/fa";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { type SignInErrorTypes } from "next-auth/src/core/pages/signin";
 
 const LoginPage = () => {
   const { session, loading } = useSession();
   const router = useRouter();
+  const [errorState, setErrorState] = useState(router.query.error || "none");
+
+  useEffect(() => {
+    setErrorState(router.query.error || "none");
+  }, [router.query.error]);
 
   if (loading) {
     return <div className="text-center">Loading...</div>;
   }
-
   if (session) {
     return <div className="text-center">You are already signed in.</div>;
   }
+
+  const errors: Record<SignInErrorTypes, string> = {
+    Signin: "Try signing in with a different account.",
+    OAuthSignin: "Try signing in with a different account.",
+    OAuthCallback: "Try signing in with a different account.",
+    OAuthCreateAccount: "Try signing in with a different account.",
+    EmailCreateAccount: "Try signing in with a different account.",
+    Callback: "Try signing in with a different account.",
+    OAuthAccountNotLinked:
+      "To confirm your identity, sign in with the same account you used originally.",
+    EmailSignin: "The e-mail could not be sent.",
+    CredentialsSignin:
+      "Sign in failed. Check the details you provided are correct.",
+    SessionRequired: "Please sign in to access this page.",
+    default: "Unable to sign in.",
+  };
 
   return (
     <div
@@ -46,24 +68,45 @@ const LoginPage = () => {
           </Link>
         </div>
         <div className=" rounded-b-3xl bg-[#ffffffd8]  px-16 pt-12 backdrop-blur-3xl">
+          {errorState !== "none" && (
+            <div className="error">
+              <p className="-mt-5 mb-5 max-w-[280px] rounded-lg border border-yellow-500 bg-yellow-50 p-3 text-center text-xs text-yellow-800">
+                {Object.keys(errors).includes(errorState as SignInErrorTypes)
+                  ? errors[errorState as SignInErrorTypes]
+                  : errors.default}
+              </p>
+            </div>
+          )}
           <h1 className="text-md mb-4 text-center text-xs font-normal text-gray-400">
             Sign in using providers
           </h1>
           <button
-            onClick={() => signIn("google", { callbackUrl: "/" })}
-            className="mx-auto mb-3 flex w-full place-content-center items-center rounded-2xl border border-gray-300 bg-white px-6 py-2 shadow-sm transition-all duration-200  hover:border-gray-400 hover:text-gray-900  "
+            onClick={() =>
+              signIn("google", {
+                callbackUrl: "http://localhost:3000/javascript",
+              })
+            }
+            className="mx-auto mb-3 flex w-full place-content-center items-center rounded-2xl border border-gray-300 bg-white px-6 py-2 shadow-sm transition-all duration-200 hover:border-gray-400  hover:bg-gray-100 hover:text-gray-900  "
           >
             <BsGoogle className="mb-0.5 mr-4" /> Sign in with Google
           </button>
           <button
-            onClick={() => signIn("discord", { callbackUrl: "/" })}
-            className="mx-auto mb-3 flex w-full place-content-center items-center rounded-2xl border border-gray-300 bg-white px-6 py-2 shadow-sm transition-all duration-200  hover:border-gray-400 hover:text-gray-900 "
+            onClick={() =>
+              signIn("discord", {
+                callbackUrl: "http://localhost:3000/javascript",
+              })
+            }
+            className="mx-auto mb-3 flex w-full place-content-center items-center rounded-2xl border border-gray-300 bg-white px-6 py-2 shadow-sm transition-all duration-200 hover:border-gray-400 hover:bg-gray-100 hover:text-gray-900 "
           >
             <BsDiscord className="mb-0.5 mr-4" /> Sign in with Discord
           </button>
           <button
-            onClick={() => signIn("github", { callbackUrl: "/" })}
-            className="mx-auto mb-3 flex w-full place-content-center items-center rounded-2xl border border-gray-300 bg-white px-6 py-2 shadow-sm transition-all duration-200  hover:border-gray-400 hover:text-gray-900 "
+            onClick={() =>
+              signIn("github", {
+                callbackUrl: "http://localhost:3000/javascript",
+              })
+            }
+            className="mx-auto mb-3 flex w-full place-content-center items-center rounded-2xl border border-gray-300 bg-white px-6 py-2 shadow-sm transition-all duration-200 hover:border-gray-400 hover:bg-gray-100 hover:text-gray-900 "
           >
             <BsGithub className="mb-0.5 mr-4" /> Sign in with GitHub
           </button>
@@ -80,7 +123,7 @@ const LoginPage = () => {
               }
             }}
             placeholder="Enter your email"
-            className="mb-12 flex items-center rounded-2xl border border-gray-300 px-6 py-2 transition-colors duration-200 hover:bg-gray-50 hover:text-black"
+            className="mb-12 flex w-full items-center rounded-2xl border border-gray-300 px-6 py-2 transition-colors duration-200 hover:bg-gray-50 hover:text-black"
           ></input>
         </div>
       </div>
