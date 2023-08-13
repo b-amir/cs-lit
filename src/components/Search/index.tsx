@@ -57,42 +57,54 @@ export function Search() {
   return (
     <>
       {/* search input */}
-      <div
-        className={`${
-          homepage
-            ? "relative z-50 flex items-start justify-start text-gray-600"
-            : "relative z-50 flex w-36 items-end justify-end text-gray-600"
-        }`}
-      >
-        <input
-          type="search"
-          name="search"
-          placeholder="Find topics..."
+      <div className=" flex flex-col">
+        {showResultsPanel && homepage ? (
+          <div className="z-50 mt-[-100px] h-[100px] p-1 py-4 pl-2 ">
+            <p className="py-1 text-2xl font-semibold text-[#ffffffd1]">
+              Search for any topic
+            </p>
+            <p className="text-sm text-[#ffffffa7]">
+              If it's not there, you can make it!
+            </p>
+          </div>
+        ) : null}
+        <div
           className={`${
             homepage
-              ? "h-10 w-96 rounded-2xl border border-[#5c2c1d2a] bg-[#f9f9f9e5] px-5 py-6 pl-10 text-sm outline-none backdrop-blur-sm backdrop-filter transition-all duration-300 focus:w-[28rem] focus:border-[#9e9e9e] focus:bg-white focus:shadow-sm focus:outline-none"
-              : "h-10 w-36 rounded-full border border-[#2A2A2E22] bg-[#f9f9f98f] px-5 pr-10 text-sm outline-none backdrop-blur-sm backdrop-filter transition-all duration-300 focus:w-64 focus:border-[#9e9e9e] focus:bg-white focus:shadow-sm focus:outline-none"
-          } ${showResultsPanel ? "w-64" : ""} `}
-          onChange={handleInputChange}
-          value={searchQuery}
-          ref={searchInputRef}
-        />
-        <button
-          type="submit"
-          className={`${
-            homepage
-              ? "absolute left-4 top-1 mr-4 mt-3"
-              : "absolute right-0 top-0 mr-4 mt-3"
+              ? "relative z-50 flex items-start justify-start text-gray-600"
+              : "relative z-50 flex w-36 items-end justify-end text-gray-600"
           }`}
         >
-          {loading ? (
-            // show spinner
-            // <CgSpinner className="animate-spin" />
-            <IoSearch className="animate-pulse cursor-not-allowed text-gray-400" />
-          ) : (
-            <IoSearch />
-          )}
-        </button>
+          <input
+            type="search"
+            name="search"
+            placeholder="Find topics..."
+            className={`${
+              homepage
+                ? "h-10 w-96 rounded-2xl border border-[#5c2c1d2a] bg-[#f9f9f9a8] px-5 py-6 pl-10 text-sm outline-none backdrop-blur-lg backdrop-filter transition-all duration-300 focus:w-[28rem] focus:border-[#9e9e9e] focus:bg-white focus:shadow-sm focus:outline-none"
+                : "h-10 w-36 rounded-full border border-[#2A2A2E22] bg-[#f9f9f98f] px-5 pr-10 text-sm outline-none backdrop-blur-sm backdrop-filter transition-all duration-300 focus:w-64 focus:border-[#9e9e9e] focus:bg-white focus:shadow-sm focus:outline-none"
+            } ${showResultsPanel ? "w-64" : ""} `}
+            onChange={handleInputChange}
+            value={searchQuery}
+            ref={searchInputRef}
+          />
+          <button
+            type="submit"
+            className={`${
+              homepage
+                ? "absolute left-4 top-1 mr-4 mt-3"
+                : "absolute right-0 top-0 mr-4 mt-3"
+            }`}
+          >
+            {loading ? (
+              // show spinner
+              // <CgSpinner className="animate-spin" />
+              <IoSearch className="animate-pulse cursor-not-allowed text-gray-400" />
+            ) : (
+              <IoSearch />
+            )}
+          </button>
+        </div>
       </div>
 
       {/* search results */}

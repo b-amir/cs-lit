@@ -233,7 +233,7 @@ function CommentSection({ analogyId }) {
                 <div
                   key={comment.id}
                   id="single-comment"
-                  className="mb-3 rounded-lg border border-transparent bg-[#f0f0f0] px-2 py-2 duration-200 hover:bg-[#f6f6f6] "
+                  className="mb-3 rounded-lg border border-[#f6f6f652] bg-[#f0f0f0a1] px-2 py-2 duration-200 hover:bg-[#f6f6f6] "
                 >
                   <div className="flex items-center gap-1">
                     <Link

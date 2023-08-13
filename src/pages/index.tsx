@@ -72,6 +72,8 @@ const Home: NextPage = () => {
     unique: true, // Use the key to identify unique items
     // i want the first item to be still. no effects. and from the second item on i want effects
     trail: 200, // Stagger delay
+    // avoid flickering
+    delay: 350, // Delay before the animation starts
   });
 
   useEffect(() => {
@@ -198,7 +200,7 @@ const Home: NextPage = () => {
           <div className="center my-auto flex flex-col items-start justify-center gap-6">
             <div className="flex flex-col items-center justify-center gap-6  py-12">
               <h1
-                className={`${archivo.className} flex flex-col items-start align-middle text-7xl font-extrabold text-[#263238] dark:text-white`}
+                className={`${archivo.className} font-archivo flex flex-col items-start align-middle text-7xl font-extrabold text-[#263238] dark:text-white`}
               >
                 <span>Explain</span>
                 <span className="flex flex-row items-center justify-center py-2 ">
