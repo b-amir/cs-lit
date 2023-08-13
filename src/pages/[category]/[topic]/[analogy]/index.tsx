@@ -22,6 +22,7 @@ import { useCreateItem } from "@/hooks/useCreateItem";
 import { LoadMoreButton } from "@/components/LoadMoreButton";
 import { useSession } from "next-auth/react";
 import { signIn } from "next-auth/react";
+import { EntityNotFound } from "@/components/EntityNotFound";
 
 export default function SingleAnalogyPage() {
   const router = useRouter();
@@ -34,7 +35,7 @@ export default function SingleAnalogyPage() {
 
   // api.analogy.getAll.useQuery();
 
-  const { data: singleAnalogyData, status } =
+  const { data: singleAnalogyData, status: singleAnalogyStatus } =
     api.analogy.getSingleAnalogyById.useQuery({
       id: UrlAnalogyId as string,
     });
@@ -47,9 +48,9 @@ export default function SingleAnalogyPage() {
     slug: UrlTopic as string,
   });
 
-  if (status === "loading") {
-    return <CornerLoading />;
-  }
+  // if (singleAnalogyStatus === "loading") {
+  //   return <CornerLoading />;
+  // }
 
   return (
     <>
@@ -67,17 +68,24 @@ export default function SingleAnalogyPage() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <PageLayout>
-        <div className="mx-auto flex  max-w-[720px] flex-col justify-between pt-40">
-          <NavShare router={router} />
-          <MainSection
-            categoryData={categoryData}
-            topicsData={topicsData}
-            singleAnalogyData={singleAnalogyData}
-          />
-          <InfoSection singleAnalogyData={singleAnalogyData} />
-          <CommentSection analogyId={singleAnalogyData?.id} />
-        </div>
-        <AboutWebsite />
+        {/* if analogy is not found - invalid route */}
+        {singleAnalogyStatus === "error" ? (
+          <EntityNotFound entity="Analogy" />
+        ) : (
+          <>
+            <div className="mx-auto flex  max-w-[720px] flex-col justify-between pt-40">
+              <NavShare router={router} />
+              <MainSection
+                categoryData={categoryData}
+                topicsData={topicsData}
+                singleAnalogyData={singleAnalogyData}
+              />
+              <InfoSection singleAnalogyData={singleAnalogyData} />
+              <CommentSection analogyId={singleAnalogyData?.id} />
+            </div>
+            <AboutWebsite />
+          </>
+        )}
       </PageLayout>
     </>
   );
@@ -164,7 +172,7 @@ function MainSection({
 
       <AnalogyView
         analogy={{
-          id: singleAnalogyData.id,
+          id: singleAnalogyData?.id,
         }}
         // because in single analogy page the info row is rendered outside of analogy view for a cleaner look
         needsInfoRow={false}

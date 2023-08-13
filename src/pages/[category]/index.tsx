@@ -14,6 +14,7 @@ import { TopicEditorForm } from "./TopicEditorForm";
 import { TopicsList } from "./TopicsList";
 import { type Topic, type Category } from "@prisma/client";
 import { FormTrigger } from "../../components/FormTrigger";
+import { EntityNotFound } from "@/components/EntityNotFound";
 
 export default function CategoryPage() {
   const [topicEditorState, setTopicEditorState] = useState({
@@ -96,90 +97,90 @@ export default function CategoryPage() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <PageLayout>
-        {/* if category is not found */}
-        {!categoryFetching && !categoryData && (
-          <div className="flex h-screen items-center justify-center ">
-            Category not found.
-          </div>
-        )}
-
-        <div
-          // if there's only 0-5 topics, include form trigger in viewport
-          className={`grow-1 w-full [overflow:overlay] ${
-            topicsData && topicsData.pages.length > 5
-              ? " min-h-[calc(100dvh-0px)]"
-              : " min-h-[calc(100dvh-160px)]"
-          }`}
-        >
-          <CategoryHeader
-            categoryFetchingStatus={categoryFetchingStatus}
-            categoryData={categoryData as Category}
-            setOrderBy={setOrderBy}
-            orderBy={orderBy}
-            setTopicEditorState={setTopicEditorState}
-          />
-
-          <div className="mx-auto mb-12 mt-8 flex px-16 ">
-            {/* handle loading states */}
-            {categoryFetching && <CornerLoading />}
-            {topicsFetchingStatus === "loading" && <TableSkeleton />}
-
-            {/* show a list of topics */}
-            {topicsFetchingStatus === "success" &&
-            topicsData?.pages[0]?.items?.length > 0 ? (
-              <TopicsList
-                topicsData={topicsData}
-                UrlCategory={UrlCategory}
-                hasNextPage={hasNextPage as boolean}
-                fetchNextPage={fetchNextPage}
-                isFetchingNextPage={isFetchingNextPage}
-                setTopicInput={setTopicInput}
+        {/* if category is not found - invalid route */}
+        {!categoryFetching && !categoryData ? (
+          <EntityNotFound entity="Category" />
+        ) : (
+          <>
+            <div
+              // if there's only 0-5 topics, include form trigger in viewport
+              className={`grow-1 w-full [overflow:overlay] ${
+                topicsData && topicsData.pages.length > 5
+                  ? " min-h-[calc(100dvh-0px)]"
+                  : " min-h-[calc(100dvh-160px)]"
+              }`}
+            >
+              <CategoryHeader
+                categoryFetchingStatus={categoryFetchingStatus}
+                categoryData={categoryData as Category}
+                setOrderBy={setOrderBy}
+                orderBy={orderBy}
                 setTopicEditorState={setTopicEditorState}
               />
-            ) : null}
 
-            {/* if there's no topics */}
-            {topicsFetchingStatus === "success" &&
-            topicsData?.pages[0]?.items?.length <= 0 ? (
-              <NoTopics
-                topicEditorState={topicEditorState}
-                setTopicEditorState={setTopicEditorState}
-              />
-            ) : null}
-          </div>
-        </div>
+              <div className="mx-auto mb-12 mt-8 flex px-16 ">
+                {/* handle loading states */}
+                {categoryFetching && <CornerLoading />}
+                {topicsFetchingStatus === "loading" && <TableSkeleton />}
 
-        <div
-          // handle form wrapper
-          className={`z-30 mx-auto flex w-full grow-0 flex-col items-center justify-center px-16 text-[#2A2A2E] shadow-lg backdrop-blur-md backdrop-filter ${
-            topicEditorState.shown
-              ? "sticky bottom-0 h-full max-h-[calc(100vh-90px-1px)] bg-[#2a2a2e3b] pb-5 pt-7 shadow-[0px_-1px_6px_2px_#00000015,0px_0px_0px_1px_#00000030,0px_-11px_20px_2px_#00000005,0px_-20px_55px_0px_#00000005]"
-              : "sticky bottom-[-200px] bg-[#2a2a2e3b] pb-7 pt-9"
-          } ${topicEditorState.purpose === "Edit" ? "" : ""}
+                {/* show a list of topics */}
+                {topicsFetchingStatus === "success" &&
+                topicsData?.pages[0]?.items?.length > 0 ? (
+                  <TopicsList
+                    topicsData={topicsData}
+                    UrlCategory={UrlCategory}
+                    hasNextPage={hasNextPage as boolean}
+                    fetchNextPage={fetchNextPage}
+                    isFetchingNextPage={isFetchingNextPage}
+                    setTopicInput={setTopicInput}
+                    setTopicEditorState={setTopicEditorState}
+                  />
+                ) : null}
+
+                {/* if there's no topics */}
+                {topicsFetchingStatus === "success" &&
+                topicsData?.pages[0]?.items?.length <= 0 ? (
+                  <NoTopics
+                    topicEditorState={topicEditorState}
+                    setTopicEditorState={setTopicEditorState}
+                  />
+                ) : null}
+              </div>
+            </div>
+
+            <div
+              // handle form wrapper
+              className={`z-30 mx-auto flex w-full grow-0 flex-col items-center justify-center px-16 text-[#2A2A2E] shadow-lg backdrop-blur-md backdrop-filter ${
+                topicEditorState.shown
+                  ? "sticky bottom-0 h-full max-h-[calc(100vh-90px-1px)] bg-[#2a2a2e3b] pb-5 pt-7 shadow-[0px_-1px_6px_2px_#00000015,0px_0px_0px_1px_#00000030,0px_-11px_20px_2px_#00000005,0px_-20px_55px_0px_#00000005]"
+                  : "sticky bottom-[-200px] bg-[#2a2a2e3b] pb-7 pt-9"
+              } ${topicEditorState.purpose === "Edit" ? "" : ""}
               ?`}
-        >
-          <FormTrigger
-            setInput={setTopicInput}
-            editorState={topicEditorState}
-            setEditorState={setTopicEditorState}
-            newInput={newInput}
-          />
+            >
+              <FormTrigger
+                setInput={setTopicInput}
+                editorState={topicEditorState}
+                setEditorState={setTopicEditorState}
+                newInput={newInput}
+              />
 
-          <animated.div
-            style={animationProps}
-            ref={contentRef}
-            className="w-full"
-          >
-            <TopicEditorForm
-              UrlCategory={UrlCategory}
-              categoryData={categoryData}
-              input={topicInput}
-              setInput={setTopicInput}
-              topicEditorState={topicEditorState}
-              setTopicEditorState={setTopicEditorState}
-            />
-          </animated.div>
-        </div>
+              <animated.div
+                style={animationProps}
+                ref={contentRef}
+                className="w-full"
+              >
+                <TopicEditorForm
+                  UrlCategory={UrlCategory}
+                  categoryData={categoryData}
+                  input={topicInput}
+                  setInput={setTopicInput}
+                  topicEditorState={topicEditorState}
+                  setTopicEditorState={setTopicEditorState}
+                />
+              </animated.div>
+            </div>
+          </>
+        )}
       </PageLayout>
     </>
   );
