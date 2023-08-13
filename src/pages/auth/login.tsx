@@ -120,7 +120,7 @@ const LoginPage = () => {
               if (e.key === "Enter") {
                 e.preventDefault();
                 void signIn("email", {
-                  callbackUrl: "http://localhost:3000/auth/verify-request",
+                  callbackUrl: "http://localhost:3000/",
                   email: e.currentTarget.value,
                 });
               }

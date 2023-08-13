@@ -17,6 +17,7 @@ import { AvatarSkeleton, HomeCategorySkeleton } from "@/components/Skeleton";
 import { HomeUserSkeleton } from "@/components/Skeleton";
 import Head from "next/head";
 import { RiImageLine } from "react-icons/ri";
+import { Search } from "@/components/Search";
 
 const carouselItems = [
   {
@@ -225,7 +226,7 @@ const Home: NextPage = () => {
                 /> */}
 
                 <div className="relative mx-auto flex flex-row pt-2 text-[#263238]">
-                  <input
+                  {/* <input
                     type="search"
                     name="search"
                     className="h-[50px] w-[500px] rounded-lg border border-[#5c2c1d2a] px-4 pr-10 text-lg text-gray-900 focus:outline-none focus:ring-1 focus:ring-[#5c2c1d6a]  dark:text-white dark:focus:ring-white"
@@ -233,7 +234,8 @@ const Home: NextPage = () => {
                   />
                   <button type="submit" className="absolute right-4 top-6">
                     <IoSearch className="scale-125 " />
-                  </button>
+                  </button>  */}
+                  <Search />
                 </div>
               </div>
               <p
@@ -295,7 +297,8 @@ const Home: NextPage = () => {
           <h2
             className={`${archivo.className} mx-auto my-14 flex h-1/6  flex-row justify-center text-3xl font-bold`}
           >
-            So far we have these categories:
+            {/* So far we have these categories: */}
+            Choose a category and dive in:
           </h2>
           {categoriesFetchingStatus === "loading" ? (
             <HomeCategorySkeleton />
@@ -369,6 +372,7 @@ const Home: NextPage = () => {
                   id: analogyData?.id,
                 }}
                 needsLocationInfo
+                // needsInfoRow={false}
                 key={analogyData?.id}
               />
             </AnalogyViewWithLink>
