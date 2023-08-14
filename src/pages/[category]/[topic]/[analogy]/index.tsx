@@ -2,7 +2,6 @@ import Head from "next/head";
 import { api } from "@/utils/api";
 import { PageLayout } from "@/components/layout";
 import { AnalogyInfoRow, AnalogyView } from "@/components/AnalogyView";
-import { CornerLoading, LoadingSpinner } from "@/components/loading";
 import { FaArrowLeft } from "react-icons/fa";
 import { RiImageLine } from "react-icons/ri";
 import { AiFillLock, AiOutlineLink } from "react-icons/ai";
@@ -17,12 +16,13 @@ import { RelativeTime } from "../../../../utils/relativeTime";
 import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { coy } from "react-syntax-highlighter/dist/cjs/styles/prism";
-import { AnalogySkeleton, CommentSkeleton } from "@/components/Skeleton";
+import { CommentSkeleton } from "@/components/Skeleton";
 import { useCreateItem } from "@/hooks/useCreateItem";
 import { LoadMoreButton } from "@/components/LoadMoreButton";
 import { useSession } from "next-auth/react";
 import { signIn } from "next-auth/react";
 import { EntityNotFound } from "@/components/EntityNotFound";
+import { saveImage } from "@/utils/saveImage";
 
 export default function SingleAnalogyPage() {
   const router = useRouter();
@@ -100,7 +100,10 @@ function NavShare({ router }) {
       <div className="flex flex-row items-center">
         {/* <FiShare />  */}
         Share As:{" "}
-        <button className="mx-2 inline-flex flex-row items-center rounded-[12px] border border-[#d2d2d28e] bg-[#ffffffc1] px-4 py-1 text-sm transition-all hover:border-[#c8c8c8] hover:bg-[#ffffff]">
+        <button
+          className="mx-2 inline-flex flex-row items-center rounded-[12px] border border-[#d2d2d28e] bg-[#ffffffc1] px-4 py-1 text-sm transition-all hover:border-[#c8c8c8] hover:bg-[#ffffff]"
+          onClick={saveImage}
+        >
           <RiImageLine className="mr-1" />
           Image{" "}
         </button>{" "}
@@ -135,30 +138,30 @@ function MainSection({ singleAnalogyData }) {
       : "";
 
   return (
-    <div
-      id="single-analogy"
-      className="mb-auto rounded-[23px] bg-[#e8e5e2] bg-gradient-to-bl from-[#1e7cba] to-[#7c1db3] px-5 py-5"
-    >
-      <div className="flex flex-row justify-between px-7 pb-1 pt-8 ">
-        <span className="flex flex-row text-sm font-semibold text-[#efefefc7]">
-          <span className="max-w-[8rem] truncate">
-            {singleAnalogyData?.category?.name}
-          </span>
-          <span className="mx-2"> {singleAnalogyData?.topic && "/"}</span>
-          <span className="max-w-[16rem] truncate">
-            {singleAnalogyData?.topic?.title}
-          </span>
-        </span>{" "}
-        <span className="text-sm text-[#efefefa7]">{domainName}</span>
-      </div>
+    <div className="mb-auto  rounded-[23px]  bg-gradient-to-bl from-[#1e7cba] to-[#7c1db3] px-1 py-7">
+      {/* this div is a trick to hide the flicker when capturing image */}
+      <div id="single-analogy" className="rounded-[23px] px-5 pb-1">
+        <div className="flex flex-row justify-between px-7 pb-1 pt-8 ">
+          <span className="flex flex-row text-sm font-semibold text-[#efefefc7]">
+            <span id="single-analogy-cat" className=" max-w-[8rem] truncate">
+              {singleAnalogyData?.category?.name}
+            </span>
+            <span className="mx-2"> {singleAnalogyData?.topic && "/"}</span>
+            <span id="single-analogy-topic" className=" max-w-[16rem] truncate">
+              {singleAnalogyData?.topic?.title}
+            </span>
+          </span>{" "}
+          <span className="text-sm text-[#efefefa7]">{domainName}</span>
+        </div>
 
-      <AnalogyView
-        analogy={{
-          id: singleAnalogyData?.id,
-        }}
-        // because in single analogy page the info row is rendered outside of analogy view for a cleaner look
-        needsInfoRow={false}
-      />
+        <AnalogyView
+          analogy={{
+            id: singleAnalogyData?.id,
+          }}
+          // because in single analogy page the info row is rendered outside of analogy view for a cleaner look
+          needsInfoRow={false}
+        />
+      </div>
     </div>
   );
 }

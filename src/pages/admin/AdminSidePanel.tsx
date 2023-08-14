@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { api } from "@/utils/api";
 import { TbUrgent } from "react-icons/tb";
 import { archivo } from "@/styles/customFonts";
-import { CgSpinner } from "react-icons/cg";
 import { MdDone as Approve, MdClose as Dismiss } from "react-icons/md";
 import { ActionMenu } from "./ActionMenu";
 import { useUpdateItem } from "@/hooks/useUpdateItem";
@@ -27,13 +26,13 @@ export function AdminSidePanel() {
       className="relative z-20 mx-auto h-full w-1/4   overflow-x-clip  border  border-[#b5b5b511] bg-[#f6f6f6] transition-all"
     >
       <div
-        id="urgent-header"
+        id="pending-header"
         className="flex h-[96px] w-full select-none flex-col justify-between  rounded-sm border-b border-b-[#5555552a] bg-gradient-to-br from-[#fff] to-[#f7f3ee00] px-6  py-4"
       >
         <h1
-          className={`${archivo.className}   flex flex-row items-center  gap-1 text-3xl font-bold`}
+          className={`${archivo.className}   flex flex-row items-center  gap-1 text-2xl font-bold`}
         >
-          <TbUrgent className="mb-0.5" /> Urgent
+          <TbUrgent className="mb-0.5" /> Pending
         </h1>
         <div className="w-full  pt-1 text-xs font-light text-[#7a6a55]">
           following items need your attention.

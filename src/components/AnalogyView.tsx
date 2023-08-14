@@ -99,7 +99,10 @@ export const AnalogyView: React.FC<IAnalogyViewProps> = (props) => {
               {analogyStatus === "loading" ? (
                 <MediumSkeleton />
               ) : (
-                <div className="mb-0.5 flex items-center justify-between align-middle font-normal  text-[#666666]">
+                <div
+                  id="analogy-author"
+                  className="flex items-center justify-between pb-0.5 align-middle font-normal  text-[#666666]"
+                >
                   <Link
                     href={`/profile/${analogyData?.authorId}`}
                     className="flex items-center align-middle text-sm transition-all hover:text-gray-800"
@@ -119,7 +122,10 @@ export const AnalogyView: React.FC<IAnalogyViewProps> = (props) => {
               {votingStatus === "loading" ? (
                 <SmallSkeleton />
               ) : (
-                <div className="flex items-start justify-start  text-xs text-[#878787]">
+                <div
+                  id="votingAverage"
+                  className="flex items-start justify-start  text-xs text-[#878787]"
+                >
                   {
                     // check if votingAverage is not NaN
                     isNaN(votingAverage) ? (
@@ -165,7 +171,10 @@ export const AnalogyView: React.FC<IAnalogyViewProps> = (props) => {
         </div>
       </div>
 
-      <div className="min-h-[120px] w-full  bg-white px-8 pb-12 pt-8">
+      <div
+        id="analogy-content"
+        className="min-h-[120px] w-full  bg-white px-8 pb-12 pt-8"
+      >
         {analogyStatus === "loading" ? (
           <MultilineSkeleton />
         ) : (

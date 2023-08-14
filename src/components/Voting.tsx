@@ -85,7 +85,7 @@ export function Voting({ analogyId }: { analogyId: string }) {
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col" id="voting">
       <IoIosArrowUp
         className={`mb-0.5 ${
           vote === "like"
