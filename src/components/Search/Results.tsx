@@ -93,7 +93,7 @@ export function Results({
         </div>
       </animated.div>
       <div
-        className="fixed right-[0px] top-[0px] z-10 h-screen w-screen bg-[#00000093] backdrop-blur-xl"
+        className="fixed right-[0px] top-[0px] z-10 h-screen w-screen bg-[#00000093] backdrop-blur-xl "
         onClick={() => setShowResultsPanel(false)}
       />
     </>

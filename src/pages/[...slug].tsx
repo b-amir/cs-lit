@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { FaArrowLeft } from "react-icons/fa";
 import { useRouter } from "next/router";
-import { RiErrorWarningFill } from "react-icons/ri";
+import { MdOutlineWrongLocation } from "react-icons/md";
 
 const Custom404 = () => {
   const router = useRouter();
@@ -36,7 +36,7 @@ const Custom404 = () => {
         </div>
         <div className=" rounded-b-3xl bg-[#ffffffd8]  px-16 py-12 backdrop-blur-3xl">
           <h1 className="text-md text-md mb-4 flex items-center justify-center gap-2 text-center font-semibold text-gray-400">
-            <RiErrorWarningFill className="mb-0.5" /> 404 - Page Not Found
+            <MdOutlineWrongLocation className="mb-0.5" /> 404 - Page Not Found
           </h1>
 
           <p className="text-md mb-4 text-center text-sm font-normal text-gray-700">

@@ -266,7 +266,7 @@ const Home: NextPage = () => {
         {/* stick to the bottom  */}
         {/* <div className=" bottom-0 flex w-full items-center justify-center py-12 text-sm font-semibold opacity-60"> */}
         <div
-          className="group bottom-0 z-10 flex h-20 w-full cursor-pointer flex-col items-center  justify-center px-2 py-4  text-[#5c2c1d7f]"
+          className="group bottom-0 z-[9] flex h-20 w-full cursor-pointer flex-col items-center  justify-center px-2 py-4  text-[#5c2c1d7f]"
           onClick={() => {
             const categorySection = document.getElementById("category-section");
             categorySection?.scrollIntoView({ behavior: "smooth" });

@@ -5,6 +5,7 @@ import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import slugify from "slugify";
 import { useSession } from "next-auth/react";
+import { IoTerminal } from "react-icons/io5";
 
 export interface ITopicInput {
   id: string;
@@ -35,63 +36,60 @@ export function useCreateItem(item: ITopicInput, type: string) {
   const createActivityLogEntry = addActivityLog();
   const { data: sessionData, status: sessionStatus } = useSession();
 
-  // const [categoryInput, setCategoryInput] = useState({
-  //   name: "",
-  //   slug: "",
-  // });
+  if (type === "Categories") {
+    // creating category
+    const { mutate: createCategory } = api.category.create.useMutation({
+      onSuccess: () => {
+        createActivityLogEntry({
+          entityType: "category",
+          entityId: "",
+          entityTitle: item.name,
+          action: "created",
+        });
+        void ctx.category.getAll.invalidate();
+        void ctx.category.getAllWithQuery.invalidate();
+        toast.success("Category created successfully.");
+      },
+      onError: (e) => {
+        const errorMessage = e.data?.zodError?.fieldErrors;
+        console.log(errorMessage);
+        if (errorMessage) {
+          if (errorMessage.name) {
+            toast.error(errorMessage?.name.join(" "));
+          }
+        } else if (
+          e.message.includes("Unique constraint failed on the fields: (`name`)")
+        ) {
+          toast.error("A category with the same name already exists.");
+        } else {
+          toast.error("Something went wrong.");
+        }
+      },
+    });
 
-  // if (type === "Categories") {
-  //   // creating category
+    const createCategoryHandler = () => {
+      try {
+        const categorySlug = slugify(item.name, { lower: true });
 
-  //   const { mutate: createCategory } = api.category.create.useMutation({
-  //     onSuccess: () => {
-  //       setCategoryInput({
-  //         name: "",
-  //         slug: "",
-  //       });
-  //       void ctx.category.getAll.invalidate();
-  //     },
-  //     onError: (e) => {
-  //       const errorMessage = e.data?.zodError?.fieldErrors;
-  //       console.log(errorMessage);
-  //       if (errorMessage) {
-  //         if (errorMessage.url) {
-  //           toast.error(errorMessage?.url.join(" "));
-  //         }
-  //         if (errorMessage.name) {
-  //           toast.error(errorMessage?.name.join(" "));
-  //         }
-  //       } else {
-  //         toast.error("Something went wrong.");
-  //       }
-  //     },
-  //   });
+        createActivityLogEntry({
+          entityType: "category",
+          entityId: item.id,
+          entityTitle: item.name,
+          action: "created",
+        });
 
-  //   const createCategoryHandler = () => {
-  //     try {
-  //       const categorySlug = slugify(categoryInput.name, { lower: true });
-
-  //       const categoryId = "123";
-
-  //       createActivityLogEntry({
-  //         entityType: "category",
-  //         entityId: categoryId,
-  //         entityTitle: item.name,
-  //         action: "created",
-  //       });
-
-  //       createCategory({
-  //         name: item.name,
-  //         slug: categorySlug,
-  //         id: categoryId,
-  //       });
-  //     } catch (e) {
-  //       toast.error("Something went wrong");
-  //       console.log(e);
-  //     }
-  //   };
-  //   return createCategoryHandler;
-  // }
+        createCategory({
+          name: item.name,
+          slug: categorySlug,
+          id: item.id !== "" ? item.id : "",
+        });
+      } catch (e) {
+        toast.error("Something went wrong");
+        console.log(e);
+      }
+    };
+    return createCategoryHandler;
+  }
 
   if (type === "Topics") {
     // creating topic

@@ -60,12 +60,12 @@ export function Search() {
       <div className=" flex flex-col">
         {showResultsPanel && homepage ? (
           <div
-            className="z-50 mt-[-100px] h-[100px] p-1 py-4 pl-2 "
+            className="z-50 mt-[-100px] h-[100px] p-1 py-4 pl-2 [text-shadow:_0_2px_6px_rgb(0_0_0_/_25%)]"
             onClick={() => {
               setShowResultsPanel(false);
             }}
           >
-            <p className="py-1 text-2xl font-semibold text-[#ffffffd1]">
+            <p className="py-1 text-2xl font-semibold text-[#ffffffd1] ">
               Search for any topic
             </p>
             <p className="text-sm text-[#ffffffa7]">

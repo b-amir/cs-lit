@@ -269,7 +269,7 @@ export const analogiesRouter = createTRPCRouter({
         })
         .then((analogy) => {
           if (!analogy) throw new TRPCError({ code: "NOT_FOUND" });
-          return analogy;
+          return singleAnalogyWithUserAndTopicAndCategoryData(analogy);
         })
     ),
 

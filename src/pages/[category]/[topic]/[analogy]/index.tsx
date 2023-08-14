@@ -27,36 +27,18 @@ import { EntityNotFound } from "@/components/EntityNotFound";
 export default function SingleAnalogyPage() {
   const router = useRouter();
 
-  const {
-    category: UrlCategory,
-    topic: UrlTopic,
-    analogy: UrlAnalogyId,
-  } = router.query;
-
-  // api.analogy.getAll.useQuery();
+  const { analogy: UrlAnalogyId } = router.query;
 
   const { data: singleAnalogyData, status: singleAnalogyStatus } =
     api.analogy.getSingleAnalogyById.useQuery({
       id: UrlAnalogyId as string,
     });
 
-  const { data: categoryData } = api.category.getBySlug.useQuery({
-    slug: UrlCategory as string,
-  });
-
-  const { data: topicsData } = api.topic.getBySlug.useQuery({
-    slug: UrlTopic as string,
-  });
-
-  // if (singleAnalogyStatus === "loading") {
-  //   return <CornerLoading />;
-  // }
-
   return (
     <>
       <Head>
         <title>
-          {`${topicsData?.title ?? ""} by ${
+          {`${singleAnalogyData?.topic.title ?? ""} by ${
             singleAnalogyData?.author?.name ?? ""
           }`}{" "}
           - CSLIT
@@ -76,8 +58,8 @@ export default function SingleAnalogyPage() {
             <div className="mx-auto flex  max-w-[720px] flex-col justify-between pt-40">
               <NavShare router={router} />
               <MainSection
-                categoryData={categoryData}
-                topicsData={topicsData}
+                // categoryData={categoryData}
+                // topicsData={topicsData}
                 singleAnalogyData={singleAnalogyData}
               />
               <InfoSection singleAnalogyData={singleAnalogyData} />
@@ -134,22 +116,18 @@ function NavShare({ router }) {
     </div>
   );
 }
-interface IMainSectionProps {
-  categoryData?: {
-    name: string;
-  };
-  topicsData?: {
-    title: string;
-  };
-  singleAnalogyData: {
-    id: string;
-  };
-}
-function MainSection({
-  categoryData,
-  topicsData,
-  singleAnalogyData,
-}: IMainSectionProps) {
+// interface IMainSectionProps {
+//   categoryData?: {
+//     name: string;
+//   };
+//   topicsData?: {
+//     title: string;
+//   };
+//   singleAnalogyData: {
+//     id: string;
+//   };
+// }
+function MainSection({ singleAnalogyData }) {
   const domainName =
     // avoid the ReferenceError and get the domain name of the current URL in the browser environment
     typeof window !== "undefined"
@@ -163,9 +141,13 @@ function MainSection({
     >
       <div className="flex flex-row justify-between px-7 pb-1 pt-8 ">
         <span className="flex flex-row text-sm font-semibold text-[#efefefc7]">
-          <span className="max-w-[8rem] truncate">{categoryData?.name}</span>
-          <span className="mx-2"> {topicsData && "/"}</span>
-          <span className="max-w-[16rem] truncate">{topicsData?.title}</span>
+          <span className="max-w-[8rem] truncate">
+            {singleAnalogyData?.category?.name}
+          </span>
+          <span className="mx-2"> {singleAnalogyData?.topic && "/"}</span>
+          <span className="max-w-[16rem] truncate">
+            {singleAnalogyData?.topic?.title}
+          </span>
         </span>{" "}
         <span className="text-sm text-[#efefefa7]">{domainName}</span>
       </div>
