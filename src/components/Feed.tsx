@@ -1,8 +1,5 @@
-import { api } from "@/utils/api";
 import { AnalogyView } from "../components/AnalogyView";
-import AnalogyViewWithLink from "./AnalogyView";
 import { type Analogy } from "@prisma/client";
-import { CgSpinner } from "react-icons/cg";
 import { LoadMoreButton } from "./LoadMoreButton";
 
 interface IFeedProps {
@@ -34,17 +31,15 @@ export const Feed: React.FC<IFeedProps> = ({
         {topicAnalogies?.pages?.map((page) =>
           // eslint-disable-next-line @typescript-eslint/no-unsafe-return
           page?.items?.map((analogy: Analogy) => (
-            // {topicAnalogies?.map((analogy: Analogy) => (
-            <AnalogyViewWithLink key={analogy.id}>
-              <AnalogyView
-                analogy={{
-                  id: analogy.id,
-                }}
-                key={analogy.id}
-                setAnalogyInput={setAnalogyInput}
-                setAnalogyEditorState={setAnalogyEditorState}
-              />
-            </AnalogyViewWithLink>
+            <AnalogyView
+              analogy={{
+                id: analogy.id,
+              }}
+              key={analogy.id}
+              needsLink={true}
+              setAnalogyInput={setAnalogyInput}
+              setAnalogyEditorState={setAnalogyEditorState}
+            />
           ))
         )}
 

@@ -1,7 +1,7 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import { api } from "@/utils/api";
-import AnalogyViewWithLink, { AnalogyView } from "@/components/AnalogyView";
+import { AnalogyView } from "@/components/AnalogyView";
 import { PageLayout } from "@/components/layout";
 import { generateSSGHelper } from "@/server/helpers/ssgHelper";
 import { CornerLoading } from "@/components/loading";
@@ -48,19 +48,16 @@ const ProfileFeed = (props: { userId: string }) => {
       {analogyData?.pages?.map((page) =>
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         page?.items?.map((analogy: Analogy) => (
-          // {topicAnalogies?.map((analogy: Analogy) => (
-          <AnalogyViewWithLink key={analogy.id}>
-            <AnalogyView
-              analogy={{
-                id: analogy.id,
-              }}
-              needsLocationInfo
-              key={analogy.id}
-            />
-          </AnalogyViewWithLink>
+          <AnalogyView
+            analogy={{
+              id: analogy.id,
+            }}
+            needsLink={true}
+            needsLocationInfo
+            key={analogy.id}
+          />
         ))
       )}
-
       {hasNextPage && (
         <LoadMoreButton
           fetchNextPage={fetchNextPage}

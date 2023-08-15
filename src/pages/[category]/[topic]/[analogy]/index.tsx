@@ -7,7 +7,7 @@ import { RiImageLine } from "react-icons/ri";
 import { AiFillLock, AiOutlineLink } from "react-icons/ai";
 import { LuExternalLink } from "react-icons/lu";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { archivo } from "@/styles/customFonts";
 import Image from "next/image";
@@ -131,11 +131,13 @@ function NavShare({ router }) {
 //   };
 // }
 function MainSection({ singleAnalogyData }) {
-  const domainName =
+  const [domainName, setDomainName] = useState("");
+  useEffect(() => {
     // avoid the ReferenceError and get the domain name of the current URL in the browser environment
     typeof window !== "undefined"
-      ? window.location.origin.replace(/^https?:\/\//, "")
+      ? setDomainName(window.location.origin.replace(/^https?:\/\//, ""))
       : "";
+  }, []);
 
   return (
     <div className="mb-auto  rounded-[23px]  bg-gradient-to-bl from-[#1e7cba] to-[#7c1db3] px-1 py-7">

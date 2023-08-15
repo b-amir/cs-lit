@@ -24,7 +24,60 @@ interface IAnalogyViewProps {
   analogy: {
     id: string;
   };
+  needsInfoRow?: boolean;
+  needsLink?: boolean;
   needsLocationInfo?: boolean;
+  setAnalogyEditorState: React.Dispatch<
+    React.SetStateAction<{
+      entity: string;
+      shown: boolean;
+      purpose: string;
+    }>
+  >;
+  setAnalogyInput: React.Dispatch<
+    React.SetStateAction<{
+      id: string;
+      title: string;
+      description: string;
+      reference: string;
+      status: string;
+      pinned: boolean;
+      topicId: string;
+      authorId: string;
+    }>
+  >;
+  analogyData: {
+    id: string;
+    title: string;
+    description: string;
+    reference: string;
+    status: string;
+    pinned: boolean;
+    topicId: string;
+    authorId: string;
+    category: {
+      slug: string;
+      name: string;
+    };
+    topic: {
+      slug: string;
+      title: string;
+    };
+    comments: {
+      pages: {
+        total: number;
+      }[];
+    };
+    createdAt: Date;
+    user: {
+      image: string;
+      name: string;
+      email: string;
+    };
+  };
+  analogyStatus?: string;
+  votingAverage?: number;
+  votingStatus?: string;
 }
 export const AnalogyView: React.FC<IAnalogyViewProps> = (props) => {
   const {
@@ -33,44 +86,98 @@ export const AnalogyView: React.FC<IAnalogyViewProps> = (props) => {
     analogy,
     needsLocationInfo = false,
     needsInfoRow = true,
+    needsLink = false,
   } = props;
 
-  const { data: analogyVotesData, status: votingStatus } =
-    api.analogy.getAnalogyVotes.useQuery({
-      analogyId: analogy.id,
-    });
-
+  // Get the analogy data for the current analogy
   const { data: analogyData, status: analogyStatus } =
     api.analogy.getById.useQuery({
       id: analogy.id,
     });
 
-  // console.log("analogyData:", analogyData);
+  // Get the analogy votes for the current analogy
+  const { data: analogyVotesData, status: votingStatus } =
+    api.analogy.getAnalogyVotes.useQuery({
+      analogyId: analogy.id,
+    });
 
+  // analogyLink is used to link to the analogy, and is constructed from the data provided by the API.
+  const analogyLink = `/${analogyData?.category?.slug}/${analogyData?.topic?.slug}/${analogyData?.id}`;
+
+  // votingAverage is used to display the average vote for the analogy.
   const [votingAverage, setVotingAverage] = useState(0);
 
+  // We can use the `useEffect` hook to run code after the first render.
   useEffect(() => {
+    // The `analogyVotesData` variable will be `null` until the
+    // `analogyVotesQuery` has finished loading.
     if (!analogyVotesData) {
       return;
     }
+
+    // Calculate the total votes, and the difference between the
+    // likes and dislikes.
     const totalVotes = analogyVotesData.likes + analogyVotesData.dislikes;
     const voteDifference = analogyVotesData.likes - analogyVotesData.dislikes;
+
+    // Calculate the average vote. We use this to calculate the
+    // reputation of the analogy.
     const voteAverage = voteDifference / totalVotes;
+
+    // Round the average vote to the nearest whole number to get
+    // the reputation.
     const analogyReputation = Math.round(voteAverage * 2);
+
+    // Set the reputation.
     setVotingAverage(analogyReputation);
   }, [analogyVotesData]);
 
   analogyStatus === "loading" && <div>Loading...</div>;
+  const analogyViewProps: IAnalogyViewProps = {
+    analogy,
+    analogyData,
+    analogyStatus,
+    needsInfoRow,
+    needsLocationInfo,
+    setAnalogyEditorState,
+    setAnalogyInput,
+    votingAverage,
+    votingStatus,
+  };
+
+  return (
+    <>
+      {needsLink ? (
+        <Link href={analogyLink} className="mx-auto w-full max-w-[705px]">
+          <AnalogyBody {...analogyViewProps} />
+        </Link>
+      ) : (
+        <AnalogyBody {...analogyViewProps} />
+      )}
+    </>
+  );
+};
+function AnalogyBody({
+  analogy,
+  analogyData,
+  analogyStatus,
+  needsInfoRow,
+  needsLocationInfo,
+  setAnalogyEditorState,
+  setAnalogyInput,
+  votingAverage,
+  votingStatus,
+}) {
   return (
     <div
       key={analogy?.id}
       className=" z-20  mx-auto my-5 flex  w-full max-w-[705px] flex-col overflow-clip rounded-[17px] 
-      border border-gray-200 bg-white px-0 py-0 shadow-lg transition-all hover:border-[#c1c1c1] "
+    border border-gray-200 bg-white px-0 py-0 shadow-lg transition-all hover:border-[#c1c1c1] "
       // className="my-2 block min-w-[500px] max-w-sm rounded-s border border-gray-200 bg-white p-6 shadow transition-all hover:bg-gray-100 dark:border-gray-700  dark:bg-gray-800 dark:hover:bg-gray-700"
     >
       <div
         className="border-b-1 w-full cursor-default border border-x-0 border-t-0 border-gray-200 bg-[#F9F9F9] px-5 py-4 
-        shadow-[inset_0px_-3px_1px_0px_#00000003]"
+      shadow-[inset_0px_-3px_1px_0px_#00000003]"
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
@@ -213,7 +320,7 @@ export const AnalogyView: React.FC<IAnalogyViewProps> = (props) => {
         <div
           id="analogy-chin"
           className="flex h-12 w-full cursor-default items-center justify-start rounded-b-[17px] border-t 
-      bg-gray-50 px-1 shadow-[inset_0px_3px_1px_0px_#00000003]"
+    bg-gray-50 px-1 shadow-[inset_0px_3px_1px_0px_#00000003]"
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -229,36 +336,7 @@ export const AnalogyView: React.FC<IAnalogyViewProps> = (props) => {
       ) : null}
     </div>
   );
-};
-
-interface IAnalogyViewWithLinkProps {
-  children?: React.ReactNode;
 }
-const AnalogyViewWithLink: React.FC<IAnalogyViewWithLinkProps> = ({
-  children,
-}) => {
-  // Extract the analogy prop from the child component
-  const { analogy } = React.Children.only(children).props;
-  const { data: analogyData } = api.analogy.getById.useQuery({
-    id: analogy.id,
-  });
-  const analogyLink = `/${analogyData?.category?.slug}/${analogyData?.topic?.slug}/${analogyData?.id}`;
-
-  const wrappedChildren = React.Children.map(children, (child) => {
-    // Clone the child component and add the "needsLink" prop to it
-    return React.cloneElement(child);
-  });
-
-  return analogyLink ? (
-    <Link href={analogyLink} className="mx-auto w-full max-w-[705px]">
-      {wrappedChildren}
-    </Link>
-  ) : (
-    <>{wrappedChildren}</>
-  );
-};
-export default AnalogyViewWithLink;
-
 interface IAnalogyInfoRowProps {
   needsLocationInfo: boolean;
   analogyData: object;
@@ -269,28 +347,11 @@ export function AnalogyInfoRow({
   setAnalogyInput,
   setAnalogyEditorState,
 }: IAnalogyInfoRowProps) {
-  // --- no infoRow if there's no item to show --- //
-  // const [visibleItems, setVisibleItems] = useState(0);
-  // useEffect(() => {
-  //   if (needsLocationInfo) {
-  //     setVisibleItems((prev) => prev + 1);
-  //   }
-  //   if (analogyData?.reference) {
-  //     setVisibleItems((prev) => prev + 1);
-  //   }
-  //   if (analogyData?.comments?.length > 0) {
-  //     setVisibleItems((prev) => prev + 1);
-  //   }
-  //   if (analogyData?.status !== "PUBLISHED") {
-  //     setVisibleItems((prev) => prev + 1);
-  //   }
-  // }, []);
+  const { data: sessionData } = useSession();
 
   // --- if info row is placed outside analogyView,
   //     then it has to get url params router rather than analogyData --- //
-
   const router = useRouter();
-
   const {
     category: UrlCategory,
     topic: UrlTopic,
@@ -298,8 +359,7 @@ export function AnalogyInfoRow({
     id: UrlProfile,
   } = router.query;
 
-  const { data: sessionData } = useSession();
-
+  // --- get comments from api --- //
   const { data: comments, status: commentsFetchingStatus } =
     api.comment.getByAnalogyId.useInfiniteQuery(
       {
