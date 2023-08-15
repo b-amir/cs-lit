@@ -4,12 +4,17 @@ import { type ChangeEvent, useEffect, useRef, useState } from "react";
 import { useSpring } from "@react-spring/web";
 import { useDebounce } from "@/hooks/useDebounce";
 import { Results } from "./Results";
+import { useRouter } from "next/router";
 
 export function Search() {
   const [showResultsPanel, setShowResultsPanel] = useState(false);
   const [results, setResults] = useState<[] | undefined>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [loading, setLoading] = useState(false);
+
+  // --- check if in homepage. if so, render a different styling for search input --- //
+  const router = useRouter();
+  const homepage = router.pathname === "/";
 
   const searchInputRef = useRef(null);
 
@@ -50,9 +55,6 @@ export function Search() {
       friction: 30,
     },
   });
-
-  const homepage =
-    typeof window !== "undefined" ? window.location.pathname === "/" : false;
 
   return (
     <>

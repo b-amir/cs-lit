@@ -23,7 +23,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
           name="description"
           content="A place for computer science enthusiasts to learn stuff easily"
         />
-        <link rel="icon" href="/assets/favicon.svg" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
       <Toaster
         toastOptions={{
