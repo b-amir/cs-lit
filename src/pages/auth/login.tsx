@@ -1,5 +1,4 @@
 import { signIn, useSession } from "next-auth/react";
-import { DiscordProvider, GithubProvider } from "../../server/auth";
 import { BsGoogle, BsDiscord, BsGithub } from "react-icons/bs";
 import Link from "next/link";
 import Image from "next/image";
@@ -7,23 +6,47 @@ import { FaArrowLeft } from "react-icons/fa";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { type SignInErrorTypes } from "next-auth/src/core/pages/signin";
+import { CornerLoading } from "@/components/loading";
 
 const LoginPage = () => {
-  const { session, loading } = useSession();
+  const { session, status } = useSession();
   const router = useRouter();
-  const [errorState, setErrorState] = useState(router.query.error || "none");
 
+  // --- get error from router query and store as state --- //
+  const [errorState, setErrorState] = useState(router.query.error || "none");
   useEffect(() => {
     setErrorState(router.query.error || "none");
   }, [router.query.error]);
 
-  if (loading) {
-    return <div className="text-center">Loading...</div>;
-  }
-  if (session) {
-    return <div className="text-center">You are already signed in.</div>;
+  if (status === "loading") {
+    return <CornerLoading />;
   }
 
+  // --- if authenticated users end up in /auth/login somehow, offer them to go back --- //
+  // --- if they just type the url and there's no back in history, got to "/"        --- //
+  if (status === "authenticated") {
+    return (
+      <div className="flex h-screen w-full select-none flex-col items-center justify-center text-gray-500">
+        You&apos;re already signed in
+        <div
+          onClick={() => {
+            const previousRoute = router.back();
+            if (previousRoute === undefined) {
+              router.push("/");
+            }
+          }}
+          className="mt-2 cursor-pointer text-sm font-semibold transition-all hover:text-black"
+        >
+          Wanna go back?
+        </div>
+      </div>
+    );
+  }
+
+  // --- store the previous page they were on for callbackURL --- //
+  const callbackURL = router.query.callbackUrl || "/";
+
+  // --- clean error messages for auth situations from original auth-js (some are clarified) --- //
   const errors: Record<SignInErrorTypes, string> = {
     Signin: "Try signing in with a different account.",
     OAuthSignin: "Try signing in with a different account.",
@@ -83,7 +106,7 @@ const LoginPage = () => {
           <button
             onClick={() =>
               void signIn("google", {
-                callbackUrl: "http://localhost:3000/javascript",
+                callbackUrl: callbackURL,
               })
             }
             className="mx-auto mb-3 flex w-full place-content-center items-center rounded-2xl border border-gray-300 bg-white px-6 py-2 shadow-sm transition-all duration-200 hover:border-gray-400  hover:bg-blue-100 hover:text-gray-900  "
@@ -93,7 +116,7 @@ const LoginPage = () => {
           <button
             onClick={() =>
               void signIn("discord", {
-                callbackUrl: "http://localhost:3000/javascript",
+                callbackUrl: callbackURL,
               })
             }
             className="mx-auto mb-3 flex w-full place-content-center items-center rounded-2xl border border-gray-300 bg-white px-6 py-2 shadow-sm transition-all duration-200 hover:border-gray-400 hover:bg-indigo-100 hover:text-gray-900 "
@@ -103,7 +126,7 @@ const LoginPage = () => {
           <button
             onClick={() =>
               void signIn("github", {
-                callbackUrl: "http://localhost:3000/javascript",
+                callbackUrl: callbackURL,
               })
             }
             className="mx-auto mb-3 flex w-full place-content-center items-center rounded-2xl border border-gray-300 bg-white px-6 py-2 shadow-sm transition-all duration-200 hover:border-gray-400 hover:bg-gray-200 hover:text-gray-900 "
@@ -120,7 +143,7 @@ const LoginPage = () => {
               if (e.key === "Enter") {
                 e.preventDefault();
                 void signIn("email", {
-                  callbackUrl: "http://localhost:3000/",
+                  callbackUrl: callbackURL,
                   email: e.currentTarget.value,
                 });
               }

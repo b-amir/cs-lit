@@ -50,13 +50,15 @@ export const AnalogyEditorForm = ({
   };
 
   const handleChange = (e) => {
+    // Destructure the 'name' and 'value' properties from the event target (input element)
     const { name, value } = e.target;
-
+    // Update the state using the 'setInput' function and a callback
     setInput((prev) => {
+      // Return a new object that merges the previous state ('prev') and the updated property
       return {
-        ...prev,
-        ...prev.item,
-        [name]: value,
+        ...prev, // Copy all properties from the previous state
+        ...prev.item, // Copy all properties from 'prev.item'
+        [name]: value, // Update the property specified by 'name' with the new 'value'
       };
     });
   };
