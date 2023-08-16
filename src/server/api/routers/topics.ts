@@ -270,6 +270,7 @@ export const topicsRouter = createTRPCRouter({
           title: {
             contains: input.query,
           },
+          status: "PUBLISHED"
         },
         take: 5,
         orderBy: [{ createdAt: "desc" }],

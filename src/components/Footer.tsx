@@ -28,7 +28,7 @@ export function Footer() {
       <div className="line text-xs text-gray-500">
         <div className="flex flex-row items-center justify-between align-middle">
           <div className="inline-flex">
-            <span className="mr-1">Hey, I'm</span>
+            <span className="mr-1">Hey, I&apos;m</span>
             <a
               className="inline-flex  flex-wrap font-semibold hover:underline"
               href="#"

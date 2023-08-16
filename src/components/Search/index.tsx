@@ -71,7 +71,7 @@ export function Search() {
               Search for any topic
             </p>
             <p className="text-sm text-[#ffffffa7]">
-              If it's not there, you can make it!
+              If it&apos;s not there, you can make it!
             </p>
           </div>
         ) : null}

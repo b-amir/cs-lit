@@ -435,6 +435,7 @@ export function AnalogyInfoRow({
         </span>
         <span className="shrink grow-0">
           {sessionData &&
+            setAnalogyEditorState &&
             ["ADMIN", "EDITOR"].includes(sessionData?.user.role) && (
               <a
                 href="#"
