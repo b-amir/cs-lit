@@ -8,7 +8,11 @@ import Head from "next/head";
 import Link from "next/link";
 import { archivo } from "@/styles/customFonts";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { AnalogySkeleton, TableSkeleton } from "@/components/Skeleton";
+import {
+  AnalogySkeleton,
+  MediumSkeleton,
+  TableSkeleton,
+} from "@/components/Skeleton";
 import { useRef, useState } from "react";
 import { FormTrigger } from "../../../components/FormTrigger";
 import { animated, useSpring } from "@react-spring/web";
@@ -26,9 +30,17 @@ function TopicPage(props) {
   });
 
   const { data: topicsData, status: topicFetchingStatus } =
-    api.topic.getBySlug.useQuery({
-      slug: UrlTopic as string,
-    });
+    api.topic.getBySlug.useQuery(
+      {
+        slug: UrlTopic as string,
+      },
+      {
+        refetchOnWindowFocus: false,
+        refetchOnMount: false,
+        refetchOnReconnect: false,
+        manual: true,
+      }
+    );
 
   const [analogyInput, setAnalogyInput] = useState({
     description: "",
@@ -51,7 +63,13 @@ function TopicPage(props) {
       order: "desc",
       limit: 10,
     },
-    { getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor }
+    {
+      getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor,
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      manual: true,
+    }
   );
 
   // --- animation setup for editor ---> //
@@ -99,30 +117,31 @@ function TopicPage(props) {
                   : " min-h-[calc(100dvh-160px)]"
               }`}
             >
-              <div
-                className="mb-14 flex w-full  flex-col border-b border-gray-300 bg-gradient-to-tr from-[#ff73631a] via-transparent to-transparent 
-          px-24 pb-6 pt-32"
-              >
+              <div className="mb-14 flex w-full  flex-col border-b border-gray-300 bg-gradient-to-tr from-[#ff73631a] via-transparent to-transparent px-24 pb-6 pt-32">
                 {topicFetchingStatus === "loading" ? (
                   <div className=" mb-4  h-8 w-1/4 animate-pulse rounded-lg bg-[#b4b4b49f]" />
                 ) : (
                   <h1
-                    className={`${archivo.className}  max-w-[720px] truncate whitespace-pre-wrap break-words text-5xl font-extrabold  tracking-tight text-[#2A2A2E] sm:text-[2rem]`}
+                    className={`${archivo.className} max-w-[720px] truncate whitespace-pre-wrap break-words text-5xl font-extrabold  tracking-tight text-[#2A2A2E] sm:text-[2rem]`}
                   >
                     {topicsData?.title}
                   </h1>
                 )}
                 <br />
                 <div className="flex w-full flex-row justify-between py-1 align-middle text-sm text-[#808080] ">
-                  <p className="grow-1 inline-flex">
-                    {analogiesCount ? analogiesCount : "No"}
-                    &nbsp;
-                    {
-                      sessionData?.user.role === "ADMIN" ? "published " : "" // admin can see unpublished analogies too. hence adding "published" so it's not confusing.
-                    }
-                    {analogiesCount === 1 ? "analogy" : "analogies"}
-                    &nbsp;for this topic.&nbsp;{" "}
-                  </p>
+                  {analogiesFetchingStatus === "loading" ? (
+                    <div className="grow-1 flex h-5 w-24 animate-pulse rounded-md bg-[#b4b4b49f]" />
+                  ) : (
+                    <p className="grow-1 inline-flex">
+                      {analogiesCount ? analogiesCount : "No"}
+                      &nbsp;
+                      {
+                        sessionData?.user.role === "ADMIN" ? "published " : "" // admin can see unpublished analogies too. hence adding "published" so it's not confusing.
+                      }
+                      {analogiesCount === 1 ? "analogy" : "analogies"}
+                      &nbsp;for this topic.&nbsp;{" "}
+                    </p>
+                  )}
                   <Link href={`${topicsData?.url}`} target="_blank">
                     <button className=" align-center justify-middle ml-auto flex grow-0 cursor-pointer items-center rounded-[17px] border border-transparent px-3 py-1 transition-all hover:border-[#d2d2d2] hover:bg-[#f0f0f0] hover:text-[#555555]">
                       <LuExternalLink className="mb-0.5" /> &nbsp;Official docs

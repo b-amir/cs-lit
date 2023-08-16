@@ -17,7 +17,13 @@ export function AdminSidePanel() {
     isFetchingNextPage,
   } = api.pending.getAll.useInfiniteQuery(
     {},
-    { getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor }
+    {
+      getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor,
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      manual: true,
+    }
   );
 
   return (

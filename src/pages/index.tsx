@@ -114,12 +114,24 @@ const Home: NextPage = () => {
     { limit: 15 },
     {
       getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor,
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      manual: true,
     }
   );
 
-  const { data: analogyData } = api.analogy.getById.useQuery({
-    id: "seiydzNj",
-  });
+  const { data: analogyData } = api.analogy.getById.useQuery(
+    {
+      id: "seiydzNj",
+    },
+    {
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      manual: true,
+    }
+  );
 
   return (
     <>

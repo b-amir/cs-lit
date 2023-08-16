@@ -16,6 +16,10 @@ export function SidebarLeft(props: { username: any }) {
       { limit: 15 },
       {
         getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor,
+        refetchOnWindowFocus: false,
+        refetchOnMount: false,
+        refetchOnReconnect: false,
+        manual: true,
       }
     );
 

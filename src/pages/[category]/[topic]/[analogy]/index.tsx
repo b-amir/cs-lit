@@ -13,9 +13,17 @@ export default function SingleAnalogyPage() {
   const router = useRouter();
   const { analogy: UrlAnalogyId } = router.query;
   const { data: singleAnalogyData, status: singleAnalogyStatus } =
-    api.analogy.getSingleAnalogyById.useQuery({
-      id: UrlAnalogyId as string,
-    });
+    api.analogy.getSingleAnalogyById.useQuery(
+      {
+        id: UrlAnalogyId as string,
+      },
+      {
+        refetchOnWindowFocus: false,
+        refetchOnMount: false,
+        refetchOnReconnect: false,
+        manual: true,
+      }
+    );
 
   return (
     <>

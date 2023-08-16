@@ -26,7 +26,13 @@ export function AdminFooter({
     isFetchingNextPage,
   } = api.activity.getAll.useInfiniteQuery(
     {},
-    { getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor }
+    {
+      getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor,
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      manual: true,
+    }
   );
 
   return (
@@ -78,9 +84,17 @@ export function AdminFooter({
 }
 
 export function ActivityItemView({ item }) {
-  const { data: userData } = api.profile.getProfileById.useQuery({
-    id: item.userId as string,
-  });
+  const { data: userData } = api.profile.getProfileById.useQuery(
+    {
+      id: item.userId as string,
+    },
+    {
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      manual: true,
+    }
+  );
 
   return (
     <div className=" flex h-8 w-full flex-row items-center justify-between border-b-[1px] border-[#00000012] px-6 py-4 transition-all hover:bg-[#00000012]">

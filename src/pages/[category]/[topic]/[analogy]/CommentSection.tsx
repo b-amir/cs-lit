@@ -28,7 +28,13 @@ export function CommentSection({ analogyId }: { analogyId: string }) {
       order: "desc",
       limit: 10,
     },
-    { getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor }
+    {
+      getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor,
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      manual: true,
+    }
   );
 
   return (

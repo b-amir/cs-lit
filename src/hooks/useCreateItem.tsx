@@ -99,6 +99,10 @@ export function useCreateItem(item: ITopicInput, type: string) {
       onSuccess: () => {
         void ctx.topic.getAll.invalidate();
         void ctx.topic.getByCategoryId.invalidate();
+        window.scrollTo({
+          top: document.body.offsetTop - 90,
+          behavior: "smooth",
+        });
         toast.success("Topic created successfully.");
       },
       onError: (e) => {

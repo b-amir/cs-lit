@@ -91,15 +91,31 @@ export const AnalogyView: React.FC<IAnalogyViewProps> = (props) => {
 
   // Get the analogy data for the current analogy
   const { data: analogyData, status: analogyStatus } =
-    api.analogy.getById.useQuery({
-      id: analogy.id,
-    });
+    api.analogy.getById.useQuery(
+      {
+        id: analogy.id,
+      },
+      {
+        refetchOnWindowFocus: false,
+        refetchOnMount: false,
+        refetchOnReconnect: false,
+        manual: true,
+      }
+    );
 
   // Get the analogy votes for the current analogy
   const { data: analogyVotesData, status: votingStatus } =
-    api.analogy.getAnalogyVotes.useQuery({
-      analogyId: analogy.id,
-    });
+    api.analogy.getAnalogyVotes.useQuery(
+      {
+        analogyId: analogy.id,
+      },
+      {
+        refetchOnWindowFocus: false,
+        refetchOnMount: false,
+        refetchOnReconnect: false,
+        manual: true,
+      }
+    );
 
   // analogyLink is used to link to the analogy, and is constructed from the data provided by the API.
   const analogyLink = `/${analogyData?.category?.slug}/${analogyData?.topic?.slug}/${analogyData?.id}`;

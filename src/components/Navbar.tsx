@@ -15,22 +15,54 @@ export function Navbar() {
   } = router.query;
 
   const { data: topicsData, isFetching: topicFetching } =
-    api.topic.getBySlug.useQuery({
-      slug: UrlTopic as string,
-    });
+    api.topic.getBySlug.useQuery(
+      {
+        slug: UrlTopic as string,
+      },
+      {
+        refetchOnWindowFocus: false,
+        refetchOnMount: false,
+        refetchOnReconnect: false,
+        manual: true,
+      }
+    );
 
   const { data: categoryData, isFetching: categoryFetching } =
-    api.category.getBySlug.useQuery({
-      slug: UrlCategory as string,
-    });
+    api.category.getBySlug.useQuery(
+      {
+        slug: UrlCategory as string,
+      },
+      {
+        refetchOnWindowFocus: false,
+        refetchOnMount: false,
+        refetchOnReconnect: false,
+        manual: true,
+      }
+    );
 
-  const { data: AnalogyData } = api.analogy.getSingleAnalogyById.useQuery({
-    id: UrlAnalogyId as string,
-  });
+  const { data: AnalogyData } = api.analogy.getSingleAnalogyById.useQuery(
+    {
+      id: UrlAnalogyId as string,
+    },
+    {
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      manual: true,
+    }
+  );
 
-  const { data: profileData } = api.profile.getProfileById.useQuery({
-    id: UrlProfile as string,
-  });
+  const { data: profileData } = api.profile.getProfileById.useQuery(
+    {
+      id: UrlProfile as string,
+    },
+    {
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      manual: true,
+    }
+  );
 
   // console.log("profileData", profileData);
   // console.log("urlProfile", UrlProfile);

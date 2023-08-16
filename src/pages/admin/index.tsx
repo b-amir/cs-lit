@@ -39,7 +39,13 @@ export default function AdminPage(props) {
       order: orderBy,
       limit: 15,
     },
-    { getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor }
+    {
+      getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor,
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      manual: true,
+    }
   );
 
   const {
@@ -53,7 +59,13 @@ export default function AdminPage(props) {
       order: orderBy,
       limit: 15,
     },
-    { getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor }
+    {
+      getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor,
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      manual: true,
+    }
   );
 
   const {
@@ -67,7 +79,13 @@ export default function AdminPage(props) {
       order: orderBy,
       limit: 15,
     },
-    { getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor }
+    {
+      getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor,
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      manual: true,
+    }
   );
 
   const {
@@ -81,7 +99,13 @@ export default function AdminPage(props) {
       order: orderBy,
       limit: 15,
     },
-    { getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor }
+    {
+      getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor,
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      manual: true,
+    }
   );
 
   const {
@@ -95,7 +119,13 @@ export default function AdminPage(props) {
       order: orderBy,
       limit: 15,
     },
-    { getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor }
+    {
+      getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor,
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      manual: true,
+    }
   );
   const [activeSection, setActiveSection] = useState("Categories");
 

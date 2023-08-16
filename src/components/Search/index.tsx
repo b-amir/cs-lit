@@ -25,9 +25,17 @@ export function Search() {
   };
 
   // returns an array of possible matches that include the query as user types
-  const { data: topicsData } = api.topic.searchByName.useQuery({
-    query: searchQuery,
-  });
+  const { data: topicsData } = api.topic.searchByName.useQuery(
+    {
+      query: searchQuery,
+    },
+    {
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      manual: true,
+    }
+  );
 
   const debouncedSearch = useDebounce(searchQuery, 500);
 

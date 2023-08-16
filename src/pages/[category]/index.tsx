@@ -44,9 +44,17 @@ export default function CategoryPage() {
     data: categoryData,
     isFetching: categoryFetching,
     status: categoryFetchingStatus,
-  } = api.category.getBySlug.useQuery({
-    slug: UrlCategory,
-  });
+  } = api.category.getBySlug.useQuery(
+    {
+      slug: UrlCategory,
+    },
+    {
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      manual: true,
+    }
+  );
 
   // --- get topics by category id --- //
   const {
@@ -62,7 +70,13 @@ export default function CategoryPage() {
       order: orderBy,
       limit: 10,
     },
-    { getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor }
+    {
+      getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor,
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      manual: true,
+    }
   );
 
   // --- animation setup for editor ---> //

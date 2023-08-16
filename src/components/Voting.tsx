@@ -5,9 +5,17 @@ import { IoIosArrowUp } from "react-icons/io";
 
 export function Voting({ analogyId }: { analogyId: string }) {
   const { data: whatDidCurrentUserVote } =
-    api.analogy.whatDidCurrentUserVote.useQuery({
-      analogyId: analogyId,
-    });
+    api.analogy.whatDidCurrentUserVote.useQuery(
+      {
+        analogyId: analogyId,
+      },
+      {
+        refetchOnWindowFocus: false,
+        refetchOnMount: false,
+        refetchOnReconnect: false,
+        manual: true,
+      }
+    );
 
   const ctx = api.useContext();
 

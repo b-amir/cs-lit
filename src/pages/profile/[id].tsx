@@ -35,7 +35,13 @@ const ProfileFeed = (props: { userId: string }) => {
       order: "desc",
       limit: 10,
     },
-    { getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor }
+    {
+      getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor,
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      manual: true,
+    }
   );
 
   if (analogyFetchingStatus === "loading") return <CornerLoading />;
@@ -78,9 +84,17 @@ const ProfilePage: NextPage<object> = () => {
   const { id: UrlId } = router.query;
 
   const { data: profileData, status: profileFetchingStatus } =
-    api.profile.getProfileById.useQuery({
-      id: UrlId as string,
-    });
+    api.profile.getProfileById.useQuery(
+      {
+        id: UrlId as string,
+      },
+      {
+        refetchOnWindowFocus: false,
+        refetchOnMount: false,
+        refetchOnReconnect: false,
+        manual: true,
+      }
+    );
 
   if (profileFetchingStatus === "loading") return <CornerLoading />;
   if (profileFetchingStatus === "error") return <div>User not found</div>;
