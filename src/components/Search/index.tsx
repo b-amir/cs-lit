@@ -70,7 +70,7 @@ export function Search() {
       <div className=" flex flex-col">
         {showResultsPanel && homepage ? (
           <div
-            className="z-50 mt-[-100px] h-[100px] p-1 py-4 pl-2 [text-shadow:_0_2px_6px_rgb(0_0_0_/_25%)]"
+            className="z-50 mt-[-100px] hidden h-[100px] flex-col p-1 py-4 pl-2 [text-shadow:_0_2px_6px_rgb(0_0_0_/_25%)] sm:flex"
             onClick={() => {
               setShowResultsPanel(false);
             }}

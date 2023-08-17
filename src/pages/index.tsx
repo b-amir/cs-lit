@@ -171,7 +171,7 @@ function HeaderSection({
   return (
     <nav
       id="header-section"
-      className="top-0 flex h-[60px] w-full items-center justify-between px-8 pt-6 sm:h-[90px] lg:px-40 lg:pt-20"
+      className="top-0 flex h-[60px] w-full items-center justify-between px-8 pt-8 sm:h-[90px] lg:px-40 lg:pt-20"
     >
       <Link href="/" className="flex items-center justify-center">
         <Image
@@ -179,7 +179,7 @@ function HeaderSection({
           width={100}
           height={0}
           alt={"CS LIT: like I'm 10"}
-          className="sm:min-w-[180px]"
+          className="p-0 sm:min-w-[180px]"
         />
       </Link>
       <div className="flex items-center justify-center">
@@ -187,21 +187,25 @@ function HeaderSection({
         {sessionStatus === "loading" ? (
           <HomeUserSkeleton />
         ) : (
-          <div className="flex items-center gap-2 rounded-full border border-[#5c2c1d2b] bg-[#ffffff36] px-2 py-2 backdrop-blur-sm transition-all duration-300 hover:border-[#5c2c1d91] hover:bg-[#ff73631c]">
-            <Link href={`/profile/${sessionData?.user?.id}`}>
-              {" "}
-              <Image
-                src={
-                  sessionData?.user?.image
-                    ? sessionData?.user?.image
-                    : "/assets/defaultpp.svg"
-                }
-                width={24}
-                height={24}
-                alt={"profile picture"}
-                className="min-w-[24px] rounded-full sm:min-w-[30px]"
-              />
-            </Link>
+          <div className="flex items-center gap-2 rounded-full border border-[#5c2c1d2b] bg-[#ffffff36] px-0 py-0 backdrop-blur-sm transition-all duration-300 hover:border-[#5c2c1d91] hover:bg-[#ff73631c]">
+            {/* <Link
+              href={` ${sessionData && `/profile/${sessionData?.user?.id}`}`}
+            > */}
+            <Image
+              src={
+                sessionData?.user?.image
+                  ? sessionData?.user?.image
+                  : "/assets/defaultpp.svg"
+              }
+              onClick={() => (!sessionData ? signIn() : null)}
+              width={24}
+              height={24}
+              alt={"profile picture"}
+              className={`m-2 min-w-[24px] rounded-full sm:min-w-[30px] ${
+                !sessionData && "cursor-pointer"
+              }`}
+            />
+            {/* </Link> */}
             {sessionData ? (
               <Link href={`/profile/${sessionData?.user?.id}`}>
                 <span className="hidden pr-4 sm:block">
@@ -212,7 +216,7 @@ function HeaderSection({
               </Link>
             ) : (
               <div
-                className="hidden cursor-pointer pr-4 sm:block"
+                className="hidden cursor-pointer py-2 pr-4 sm:block"
                 onClick={() => signIn()}
               >
                 Login
@@ -245,10 +249,10 @@ function HeroSection({
         <div className="my-auto flex flex-col items-start justify-center lg:gap-6">
           <div className="flex flex-col items-center justify-center gap-6 py-6 sm:py-12">
             <h1
-              className={`${archivo.className} font-archivo flex flex-col items-start align-middle text-4xl font-extrabold text-[#263238] dark:text-white sm:text-6xl lg:text-7xl`}
+              className={`${archivo.className} font-archivo flex flex-col items-start pt-4 align-middle text-4xl font-extrabold text-[#263238] dark:text-white sm:pt-0 sm:text-6xl lg:pt-4 lg:text-7xl`}
             >
               <span>Explain</span>
-              <span className="flex flex-row items-center justify-center lg:py-2 ">
+              <span className="flex flex-row items-center justify-center  lg:py-2 ">
                 {/* Use the carouselTransitions.map to loop through animated divs */}
                 {carouselTransitions((props, item) => (
                   <animated.div
@@ -286,7 +290,7 @@ function HeroSection({
           </div>
         </div>
         <Image
-          className="z-0 mx-auto my-auto w-full min-w-[280px] px-12 sm:w-4/12 sm:min-w-[460px] lg:min-w-[500px]"
+          className="z-0  mx-auto my-auto w-full min-w-[280px] px-12 sm:absolute sm:bottom-16 sm:right-1 sm:ml-auto sm:w-4/12 sm:min-w-[460px] lg:relative lg:mx-auto lg:min-w-[500px]"
           src="/assets/bulb2.svg"
           width={100}
           height={100}
@@ -383,7 +387,7 @@ function ExampleSection({ analogyData }: { analogyData: unknown }) {
       id="example-section"
       className="flex min-h-screen w-full flex-row bg-[#fff1f0]"
     >
-      <div className="mx-auto my-auto flex h-full w-full max-w-[calc(100vw*7/12)] flex-col items-center justify-center py-12 text-[#292626]">
+      <div className="mx-auto my-auto flex h-full w-full flex-col items-center justify-center py-12 text-[#292626] lg:max-w-[calc(100vw*7/12)]">
         <h2
           className={`${archivo.className} mx-auto my-3 flex flex-row justify-center text-3xl font-bold`}
         >
@@ -403,7 +407,7 @@ function ExampleSection({ analogyData }: { analogyData: unknown }) {
           className="mx-auto my-1 flex h-12 w-[1px] flex-col items-center justify-center bg-[#5c2c1d2b]"
         />
         <div
-          className="mx-auto my-[-4px] flex w-full max-w-[760px] flex-row rounded-3xl border-[1px] border-[#5c2c1d2b] bg-[#5c2c1d09] px-5 py-10 "
+          className="mx-auto my-[-4px] flex w-full max-w-[760px] flex-row rounded-3xl border-[1px] border-[#5c2c1d2b] bg-[#5c2c1d09] py-0.5 sm:px-5 sm:py-10 "
           // style={{
           // backgroundImage: `url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%232c1d2b' fill-opacity='0.05' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E")`,
           // backgroundColor: "#f9eae9",
@@ -423,7 +427,7 @@ function ExampleSection({ analogyData }: { analogyData: unknown }) {
           id="vertical-line"
           className="mx-auto my-1 flex h-12 w-[1px] flex-col items-center justify-center bg-[#5c2c1d2b]"
         />
-        <p className="font-regular text-md mx-auto my-3 flex flex-row items-center justify-center text-[#292626a9]">
+        <p className="font-regular text-md mx-auto my-3 flex flex-col items-center justify-center text-center text-[#292626a9] sm:flex-row">
           Other people can also participate and post their analogies.
           <span className="italic text-[#292626c6]">&nbsp;Especially you!</span>
         </p>
@@ -458,9 +462,9 @@ function ShareSection({
       id="share-section"
       className="flex min-h-screen w-full flex-row bg-[#ffffff]"
     >
-      <div className="mx-auto my-auto flex h-full max-w-[calc(100vw*7/12)] flex-col items-center justify-center py-12 text-[#292626]">
+      <div className="mx-auto my-auto flex h-full flex-col items-center justify-center py-12 text-[#292626] lg:max-w-[calc(100vw*7/12)]">
         <h2
-          className={`${archivo.className} mx-auto my-3 mb-12 flex flex-row justify-center text-3xl font-bold`}
+          className={`${archivo.className} mx-auto my-3 mb-12 flex flex-row justify-center text-center text-3xl font-bold`}
         >
           Share your insights within your social circles
         </h2>
@@ -473,8 +477,8 @@ function ShareSection({
           id="vertical-line"
           className="mx-auto my-1 flex h-12 w-[1px] flex-col items-center justify-center bg-[#5c2c1d2b]"
         />
-        <div className="mb-20 mt-[-4px] flex w-full max-w-[760px] flex-col rounded-[23px] bg-[#e8e5e2] bg-gradient-to-bl from-[#1e7cba] to-[#7c1db3] px-5 py-5">
-          <div className="flex w-full flex-row items-center justify-end px-5 py-4 text-white">
+        <div className="mb-20 mt-[-4px] flex w-full flex-col rounded-[9px] bg-[#e8e5e2] bg-gradient-to-bl from-[#1e7cba] to-[#7c1db3] py-0.5 sm:rounded-[17px] sm:px-5 sm:py-5 md:max-w-[760px]">
+          <div className="flex w-full flex-row items-center justify-end pt-4 text-xs text-white sm:px-5 sm:py-4 sm:text-sm">
             Share As:{" "}
             <button className="mx-2 inline-flex flex-row items-center rounded-[12px] border border-[#d2d2d28e] bg-[#ffffffc1] px-3 py-1 text-sm text-gray-800 transition-all hover:border-[#c8c8c8] hover:bg-[#ffffff]">
               <RiImageLine className="mr-1" />
@@ -570,7 +574,7 @@ function FooterSection() {
   return (
     <footer
       id="footer-section"
-      className="mx-auto flex w-full flex-row items-center justify-center border-t border-t-[#ffffff] bg-[#263238] px-12 py-6 shadow-inner shadow-[#1d262b]"
+      className="mx-auto flex w-full flex-col items-center justify-center border-t border-t-[#ffffff] bg-[#263238] px-12 py-6 shadow-inner shadow-[#1d262b] sm:flex-row"
       // style={{
       // backgroundImage: "url(/assets/noise.webp)",
       // backgroundBlendMode: "overlay",
@@ -582,13 +586,13 @@ function FooterSection() {
         width={100}
         height={100}
         alt="logo"
-        className="mr-6 "
+        className="mb-6 sm:mb-0 sm:mr-6"
       />
       <div
         id="vertical-line"
-        className=" my-1 flex h-16 w-[1px] flex-col items-center justify-center bg-[#e5e1e031]"
+        className="my-1 hidden h-16  w-[1px] flex-col items-center justify-center bg-[#e5e1e031] sm:flex"
       />
-      <div className="ml-6 flex flex-col text-xs text-[#dadadac1]">
+      <div className="flex flex-col text-xs text-[#dadadac1] sm:ml-6">
         <div className="inline-flex ">
           <FaLinkedin className="mr-1.5 mt-0.5" />
           <span className="mr-1">Hey, I&apos;m</span>

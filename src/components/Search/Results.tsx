@@ -21,7 +21,7 @@ export function Results({
       <animated.div
         className={`${
           homepage
-            ? "fixed  right-[0px] top-[0px] z-20 h-screen w-[360px] overflow-hidden border-x border-[#ffffff3a] bg-[#eaeaeab8] pt-[40px] shadow-lg backdrop-blur-lg backdrop-filter"
+            ? "fixed  right-[0px] top-[0px] z-[51] h-screen w-full overflow-hidden border-x border-[#ffffff3a] bg-[#eaeaeab8] pt-[40px] shadow-lg backdrop-blur-lg backdrop-filter md:w-[460px]"
             : "absolute right-[0px] top-[0px] z-20 h-screen w-[360px] overflow-hidden border-x border-[#ffffff3a] bg-[#eaeaeaf8] pt-[40px] shadow-lg backdrop-blur-sm backdrop-filter"
         }`}
         style={panelAnimation}
