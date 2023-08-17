@@ -56,7 +56,7 @@ export function TopicsList({
             <th scope="col" className="px-6 py-3">
               <span className="sr-only">Status</span>
             </th>
-            <th scope="col" className="px-6 py-3 text-center">
+            <th scope="col" className="hidden px-0.5 py-3 text-center sm:flex">
               last update
             </th>
             {sessionData &&
@@ -83,7 +83,7 @@ export function TopicsList({
                   </th>
                 </Link>
                 <td className="px-6 py-4">{getStatusIcon(topic.status)}</td>
-                <td className="w-3/12 px-1 py-4 text-center text-xs">
+                <td className="hidden px-0.5 py-4 text-center text-xs sm:flex">
                   {RelativeTime(topic.updatedAt)}
                   {/* {new Date(topic.updatedAt).toLocaleDateString()} */}
                 </td>

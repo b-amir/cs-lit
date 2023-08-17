@@ -132,7 +132,7 @@ export default function CategoryPage() {
                 setTopicEditorState={setTopicEditorState}
               />
 
-              <div className="mx-auto mb-12 mt-8 flex px-16 ">
+              <div className="mx-auto mb-12 mt-8 flex sm:px-10 lg:px-16 ">
                 {/* handle loading states */}
                 {categoryFetching && <CornerLoading />}
                 {topicsFetchingStatus === "loading" && <TableSkeleton />}
@@ -164,10 +164,10 @@ export default function CategoryPage() {
 
             <div
               // handle form wrapper
-              className={`z-30 mx-auto flex w-full grow-0 flex-col items-center justify-center px-16 text-[#2A2A2E] shadow-lg backdrop-blur-md backdrop-filter ${
+              className={`z-30 mx-auto flex w-full grow-0 flex-col items-center justify-center px-2 text-[#2A2A2E] shadow-lg backdrop-blur-md sm:px-10 lg:px-16 ${
                 topicEditorState.shown
                   ? "sticky bottom-0 h-full max-h-[calc(100vh-90px-1px)] bg-[#2a2a2e3b] pb-5 pt-7 shadow-[0px_-1px_6px_2px_#00000015,0px_0px_0px_1px_#00000030,0px_-11px_20px_2px_#00000005,0px_-20px_55px_0px_#00000005]"
-                  : "sticky bottom-[-200px] bg-[#2a2a2e3b] pb-7 pt-9"
+                  : "sticky bottom-[-200px] bg-[#2a2a2e3b] py-2 sm:pb-7 sm:pt-9"
               } ${topicEditorState.purpose === "Edit" ? "" : ""}
               ?`}
             >
@@ -253,12 +253,12 @@ function CategoryHeader({
   setTopicEditorState,
 }: ICategoryHeaderProps) {
   return (
-    <div className="mb-14 flex w-full  flex-col border-b border-gray-300 bg-gradient-to-tr from-[#ff73631a] via-transparent to-transparent px-24 pb-6 pt-32">
+    <div className="mb-14 flex w-full  flex-col border-b border-gray-300 bg-gradient-to-tr from-[#ff73631a] via-transparent to-transparent px-4 pb-6 pt-32 sm:px-12 lg:px-24">
       {categoryFetchingStatus === "loading" ? (
         <div className=" mb-4 h-8 w-1/4 animate-pulse rounded-lg bg-[#b4b4b49f]" /> // category name skeleton
       ) : (
         <h1
-          className={`${archivo.className} mb-4 max-w-[720px] items-start justify-start truncate whitespace-pre-wrap break-words text-5xl font-extrabold tracking-tight text-[#2A2A2E] sm:text-[2rem]`}
+          className={`${archivo.className} mb-4 max-w-[720px] items-start justify-start truncate whitespace-pre-wrap break-words text-2xl font-extrabold tracking-tight text-[#2A2A2E] sm:text-4xl lg:text-5xl `}
         >
           {categoryData?.name}
         </h1>
@@ -299,7 +299,8 @@ function CategoryHeader({
           }
           className="mx-2 inline-flex flex-row items-center rounded-[12px] border border-[#d2d2d28e] bg-[#ffffffc1] px-3 py-1.5 text-sm transition-all hover:border-[#c8c8c8] hover:bg-[#ffffff]"
         >
-          <CgFolderAdd className="mb-0.5 mr-2" /> Create topic
+          <CgFolderAdd className="mb-0.5 sm:mr-2" />{" "}
+          <span className="hidden sm:flex"> Create topic</span>
         </button>
       </div>
     </div>

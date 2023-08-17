@@ -187,7 +187,7 @@ function HeaderSection({
         {sessionStatus === "loading" ? (
           <HomeUserSkeleton />
         ) : (
-          <div className="flex items-center gap-2 rounded-full border border-[#5c2c1d2b] bg-[#ffffff36] px-0 py-0 backdrop-blur-sm transition-all duration-300 hover:border-[#5c2c1d91] hover:bg-[#ff73631c]">
+          <div className="flex items-center gap-0 rounded-full border border-[#5c2c1d2b] bg-[#ffffff36] px-0 py-0 backdrop-blur-sm transition-all duration-300 hover:border-[#5c2c1d91] hover:bg-[#ff73631c]">
             {/* <Link
               href={` ${sessionData && `/profile/${sessionData?.user?.id}`}`}
             > */}
@@ -246,7 +246,7 @@ function HeroSection({
       }}
     >
       <div className="my-auto flex w-full flex-auto flex-wrap justify-between gap-2 lg:gap-16">
-        <div className="my-auto flex flex-col items-start justify-center lg:gap-6">
+        <div className="my-auto flex flex-col items-start justify-center lg:mr-auto lg:gap-6">
           <div className="flex flex-col items-center justify-center gap-6 py-6 sm:py-12">
             <h1
               className={`${archivo.className} font-archivo flex flex-col items-start pt-4 align-middle text-4xl font-extrabold text-[#263238] dark:text-white sm:pt-0 sm:text-6xl lg:pt-4 lg:text-7xl`}
@@ -290,7 +290,7 @@ function HeroSection({
           </div>
         </div>
         <Image
-          className="z-0  mx-auto my-auto w-full min-w-[280px] px-12 sm:absolute sm:bottom-16 sm:right-1 sm:ml-auto sm:w-4/12 sm:min-w-[460px] lg:relative lg:mx-auto lg:min-w-[500px]"
+          className="z-0  mx-auto my-auto w-full min-w-[280px] px-12 sm:absolute sm:bottom-16 sm:right-1 sm:ml-auto sm:w-4/12 sm:min-w-[460px] lg:relative  lg:min-w-[500px]"
           src="/assets/bulb2.svg"
           width={100}
           height={100}

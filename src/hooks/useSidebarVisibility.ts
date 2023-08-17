@@ -19,17 +19,31 @@ const useSidebarVisibility = () => {
       right: !routesWithHiddenSidebars,
     });
 
+
+    const width = window.innerWidth ? window.innerWidth : 768; // Default width for server-side rendering
+
+    // the types of pages that sidebar should be rendered in them:
+    // 1- no sidebar for mobile devices < 640
+    // 2- only left sidebar for tablets between 640 and 768
+    // 3- both sidebars for laptops and bidder > 768
+    setVisibleSidebars({
+      left: width > 640,
+      right: width > 768,
+    });
+
+
+
     // Calculate mainWidthClass based on the visibility of sidebars
     setMainWidthClass(
       visibleSidebars.left && visibleSidebars.right
         ? "w-4/6" // Both sidebars are visible
         : visibleSidebars.left || visibleSidebars.right
-          ? "w-5/6" // Either the left or right sidebar is hidden
+          ? "w-5/6 right-0 top-0 absolute" // Either the left or right sidebar is hidden
           : "w-full" // Both sidebars are hidden
     );
   }, [router.query, router.route, visibleSidebars.left, visibleSidebars.right]);
 
-  return { visibleSidebars, mainWidthClass };
+  return { visibleSidebars, setVisibleSidebars, mainWidthClass };
 };
 
 export default useSidebarVisibility;

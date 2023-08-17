@@ -19,10 +19,10 @@ export function SidebarRight(props: { username: any }) {
   return (
     <aside
       id="logo-sidebar"
-      className="fixed right-0 top-0 z-50 flex h-screen w-1/6 -translate-x-full flex-col place-content-stretch items-stretch justify-between border-l border-white bg-white pt-0 shadow-md transition-transform dark:border-gray-700 dark:bg-gray-800 sm:translate-x-0"
+      className="fixed right-0 top-0 z-50 hidden h-screen w-1/6 -translate-x-full flex-col place-content-stretch items-stretch justify-between border-l border-white bg-white pt-0 shadow-md transition-transform dark:border-gray-700 dark:bg-gray-800 sm:translate-x-0 lg:flex"
       aria-label="Sidebar"
     >
-      <div className="bg-whitepb-0 overflow-y-auto dark:bg-gray-800">
+      <div className="overflow-y-auto bg-white pb-0 dark:bg-gray-800">
         <UserSection
           {...props}
           userSectionShown={userSectionShown}

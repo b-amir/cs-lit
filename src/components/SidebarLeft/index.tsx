@@ -53,7 +53,7 @@ function LogoSection() {
           width={130}
           height={50}
           alt={"CS LIT: like I'm 10"}
-          className="min-h-[50px] min-w-[100px]"
+          className="min-w-[80px] lg:min-w-[100px]"
         />
       </Link>
     </div>
@@ -61,13 +61,13 @@ function LogoSection() {
 }
 function SidebarCategoriesList({ categories }) {
   return (
-    <ul className="mb-auto mt-6 space-y-2 px-3 text-sm font-medium">
+    <ul className="mb-auto mt-6 space-y-2 text-sm font-medium lg:px-3">
       {/* map through category items from database */}
       {categories?.pages?.map((page) =>
         page?.items?.map((category) => (
           <li key={category.id}>
             <Link
-              className="flex items-center rounded-lg p-2 text-[#2A2A2E] hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+              className="flex items-center p-2 text-xs text-[#2A2A2E] hover:bg-gray-100 lg:rounded-lg lg:text-base"
               // onClick={() => {}}
               href={`/${category.slug}`}
             >
@@ -98,7 +98,7 @@ function AddCategoryForm() {
   };
   return (
     <form
-      className=" mx-auto my-4 flex w-full flex-row items-center justify-center gap-0 px-3 align-middle text-sm font-medium"
+      className=" mx-auto my-4 flex w-full flex-row items-center justify-center gap-0 px-3 align-middle text-xs font-medium lg:text-sm"
       onSubmit={handleCreate}
     >
       {input.name.length >= 3 ? (

@@ -3,8 +3,53 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { api } from "@/utils/api";
 import { Search } from "./Search";
+import useSidebarVisibility from "@/hooks/useSidebarVisibility";
+import Image from "next/image";
+import { CgMenuLeft } from "react-icons/cg";
+import { FaRegUserCircle } from "react-icons/fa";
 
 export function Navbar() {
+  const { visibleSidebars, setVisibleSidebars, mainWidthClass } =
+    useSidebarVisibility();
+
+  return (
+    <nav
+      className={`fixed top-0 z-40 mx-auto flex min-h-[90px] ${mainWidthClass} items-center justify-between border-b !border-[#ebe8e869] border-opacity-20 bg-transparent bg-gradient-to-b from-[#EBEAE8] to-[#ebeae84a] px-2 backdrop-blur-sm sm:px-10`}
+    >
+      <div className="flex w-full items-center justify-between px-3 py-1 sm:py-3 lg:px-5 ">
+        <div className=" flex h-10 items-start  justify-start rounded-full bg-[#EBEAE800] px-0 py-1 backdrop-filter-none">
+          <Breadcrumbs />
+          <CgMenuLeft
+            className="flex cursor-pointer text-[#4f4e4d97] sm:hidden"
+            onClick={() =>
+              setVisibleSidebars({ ...visibleSidebars, left: true })
+            }
+          />
+        </div>
+        <div className="flex items-center justify-center sm:hidden">
+          <Image
+            src={"/assets/logo17.svg"}
+            width={80}
+            height={20}
+            alt={"CS LIT: like I'm 10"}
+            className="min-h-[50px] min-w-[100px]"
+          />
+        </div>
+        <div className="hidden items-end justify-end sm:flex">
+          <Search />
+        </div>
+        <FaRegUserCircle
+          className="flex cursor-pointer text-[#4f4e4d97] lg:hidden"
+          onClick={() =>
+            setVisibleSidebars({ ...visibleSidebars, right: true })
+          }
+        />
+      </div>
+    </nav>
+  );
+}
+
+function Breadcrumbs() {
   const router = useRouter();
 
   const {
@@ -64,94 +109,80 @@ export function Navbar() {
     }
   );
 
-  // console.log("profileData", profileData);
-  // console.log("urlProfile", UrlProfile);
-
   return (
-    <nav className="fixed top-0 z-40 mx-auto flex min-h-[90px] w-4/6 items-center justify-between border-b !border-[#ebe8e869] border-opacity-20 bg-transparent bg-gradient-to-b from-[#EBEAE8] to-[#ebeae84a] px-10 backdrop-blur-sm backdrop-filter">
-      <div className="flex w-full items-center justify-between px-3 py-3 lg:px-5 ">
-        <div className=" flex h-10 items-start  justify-start rounded-full bg-[#EBEAE800] px-0 py-1 backdrop-blur-none backdrop-filter-none">
-          <div className="my-auto inline-flex text-sm">
-            <Link href="/">
-              <TiHome className="mt-[0px] cursor-pointer !text-lg text-[#2A2A2E] transition-all hover:text-black" />
-            </Link>
+    <div id="breadcrumbs" className="my-auto hidden text-sm sm:inline-flex">
+      <Link href="/">
+        <TiHome className="mt-[0px] cursor-pointer !text-lg text-[#2A2A2E] transition-all hover:text-black" />
+      </Link>
 
-            {router.pathname === "/admin" && (
-              <>
-                <span className="mx-2 text-[#69696975]">/</span>
-                <span className="cursor-pointer font-semibold text-[#2A2A2E]">
-                  Admin panel
-                </span>
-              </>
-            )}
+      {router.pathname === "/admin" && (
+        <>
+          <span className="mx-2 text-[#69696975]">/</span>
+          <span className="cursor-pointer font-semibold text-[#2A2A2E]">
+            Admin panel
+          </span>
+        </>
+      )}
 
-            {categoryData && (
-              <>
-                <span className="mx-2 text-[#69696975] ">/</span>
-                <Link
-                  href={`/${UrlCategory}`}
-                  className="max-w-[calc(7vw)] truncate  "
-                >
-                  <span
-                    className={` cursor-pointer text-[#2A2A2E] transition-all hover:text-black ${
-                      !UrlTopic && "font-semibold"
-                    }`}
-                  >
-                    {categoryData?.name}
-                  </span>
-                </Link>
-              </>
-            )}
-            {topicsData && (
-              <>
-                <span className="mx-2 text-[#69696975]  ">/</span>
-                <Link
-                  href={`/${UrlCategory}/${UrlTopic}`}
-                  className="max-w-[calc(11vw)] truncate "
-                >
-                  <span
-                    className={`cursor-pointer text-[#2A2A2E] transition-all hover:text-black ${
-                      !UrlAnalogyId && "font-semibold"
-                    }`}
-                  >
-                    {topicsData?.title}
-                  </span>
-                </Link>
-              </>
-            )}
-            {AnalogyData && (
-              <>
-                <span className="mx-2 text-[#69696975]">/</span>
-                <Link
-                  href={`/${UrlCategory}/${UrlTopic}`}
-                  className="max-w-[calc(12vw)] truncate"
-                >
-                  <span className="cursor-pointer font-semibold text-[#2A2A2E] transition-all hover:text-black">
-                    {AnalogyData?.author?.name
-                      ? AnalogyData?.author?.name
-                      : AnalogyData?.author?.email}
-                    's Analogy
-                  </span>
-                </Link>
-              </>
-            )}
+      {categoryData && (
+        <>
+          <span className="mx-2 text-[#69696975] ">/</span>
+          <Link
+            href={`/${UrlCategory}`}
+            className="max-w-[calc(7vw)] truncate  "
+          >
+            <span
+              className={` cursor-pointer text-[#2A2A2E] transition-all hover:text-black ${
+                !UrlTopic && "font-semibold"
+              }`}
+            >
+              {categoryData?.name}
+            </span>
+          </Link>
+        </>
+      )}
+      {topicsData && (
+        <>
+          <span className="mx-2 text-[#69696975]  ">/</span>
+          <Link
+            href={`/${UrlCategory}/${UrlTopic}`}
+            className="max-w-[calc(11vw)] truncate "
+          >
+            <span
+              className={`cursor-pointer text-[#2A2A2E] transition-all hover:text-black ${
+                !UrlAnalogyId && "font-semibold"
+              }`}
+            >
+              {topicsData?.title}
+            </span>
+          </Link>
+        </>
+      )}
+      {AnalogyData && (
+        <>
+          <span className="mx-2 text-[#69696975]">/</span>
+          <Link
+            href={`/${UrlCategory}/${UrlTopic}`}
+            className="max-w-[calc(12vw)] truncate"
+          >
+            <span className="cursor-pointer font-semibold text-[#2A2A2E] transition-all hover:text-black">
+              {AnalogyData?.author?.name
+                ? AnalogyData?.author?.name
+                : AnalogyData?.author?.email}
+              's Analogy
+            </span>
+          </Link>
+        </>
+      )}
 
-            {profileData && (
-              <>
-                <span className="mx-2 text-[#69696975]">/</span>
-                <span className="cursor-pointer font-semibold text-[#2A2A2E]">
-                  {profileData?.name || profileData?.email}
-                </span>
-              </>
-            )}
-          </div>
-        </div>
-        <div className="flex items-center justify-center"></div>
-        <div className="flex items-end justify-end">
-          <Search />
-          {/* user profile */}
-        </div>
-      </div>
-    </nav>
+      {profileData && (
+        <>
+          <span className="mx-2 text-[#69696975]">/</span>
+          <span className="cursor-pointer font-semibold text-[#2A2A2E]">
+            {profileData?.name || profileData?.email}
+          </span>
+        </>
+      )}
+    </div>
   );
 }
