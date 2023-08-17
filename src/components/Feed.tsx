@@ -27,7 +27,10 @@ export const Feed: React.FC<IFeedProps> = ({
   // if (!data) return <>Something went wrong. no data</>;
   return (
     <>
-      <div id="analogies-array" className="flex flex-col items-center px-16">
+      <div
+        id="analogies-array"
+        className="flex flex-col items-center sm:px-10 lg:px-16"
+      >
         {topicAnalogies?.pages?.map((page) =>
           // eslint-disable-next-line @typescript-eslint/no-unsafe-return
           page?.items?.map((analogy: Analogy) => (

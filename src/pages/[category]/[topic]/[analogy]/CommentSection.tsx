@@ -40,7 +40,7 @@ export function CommentSection({ analogyId }: { analogyId: string }) {
   return (
     <div
       id="comments-section"
-      className="mb-auto mt-8 rounded-[23px] bg-[#d7d7d7] px-6 py-2"
+      className="mb-auto mt-8 rounded-md bg-[#d7d7d7] px-2 py-2 sm:rounded-[23px] sm:px-6"
     >
       <h2 className="text-md p-3 font-bold text-[#2A2A2E]">Comments</h2>
       {commentsFetchingStatus === "loading" ? (

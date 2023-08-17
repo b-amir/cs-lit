@@ -253,7 +253,7 @@ function CategoryHeader({
   setTopicEditorState,
 }: ICategoryHeaderProps) {
   return (
-    <div className="mb-14 flex w-full  flex-col border-b border-gray-300 bg-gradient-to-tr from-[#ff73631a] via-transparent to-transparent px-4 pb-6 pt-32 sm:px-12 lg:px-24">
+    <div className="mb-14 flex w-full  flex-col border-b border-gray-300 bg-gradient-to-tr from-[#ff73631a] via-transparent to-transparent px-4 pb-6 pt-28 sm:px-12 sm:pt-32 lg:px-24">
       {categoryFetchingStatus === "loading" ? (
         <div className=" mb-4 h-8 w-1/4 animate-pulse rounded-lg bg-[#b4b4b49f]" /> // category name skeleton
       ) : (

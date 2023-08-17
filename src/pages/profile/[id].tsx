@@ -50,7 +50,7 @@ const ProfileFeed = (props: { userId: string }) => {
   }
 
   return (
-    <div className="flex w-full flex-col items-center justify-center px-16">
+    <div className="flex w-full flex-col items-center justify-center sm:px-10 lg:px-16">
       {analogyData?.pages?.map((page) =>
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         page?.items?.map((analogy: Analogy) => (
@@ -73,6 +73,34 @@ const ProfileFeed = (props: { userId: string }) => {
     </div>
   );
 };
+
+function ProfileHeader({ profileData }: { profileData: unknown }) {
+  return (
+    <div
+      id="profile-header"
+      className="mt-0 flex w-full flex-col items-center justify-center"
+    >
+      <div className="mb-12 w-full border-b-2  border-[#827c7c2b]   ">
+        <div className="flex w-full flex-col  justify-center gap-4 bg-gradient-to-tr from-[#ff73631a] to-transparent  px-4 pb-4 pt-28 text-center sm:flex-row sm:justify-start sm:gap-0 sm:px-12 sm:pb-12 sm:pt-32  sm:text-start lg:px-24">
+          <Image
+            src={profileData.profileImageUrl ?? "/assets/defaultpp.svg"}
+            className="max-w-14 mx-auto -mt-1.5 max-h-14 rounded-full ring-1 ring-[#827c7cb8] sm:mx-0 sm:mr-4"
+            alt={"Profile Picture"}
+            width={42}
+            height={42}
+          />
+
+          <p className=" text-md font-bold text-[#343437] sm:text-2xl ">
+            {profileData?.name ? profileData?.name : profileData?.email}
+            <span className="font-semibold text-[#535357]">
+              &apos;s Analogies
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 const ProfilePage: NextPage<object> = () => {
   // api.analogy.getAll.useQuery();
@@ -117,29 +145,7 @@ const ProfilePage: NextPage<object> = () => {
           id="profile-page"
           className="z-10 mx-auto mb-20 flex w-full flex-col items-start justify-between "
         >
-          <div
-            id="profile-header"
-            className="mt-0 flex w-full flex-col items-center justify-center"
-          >
-            <div className="mb-12 w-full border-b-2  border-[#827c7c2b]   ">
-              <div className="flex w-full flex-row  bg-gradient-to-tr from-[#ff73631a] to-transparent px-24 pb-12  pt-32">
-                <Image
-                  src={profileData.profileImageUrl ?? "/assets/defaultpp.svg"}
-                  className="max-w-14 -mt-1.5 mr-4 max-h-14 rounded-full ring-1 ring-[#827c7cb8]"
-                  alt={"Profile Picture"}
-                  width={42}
-                  height={42}
-                />
-
-                <p className=" text-2xl font-bold text-[#343437]">
-                  {profileData?.name ? profileData?.name : profileData?.email}
-                  <span className="font-semibold text-[#535357]">
-                    &apos;s Analogies
-                  </span>
-                </p>
-              </div>
-            </div>
-          </div>
+          <ProfileHeader profileData={profileData} />
           <ProfileFeed userId={profileData.id} />
         </div>
       </PageLayout>

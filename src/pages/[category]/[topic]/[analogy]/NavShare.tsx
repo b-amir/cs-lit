@@ -20,16 +20,16 @@ export function NavShare({ router }) {
   return (
     <div
       id="nav-share"
-      className="mb-8 flex w-full flex-row justify-between text-[#2A2A2E]"
+      className="mb-8 flex w-full flex-row justify-end text-sm text-[#2A2A2E] sm:justify-between sm:text-base"
     >
       <button
         onClick={() => router.back()}
-        className="align-center justify-middle group mr-auto inline-flex cursor-pointer flex-row items-center justify-center rounded-[12px] border border-transparent px-0 py-1 align-middle transition-all"
+        className="align-center justify-middle group mr-auto hidden cursor-pointer flex-row items-center justify-center rounded-[12px] border border-transparent px-0 py-1 align-middle transition-all sm:inline-flex"
       >
         <FaArrowLeft className="mr-2  transition-all group-hover:-translate-x-0.5 " />
         back
       </button>
-      <div className="flex flex-row items-center">
+      <div className="flex flex-row items-center ">
         {/* <FiShare />  */}
         Share As:{" "}
         <button

@@ -22,9 +22,9 @@ export function MainSection({ singleAnalogyData }) {
   }, []);
 
   return (
-    <div className="mb-auto  rounded-[23px]  bg-gradient-to-bl from-[#1e7cba] to-[#7c1db3] px-1 py-7">
+    <div className="mb-auto rounded-md bg-gradient-to-bl  from-[#1e7cba] to-[#7c1db3] py-2 sm:rounded-[23px] sm:px-1 sm:py-7">
       {/* this div is a trick to hide the flicker when capturing image */}
-      <div id="single-analogy" className="rounded-[23px] px-5 pb-1">
+      <div id="single-analogy" className="rounded-[23px] pb-1 sm:px-5">
         <div className="flex flex-row justify-between px-7 pb-1 pt-8 ">
           <span className="flex flex-row text-sm font-semibold text-[#efefefc7]">
             <span id="single-analogy-cat" className=" max-w-[8rem] truncate">

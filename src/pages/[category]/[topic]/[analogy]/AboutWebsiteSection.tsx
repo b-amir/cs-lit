@@ -27,7 +27,7 @@ export function AboutWebsiteSection() {
       {!aboutIsHidden && (
         <div
           id="what-is-footer"
-          className="border-t-1 mt-auto w-full  border border-x-0 border-b-0 bg-[#2a2a2e3b]  px-20 pb-14 pt-12 text-[#656565]"
+          className="border-t-1 mt-auto w-full  border border-x-0 border-b-0 bg-[#2a2a2e3b] px-4 pb-14 pt-12 text-[#656565] sm:px-20"
         >
           <span className={`${archivo.className}  font-extrabold`}>
             What is CS LIT?

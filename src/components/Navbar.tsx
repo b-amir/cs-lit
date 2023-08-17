@@ -17,7 +17,7 @@ export function Navbar() {
       className={`fixed top-0 z-40 mx-auto flex min-h-[90px] ${mainWidthClass} items-center justify-between border-b !border-[#ebe8e869] border-opacity-20 bg-transparent bg-gradient-to-b from-[#EBEAE8] to-[#ebeae84a] px-2 backdrop-blur-sm sm:px-10`}
     >
       <div className="flex w-full items-center justify-between px-3 py-1 sm:py-3 lg:px-5 ">
-        <div className=" flex h-10 items-start  justify-start rounded-full bg-[#EBEAE800] px-0 py-1 backdrop-filter-none">
+        <div className=" flex h-10 items-center  justify-start rounded-full bg-[#EBEAE800] px-0 py-1 backdrop-filter-none">
           <Breadcrumbs />
           <CgMenuLeft
             className="flex cursor-pointer text-[#4f4e4d97] sm:hidden"
@@ -35,7 +35,7 @@ export function Navbar() {
             className="min-h-[50px] min-w-[100px]"
           />
         </div>
-        <div className="hidden items-end justify-end sm:flex">
+        <div className="hidden items-center justify-end sm:flex">
           <Search />
         </div>
         <FaRegUserCircle
