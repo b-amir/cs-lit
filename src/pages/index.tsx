@@ -252,7 +252,7 @@ function HeroSection({
               className={`${archivo.className} font-archivo flex flex-col items-start pt-4 align-middle text-4xl font-extrabold text-[#263238] dark:text-white sm:pt-0 sm:text-6xl lg:pt-4 lg:text-8xl`}
             >
               <span>Explain</span>
-              <span className="flex flex-row items-center justify-center lg:mb-4  lg:py-2 ">
+              <span className="flex flex-row items-center justify-center lg:mb-5  lg:py-2 ">
                 {/* Use the carouselTransitions.map to loop through animated divs */}
                 {carouselTransitions((props, item) => (
                   <animated.div
@@ -285,10 +285,10 @@ function HeroSection({
           </p>
         </div>
         <Image
-          className="z-0 mx-auto w-full min-w-[280px] px-0 sm:absolute sm:bottom-16 sm:right-1 sm:ml-auto sm:w-4/12 sm:min-w-[460px] lg:relative lg:mx-0 lg:mt-[5dvh] "
+          className="z-0 mx-auto w-full min-w-[280px] px-0 sm:absolute sm:bottom-16 sm:right-1 sm:ml-auto sm:w-4/12 sm:min-w-[360px] lg:relative lg:mx-0 lg:mt-[5dvh] "
           src="/assets/bulb2.svg"
-          width={460}
-          height={100}
+          width={520}
+          height={660}
           alt={"lightbulb"}
         />
       </div>
@@ -327,15 +327,15 @@ function CategoriesSection({
       }}
     >
       <Image
-        className="absolute bottom-0 z-0 mb-0 flex max-h-[calc(95dvh)] select-none sm:max-w-[calc(1*100vw/4)]"
+        className="absolute bottom-0 z-0 mb-0 flex max-h-[calc(250px)] select-none sm:max-h-[calc(95dvh)] sm:max-w-[calc(1*100vw/4)]"
         src="/assets/lighthouse2.svg"
         height={400}
         width={400}
         alt="lighthouse"
       />
-      <div className="  my-4 flex min-h-screen w-full flex-col text-[#292626] sm:right-0 sm:my-10 md:max-w-[calc(5*100vw/5)] lg:right-0 lg:mx-24 lg:ml-auto lg:max-w-[calc(3*100vw/5)]">
+      <div className="  my-4 flex min-h-screen w-full flex-col text-[#FFF2EF] [text-shadow:_0_1px_5px_rgb(0_0_0_/_20%)] sm:right-0 sm:my-10 md:max-w-[calc(5*100vw/5)] lg:right-0 lg:mx-24 lg:ml-auto lg:max-w-[calc(3*100vw/5)]">
         <h2
-          className={`${archivo.className} h-3/12   mx-auto my-14 flex min-h-[calc(15dvh)] w-full flex-row justify-center text-lg font-bold sm:text-3xl`}
+          className={`${archivo.className} h-3/12 mx-auto   my-14 flex min-h-[calc(15dvh)] w-full flex-row justify-center px-6 text-center text-3xl font-bold sm:text-4xl`}
         >
           {/* So far we have these categories: */}
           Choose a category and dive in:
@@ -349,14 +349,16 @@ function CategoriesSection({
               page?.items?.map((category) => (
                 <li key={category.id} className="">
                   <Link
-                    className="group flex max-w-[calc(100vw-10vw)] flex-row items-center justify-center overflow-x-clip rounded-2xl border border-[#d5d9df33] bg-[#d6e2f60b] bg-gradient-to-tr from-[#d6e2f60b]  via-[#d6e2f60b] to-[#d4d4d432] px-6 py-2 text-[#2A2A2E] shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.15)_0px_1px_1px_0px] backdrop-blur-lg
- transition-shadow  duration-300 hover:-translate-y-0.5 hover:border-[#d4d4d4d5] hover:bg-[#d4d4d4a3] hover:shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px] sm:mx-auto sm:max-w-[calc(40vw)] sm:py-9"
+                    className="group flex max-w-[calc(100vw-10vw)] flex-row items-center justify-center overflow-x-clip rounded-2xl border border-[#d5d9df33] bg-[#d6e2f60b] bg-gradient-to-tr from-[#d6e2f60b]  via-[#d6e2f60b] to-[#d4d4d432] px-6 py-2  text-[#29313d] shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.15)_0px_1px_1px_0px]
+ backdrop-blur-lg  transition-shadow duration-300 [text-shadow:_0_1px_3px_rgb(255_255_255_/_25%)] hover:-translate-y-0.5 hover:border-[#d4d4d4d5] hover:bg-[#d4d4d4a3]  hover:shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px] sm:mx-auto sm:max-w-[calc(40vw)] sm:py-9"
                     // onClick={() => {}}
                     href={`/${category.slug}`}
                   >
-                    {getCategoryIcon(category?.slug)}
+                    <span className="text-2xl">
+                      {getCategoryIcon(category?.slug)}
+                    </span>
 
-                    <span className="ml-4 flex-1 truncate text-ellipsis whitespace-nowrap font-semibold transition-all duration-200 [text-shadow:_0_1px_0_rgb(255_255_255_/_20%)] hover:text-[#37373b]">
+                    <span className="ml-4 flex-1 truncate text-ellipsis whitespace-nowrap font-semibold  transition-all duration-200 ">
                       {category.name}
                     </span>
                   </Link>
@@ -384,7 +386,7 @@ function ExampleSection({ analogyData }: { analogyData: unknown }) {
     >
       <div className="mx-auto my-auto flex h-full w-full flex-col items-center justify-center py-12 text-[#292626] lg:max-w-[calc(100vw*7/12)]">
         <h2
-          className={`${archivo.className} mx-auto my-3 flex flex-row justify-center text-3xl font-bold`}
+          className={`${archivo.className} mx-auto my-3 flex flex-row justify-center px-6 text-center text-3xl font-bold sm:text-4xl`}
         >
           Here&apos;s an example
         </h2>
@@ -402,7 +404,7 @@ function ExampleSection({ analogyData }: { analogyData: unknown }) {
           className="mx-auto my-1 flex h-12 w-[1px] flex-col items-center justify-center bg-[#5c2c1d2b]"
         />
         <div
-          className="mx-auto my-[-4px] flex w-full max-w-[760px] flex-row rounded-3xl border-[1px] border-[#5c2c1d2b] bg-[#5c2c1d09] py-0.5 sm:px-5 sm:py-10 "
+          className="mx-auto my-[-4px] flex w-full max-w-[760px] flex-row rounded-xl border-[1px] border-[#5c2c1d2b] bg-[#5c2c1d09] py-0.5 sm:rounded-3xl sm:px-5 sm:py-10 "
           // style={{
           // backgroundImage: `url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%232c1d2b' fill-opacity='0.05' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E")`,
           // backgroundColor: "#f9eae9",
@@ -461,7 +463,7 @@ function ShareSection({
     >
       <div className="mx-auto my-auto flex h-full flex-col items-center justify-center py-12 text-[#292626] lg:max-w-[calc(100vw*7/12)]">
         <h2
-          className={`${archivo.className} mx-auto my-3 mb-12 flex flex-row justify-center px-4 text-center text-3xl font-bold`}
+          className={`${archivo.className} mx-auto my-3 mb-12 flex flex-row justify-center px-6 text-center text-3xl font-bold sm:text-4xl`}
         >
           Share your insights within your social circles
         </h2>
@@ -474,7 +476,7 @@ function ShareSection({
           id="vertical-line"
           className="mx-auto my-1 flex h-12 w-[1px] flex-col items-center justify-center bg-[#5c2c1d2b]"
         />
-        <div className="mb-20 mt-[-4px] flex w-full flex-col rounded-[9px] bg-[#e8e5e2] bg-gradient-to-bl from-[#1e7cba] to-[#7c1db3] py-0.5 sm:rounded-[17px] sm:px-5 sm:py-5 md:max-w-[760px]">
+        <div className="mb-20 mt-[-4px] flex w-full flex-col rounded-xl bg-[#e8e5e2] bg-gradient-to-bl from-[#1e7cba] to-[#7c1db3] py-0.5 sm:rounded-3xl sm:px-5 sm:py-5 md:max-w-[760px]">
           <div className="flex w-full flex-row items-center justify-end pt-4 text-xs text-white sm:px-5 sm:py-4 sm:text-sm">
             Share As:{" "}
             <button className="mx-2 inline-flex flex-row items-center rounded-[12px] border border-[#d2d2d28e] bg-[#ffffffc1] px-3 py-1 text-sm text-gray-800 transition-all hover:border-[#c8c8c8] hover:bg-[#ffffff]">

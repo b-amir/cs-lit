@@ -33,7 +33,9 @@ export const PageLayout = (props: PropsWithChildren<object>) => {
         <main
           className={`flex min-h-[100dvh] ${mainWidthClass} flex-col items-center justify-center bg-[#EBEAE8]  `}
         >
-          <div className="container top-0 min-h-screen ">{props.children}</div>
+          <div className="container top-0 min-h-[100dvh] ">
+            {props.children}
+          </div>
         </main>
       </div>
     </>

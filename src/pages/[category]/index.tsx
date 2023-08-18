@@ -118,10 +118,10 @@ export default function CategoryPage() {
           <>
             <div
               // if there's only 0-5 topics, include form trigger in viewport
-              className={`grow-1 w-full [overflow:overlay] ${
+              className={`grow-1 w-full [overflow:overlay] sm:${
                 topicsData && topicsData.pages.length > 5
                   ? " min-h-[calc(100dvh-0px)]"
-                  : " min-h-[calc(100dvh-160px)]"
+                  : " min-h-[calc(100dvh-0px)]"
               }`}
             >
               <CategoryHeader
@@ -167,7 +167,7 @@ export default function CategoryPage() {
               className={`z-30 mx-auto flex w-full grow-0 flex-col items-center justify-center px-2 text-[#2A2A2E] shadow-lg backdrop-blur-md sm:px-10 lg:px-[16.666667%] ${
                 topicEditorState.shown
                   ? "sticky bottom-0 h-full max-h-[calc(100vh-90px-1px)] bg-[#2a2a2e3b] pb-5 pt-7 shadow-[0px_-1px_6px_2px_#00000015,0px_0px_0px_1px_#00000030,0px_-11px_20px_2px_#00000005,0px_-20px_55px_0px_#00000005]"
-                  : "sticky bottom-[-200px] bg-[#2a2a2e3b] py-2 sm:pb-7 sm:pt-9"
+                  : "sticky bottom-[-200px] bg-[#2a2a2e3b] py-4 sm:pb-7 sm:pt-9"
               } ${topicEditorState.purpose === "Edit" ? "" : ""}
               ?`}
             >
@@ -263,7 +263,7 @@ function CategoryHeader({
           {categoryData?.name}
         </h1>
       )}
-      <div className="flex flex-row items-end place-self-end pt-5 text-sm font-semibold text-[#2A2A2E]">
+      <div className="flex flex-row items-center place-self-end pt-5 text-sm font-semibold text-[#2A2A2E]">
         <div className="mr-0 inline-flex items-center">
           <label htmlFor="sort-by" className="min-w-fit">
             Sort by:
@@ -273,6 +273,7 @@ function CategoryHeader({
               paddingLeft: "0.8rem",
               paddingRight: "1.5rem",
               paddingTop: "0.35rem",
+              height: "2rem",
               paddingBottom: "0.35rem",
               backgroundColor: "#fff",
               backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%234a5568'%3E%3Cpath fill-rule='evenodd' d='M10.707 14.707a1 1 0 0 1-1.414 0L5.586 10.586a1 1 0 1 1 1.414-1.414L10 12.586l3.293-3.293a1 1 0 1 1 1.414 1.414l-4 4z'/%3E%3C/svg%3E")`,
@@ -297,7 +298,7 @@ function CategoryHeader({
           onClick={() =>
             setTopicEditorState({ shown: true, purpose: "Create" })
           }
-          className="mx-2 inline-flex flex-row items-center rounded-[12px] border border-[#d2d2d28e] bg-[#ffffffc1] px-3 py-1.5 text-sm transition-all hover:border-[#c8c8c8] hover:bg-[#ffffff]"
+          className="mx-2 inline-flex h-8 flex-row items-center rounded-[12px] border border-[#d2d2d28e] bg-[#ffffffc1] px-3 py-1.5 text-sm transition-all hover:border-[#c8c8c8] hover:bg-[#ffffff]"
         >
           <CgFolderAdd className="mb-0.5 sm:mr-2" />{" "}
           <span className="hidden sm:flex"> Create topic</span>

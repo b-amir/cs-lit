@@ -27,7 +27,7 @@ export function SidebarCategoriesSection() {
             page?.items?.map((category) => (
               <li key={category.id}>
                 <Link
-                  className="flex items-center p-2 text-xs text-[#2A2A2E] hover:bg-gray-100 lg:rounded-lg lg:text-sm"
+                  className="flex items-center p-2 text-sm text-[#2A2A2E] hover:bg-gray-100 lg:rounded-lg"
                   // onClick={() => {}}
                   href={`/${category.slug}`}
                 >

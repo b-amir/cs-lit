@@ -267,9 +267,18 @@ export const topicsRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       const topics = await ctx.prisma.topic.findMany({
         where: {
-          title: {
-            contains: input.query,
-          },
+          OR: [
+            {
+              title: {
+                contains: input.query,
+              },
+            },
+            {
+              title: {
+                contains: input.query.toLowerCase(),
+              },
+            },
+          ],
           status: "PUBLISHED"
         },
         take: 5,

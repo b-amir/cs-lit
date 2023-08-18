@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { api } from "@/utils/api";
 import { Search } from "./Search";
-import useSidebarVisibility from "@/hooks/useSidebarVisibility";
 import Image from "next/image";
 import { CgMenuLeft } from "react-icons/cg";
 import { FaRegUserCircle } from "react-icons/fa";
@@ -27,19 +26,21 @@ export function Navbar({
           <Breadcrumbs />
         </div>
         <div className="flex items-center justify-center sm:hidden">
-          <Image
-            src={"/assets/logo17.svg"}
-            width={80}
-            height={20}
-            alt={"CS LIT: like I'm 10"}
-            className="min-h-[50px] min-w-[100px]"
-          />
+          <Link href="/">
+            <Image
+              src={"/assets/logo17.svg"}
+              width={80}
+              height={20}
+              alt={"CS LIT: like I'm 10"}
+              className="min-h-[50px] min-w-[100px]"
+            />
+          </Link>
         </div>
         <div className="hidden items-center justify-end sm:flex">
           <Search />
         </div>
         <FaRegUserCircle
-          className="flex h-12 w-12 cursor-pointer select-none rounded-lg p-[0.8rem] text-[#4f4e4d97] transition-all hover:bg-[#ffffff96] md:hidden"
+          className="flex h-12 w-12 cursor-pointer select-none rounded-lg p-[0.88rem] text-[#4f4e4d97] transition-all hover:bg-[#ffffff96] md:hidden"
           onClick={toggleRightSidebar}
         />
       </div>

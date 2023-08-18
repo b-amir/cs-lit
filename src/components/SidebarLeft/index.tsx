@@ -29,11 +29,11 @@ export function SidebarLeft({ visible, hide }) {
 
       {visible && (
         <div
-          className="absolute right-0 top-0 z-[49] h-screen w-screen bg-[#0000003c] backdrop-blur-md sm:hidden"
+          className="fixed right-0 top-0 z-[49] h-screen w-screen overscroll-y-none bg-[#0000003c] backdrop-blur-md sm:hidden"
           onClick={hide}
         >
           <IoClose
-            className="absolute right-4 top-4 h-10 w-10 cursor-pointer text-[#4f4e4d97] hover:text-[#4f4e4dee]"
+            className={`absolute right-6 top-6 h-10 w-10 cursor-pointer p-[0.4rem] text-[#4f4e4d97] hover:text-[#4f4e4dee]`}
             onClick={(e) => {
               e.preventDefault();
               hide;

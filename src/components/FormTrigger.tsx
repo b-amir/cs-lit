@@ -31,8 +31,8 @@ export function FormTrigger({
   return (
     <div
       id="add-topic-header"
-      className={` inline-flex w-full cursor-pointer flex-row items-center rounded-[12px] border border-[#dcdcdca1] bg-[#efefef] px-10 py-4
-                  text-xl font-bold shadow-sm transition-all duration-300 hover:border-[#8b8b8ba5] hover:bg-[#ffffff]  sm:mb-4 sm:py-6 `}
+      className={` mb-4 inline-flex w-full cursor-pointer flex-row items-center rounded-[12px] border border-[#dcdcdca1] bg-[#efefef] px-10
+                  py-4 text-xl font-bold shadow-sm transition-all duration-300 hover:border-[#8b8b8ba5] hover:bg-[#ffffff] sm:mb-4 sm:py-6 `}
       onClick={() => {
         setEditorState?.({
           ...editorState,
@@ -42,7 +42,7 @@ export function FormTrigger({
         setInput(newInput);
       }}
     >
-      <CgFolderAdd className="mb-1.5 mr-2.5" />
+      <CgFolderAdd className="mb-0.5 mr-2.5" />
       <span className=" grow select-none">
         <h2>
           {editorState.purpose ?? "Create"} {editorState.entity}
