@@ -8,23 +8,23 @@ import Image from "next/image";
 import { CgMenuLeft } from "react-icons/cg";
 import { FaRegUserCircle } from "react-icons/fa";
 
-export function Navbar() {
-  const { visibleSidebars, setVisibleSidebars, mainWidthClass } =
-    useSidebarVisibility();
-
+export function Navbar({
+  mainWidthClass,
+  toggleLeftSidebar,
+  toggleRightSidebar,
+}) {
+  // console.log("visibleSidebars:", visibleSidebars);
   return (
     <nav
       className={`fixed top-0 z-40 mx-auto flex min-h-[90px] ${mainWidthClass} items-center justify-between border-b !border-[#ebe8e869] border-opacity-20 bg-transparent bg-gradient-to-b from-[#EBEAE8] to-[#ebeae84a] px-2 backdrop-blur-sm sm:px-10`}
     >
       <div className="flex w-full items-center justify-between px-3 py-1 sm:py-3 lg:px-5 ">
         <div className=" flex h-10 items-center  justify-start rounded-full bg-[#EBEAE800] px-0 py-1 backdrop-filter-none">
-          <Breadcrumbs />
           <CgMenuLeft
-            className="flex cursor-pointer text-[#4f4e4d97] sm:hidden"
-            onClick={() =>
-              setVisibleSidebars({ ...visibleSidebars, left: true })
-            }
+            className="flex h-12 w-12 cursor-pointer select-none rounded-lg p-[0.8rem] text-[#4f4e4d97] transition-all hover:bg-[#ffffff96] sm:hidden"
+            onClick={toggleLeftSidebar}
           />
+          <Breadcrumbs />
         </div>
         <div className="flex items-center justify-center sm:hidden">
           <Image
@@ -39,10 +39,8 @@ export function Navbar() {
           <Search />
         </div>
         <FaRegUserCircle
-          className="flex cursor-pointer text-[#4f4e4d97] lg:hidden"
-          onClick={() =>
-            setVisibleSidebars({ ...visibleSidebars, right: true })
-          }
+          className="flex h-12 w-12 cursor-pointer select-none rounded-lg p-[0.8rem] text-[#4f4e4d97] transition-all hover:bg-[#ffffff96] md:hidden"
+          onClick={toggleRightSidebar}
         />
       </div>
     </nav>

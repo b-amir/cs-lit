@@ -70,7 +70,7 @@ export function CommentSection({ analogyId }: { analogyId: string }) {
             <CommentEditor analogyId={analogyId} />
           ) : (
             <div
-              className={`my-4 flex w-full cursor-pointer resize-none items-center rounded-lg border border-[#ffffff45] bg-[#ffffff45] px-3 py-2 text-sm text-gray-500 transition-all duration-200 hover:bg-[#ffffff6c] hover:text-gray-600`}
+              className={`my-4 flex w-full cursor-pointer select-none resize-none items-center rounded-lg border border-[#ffffff45] bg-[#ffffff45] px-3 py-2 text-sm text-gray-500 transition-all duration-200 hover:bg-[#ffffff6c] hover:text-gray-600`}
               onClick={() => signIn()}
             >
               <AiFillLock className="mb-0.5 mr-2" /> You need to be logged in to
@@ -165,7 +165,7 @@ function CommentEditor({ analogyId }: { analogyId: string }) {
     if (analogyId) {
       setCommentInput({ ...commentInput, analogyId: analogyId });
     }
-  }, [analogyId, commentInput]);
+  }, []);
   const item = commentInput as Comment;
   const type = "Comments";
 

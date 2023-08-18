@@ -152,7 +152,7 @@ export default function TopicPage(props) {
             {/* {sessionData ? ( */}
             <div
               // handle form wrapper
-              className={`z-30 mx-auto flex w-full grow-0 flex-col items-center justify-center px-2 text-[#2A2A2E] shadow-lg  backdrop-blur-md sm:px-10 lg:px-16  ${
+              className={`z-30 mx-auto flex w-full grow-0 flex-col items-center justify-center px-2 text-[#2A2A2E] shadow-lg  backdrop-blur-md sm:px-10 lg:px-[16.666667%]  ${
                 analogyEditorState.shown
                   ? "sticky bottom-0 h-full max-h-[calc(100vh-90px-1px)] bg-[#2a2a2e3b] pb-5 pt-7 shadow-[0px_-1px_6px_2px_#00000015,0px_0px_0px_1px_#00000030,0px_-11px_20px_2px_#00000005,0px_-20px_55px_0px_#00000005]"
                   : "sticky bottom-[-200px] bg-[#2a2a2e3b] py-2 sm:pb-7 sm:pt-9"
@@ -200,7 +200,7 @@ function TopicHeader({
   topicsData: unknown;
 }) {
   return (
-    <div className="mb-14 flex w-full  flex-col border-b border-gray-300 bg-gradient-to-tr from-[#ff73631a] via-transparent to-transparent px-4 pb-6 pt-28 sm:px-12 sm:pt-32 lg:px-24">
+    <div className="mb-14 flex w-full  flex-col border-b border-gray-300 bg-gradient-to-tr from-[#ff73631a] via-transparent to-transparent px-4 pb-6 pt-28 sm:px-12 sm:pt-32 lg:px-[18%]">
       {topicFetchingStatus === "loading" ? (
         <div className=" mb-4  h-8 w-1/4 animate-pulse rounded-lg bg-[#b4b4b49f]" />
       ) : (

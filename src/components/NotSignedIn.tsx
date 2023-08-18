@@ -8,7 +8,7 @@ export function NotSignedIn() {
       <div className="flex select-none flex-col items-center justify-center text-gray-500">
         <AiFillLock />
         <span
-          className="mt-2 cursor-pointer transition-all hover:text-gray-700"
+          className="mt-2 cursor-pointer select-none transition-all hover:text-gray-700"
           onClick={() => signIn()}
         >
           You need to sign in.

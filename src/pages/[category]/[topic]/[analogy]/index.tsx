@@ -46,7 +46,7 @@ export default function SingleAnalogyPage() {
           <EntityNotFound entity="Analogy" />
         ) : (
           <>
-            <div className="mx-auto flex  max-w-[720px] flex-col justify-between pt-28 sm:px-10 sm:pt-40 lg:px-14">
+            <div className="mx-auto flex  max-w-[900px] flex-col justify-between pt-28 sm:px-10 sm:pt-40 lg:px-14">
               <NavShare router={router} />
               <MainSection singleAnalogyData={singleAnalogyData} />
               <InfoSection singleAnalogyData={singleAnalogyData} />

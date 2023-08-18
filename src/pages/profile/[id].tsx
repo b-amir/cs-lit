@@ -50,7 +50,7 @@ const ProfileFeed = (props: { userId: string }) => {
   }
 
   return (
-    <div className="flex w-full flex-col items-center justify-center sm:px-10 lg:px-16">
+    <div className="flex w-full flex-col items-center justify-center sm:px-10 lg:px-[16.666667%]">
       {analogyData?.pages?.map((page) =>
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         page?.items?.map((analogy: Analogy) => (
@@ -81,7 +81,7 @@ function ProfileHeader({ profileData }: { profileData: unknown }) {
       className="mt-0 flex w-full flex-col items-center justify-center"
     >
       <div className="mb-12 w-full border-b-2  border-[#827c7c2b]   ">
-        <div className="flex w-full flex-col  justify-center gap-4 bg-gradient-to-tr from-[#ff73631a] to-transparent  px-4 pb-4 pt-28 text-center sm:flex-row sm:justify-start sm:gap-0 sm:px-12 sm:pb-12 sm:pt-32  sm:text-start lg:px-24">
+        <div className="flex w-full flex-col  justify-center gap-4 bg-gradient-to-tr from-[#ff73631a] to-transparent  px-4 pb-4 pt-28 text-center sm:flex-row sm:justify-start sm:gap-0 sm:px-12 sm:pb-12 sm:pt-32  sm:text-start lg:px-[18%]">
           <Image
             src={profileData.profileImageUrl ?? "/assets/defaultpp.svg"}
             className="max-w-14 mx-auto -mt-1.5 max-h-14 rounded-full ring-1 ring-[#827c7cb8] sm:mx-0 sm:mr-4"

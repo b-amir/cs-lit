@@ -11,27 +11,49 @@ import { IoIosArrowUp } from "react-icons/io";
 import { routeHandler } from "@/utils/routeHandler";
 import { useSession } from "next-auth/react";
 import { AiFillControl } from "react-icons/ai";
+import { IoClose } from "react-icons/io5";
 
-export function SidebarRight(props: { username: any }) {
+export function SidebarRight({ visible, hide }) {
   const [userSectionShown, setUserSectionShown] = useState(false);
   const { data: sessionData } = useSession();
+  const username = sessionData?.user;
 
   return (
-    <aside
-      id="logo-sidebar"
-      className="fixed right-0 top-0 z-50 hidden h-screen w-1/6 -translate-x-full flex-col place-content-stretch items-stretch justify-between border-l border-white bg-white pt-0 shadow-md transition-transform dark:border-gray-700 dark:bg-gray-800 sm:translate-x-0 lg:flex"
-      aria-label="Sidebar"
-    >
-      <div className="overflow-y-auto bg-white pb-0 dark:bg-gray-800">
-        <UserSection
-          {...props}
-          userSectionShown={userSectionShown}
-          setUserSectionShown={setUserSectionShown}
-        />
-        <WidgetSection />
-      </div>
-      {["ADMIN", "EDITOR"].includes(sessionData?.user.role) && <AdminLink />}
-    </aside>
+    <div className="flex ">
+      <aside
+        id="sidebar-right"
+        className={`fixed right-0 top-0 z-50 flex h-screen w-9/12 flex-col place-content-stretch items-stretch justify-between border-l
+      border-white bg-white pt-0 shadow-md transition-transform  dark:border-gray-700 dark:bg-gray-800 sm:w-1/6 ${
+        visible ? "translate-x-0" : "translate-x-full"
+      }`}
+        aria-label="Sidebar"
+      >
+        <div className="overflow-y-auto bg-white pb-0 dark:bg-gray-800">
+          <UserSection
+            username={username}
+            userSectionShown={userSectionShown}
+            setUserSectionShown={setUserSectionShown}
+          />
+          <WidgetSection />
+        </div>
+        {["ADMIN", "EDITOR"].includes(sessionData?.user.role) && <AdminLink />}
+      </aside>
+
+      {visible && (
+        <div
+          className="absolute right-0 top-0 z-[49] h-screen w-screen bg-[#0000003c] backdrop-blur-md sm:hidden"
+          onClick={hide}
+        >
+          <IoClose
+            className="absolute left-4 top-4 h-10 w-10 cursor-pointer text-[#4f4e4d97] hover:text-[#4f4e4dee]"
+            onClick={(e) => {
+              e.preventDefault();
+              hide;
+            }}
+          />
+        </div>
+      )}
+    </div>
   );
 }
 
