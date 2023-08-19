@@ -54,18 +54,18 @@ export const UserSection = (props: {
               <button className="text-gray rounded-full bg-white/10 px-2 py-0 text-left text-xs font-light no-underline  transition-all">
                 {sessionData ? (
                   <div
-                    className="flex flex-row text-[#606060] hover:text-[#000] "
+                    className="flex flex-row  items-center  text-[#606060] hover:text-[#000] "
                     onClick={() => signOut()}
                   >
-                    <HiOutlineLogout className="mr-1 stroke-[#606060] " /> Sign
+                    <HiOutlineLogout className=" mr-1 stroke-[#606060] " /> Sign
                     out
                   </div>
                 ) : (
                   <div
-                    className="flex flex-row text-[#606060] hover:text-[#000] "
+                    className="flex flex-row items-center text-[#606060] hover:text-[#000] "
                     onClick={() => signIn()}
                   >
-                    <HiOutlineLogin className="mr-1 stroke-[#606060] " /> Sign
+                    <HiOutlineLogin className=" mr-1 stroke-[#606060] " /> Sign
                     in
                   </div>
                 )}

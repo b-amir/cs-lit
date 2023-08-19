@@ -349,8 +349,8 @@ function CategoriesSection({
               page?.items?.map((category) => (
                 <li key={category.id} className="">
                   <Link
-                    className="group flex max-w-[calc(100vw-10vw)] flex-row items-center justify-center overflow-x-clip rounded-2xl border border-[#d5d9df33] bg-[#d6e2f60b] bg-gradient-to-tr from-[#d6e2f60b]  via-[#d6e2f60b] to-[#d4d4d432] px-6 py-2  text-[#29313d] shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.15)_0px_1px_1px_0px]
- backdrop-blur-lg  transition-shadow duration-300 [text-shadow:_0_1px_3px_rgb(255_255_255_/_25%)] hover:-translate-y-0.5 hover:border-[#d4d4d4d5] hover:bg-[#d4d4d4a3]  hover:shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px] sm:mx-auto sm:max-w-[calc(40vw)] sm:py-9"
+                    className="group flex max-w-[calc(100vw-10vw)] flex-row items-center justify-center overflow-x-clip rounded-2xl border border-[#d5d9df33] bg-[#d6e2f62c] bg-gradient-to-tr from-[#d6e2f60b] via-[#d6e2f60b]  to-[#d4d4d432] px-6 py-3 text-[#29313d]  shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.15)_0px_1px_1px_0px] backdrop-blur-lg
+ transition-shadow  duration-300 [text-shadow:_0_1px_3px_rgb(255_255_255_/_25%)] hover:-translate-y-0.5 hover:border-[#d4d4d4d5] hover:bg-[#d4d4d4a3] hover:shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]  sm:mx-auto sm:max-w-[calc(40vw)] sm:bg-[#d6e2f60b] sm:py-9"
                     // onClick={() => {}}
                     href={`/${category.slug}`}
                   >
@@ -368,7 +368,7 @@ function CategoriesSection({
           </ul>
         )}
         <div className=" h-1/12  my-12 flex-col items-end">
-          <p className="font-regular   z-10  flex  flex-row  justify-center rounded-lg border border-[#d5d9df33] bg-[#d6e2f600] px-4 py-2 text-sm text-[#292626a9] shadow-sm backdrop-blur-sm md:border-0 md:bg-none md:shadow-none md:backdrop-blur-0">
+          <p className="font-regular   z-10  flex  flex-row  justify-center rounded-lg border border-[#d5d9df33] bg-[#d6e2f634] px-4 py-2 text-sm text-[#292626a9] shadow-sm backdrop-blur-sm sm:bg-[#d6e2f600] sm:shadow-none md:border-0 md:bg-none md:backdrop-blur-0">
             If you find a category missing, you can add it via GitHub
             contribution. It&apos;s an open-sourced project.
           </p>

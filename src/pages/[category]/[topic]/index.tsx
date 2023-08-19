@@ -111,10 +111,10 @@ export default function TopicPage(props) {
         ) : (
           <>
             <div
-              className={`grow-1 w-full [overflow:overlay] ${
+              className={`grow-1 w-full [overflow:overlay] sm:${
                 topicAnalogies && topicAnalogies.pages.length > 1
                   ? " min-h-[calc(100dvh-0px)]"
-                  : " min-h-[calc(100dvh-160px)]"
+                  : " min-h-[calc(100dvh-0px)]"
               }`}
             >
               <TopicHeader
@@ -200,7 +200,7 @@ function TopicHeader({
   topicsData: unknown;
 }) {
   return (
-    <div className="mb-14 flex w-full  flex-col border-b border-gray-300 bg-gradient-to-tr from-[#ff73631a] via-transparent to-transparent px-4 pb-6 pt-28 sm:px-12 sm:pt-32 lg:px-[18%]">
+    <div className="mb-14 flex w-full  flex-col border-b border-gray-300 bg-gradient-to-tr from-[#ff73631a] via-transparent to-transparent px-6 pb-6 pl-8 pt-28 sm:px-12 sm:pt-32 lg:px-[18%]">
       {topicFetchingStatus === "loading" ? (
         <div className=" mb-4  h-8 w-1/4 animate-pulse rounded-lg bg-[#b4b4b49f]" />
       ) : (
@@ -211,7 +211,7 @@ function TopicHeader({
         </h1>
       )}
       <br />
-      <div className="flex w-full flex-row justify-between py-1 align-middle text-sm text-[#808080] ">
+      <div className="flex w-full flex-row items-center justify-between py-1 text-sm text-[#808080] ">
         {analogiesFetchingStatus === "loading" ? (
           <div className="grow-1 flex h-5 w-24 animate-pulse rounded-md bg-[#b4b4b49f]" />
         ) : (

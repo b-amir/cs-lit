@@ -11,8 +11,8 @@ export function SidebarLeft({ visible, hide }) {
     <div className="flex ">
       <aside
         id="left-sidebar"
-        className={`fixed left-0 top-0 z-50 flex h-screen w-9/12  flex-col place-content-stretch items-stretch justify-between 
-    border-r border-white bg-white pt-0 shadow-md transition-transform  duration-300 ease-in-out dark:border-gray-700 dark:bg-gray-800 sm:w-1/6 
+        className={`fixed left-0 top-0 z-50 flex h-screen w-9/12 flex-col  place-content-stretch items-stretch justify-between border-r 
+    border-white bg-white pt-0 shadow-md transition-transform duration-300  ease-in-out dark:border-gray-700 dark:bg-gray-800 sm:w-4/12 md:w-1/6 
    ${visible ? "translate-x-0" : "-translate-x-full"}
     `}
         aria-label="Sidebar"

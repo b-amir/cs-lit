@@ -36,7 +36,7 @@ export function Navbar({
             />
           </Link>
         </div>
-        <div className="hidden items-center justify-end sm:flex">
+        <div className="hidden items-center justify-end md:flex">
           <Search />
         </div>
         <FaRegUserCircle

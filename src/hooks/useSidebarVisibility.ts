@@ -62,9 +62,9 @@ const useSidebarVisibility = () => {
       initialVisibleSidebars.left && initialVisibleSidebars.right
         ? "w-4/6" // Both sidebars are visible
         : initialVisibleSidebars.left && !initialVisibleSidebars.right
-          ? "w-5/6 absolute top-0 right-0"
+          ? "w-8/12 absolute top-0 right-0"
           : initialVisibleSidebars.right && !initialVisibleSidebars.left
-            ? "w-5/6 absolute top-0 left-0"
+            ? "w-8/12 absolute top-0 left-0"
             : "w-full" // Both sidebars are hidden
     );
   }, [

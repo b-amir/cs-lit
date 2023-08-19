@@ -187,7 +187,7 @@ function AnalogyEditorBody({
         {/* )} */}
 
         {/* a checkmark to indicate if analogy has a reference link */}
-        <div className=" mt-4 flex w-fit items-center rounded-lg px-2 py-1 transition-all duration-200 hover:bg-gray-50">
+        <div className="mt-12 flex w-fit items-center rounded-lg px-2 py-1 transition-all duration-200 hover:bg-gray-50 sm:mt-4">
           <input
             id="hasReference"
             name="hasReference"

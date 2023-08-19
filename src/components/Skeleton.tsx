@@ -77,7 +77,7 @@ export function SidebarCategorySkeleton() {
 
 export function AnalogySkeleton() {
   return (
-    <div className="mx-auto my-7 flex w-full    flex-row justify-between px-16 py-1 align-middle text-sm text-[#808080]">
+    <div className="mx-auto my-7 flex w-full max-w-[705px] flex-row justify-between py-1 align-middle text-sm text-[#808080] sm:px-10 lg:px-[1%] ">
       <div
         className="mx-auto flex h-56 w-full  max-w-[705px] animate-pulse flex-col items-start justify-start 
     rounded-[17px] border border-[#cdcdcd7d] bg-gray-50  pb-5 shadow-sm "
