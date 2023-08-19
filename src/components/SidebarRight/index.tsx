@@ -23,12 +23,12 @@ export function SidebarRight({ visible, hide }) {
       <aside
         id="sidebar-right"
         className={`fixed right-0 top-0 z-50 flex h-screen w-9/12 flex-col place-content-stretch items-stretch justify-between border-l border-white
-      bg-white pt-0 shadow-md transition-transform dark:border-gray-700  dark:bg-gray-800 sm:w-4/12 md:w-1/6 ${
+      bg-white pt-0 shadow-md transition-transform sm:w-4/12 md:w-1/6 ${
         visible ? "translate-x-0" : "translate-x-full"
       }`}
         aria-label="Sidebar"
       >
-        <div className="overflow-y-auto bg-white pb-0 dark:bg-gray-800">
+        <div className="overflow-y-auto bg-white pb-0">
           <UserSection
             username={username}
             userSectionShown={userSectionShown}
@@ -189,7 +189,7 @@ export function WidgetLayout(props: PropsWithChildren<any>) {
       <div
         onClick={props.onShow}
         id="sidebar-widget-title"
-        className="group mx-4 my-4 inline-flex max-w-[180px] flex-1 cursor-pointer select-none items-center overflow-clip overflow-ellipsis  whitespace-nowrap rounded-[12px] border bg-[#ffffff] px-3 py-2 text-sm text-[#555558] shadow-sm transition-all hover:border-[#00000037] hover:bg-[#f7f7f7] hover:shadow-inner hover:shadow-[#ebebebb7] dark:text-white"
+        className="group mx-4 my-4 inline-flex max-w-[180px] flex-1 cursor-pointer select-none items-center overflow-clip overflow-ellipsis  whitespace-nowrap rounded-[12px] border bg-[#ffffff] px-3 py-2 text-sm text-[#555558] shadow-sm transition-all hover:border-[#00000037] hover:bg-[#f7f7f7] hover:shadow-inner hover:shadow-[#ebebebb7]"
       >
         <span id="widget-icon" className="mr-2 ">
           {props.widgetIcon}

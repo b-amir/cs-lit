@@ -128,15 +128,15 @@ function AnalogyEditorBody({
         >
           Your analogy
         </label>
-        <div className="group mt-1 w-full rounded-[12px] border border-gray-200 bg-gray-50 shadow-sm transition-all hover:border-[#c1c1c1] focus:border-[#c1c1c1] dark:border-gray-600 dark:bg-gray-700">
-          <div className="rounded-[12px] bg-white px-6 pb-2 pt-6 dark:bg-gray-800">
+        <div className="group mt-1 w-full rounded-[12px] border border-gray-200 bg-gray-50 shadow-sm transition-all hover:border-[#c1c1c1] focus:border-[#c1c1c1] ">
+          <div className="rounded-[12px] bg-white px-6 pb-2 pt-6">
             <label htmlFor="comment" className="sr-only">
               Add your analogy
             </label>
             <textarea
               id="comment"
               rows={4}
-              className="w-full border-0 border-transparent bg-white px-0 text-sm text-[#2A2A2E] !outline-none  group-focus:border-[#c1c1c1] dark:bg-gray-800 dark:text-white dark:placeholder-gray-400"
+              className="w-full border-0 border-transparent bg-white px-0 text-sm text-[#2A2A2E] !outline-none  group-focus:border-[#c1c1c1] "
               placeholder="Add your analogy ..."
               required
               value={input?.description}
@@ -149,13 +149,13 @@ function AnalogyEditorBody({
               // disabled={isSubmitting || editorLayoutState?.purpose === "Edit"}
             ></textarea>
           </div>
-          <div className="flex items-center justify-between border-t px-3 py-2 dark:border-gray-600">
+          <div className="flex items-center justify-between border-t px-3 py-2">
             <div className="flex space-x-1 pl-0 sm:pl-2">
               <a
                 href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet"
                 target="_blank"
                 type="button"
-                className=" font-small inline-flex cursor-pointer justify-center rounded p-2 text-xs text-gray-500 hover:bg-gray-100 hover:text-[#2A2A2E] dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
+                className=" font-small inline-flex cursor-pointer justify-center rounded p-2 text-xs text-gray-500 hover:bg-gray-100 hover:text-[#2A2A2E] "
               >
                 how to write markdown?
               </a>

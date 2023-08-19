@@ -20,23 +20,23 @@ import { Search } from "@/components/Search";
 const carouselItems = [
   {
     name: "CS",
-    color: "#F59E0B",
+    color: "#ff7263",
   },
   {
     name: "JavaScript",
-    color: "#F472B6",
+    color: "#a19753",
   },
   {
     name: "Data Structure",
-    color: "#10B981",
+    color: "#508f7a",
   },
   {
     name: "React.js",
-    color: "#3B82F6",
+    color: "#578894",
   },
   {
     name: "Next.js",
-    color: "#6366F1",
+    color: "#977e52",
   },
 ];
 
@@ -47,14 +47,13 @@ const Home: NextPage = () => {
     carouselItems[1],
     carouselItems[2],
   ]);
-  const [firstCycleComplete, setFirstCycleComplete] = useState(false);
+  // const [firstCycleComplete, setFirstCycleComplete] = useState(false);
   // useTransition for the carousel items to animate slide-up
   const carouselTransitions = useTransition([currentCarouselItems[0]], {
     from: {
       opacity: 0,
       transform: "translateX(30%)",
     },
-
     enter: {
       opacity: 1,
       transform: "translateX(0%)",
@@ -68,43 +67,41 @@ const Home: NextPage = () => {
     config: { duration: 300, mass: 1, tension: 170, friction: 26 },
 
     unique: true, // Use the key to identify unique items
-    // i want the first item to be still. no effects. and from the second item on i want effects
     trail: 200, // Stagger delay
-    // avoid flickering
     delay: 350, // Delay before the animation starts
   });
 
   useEffect(() => {
-    if (!firstCycleComplete) {
-      const interval = setInterval(() => {
-        const currentIndex = carouselItems.findIndex(
-          (item) => item === currentCarouselItems[0]
-        );
+    // if (!firstCycleComplete) {
+    const interval = setInterval(() => {
+      const currentIndex = carouselItems.findIndex(
+        (item) => item === currentCarouselItems[0]
+      );
 
-        if (currentIndex < carouselItems.length - 2) {
-          setCurrentCarouselItems([
-            carouselItems[currentIndex + 1],
-            carouselItems[currentIndex + 2],
-            carouselItems[currentIndex + 3],
-          ]);
-        } else if (currentIndex === carouselItems.length - 2) {
-          setCurrentCarouselItems([
-            carouselItems[currentIndex + 1],
-            carouselItems[currentIndex + 2],
-            carouselItems[0],
-          ]);
-        } else if (currentIndex === carouselItems.length - 1) {
-          setCurrentCarouselItems([
-            carouselItems[0],
-            carouselItems[1],
-            carouselItems[2],
-          ]);
-          setFirstCycleComplete(true);
-        }
-      }, 2000);
-      return () => clearInterval(interval);
-    }
-  }, [currentCarouselItems, firstCycleComplete]);
+      if (currentIndex < carouselItems.length - 2) {
+        setCurrentCarouselItems([
+          carouselItems[currentIndex + 1],
+          carouselItems[currentIndex + 2],
+          carouselItems[currentIndex + 3],
+        ]);
+      } else if (currentIndex === carouselItems.length - 2) {
+        setCurrentCarouselItems([
+          carouselItems[currentIndex + 1],
+          carouselItems[currentIndex + 2],
+          carouselItems[0],
+        ]);
+      } else if (currentIndex === carouselItems.length - 1) {
+        setCurrentCarouselItems([
+          carouselItems[0],
+          carouselItems[1],
+          carouselItems[2],
+        ]);
+        // setFirstCycleComplete(false);
+      }
+    }, 2000);
+    return () => clearInterval(interval);
+    // }
+  }, [currentCarouselItems]);
 
   const {
     data: categories,
@@ -247,15 +244,15 @@ function HeroSection({
     >
       <div
         id="top-part"
-        className="my-auto mb-auto flex w-full max-w-[1360px] flex-auto flex-wrap items-center justify-between gap-2 lg:max-h-[75dvh] lg:gap-0 lg:py-20"
+        className="my-auto mb-auto flex w-full max-w-[1360px] flex-auto  flex-wrap-reverse items-center justify-between gap-2 lg:max-h-[75dvh] lg:gap-0 lg:py-20"
       >
         <div
           id="left-part"
-          className="my-auto  flex flex-col items-start justify-center lg:mr-auto lg:gap-6"
+          className="my-auto -mt-12 flex flex-col items-start justify-center sm:mt-auto lg:mr-auto lg:gap-6"
         >
           <div className="flex flex-col items-center justify-center gap-6 py-6">
             <h1
-              className={`${archivo.className} font-archivo flex flex-col items-start pt-4 align-middle text-4xl font-extrabold text-[#263238] dark:text-white sm:pt-0 sm:text-6xl lg:pt-4 lg:text-7xl`}
+              className={`${archivo.className}  flex flex-col items-start align-middle text-4xl font-extrabold text-[#263238] sm:pt-0 sm:text-6xl lg:pt-4 lg:text-7xl`}
             >
               <span>Explain</span>
               <span className="flex flex-row items-center justify-center  lg:py-3 ">
@@ -263,8 +260,8 @@ function HeroSection({
                 {carouselTransitions((props, item) => (
                   <animated.div
                     key={item?.name}
-                    style={props}
-                    className="w-24 whitespace-nowrap font-normal text-[#ff7263] lg:mb-1 lg:h-16"
+                    style={{ ...props, color: item.color }}
+                    className={`fontColor: lg:h-16" w-24  whitespace-nowrap font-normal lg:mb-1`}
                   >
                     {item?.name}
                   </animated.div>
@@ -278,7 +275,7 @@ function HeroSection({
             <Search />
           </div>
           <p
-            className="group flex select-none flex-row items-center justify-center px-2  text-sm text-[#5c2c1dc4] dark:text-gray-400"
+            className="group flex select-none flex-row items-center justify-center px-2  text-sm text-[#5c2c1dc4]"
             onClick={() => {
               const exampleSection = document.getElementById("example-section");
               exampleSection?.scrollIntoView({ behavior: "smooth" });
@@ -293,7 +290,7 @@ function HeroSection({
 
         <Image
           id="right-part"
-          className="z-0 mx-auto w-full min-w-[280px] px-0 sm:absolute sm:bottom-16 sm:right-1 sm:ml-auto sm:w-4/12 sm:min-w-[360px] lg:relative lg:mx-0 lg:mt-[12dvh] lg:max-h-[32rem] "
+          className="z-0 mx-auto -mt-12 w-full min-w-[280px] px-0 sm:absolute sm:bottom-16 sm:right-1 sm:ml-auto sm:w-4/12 sm:min-w-[360px] lg:relative lg:mx-0 lg:mt-[12dvh] lg:max-h-[32rem] "
           src="/assets/bulb2.svg"
           width={512}
           height={512}
@@ -448,7 +445,7 @@ function ExampleSection({ analogyData }: { analogyData: unknown }) {
         <button
           className="font-regular text-md group mx-auto mb-3 mt-[-4px] flex flex-row content-center items-center justify-center
  rounded-xl border border-[#5c2c1d2b] bg-[#ffffff98] px-8 py-2 text-sm font-semibold text-[#292626a9] shadow-sm
- transition-all duration-200 hover:border-[#5c2c1d66] hover:px-8 hover:shadow-md dark:text-gray-400"
+ transition-all duration-200 hover:border-[#5c2c1d66] hover:px-8 hover:shadow-md"
         >
           <span className="cursor-pointer transition-all duration-300 group-hover:-translate-x-0.5">
             Explore Closure Topic
@@ -557,7 +554,7 @@ function ShareSection({
         <button
           className="font-regular text-md text-md group mx-auto mb-1 flex flex-row content-center items-center
  justify-center rounded-xl border border-[#5c2c1d2b] bg-[#ff7263] px-8 py-3 font-semibold text-[#ffffffd3] shadow-sm
- transition-all duration-200 hover:border-[#5c2c1d66] hover:px-8 hover:shadow-md dark:text-gray-400"
+ transition-all duration-200 hover:border-[#5c2c1d66] hover:px-8 hover:shadow-md"
         >
           <span
             className="cursor-pointer transition-all duration-300 group-hover:-translate-x-0.5"
@@ -583,7 +580,7 @@ function FooterSection() {
   return (
     <footer
       id="footer-section"
-      className="mx-auto flex w-full flex-col items-center justify-center border-t border-t-[#ffffff] bg-[#263238] px-12 py-6 shadow-inner shadow-[#1d262b] sm:flex-row"
+      className="mx-auto flex w-full flex-col items-center justify-center border-t border-t-[#ffffff] bg-[#1C282E] px-12 py-6 shadow-inner shadow-[#1d262b] sm:flex-row"
       // style={{
       // backgroundImage: "url(/assets/noise.webp)",
       // backgroundBlendMode: "overlay",

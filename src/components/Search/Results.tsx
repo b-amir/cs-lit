@@ -10,6 +10,10 @@ export function Results({
   debouncedSearch,
   loading,
   setShowResultsPanel,
+  onChange,
+  value,
+  ref,
+  setSearchQuery,
 }) {
   const homepage =
     typeof window !== "undefined" ? window.location.pathname === "/" : false;
@@ -29,15 +33,47 @@ export function Results({
         <div
           className={`${
             homepage
-              ? "top-0 -mb-4 mt-[-40px] h-12 bg-[#b4b4b477]  p-4 "
+              ? "top-0 -mb-4 mt-[-40px] h-[4.8rem] items-center bg-[#b4b4b477]  p-4 "
               : "top-0 mt-[-40px] h-[90px] border-b border-[#7c7c7c41] bg-[#b4b4b477] shadow-sm"
           }`}
         >
           {homepage ? (
-            <MdClose
-              className="my-auto flex cursor-pointer items-center justify-center rounded-full  transition-all hover:text-gray-500"
-              onClick={() => setShowResultsPanel(false)}
-            />
+            <>
+              <input
+                type="search"
+                name="search"
+                placeholder="Find topics..."
+                className={`${
+                  homepage
+                    ? "h-10 w-full  rounded-2xl border border-[#5c2c1d2a] bg-[#f9f9f9a8] px-5 py-6 pl-10 text-sm shadow-md shadow-[#6c6c6c0b] outline-none backdrop-blur-lg backdrop-filter transition-all duration-300 focus:border-[#9e9e9e] focus:bg-white focus:shadow-sm focus:outline-none sm:w-96 lg:w-96 lg:focus:w-96"
+                    : "h-10 w-36 rounded-full border border-[#2A2A2E22] bg-[#f9f9f98f] px-5 pr-10 text-sm outline-none backdrop-blur-sm backdrop-filter transition-all duration-300 focus:w-64 focus:border-[#9e9e9e] focus:bg-white focus:shadow-sm focus:outline-none"
+                } input[type=search] {-webkit-appearance: searchfield !important;} input[type=search]::-webkit-search-cancel-button {-webkit-appearance: searchfield-cancel-button !important;}`}
+                onChange={onChange}
+                value={value}
+                ref={ref}
+              />
+              {homepage && (
+                <button
+                  className="clear-button absolute right-8 top-10 -translate-y-1/2 transform text-gray-500 hover:text-gray-700 focus:outline-none"
+                  onClick={() => {
+                    setSearchQuery("");
+                    setShowResultsPanel(false);
+                  }}
+                >
+                  <svg
+                    className="h-5 w-5"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M6.293 6.293a1 1 0 0 1 1.414 0L10 8.586l2.293-2.293a1 1 0 1 1 1.414 1.414L11.414 10l2.293 2.293a1 1 0 0 1-1.414 1.414L10 11.414l-2.293 2.293a1 1 0 0 1-1.414-1.414L8.586 10 6.293 7.707a1 1 0 0 1 0-1.414z"
+                    />
+                  </svg>
+                </button>
+              )}
+            </>
           ) : null}
         </div>
         <div className="flex h-full flex-col items-start justify-start pt-6">

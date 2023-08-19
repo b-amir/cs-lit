@@ -47,8 +47,8 @@ export function TopicsList({
 
   return (
     <div className="relative w-full overflow-x-auto rounded-[12px] border border-[#cdcdcd7d] bg-gray-50 shadow-sm">
-      <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
-        <thead className="border-b  text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+      <table className="w-full text-left text-sm text-gray-500">
+        <thead className="border-b  text-xs uppercase text-gray-700">
           <tr>
             <th scope="col" className="w-full px-6 py-3">
               Topic
@@ -72,12 +72,12 @@ export function TopicsList({
             page?.items?.map((topic: Topic) => (
               <tr
                 key={topic.id}
-                className="border-b bg-white hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800"
+                className="border-b bg-white hover:bg-gray-100"
               >
                 <Link href={`${UrlCategory}/${topic.slug}`} className="">
                   <th
                     scope="row"
-                    className="max-w-[360px] cursor-pointer overflow-clip overflow-ellipsis whitespace-nowrap px-6 py-6 text-base font-medium text-[#2A2A2E] dark:text-white"
+                    className="max-w-[360px] cursor-pointer overflow-clip overflow-ellipsis whitespace-nowrap px-6 py-6 text-base font-medium text-[#2A2A2E]"
                   >
                     {topic.title}
                   </th>
@@ -92,7 +92,7 @@ export function TopicsList({
                     <td className="px-6 py-4 text-right">
                       <a
                         href="#"
-                        className="font-medium text-gray-400 hover:underline dark:text-gray-300"
+                        className="font-medium text-gray-400 hover:underline"
                         onClick={(e) => {
                           e.preventDefault();
                           setTopicEditorState({

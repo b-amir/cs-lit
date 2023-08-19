@@ -189,7 +189,6 @@ function AnalogyBody({
       key={analogy?.id}
       className=" z-20  mx-auto my-5 flex  w-full max-w-[705px] flex-col overflow-clip rounded-[17px] 
     border border-gray-200 bg-white px-0 py-0 shadow-lg transition-all hover:border-[#c1c1c1] "
-      // className="my-2 block min-w-[500px] max-w-sm rounded-s border border-gray-200 bg-white p-6 shadow transition-all hover:bg-gray-100 dark:border-gray-700  dark:bg-gray-800 dark:hover:bg-gray-700"
     >
       <div
         className="border-b-1 w-full cursor-default border border-x-0 border-t-0 border-gray-200 bg-[#F9F9F9] px-5 py-4 
@@ -455,7 +454,7 @@ export function AnalogyInfoRow({
             ["ADMIN", "EDITOR"].includes(sessionData?.user.role) && (
               <a
                 href="#"
-                className="font-medium text-gray-400 hover:underline dark:text-gray-300"
+                className="font-medium text-gray-400 hover:underline"
                 onClick={(e) => {
                   e.preventDefault();
                   setAnalogyEditorState({
