@@ -2,6 +2,7 @@ import Link from "next/link";
 import { animated } from "@react-spring/web";
 import { CgSpinner } from "react-icons/cg";
 import { MdClose } from "react-icons/md";
+import { IoSearch } from "react-icons/io5";
 
 export function Results({
   panelAnimation,
@@ -42,6 +43,7 @@ export function Results({
               <input
                 type="search"
                 name="search"
+                id="counter-input"
                 placeholder="Find topics..."
                 className={`${
                   homepage
@@ -53,25 +55,34 @@ export function Results({
                 ref={ref}
               />
               {homepage && (
-                <button
-                  className="clear-button absolute right-8 top-10 -translate-y-1/2 transform text-gray-500 hover:text-gray-700 focus:outline-none"
-                  onClick={() => {
-                    setSearchQuery("");
-                    setShowResultsPanel(false);
-                  }}
-                >
-                  <svg
-                    className="h-5 w-5"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
+                <>
+                  <button
+                    className="clear-button absolute right-3 top-10 -translate-y-1/2 transform   p-1.5 text-gray-500 hover:text-gray-700 focus:outline-none"
+                    onClick={() => {
+                      setSearchQuery("");
+                      setShowResultsPanel(false);
+                    }}
                   >
-                    <path
-                      fill-rule="evenodd"
-                      d="M6.293 6.293a1 1 0 0 1 1.414 0L10 8.586l2.293-2.293a1 1 0 1 1 1.414 1.414L11.414 10l2.293 2.293a1 1 0 0 1-1.414 1.414L10 11.414l-2.293 2.293a1 1 0 0 1-1.414-1.414L8.586 10 6.293 7.707a1 1 0 0 1 0-1.414z"
-                    />
-                  </svg>
-                </button>
+                    <svg
+                      className="h-10 w-10 p-2"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M6.293 6.293a1 1 0 0 1 1.414 0L10 8.586l2.293-2.293a1 1 0 1 1 1.414 1.414L11.414 10l2.293 2.293a1 1 0 0 1-1.414 1.414L10 11.414l-2.293 2.293a1 1 0 0 1-1.414-1.414L8.586 10 6.293 7.707a1 1 0 0 1 0-1.414z"
+                      />
+                    </svg>
+                  </button>
+
+                  <button
+                    type="submit"
+                    className="absolute left-8 top-5 mr-4 mt-3"
+                  >
+                    <IoSearch />
+                  </button>
+                </>
               )}
             </>
           ) : null}
@@ -129,7 +140,7 @@ export function Results({
         </div>
       </animated.div>
       <div
-        className="fixed right-0 top-0 z-10 h-screen w-screen overscroll-y-none bg-[#00000093] backdrop-blur-xl "
+        className="fixed right-0 top-0 z-10 h-[100dvh] w-screen overscroll-y-none bg-[#00000093] backdrop-blur-xl "
         onClick={() => setShowResultsPanel(false)}
       />
     </>

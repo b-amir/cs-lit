@@ -188,6 +188,7 @@ function HeaderSection({
             {/* <Link
               href={` ${sessionData && `/profile/${sessionData?.user?.id}`}`}
             > */}
+
             <Image
               src={
                 sessionData?.user?.image
@@ -244,7 +245,7 @@ function HeroSection({
     >
       <div
         id="top-part"
-        className="my-auto mb-auto flex w-full max-w-[1360px] flex-auto  flex-wrap-reverse items-center justify-between gap-2 lg:max-h-[75dvh] lg:gap-0 lg:py-20"
+        className="my-auto mb-auto flex w-full max-w-[1360px] flex-auto  flex-wrap-reverse items-center justify-between gap-2 sm:flex-wrap lg:max-h-[75dvh] lg:gap-0 lg:py-20"
       >
         <div
           id="left-part"
@@ -290,7 +291,7 @@ function HeroSection({
 
         <Image
           id="right-part"
-          className="z-0 mx-auto -mt-12 w-full min-w-[280px] px-0 sm:absolute sm:bottom-16 sm:right-1 sm:ml-auto sm:w-4/12 sm:min-w-[360px] lg:relative lg:mx-0 lg:mt-[12dvh] lg:max-h-[32rem] "
+          className="z-0 mx-auto -mt-12 w-full min-w-[280px] max-w-[280px] px-0 sm:absolute sm:bottom-16 sm:right-1 sm:ml-auto sm:w-4/12 sm:min-w-[360px] sm:max-w-none lg:relative lg:mx-0 lg:mt-[12dvh] lg:max-h-[32rem] "
           src="/assets/bulb2.svg"
           width={512}
           height={512}

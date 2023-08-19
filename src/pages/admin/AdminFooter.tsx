@@ -38,7 +38,7 @@ export function AdminFooter({
   return (
     <div
       id="admin-footer"
-      className={`absolute bottom-0 z-20 w-4/6 border-t border-t-[#cbcbcb]  bg-[#a352490d] transition-all ${
+      className={` bottom-0 z-20 w-full flex-col border-t border-t-[#cbcbcb] bg-[#f6f6f6] transition-all  sm:absolute sm:w-4/6 ${
         AdminFooterCollapsed
           ? "h-8 shadow-sm"
           : "h-[20dvh]  shadow-[0px_-1.5px_2px_1px_#00000008]"

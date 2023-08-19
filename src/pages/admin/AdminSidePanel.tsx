@@ -29,7 +29,7 @@ export function AdminSidePanel() {
   return (
     <div
       id="admin-sidepanel"
-      className="relative z-20 mx-auto h-full w-1/4   overflow-x-clip  border  border-[#b5b5b511] bg-[#f6f6f6] transition-all"
+      className="relative z-20 mx-auto h-full max-h-96 w-full overflow-y-auto overflow-x-clip border   border-[#b5b5b511]  bg-[#f6f6f6]  transition-all sm:max-h-none sm:w-1/4"
     >
       <div
         id="pending-header"
@@ -45,7 +45,7 @@ export function AdminSidePanel() {
         </div>
       </div>
 
-      <div className="h-[calc(100dvh-20dvh-90px-96px)] overflow-y-auto">
+      <div className=" overflow-y-auto sm:h-[calc(100dvh-20dvh-90px-96px)]">
         {pendingData?.pages?.map((page) =>
           page?.items?.map((item) => (
             <PendingItemView key={item.id} item={item} />

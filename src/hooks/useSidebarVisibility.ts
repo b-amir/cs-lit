@@ -20,7 +20,7 @@ const useSidebarVisibility = () => {
 
 
 
-  useLayoutEffect(() => {
+  useEffect(() => {
 
     /* --- ROUTE BASED RULES 
     ------------------------- */

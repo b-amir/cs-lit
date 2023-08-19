@@ -40,7 +40,7 @@ export function ListView({
   return (
     <div className=" relative z-20 mx-auto h-full  overflow-x-clip overflow-y-scroll  rounded-sm  bg-white px-0  transition-all ">
       <>
-        <div className="flex flex-col gap-5  border-b border-[#5555552a] bg-gradient-to-tr from-[#f4e6e07d] to-[#f9ece57d] px-16 py-6">
+        <div className="flex flex-col gap-5  border-b border-[#5555552a] bg-gradient-to-tr from-[#f4e6e07d] to-[#f9ece57d] px-6 py-6 sm:px-16">
           <div
             id="count-title"
             className="flex flex-row items-center justify-start"
@@ -98,7 +98,7 @@ export function ListView({
 
 function RadioOptions({ setOrderBy }) {
   return (
-    <div className="grid grid-cols-2 gap-1 rounded-md bg-[#6e3c2024] px-[0] py-1 text-sm text-[#2f2f2f]">
+    <div className="grid grid-cols-2 gap-1 rounded-md bg-[#6e3c2024] px-[0] py-1 text-xs text-[#2f2f2f] sm:text-sm">
       <div>
         <input
           type="radio"
@@ -119,7 +119,7 @@ function RadioOptions({ setOrderBy }) {
              peer-checked:font-bold peer-checked:text-gray-800 
              peer-checked:shadow-lg peer-checked:duration-200"
         >
-          <TbSortDescending2 className="mb-[3px]" /> Newest
+          <TbSortDescending2 className="mb-[3px] hidden sm:flex" /> Newest
         </label>
       </div>
       <div>
@@ -142,7 +142,7 @@ function RadioOptions({ setOrderBy }) {
            peer-checked:shadow-sm peer-checked:duration-200
            "
         >
-          <TbSortAscending2 className="mb-[4px]" />
+          <TbSortAscending2 className="mb-[4px] hidden sm:flex" />
           Oldest
         </label>
       </div>

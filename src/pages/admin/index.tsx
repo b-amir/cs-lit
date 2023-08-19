@@ -221,10 +221,13 @@ export default function AdminPage(props) {
               id="admin=page"
               className="mt-[90px] flex h-[calc(100dvh-90px-2px)] w-full flex-col border border-y-[#5555552a]"
             >
-              <div id="admin-page-columns" className=" flex ">
+              <div
+                id="admin-page-columns"
+                className="flex flex-col sm:flex-row "
+              >
                 <div
                   id="admin-lists"
-                  className={` w-3/4 overflow-x-clip overflow-y-clip border border-r-[#5555552a] pb-[92px] transition-all ${
+                  className={`w-full overflow-x-clip overflow-y-clip border border-r-[#5555552a] pb-[92px] transition-all sm:w-3/4 ${
                     AdminFooterCollapsed
                       ? "h-[calc(100dvh-2rem-90px)]"
                       : "h-[calc(100dvh-20dvh-90px)]"

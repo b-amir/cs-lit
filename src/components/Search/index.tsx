@@ -80,7 +80,7 @@ export function Search() {
             placeholder="Find topics..."
             className={`${
               homepage
-                ? "h-10 w-full  rounded-2xl border border-[#5c2c1d2a] bg-[#f9f9f9a8] px-5 py-6 pl-10 text-sm shadow-md shadow-[#6c6c6c0b] outline-none backdrop-blur-lg backdrop-filter transition-all duration-300 focus:border-[#9e9e9e] focus:bg-white focus:shadow-sm focus:outline-none sm:w-96 lg:w-96 lg:focus:w-96"
+                ? "h-10 w-full cursor-pointer  rounded-2xl border border-[#5c2c1d2a] bg-[#f9f9f9a8] px-5 py-6 pl-10 text-sm shadow-md shadow-[#6c6c6c0b] outline-none backdrop-blur-lg backdrop-filter transition-all duration-300 focus:border-[#9e9e9e] focus:bg-white focus:shadow-sm focus:outline-none sm:w-96 lg:w-96 lg:focus:w-96"
                 : "h-10 w-36 rounded-full border border-[#2A2A2E22] bg-[#f9f9f98f] px-5 pr-10 text-sm outline-none backdrop-blur-sm backdrop-filter transition-all duration-300 focus:w-64 focus:border-[#9e9e9e] focus:bg-white focus:shadow-sm focus:outline-none"
             } ${
               showResultsPanel ? "w-full lg:w-64" : ""
@@ -88,6 +88,17 @@ export function Search() {
             onChange={handleInputChange}
             value={searchQuery}
             ref={searchInputRef}
+            onClick={
+              homepage // set result panel true and scroll to top
+                ? () => {
+                    window.scrollTo({
+                      top: document.getElementById("counter-input"),
+                      behavior: "smooth",
+                    });
+                    setShowResultsPanel(true);
+                  }
+                : () => setShowResultsPanel(false)
+            }
           />
           {homepage && showResultsPanel && (
             <button

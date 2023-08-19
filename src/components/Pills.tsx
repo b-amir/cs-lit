@@ -20,7 +20,7 @@ export function PillsRow({
   return (
     <div
       id="pills-row"
-      className="flex max-h-[96px] flex-row items-start  gap-3 border-b border-[#5555552a] bg-[#F9F9F9] px-16 py-8"
+      className="flex flex-row items-start  gap-3 overflow-x-scroll border-b border-[#5555552a] bg-[#F9F9F9] px-6 py-8 sm:max-h-[96px] sm:overflow-x-clip sm:px-16 "
     >
       {pills.map((pillName) => (
         <Pill
