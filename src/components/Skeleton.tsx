@@ -26,22 +26,19 @@ export function AvatarSkeleton(): React.ReactNode {
 }
 export function HomeCategorySkeleton() {
   return (
-    <div className="grid h-4/6 w-full grid-cols-3 grid-rows-5 gap-6">
-      <div className="flex h-[85.65px] w-[283.65px] animate-pulse flex-row items-center justify-center rounded-xl bg-[#6267774f] px-6 py-7 shadow-sm backdrop-blur-sm" />
-      <div className="flex h-[85.65px] w-[283.65px] animate-pulse flex-row items-center justify-center rounded-xl bg-[#6267774f] px-6 py-7 shadow-sm backdrop-blur-sm" />
-      <div className="flex h-[85.65px] w-[283.65px] animate-pulse flex-row items-center justify-center rounded-xl bg-[#6267774f] px-6 py-7 shadow-sm backdrop-blur-sm" />
-      <div className="flex h-[85.65px] w-[283.65px] animate-pulse flex-row items-center justify-center rounded-xl bg-[#6267774f] px-6 py-7 shadow-sm backdrop-blur-sm" />
-      <div className="flex h-[85.65px] w-[283.65px] animate-pulse flex-row items-center justify-center rounded-xl bg-[#6267774f] px-6 py-7 shadow-sm backdrop-blur-sm" />
-      <div className="flex h-[85.65px] w-[283.65px] animate-pulse flex-row items-center justify-center rounded-xl bg-[#6267774f] px-6 py-7 shadow-sm backdrop-blur-sm" />
-      <div className="flex h-[85.65px] w-[283.65px] animate-pulse flex-row items-center justify-center rounded-xl bg-[#6267774f] px-6 py-7 shadow-sm backdrop-blur-sm" />
-      <div className="flex h-[85.65px] w-[283.65px] animate-pulse flex-row items-center justify-center rounded-xl bg-[#6267774f] px-6 py-7 shadow-sm backdrop-blur-sm" />
-      <div className="flex h-[85.65px] w-[283.65px] animate-pulse flex-row items-center justify-center rounded-xl bg-[#6267774f] px-6 py-7 shadow-sm backdrop-blur-sm" />
-      <div className="flex h-[85.65px] w-[283.65px] animate-pulse flex-row items-center justify-center rounded-xl bg-[#6267774f] px-6 py-7 shadow-sm backdrop-blur-sm" />
-      <div className="flex h-[85.65px] w-[283.65px] animate-pulse flex-row items-center justify-center rounded-xl bg-[#6267774f] px-6 py-7 shadow-sm backdrop-blur-sm" />
-      <div className="flex h-[85.65px] w-[283.65px] animate-pulse flex-row items-center justify-center rounded-xl bg-[#6267774f] px-6 py-7 shadow-sm backdrop-blur-sm" />
-      <div className="flex h-[85.65px] w-[283.65px] animate-pulse flex-row items-center justify-center rounded-xl bg-[#6267774f] px-6 py-7 shadow-sm backdrop-blur-sm" />
-      <div className="flex h-[85.65px] w-[283.65px] animate-pulse flex-row items-center justify-center rounded-xl bg-[#6267774f] px-6 py-7 shadow-sm backdrop-blur-sm" />
-      <div className="flex h-[85.65px] w-[283.65px] animate-pulse flex-row items-center justify-center rounded-xl bg-[#6267774f] px-6 py-7 shadow-sm backdrop-blur-sm" />
+    <div className="h-8/12 mx-auto mb-20 grid w-full justify-center gap-6 text-lg font-normal sm:grid-cols-2 lg:grid-cols-3">
+      <div className=" flex h-full w-full max-w-[calc(100vw-10vw)] animate-pulse flex-row items-center justify-center overflow-x-clip rounded-2xl border border-[#d5d9df33]  bg-[#d6e2f62c] px-6 py-3   text-[#29313d]  backdrop-blur-lg sm:mx-auto sm:max-w-[calc(40vw)] sm:bg-[#d6e2f60b] sm:py-9" />
+      <div className=" flex h-full w-full max-w-[calc(100vw-10vw)] animate-pulse flex-row items-center justify-center overflow-x-clip rounded-2xl border border-[#d5d9df33]  bg-[#d6e2f62c] px-6 py-3   text-[#29313d]  backdrop-blur-lg sm:mx-auto sm:max-w-[calc(40vw)] sm:bg-[#d6e2f60b] sm:py-9" />
+      <div className=" flex h-full w-full max-w-[calc(100vw-10vw)] animate-pulse flex-row items-center justify-center overflow-x-clip rounded-2xl border border-[#d5d9df33]  bg-[#d6e2f62c] px-6 py-3   text-[#29313d]  backdrop-blur-lg sm:mx-auto sm:max-w-[calc(40vw)] sm:bg-[#d6e2f60b] sm:py-9" />
+      <div className=" flex h-full w-full max-w-[calc(100vw-10vw)] animate-pulse flex-row items-center justify-center overflow-x-clip rounded-2xl border border-[#d5d9df33]  bg-[#d6e2f62c] px-6 py-3   text-[#29313d]  backdrop-blur-lg sm:mx-auto sm:max-w-[calc(40vw)] sm:bg-[#d6e2f60b] sm:py-9" />
+      <div className=" flex h-full w-full max-w-[calc(100vw-10vw)] animate-pulse flex-row items-center justify-center overflow-x-clip rounded-2xl border border-[#d5d9df33]  bg-[#d6e2f62c] px-6 py-3   text-[#29313d]  backdrop-blur-lg sm:mx-auto sm:max-w-[calc(40vw)] sm:bg-[#d6e2f60b] sm:py-9" />
+      <div className=" flex h-full w-full max-w-[calc(100vw-10vw)] animate-pulse flex-row items-center justify-center overflow-x-clip rounded-2xl border border-[#d5d9df33]  bg-[#d6e2f62c] px-6 py-3   text-[#29313d]  backdrop-blur-lg sm:mx-auto sm:max-w-[calc(40vw)] sm:bg-[#d6e2f60b] sm:py-9" />
+      <div className=" flex h-full w-full max-w-[calc(100vw-10vw)] animate-pulse flex-row items-center justify-center overflow-x-clip rounded-2xl border border-[#d5d9df33]  bg-[#d6e2f62c] px-6 py-3   text-[#29313d]  backdrop-blur-lg sm:mx-auto sm:max-w-[calc(40vw)] sm:bg-[#d6e2f60b] sm:py-9" />
+      <div className=" flex h-full w-full max-w-[calc(100vw-10vw)] animate-pulse flex-row items-center justify-center overflow-x-clip rounded-2xl border border-[#d5d9df33]  bg-[#d6e2f62c] px-6 py-3   text-[#29313d]  backdrop-blur-lg sm:mx-auto sm:max-w-[calc(40vw)] sm:bg-[#d6e2f60b] sm:py-9" />
+      <div className=" flex h-full w-full max-w-[calc(100vw-10vw)] animate-pulse flex-row items-center justify-center overflow-x-clip rounded-2xl border border-[#d5d9df33]  bg-[#d6e2f62c] px-6 py-3   text-[#29313d]  backdrop-blur-lg sm:mx-auto sm:max-w-[calc(40vw)] sm:bg-[#d6e2f60b] sm:py-9" />
+      <div className=" flex h-full w-full max-w-[calc(100vw-10vw)] animate-pulse flex-row items-center justify-center overflow-x-clip rounded-2xl border border-[#d5d9df33]  bg-[#d6e2f62c] px-6 py-3   text-[#29313d]  backdrop-blur-lg sm:mx-auto sm:max-w-[calc(40vw)] sm:bg-[#d6e2f60b] sm:py-9" />
+      <div className=" flex h-full w-full max-w-[calc(100vw-10vw)] animate-pulse flex-row items-center justify-center overflow-x-clip rounded-2xl border border-[#d5d9df33]  bg-[#d6e2f62c] px-6 py-3   text-[#29313d]  backdrop-blur-lg sm:mx-auto sm:max-w-[calc(40vw)] sm:bg-[#d6e2f60b] sm:py-9" />
+      <div className=" flex h-full w-full max-w-[calc(100vw-10vw)] animate-pulse flex-row items-center justify-center overflow-x-clip rounded-2xl border border-[#d5d9df33]  bg-[#d6e2f62c] px-6 py-3   text-[#29313d]  backdrop-blur-lg sm:mx-auto sm:max-w-[calc(40vw)] sm:bg-[#d6e2f60b] sm:py-9" />
     </div>
   );
 }

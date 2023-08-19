@@ -19,7 +19,7 @@ import {
 } from "./EditorModal";
 import { useSession } from "next-auth/react";
 import { AiFillLock } from "react-icons/ai";
-import { LoadingSpinner } from "@/components/loading";
+import { CornerLoading } from "@/components/loading";
 
 export default function AdminPage(props) {
   const [AdminFooterCollapsed, setAdminFooterCollapsed] = useState(false);
@@ -214,7 +214,7 @@ export default function AdminPage(props) {
       </Head>
       <PageLayout>
         {sessionStatus === "loading" ? (
-          <LoadingSpinner />
+          <CornerLoading />
         ) : sessionData?.user.role === "ADMIN" ? (
           <>
             <div

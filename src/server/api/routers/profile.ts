@@ -165,12 +165,18 @@ export const profileRouter = createTRPCRouter({
             }
           }
         },
-        include: {
+        select: {
+          id: true,
+          name: true,
           _count: {
             select: {
-              analogies: true,
-            },
-          },
+              analogies: {
+                where: {
+                  status: "PUBLISHED"
+                }
+              }
+            }
+          }
         },
         take: 3,
         orderBy: [
@@ -178,12 +184,15 @@ export const profileRouter = createTRPCRouter({
           {
             analogies: {
               _count: 'desc',
+
             },
           },
         ],
       });
       return filterUsersForClient(users);
     }),
+
+
 
   update: protectedProcedure
     .input(
