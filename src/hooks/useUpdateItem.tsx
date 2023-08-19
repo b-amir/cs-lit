@@ -40,7 +40,6 @@ export function useUpdateItem(item: ITopicInput, type: string) {
       },
       onError: (e) => {
         toast.error("Something went wrong");
-        console.log(e);
       },
     });
 
@@ -56,7 +55,6 @@ export function useUpdateItem(item: ITopicInput, type: string) {
         updateCategory({ id: item.id, name: item.name, slug: item.slug });
       } catch (e) {
         toast.error("Something went wrong");
-        console.log(e);
       }
     };
     return updateCategoryHandler;
@@ -91,7 +89,6 @@ export function useUpdateItem(item: ITopicInput, type: string) {
         });
       } catch (e) {
         toast.error("Something went wrong");
-        console.log(e);
       }
     };
     return updateTopicHandler;
@@ -109,7 +106,6 @@ export function useUpdateItem(item: ITopicInput, type: string) {
       },
       onError: (e) => {
         const errorMessage = e.data?.zodError?.fieldErrors;
-        console.log(errorMessage);
         if (errorMessage) {
           if (errorMessage.description) {
             toast.error(errorMessage?.description.join(" "));
@@ -140,7 +136,6 @@ export function useUpdateItem(item: ITopicInput, type: string) {
         });
       } catch (e) {
         toast.error("Something went wrong");
-        console.log(e);
       }
     };
     return updateAnalogyHandler;
@@ -156,7 +151,6 @@ export function useUpdateItem(item: ITopicInput, type: string) {
       },
       onError: (e) => {
         toast.error("Something went wrong");
-        console.log(e);
       },
     });
 
@@ -179,7 +173,6 @@ export function useUpdateItem(item: ITopicInput, type: string) {
         });
       } catch (e) {
         toast.error("Something went wrong");
-        console.log(e);
       }
     };
     return updateUserHandler;
@@ -213,7 +206,6 @@ export function useUpdateItem(item: ITopicInput, type: string) {
         });
       } catch (e) {
         toast.error("Something went wrong");
-        console.log(e);
       }
     };
     return updateTopicHandler;

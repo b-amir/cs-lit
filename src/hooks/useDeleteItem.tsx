@@ -40,7 +40,6 @@ export function useDeleteItem(item: ITopicInput, type: string) {
         deleteTopic({ id: item.id });
       } catch (e) {
         toast.error("Something went wrong");
-        console.log(e);
       }
     };
     return deleteTopicHandler;
@@ -56,7 +55,6 @@ export function useDeleteItem(item: ITopicInput, type: string) {
       },
       onError: (e) => {
         toast.error("Something went wrong");
-        console.log(e);
       },
     });
 
@@ -71,7 +69,6 @@ export function useDeleteItem(item: ITopicInput, type: string) {
         deleteCategory({ id: item.id });
       } catch (e) {
         toast.error("Something went wrong");
-        console.log(e);
       }
     };
     return deleteCategoryHandler;
@@ -88,7 +85,6 @@ export function useDeleteItem(item: ITopicInput, type: string) {
       },
       onError: (e) => {
         toast.error("Something went wrong");
-        console.log(e);
       },
     });
 
@@ -103,7 +99,6 @@ export function useDeleteItem(item: ITopicInput, type: string) {
         deleteAnalogy({ id: item.id });
       } catch (e) {
         toast.error("Something went wrong");
-        console.log(e);
       }
     };
     return deleteAnalogyHandler;
@@ -119,7 +114,6 @@ export function useDeleteItem(item: ITopicInput, type: string) {
       },
       onError: (e) => {
         toast.error("Something went wrong");
-        console.log(e);
       },
     });
 
@@ -134,7 +128,6 @@ export function useDeleteItem(item: ITopicInput, type: string) {
         deleteUser({ id: item.id });
       } catch (e) {
         toast.error("Something went wrong");
-        console.log(e);
       }
     };
     return deleteUserHandler;
@@ -151,7 +144,6 @@ export function useDeleteItem(item: ITopicInput, type: string) {
       },
       onError: (e) => {
         toast.error("Something went wrong");
-        console.log(e);
       },
     });
 
@@ -166,7 +158,6 @@ export function useDeleteItem(item: ITopicInput, type: string) {
         deleteComment({ id: item.id });
       } catch (e) {
         toast.error("Something went wrong");
-        console.log(e);
       }
     };
     return deleteCommentHandler;

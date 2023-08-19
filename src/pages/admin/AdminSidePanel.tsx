@@ -60,8 +60,6 @@ export function AdminSidePanel() {
           </div>
         )}
 
-        {/* {console.log(pendingData)} */}
-
         {hasNextPage && (
           <LoadMoreButton
             fetchNextPage={fetchNextPage}

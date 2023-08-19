@@ -52,7 +52,6 @@ export function useCreateItem(item: ITopicInput, type: string) {
       },
       onError: (e) => {
         const errorMessage = e.data?.zodError?.fieldErrors;
-        console.log(errorMessage);
         if (errorMessage) {
           if (errorMessage.name) {
             toast.error(errorMessage?.name.join(" "));
@@ -85,7 +84,6 @@ export function useCreateItem(item: ITopicInput, type: string) {
         });
       } catch (e) {
         toast.error("Something went wrong");
-        console.log(e);
       }
     };
     return createCategoryHandler;
@@ -107,7 +105,6 @@ export function useCreateItem(item: ITopicInput, type: string) {
       },
       onError: (e) => {
         const errorMessage = e.data?.zodError?.fieldErrors;
-        // console.log(errorMessage);
         if (errorMessage) {
           if (errorMessage.url) {
             toast.error(errorMessage?.url.join(" "));
@@ -153,7 +150,6 @@ export function useCreateItem(item: ITopicInput, type: string) {
         });
       } catch (e) {
         toast.error("Something went wrong");
-        // console.log(e);
       }
     };
     return createTopicHandler;
@@ -175,7 +171,6 @@ export function useCreateItem(item: ITopicInput, type: string) {
       },
       onError: (e) => {
         const errorMessage = e.data?.zodError?.fieldErrors;
-        console.log(errorMessage);
         if (errorMessage) {
           if (errorMessage.description) {
             toast.error(errorMessage?.description.join(" "));
@@ -210,7 +205,6 @@ export function useCreateItem(item: ITopicInput, type: string) {
         });
       } catch (e) {
         toast.error("Something went wrong");
-        console.log(e);
       }
     };
     return createAnalogyHandler;
@@ -231,7 +225,6 @@ export function useCreateItem(item: ITopicInput, type: string) {
       },
       onError: (e) => {
         const errorMessage = e.data?.zodError?.fieldErrors;
-        console.log(errorMessage);
         if (errorMessage) {
           if (errorMessage.content) {
             toast.error(errorMessage?.content.join(" "));
@@ -257,7 +250,6 @@ export function useCreateItem(item: ITopicInput, type: string) {
         });
       } catch (e) {
         toast.error("Something went wrong");
-        console.log(e);
       }
     };
     return createCommentHandler;
@@ -272,7 +264,6 @@ export function useCreateItem(item: ITopicInput, type: string) {
   //     },
   //     onError: (e) => {
   //       toast.error("Something went wrong");
-  //       console.log(e);
   //     },
   //   });
 
@@ -295,7 +286,6 @@ export function useCreateItem(item: ITopicInput, type: string) {
   //       });
   //     } catch (e) {
   //       toast.error("Something went wrong");
-  //       console.log(e);
   //     }
   //   };
   //   return updateUserHandler;

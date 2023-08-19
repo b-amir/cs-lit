@@ -12,7 +12,6 @@ export function Navbar({
   toggleLeftSidebar,
   toggleRightSidebar,
 }) {
-  // console.log("visibleSidebars:", visibleSidebars);
   return (
     <nav
       className={`fixed top-0 z-40 mx-auto flex min-h-[90px] ${mainWidthClass} items-center justify-between border-b !border-[#ebe8e869] border-opacity-20 bg-transparent bg-gradient-to-b from-[#EBEAE8] to-[#ebeae84a] px-2 backdrop-blur-sm sm:px-10`}

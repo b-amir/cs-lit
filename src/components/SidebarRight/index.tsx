@@ -64,7 +64,6 @@ function WidgetSection() {
   );
   const { data: TopThreeData } = api.profile.getTopThree.useQuery();
 
-  console.log("TopThreeData:", TopThreeData);
 
   // if window height is small, show one widget at a time and hide the other
   const [activeWidgetIndex, setActiveWidgetIndex] = useState([0]);

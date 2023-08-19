@@ -26,8 +26,6 @@ export function FormTrigger({
   setEditorState,
   newInput,
 }: IFormTriggerProps) {
-  console.log("editorState:", editorState);
-
   return (
     <div
       id="add-topic-header"

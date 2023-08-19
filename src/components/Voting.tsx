@@ -29,8 +29,6 @@ export function Voting({ analogyId }: { analogyId: string }) {
     }
   }, [whatDidCurrentUserVote]);
 
-  // console.log("whatDidCurrentUserVote", whatDidCurrentUserVote);
-
   const { mutate: Vote, isLoading: isVoting } = api.analogy.voting.useMutation({
     onSuccess: () => {
       void ctx.analogy.getAnalogyVotes.invalidate();
@@ -45,7 +43,6 @@ export function Voting({ analogyId }: { analogyId: string }) {
     },
     onError: (e) => {
       const errorMessage = e.data?.zodError?.fieldErrors;
-      // console.log(errorMessage);
       if (errorMessage) {
         if (errorMessage.vote) {
           toast.error(errorMessage?.vote.join(" "));
