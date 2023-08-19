@@ -3,6 +3,7 @@ import { animated } from "@react-spring/web";
 import { CgSpinner } from "react-icons/cg";
 import { MdClose } from "react-icons/md";
 import { IoSearch } from "react-icons/io5";
+import { useRef } from "react";
 
 export function Results({
   panelAnimation,
@@ -21,12 +22,22 @@ export function Results({
   const haveResults = results?.length > 0 && !loading && searchQuery.length > 1;
   const smallQuery = searchQuery.length < 2;
 
+  const searchInputRef = useRef(null);
+  const handleInputFocus = (event) => {
+    event.preventDefault();
+    // prevent mobile keyboard height to screw things up
+    searchInputRef.current.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+    });
+  };
+
   return (
     <>
       <animated.div
         className={`${
           homepage
-            ? "fixed  right-[0px] top-[0px] z-[51] h-screen w-full overflow-hidden border-x border-[#ffffff3a] bg-[#eaeaeab8] pt-[40px] shadow-lg backdrop-blur-lg backdrop-filter md:w-[460px]"
+            ? "fixed  right-0 top-0 z-[51] h-[100dvh] w-full overflow-hidden border-x border-[#ffffff3a] bg-[#eaeaeab8] pt-[40px] shadow-lg backdrop-blur-lg backdrop-filter md:w-[460px]"
             : "absolute right-[0px] top-[0px] z-20 h-screen w-[360px] overflow-hidden border-x border-[#ffffff3a] bg-[#eaeaeaf8] pt-[40px] shadow-lg backdrop-blur-sm backdrop-filter"
         }`}
         style={panelAnimation}
@@ -34,7 +45,7 @@ export function Results({
         <div
           className={`${
             homepage
-              ? "top-0 -mb-4 mt-[-40px] h-[4.8rem] items-center bg-[#b4b4b477]  p-4 "
+              ? "fixed right-0 top-0 h-[5rem] w-full items-center bg-[#b4b4b477]  p-4 "
               : "top-0 mt-[-40px] h-[90px] border-b border-[#7c7c7c41] bg-[#b4b4b477] shadow-sm"
           }`}
         >
@@ -43,11 +54,13 @@ export function Results({
               <input
                 type="search"
                 name="search"
+                ref={searchInputRef}
                 id="counter-input"
+                onFocus={handleInputFocus}
                 placeholder="Find topics..."
                 className={`${
                   homepage
-                    ? "h-10 w-full  rounded-2xl border border-[#5c2c1d2a] bg-[#f9f9f9a8] px-5 py-6 pl-10 text-sm shadow-md shadow-[#6c6c6c0b] outline-none backdrop-blur-lg backdrop-filter transition-all duration-300 focus:border-[#9e9e9e] focus:bg-white focus:shadow-sm focus:outline-none sm:w-96 lg:w-96 lg:focus:w-96"
+                    ? "h-10 w-full  overscroll-y-none rounded-2xl border border-[#5c2c1d2a]  bg-[#f9f9f9a8] px-5 py-6 pl-10 text-sm shadow-md shadow-[#6c6c6c0b] outline-none backdrop-blur-lg backdrop-filter transition-all duration-300 focus:border-[#9e9e9e] focus:bg-white focus:shadow-sm focus:outline-none sm:w-96 lg:w-96 lg:focus:w-96"
                     : "h-10 w-36 rounded-full border border-[#2A2A2E22] bg-[#f9f9f98f] px-5 pr-10 text-sm outline-none backdrop-blur-sm backdrop-filter transition-all duration-300 focus:w-64 focus:border-[#9e9e9e] focus:bg-white focus:shadow-sm focus:outline-none"
                 } input[type=search] {-webkit-appearance: searchfield !important;} input[type=search]::-webkit-search-cancel-button {-webkit-appearance: searchfield-cancel-button !important;}`}
                 onChange={onChange}
@@ -89,13 +102,13 @@ export function Results({
         </div>
         <div className="flex h-full flex-col items-start justify-start pt-6">
           {smallQuery ? (
-            <div className="mx-auto my-6 inline-flex flex-row  content-center items-center justify-center rounded-full border border-[#bcac22] bg-[#e8e09b33] px-6 py-2 text-center text-sm font-semibold text-[#896d12]">
+            <div className="mx-auto my-10 inline-flex flex-row  content-center items-center justify-center rounded-full border border-[#bcac22] bg-[#e8e09b33] px-6 py-2 text-center text-sm font-semibold text-[#896d12]">
               At least type 2 characters
             </div>
           ) : null}
 
           {haveResults ? (
-            <div className="my-6 mb-6 flex w-full flex-row content-center justify-start text-center font-semibold text-[#2a2a2ec4]">
+            <div className="my-10 mb-6 flex w-full flex-row content-center justify-start text-center font-semibold text-[#2a2a2ec4]">
               <div className="mx-12 flex w-full flex-row content-start items-start justify-start text-start">
                 Top results:
               </div>
@@ -124,10 +137,10 @@ export function Results({
               ))}
             {searchQuery.length > 1 && loading && (
               // show spinner
-              <CgSpinner className="mx-auto my-4 flex w-full animate-spin flex-row content-center justify-center text-center text-2xl font-semibold text-[#2a2a2ec4]" />
+              <CgSpinner className="mx-auto my-10 flex w-full animate-spin flex-row content-center justify-center text-center text-2xl font-semibold text-[#2a2a2ec4]" />
             )}
             {searchQuery && !loading && results?.length === 0 && (
-              <div className="mx-auto my-8 flex w-full flex-col content-center justify-center gap-2 text-center  ">
+              <div className="mx-auto my-10 flex w-full flex-col content-center justify-center gap-2 text-center  ">
                 <span className="font-semibold text-[#2a2a2ec4]">
                   No results found.
                 </span>{" "}
@@ -140,7 +153,7 @@ export function Results({
         </div>
       </animated.div>
       <div
-        className="fixed right-0 top-0 z-10 h-[100dvh] w-screen overscroll-y-none bg-[#00000093] backdrop-blur-xl "
+        className="fixed right-0 top-0 z-10  h-[100dvh] w-screen overscroll-y-none bg-[#00000093] backdrop-blur-xl"
         onClick={() => setShowResultsPanel(false)}
       />
     </>

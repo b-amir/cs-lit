@@ -235,7 +235,7 @@ function HeroSection({
   return (
     <div
       id="hero-section"
-      className="mt-[-60px] flex h-screen w-full flex-col items-center justify-between px-8 pt-20 sm:mt-[-90px] lg:px-40"
+      className="mt-[-60px] flex h-[100dvh] w-full flex-col items-center justify-between px-8 pt-20 sm:mt-[-90px] lg:px-40"
       style={{
         backgroundColor: "#fff",
         backgroundAttachment: "fixed",
