@@ -103,7 +103,7 @@ export default function CategoryPage() {
   return (
     <>
       <Head>
-        <title>{`${categoryData?.name ?? "CS"}`} Like I&apos;m 10!</title>
+        <title>{`${categoryData?.name ?? "CS"} Like I'm 10 !`}</title>
         <meta
           name="description"
           content="Explain Computer science like I'm 10 Years Old!"

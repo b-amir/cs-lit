@@ -29,10 +29,9 @@ export default function SingleAnalogyPage() {
     <>
       <Head>
         <title>
-          {`${singleAnalogyData?.topic?.title ?? ""} by ${
-            singleAnalogyData?.user?.name ?? ""
-          }`}{" "}
-          - CSLIT
+          {`${singleAnalogyData?.topic?.title ?? "Analogy"} by ${
+            singleAnalogyData?.user?.name ?? "User"
+          }`}
         </title>
         <meta
           name="description"

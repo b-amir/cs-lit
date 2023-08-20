@@ -94,10 +94,7 @@ export default function TopicPage(props) {
   return (
     <>
       <Head>
-        <title>
-          {/* eslint-disable-next-line react/jsx-no-comment-textnodes */}
-          {`${topicsData?.title ?? "CS"}`} Like I&apos;m 10!
-        </title>
+        <title>{`${topicsData?.title ?? "CS"} Like I'm 10 !`}</title>
         <meta
           name="description"
           content="Explain Computer science like I'm 10 Years Old!"

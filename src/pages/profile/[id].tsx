@@ -9,6 +9,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { LoadMoreButton } from "@/components/LoadMoreButton";
 import { useSession } from "next-auth/react";
+import type { Metadata, ResolvingMetadata } from "next";
 
 // this is a page that is renderd when a user visits /profile/[id]
 // the point of this page is to show a user's profile and all analogies that they created
@@ -131,8 +132,8 @@ const ProfilePage: NextPage<object> = () => {
     <>
       <Head>
         <title>
-          {profileData?.name ? profileData?.name : profileData?.email}&apos;s
-          Profile
+          {`${profileData?.name ? profileData?.name : profileData?.email}'s
+          Profile`}
         </title>
         <meta
           name="description"
@@ -154,24 +155,3 @@ const ProfilePage: NextPage<object> = () => {
 };
 
 export default ProfilePage;
-
-// export const getStaticProps: GetStaticProps = async (context) => {
-//   const ssg = generateSSGHelper();
-
-//   const userId = context.params?.userId as string;
-//   if (typeof userId !== "string") throw new Error("slug is not a string");
-
-//   // const userId = slug.replace("@", "");
-//   await ssg.profile.getUserId.prefetch({ id: userId });
-
-//   return {
-//     props: {
-//       trpcState: JSON.parse(JSON.stringify(ssg.dehydrate())),
-//       userId,
-//     },
-//   };
-// };
-
-// export const getStaticPaths = () => {
-//   return { paths: [], fallback: "blocking" };
-// };

@@ -122,9 +122,9 @@ const ErrorPage = (props: ErrorProps) => {
             <RiErrorWarningFill className="mb-0.5" /> {heading}
           </h1>
 
-          <p className="text-md mb-4 text-center text-sm font-normal text-gray-700">
+          <div className="text-md mb-4 text-center text-sm font-normal text-gray-700">
             {message}
-          </p>
+          </div>
         </div>
       </div>
     </div>

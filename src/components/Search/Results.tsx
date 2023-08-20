@@ -3,7 +3,6 @@ import { animated } from "@react-spring/web";
 import { CgSpinner } from "react-icons/cg";
 import { MdClose } from "react-icons/md";
 import { IoSearch } from "react-icons/io5";
-import { useRef } from "react";
 
 export function Results({
   panelAnimation,
@@ -21,16 +20,6 @@ export function Results({
     typeof window !== "undefined" ? window.location.pathname === "/" : false;
   const haveResults = results?.length > 0 && !loading && searchQuery.length > 1;
   const smallQuery = searchQuery.length < 2;
-
-  const searchInputRef = useRef(null);
-  const handleInputFocus = (event) => {
-    event.preventDefault();
-    // prevent mobile keyboard height to screw things up
-    searchInputRef.current.scrollIntoView({
-      behavior: "smooth",
-      block: "center",
-    });
-  };
 
   return (
     <>
@@ -54,9 +43,7 @@ export function Results({
               <input
                 type="search"
                 name="search"
-                ref={searchInputRef}
                 id="counter-input"
-                onFocus={handleInputFocus}
                 placeholder="Find topics..."
                 className={`${
                   homepage

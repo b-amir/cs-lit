@@ -77,12 +77,17 @@ export function Search() {
           {homepage ? (
             <button
               onClick={() => {
-                const categorySection =
-                  document.getElementById("counter-input");
-                categorySection?.scrollIntoView({ behavior: "smooth" });
                 setShowResultsPanel(true);
+                // taking this task out of callstack until we have a "counter-input" in the DOM
+                setTimeout(() => {
+                  const counterInput =
+                    document?.getElementById("counter-input");
+                  if (counterInput) {
+                    counterInput.focus();
+                  }
+                }, 0);
               }}
-              className="flex h-10 w-72 cursor-pointer select-none items-center justify-start rounded-2xl border border-[#5c2c1d2a] bg-[#f9f9f9a8] px-5 py-6 pl-10 text-sm text-gray-400 shadow-md shadow-[#6c6c6c0b] outline-none backdrop-blur-lg backdrop-filter transition-all duration-300 focus:border-[#9e9e9e] focus:bg-white focus:shadow-sm focus:outline-none sm:w-96 lg:w-96 lg:focus:w-96"
+              className="flex h-10 w-72 cursor-pointer select-none items-center justify-start rounded-2xl border border-[#5c2c1d2a] bg-[#f9f9f9a8] px-5 py-6 pl-10 text-sm text-gray-400 shadow-md shadow-[#6c6c6c0b] outline-none backdrop-blur-lg backdrop-filter transition-all duration-300 hover:border-[#9e9e9ec0] focus:bg-white focus:shadow-sm focus:outline-none sm:w-96 lg:w-96 lg:focus:w-96"
             >
               <IoSearch className="absolute left-4 top-4 " />
               <span> Find topics...</span>
@@ -93,7 +98,7 @@ export function Search() {
                 type="search"
                 name="search"
                 placeholder="Find topics..."
-                className={`"h-10 focus:outline-none" w-36 rounded-full border border-[#2A2A2E22] bg-[#f9f9f98f] px-5 pr-10 text-sm outline-none backdrop-blur-sm backdrop-filter transition-all duration-300 focus:w-64 focus:border-[#9e9e9e] focus:bg-white focus:shadow-sm
+                className={`focus:outline-none" h-10 w-36 rounded-full border border-[#2A2A2E22] bg-[#f9f9f98f] px-5 pr-10 text-sm outline-none backdrop-blur-sm backdrop-filter transition-all duration-300 focus:w-64 focus:border-[#9e9e9e] focus:bg-white focus:shadow-sm
                 ${
                   showResultsPanel ? "w-full lg:w-64" : ""
                 }  input[type=search] {-webkit-appearance: searchfield !important;} input[type=search]::-webkit-search-cancel-button {-webkit-appearance: searchfield-cancel-button !important;}`}
