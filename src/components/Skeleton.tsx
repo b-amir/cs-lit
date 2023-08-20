@@ -44,7 +44,7 @@ export function HomeCategorySkeleton() {
 }
 export function HomeUserSkeleton() {
   return (
-    <div className="flex h-[47.66px] w-[47.66px] animate-pulse items-center gap-2 rounded-full border border-[#5c2c1d2b] bg-[#f0cec5] px-2 py-2 pr-4 backdrop-blur-sm transition-all duration-300 sm:w-[148.53px]" />
+    <div className="flex h-[47.66px] w-[47.66px] animate-pulse items-center gap-2 rounded-full border border-[#5c2c1d2b] bg-[#f0cec578] px-2 py-2 pr-4 backdrop-blur-sm transition-all duration-300 sm:w-[148.53px]" />
   );
 }
 export function TableSkeleton(): React.ReactNode {

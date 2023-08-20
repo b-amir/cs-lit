@@ -1,8 +1,21 @@
 import Link from "next/link";
-import { animated } from "@react-spring/web";
+import { animated, type SpringValues } from "@react-spring/web";
 import { CgSpinner } from "react-icons/cg";
-import { MdClose } from "react-icons/md";
 import { IoSearch } from "react-icons/io5";
+import { type IExtendedTopic } from ".";
+
+interface IResultsProps {
+  panelAnimation: SpringValues;
+  results: IExtendedTopic[] | undefined;
+  searchQuery: string;
+  debouncedSearch: string;
+  loading: boolean;
+  setShowResultsPanel: (value: boolean) => void;
+  handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  value: string;
+  ref: React.RefObject<HTMLInputElement>;
+  setSearchQuery: (value: string) => void;
+}
 
 export function Results({
   panelAnimation,
@@ -11,14 +24,15 @@ export function Results({
   debouncedSearch,
   loading,
   setShowResultsPanel,
-  onChange,
+  handleInputChange,
   value,
   ref,
   setSearchQuery,
-}) {
+}: IResultsProps) {
   const homepage =
     typeof window !== "undefined" ? window.location.pathname === "/" : false;
-  const haveResults = results?.length > 0 && !loading && searchQuery.length > 1;
+  const haveResults =
+    results && results?.length > 0 && !loading && searchQuery.length > 1;
   const smallQuery = searchQuery.length < 2;
 
   return (
@@ -50,7 +64,7 @@ export function Results({
                     ? "h-10 w-full  overscroll-y-none rounded-2xl border border-[#5c2c1d2a]  bg-[#f9f9f9a8] px-5 py-6 pl-10 text-sm shadow-md shadow-[#6c6c6c0b] outline-none backdrop-blur-lg backdrop-filter transition-all duration-300 focus:border-[#9e9e9e] focus:bg-white focus:shadow-sm focus:outline-none sm:w-96 lg:w-96 lg:focus:w-96"
                     : "h-10 w-36 rounded-full border border-[#2A2A2E22] bg-[#f9f9f98f] px-5 pr-10 text-sm outline-none backdrop-blur-sm backdrop-filter transition-all duration-300 focus:w-64 focus:border-[#9e9e9e] focus:bg-white focus:shadow-sm focus:outline-none"
                 } input[type=search] {-webkit-appearance: searchfield !important;} input[type=search]::-webkit-search-cancel-button {-webkit-appearance: searchfield-cancel-button !important;}`}
-                onChange={onChange}
+                onChange={handleInputChange}
                 value={value}
                 ref={ref}
               />
@@ -103,8 +117,9 @@ export function Results({
           ) : null}
           <ul id="search-result-items" className="flex w-full flex-col gap-5">
             {debouncedSearch?.length > 1 &&
+              results &&
               results?.length > 0 &&
-              results?.map((topic: any) => (
+              results?.map((topic: IExtendedTopic) => (
                 <li className="w-full" key={topic.id}>
                   <Link
                     href={`/${topic.category.slug}/${topic.slug}`}

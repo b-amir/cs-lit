@@ -155,3 +155,24 @@ const ProfilePage: NextPage<object> = () => {
 };
 
 export default ProfilePage;
+
+// export const getStaticProps: GetStaticProps = async (context) => {
+//   const ssg = generateSSGHelper();
+
+//   const userId = context.params?.userId as string;
+//   if (typeof userId !== "string") throw new Error("slug is not a string");
+
+//   // const userId = slug.replace("@", "");
+//   await ssg.profile.getUserId.prefetch({ id: userId });
+
+//   return {
+//     props: {
+//       trpcState: JSON.parse(JSON.stringify(ssg.dehydrate())),
+//       userId,
+//     },
+//   };
+// };
+
+// export const getStaticPaths = () => {
+//   return { paths: [], fallback: "blocking" };
+// };

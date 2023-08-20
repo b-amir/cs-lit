@@ -1,14 +1,22 @@
 import { IoSearch } from "react-icons/io5";
 import { api } from "@/utils/api";
 import { type ChangeEvent, useEffect, useRef, useState } from "react";
-import { useSpring } from "@react-spring/web";
+import { useSpring, type SpringValues } from "@react-spring/web";
 import { useDebounce } from "@/hooks/useDebounce";
 import { Results } from "./Results";
 import { useRouter } from "next/router";
+import { type Topic } from "@prisma/client";
+
+export interface IExtendedTopic extends Topic {
+  category: {
+    name: string;
+    slug: string;
+  };
+}
 
 export function Search() {
   const [showResultsPanel, setShowResultsPanel] = useState(false);
-  const [results, setResults] = useState<[] | undefined>([]);
+  const [results, setResults] = useState<IExtendedTopic[] | undefined>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [loading, setLoading] = useState(false);
 
@@ -33,25 +41,24 @@ export function Search() {
       refetchOnWindowFocus: false,
       refetchOnMount: false,
       refetchOnReconnect: false,
-      manual: true,
     }
   );
 
   const debouncedSearch = useDebounce(searchQuery, 500);
 
   useEffect(() => {
-    async function fetchData() {
+    function fetchData() {
       setLoading(true);
       setResults([]);
-      const fetchedTopics = await topicsData;
+      const fetchedTopics = topicsData;
       // this delay is just gives the satisfaction of "searching"!
-      // It's purely a UX desicion and obviously not to be used big projects.
+      // It's purely a UX decision and obviously not to be used big projects.
       setTimeout(() => {
         setResults(fetchedTopics);
         setLoading(false);
       }, 800);
     }
-    if (debouncedSearch) fetchData();
+    if (debouncedSearch) void fetchData();
   }, [debouncedSearch, topicsData]);
 
   // Animation config
@@ -132,7 +139,7 @@ export function Search() {
           debouncedSearch={debouncedSearch}
           loading={loading}
           setShowResultsPanel={setShowResultsPanel}
-          onChange={handleInputChange}
+          handleInputChange={handleInputChange}
           value={searchQuery}
           ref={searchInputRef}
           setSearchQuery={setSearchQuery}
