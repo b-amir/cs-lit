@@ -29,7 +29,7 @@ export const Feed: React.FC<IFeedProps> = ({
     <>
       <div
         id="analogies-array"
-        className="flex flex-col items-center sm:px-10 lg:px-[16.666667%]"
+        className={`mb-auto flex flex-col items-center  pb-16 sm:px-10 lg:px-[16.666667%]`}
       >
         {topicAnalogies?.pages?.map((page) =>
           // eslint-disable-next-line @typescript-eslint/no-unsafe-return

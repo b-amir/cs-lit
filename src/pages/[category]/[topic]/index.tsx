@@ -18,6 +18,7 @@ import { FormTrigger } from "../../../components/FormTrigger";
 import { animated, useSpring } from "@react-spring/web";
 import { type Analogy } from "@prisma/client";
 import { EntityNotFound } from "../../../components/EntityNotFound";
+import { FiArrowDown } from "react-icons/fi";
 
 export default function TopicPage(props) {
   const router = useRouter();
@@ -68,7 +69,6 @@ export default function TopicPage(props) {
       refetchOnWindowFocus: false,
       refetchOnMount: false,
       refetchOnReconnect: false,
-      manual: true,
     }
   );
 
@@ -90,7 +90,6 @@ export default function TopicPage(props) {
   };
 
   const analogiesCount = topicAnalogies?.pages[0].total;
-
   return (
     <>
       <Head>
@@ -108,11 +107,7 @@ export default function TopicPage(props) {
         ) : (
           <>
             <div
-              className={`grow-1 w-full [overflow:overlay] sm:${
-                topicAnalogies && topicAnalogies.pages.length > 1
-                  ? " min-h-[calc(100dvh-0px)]"
-                  : " min-h-[calc(100dvh-0px)]"
-              }`}
+              className={`grow-1 min-h-[calc(100dvh)] w-full [overflow:overlay]`}
             >
               <TopicHeader
                 analogiesCount={analogiesCount}
@@ -139,9 +134,20 @@ export default function TopicPage(props) {
                 />
               )}
 
-              <div className="mx-auto my-12 flex w-full select-none flex-row justify-center px-6 py-1 text-center text-[#808080ae]">
-                <p className="grow-1 inline-flex font-light italic sm:text-lg">
-                  - You can totally add your own analogy here! -
+              <div
+                className={`relative bottom-6 left-auto right-auto mx-auto flex w-full cursor-pointer select-none flex-row justify-center px-6 py-1 text-center text-[#808080ae]
+                ${topicAnalogies ? "mt-auto" : "mt-[calc(50dvh)]"}
+                `}
+                onClick={() => {
+                  window.scrollTo({
+                    top: document?.body?.scrollHeight,
+                    behavior: "smooth",
+                  });
+                }}
+              >
+                <p className="grow-1 group flex flex-col  items-center justify-center font-light italic sm:text-lg">
+                  <span>- You can totally add your own analogy here! -</span>
+                  <FiArrowDown className=" mt-6 animate-bounce duration-100 group-hover:block group-hover:-translate-y-2" />
                 </p>
               </div>
             </div>

@@ -63,10 +63,10 @@ function Breadcrumbs() {
         slug: UrlTopic as string,
       },
       {
+        enabled: !!UrlTopic,
         refetchOnWindowFocus: false,
         refetchOnMount: false,
         refetchOnReconnect: false,
-        manual: true,
       }
     );
 
@@ -76,10 +76,10 @@ function Breadcrumbs() {
         slug: UrlCategory as string,
       },
       {
+        enabled: !!UrlCategory,
         refetchOnWindowFocus: false,
         refetchOnMount: false,
         refetchOnReconnect: false,
-        manual: true,
       }
     );
 
@@ -88,10 +88,10 @@ function Breadcrumbs() {
       id: UrlAnalogyId as string,
     },
     {
+      enabled: !!UrlAnalogyId,
       refetchOnWindowFocus: false,
       refetchOnMount: false,
       refetchOnReconnect: false,
-      manual: true,
     }
   );
 
@@ -100,10 +100,10 @@ function Breadcrumbs() {
       id: UrlProfile as string,
     },
     {
+      enabled: !!UrlProfile,
       refetchOnWindowFocus: false,
       refetchOnMount: false,
       refetchOnReconnect: false,
-      manual: true,
     }
   );
 
