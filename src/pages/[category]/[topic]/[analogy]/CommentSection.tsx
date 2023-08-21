@@ -33,7 +33,6 @@ export function CommentSection({ analogyId }: { analogyId: string }) {
       refetchOnWindowFocus: false,
       refetchOnMount: false,
       refetchOnReconnect: false,
-      manual: true,
     }
   );
 

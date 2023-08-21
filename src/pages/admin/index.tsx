@@ -44,7 +44,6 @@ export default function AdminPage(props) {
       refetchOnWindowFocus: false,
       refetchOnMount: false,
       refetchOnReconnect: false,
-      manual: true,
     }
   );
 
@@ -64,7 +63,6 @@ export default function AdminPage(props) {
       refetchOnWindowFocus: false,
       refetchOnMount: false,
       refetchOnReconnect: false,
-      manual: true,
     }
   );
 
@@ -84,7 +82,6 @@ export default function AdminPage(props) {
       refetchOnWindowFocus: false,
       refetchOnMount: false,
       refetchOnReconnect: false,
-      manual: true,
     }
   );
 
@@ -104,7 +101,6 @@ export default function AdminPage(props) {
       refetchOnWindowFocus: false,
       refetchOnMount: false,
       refetchOnReconnect: false,
-      manual: true,
     }
   );
 
@@ -124,7 +120,6 @@ export default function AdminPage(props) {
       refetchOnWindowFocus: false,
       refetchOnMount: false,
       refetchOnReconnect: false,
-      manual: true,
     }
   );
   const [activeSection, setActiveSection] = useState("Categories");

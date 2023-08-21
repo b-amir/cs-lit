@@ -31,7 +31,6 @@ export function AdminFooter({
       refetchOnWindowFocus: false,
       refetchOnMount: false,
       refetchOnReconnect: false,
-      manual: true,
     }
   );
 
@@ -92,7 +91,6 @@ export function ActivityItemView({ item }) {
       refetchOnWindowFocus: false,
       refetchOnMount: false,
       refetchOnReconnect: false,
-      manual: true,
     }
   );
 

@@ -8,11 +8,13 @@ import { AboutWebsiteSection } from "./AboutWebsiteSection";
 import { InfoSection } from "./InfoSection";
 import { MainSection } from "./MainSection";
 import { NavShare } from "./NavShare";
+import { useSession } from "next-auth/react";
 
 export default function SingleAnalogyPage() {
   const router = useRouter();
+  const { data: sessionData } = useSession();
   const { analogy: UrlAnalogyId } = router.query;
-  const { data: singleAnalogyData, status: singleAnalogyStatus } =
+  const { data: singleAnalogyData, status: singleAnalogyFetchingStatus } =
     api.analogy.getSingleAnalogyById.useQuery(
       {
         id: UrlAnalogyId as string,
@@ -21,9 +23,22 @@ export default function SingleAnalogyPage() {
         refetchOnWindowFocus: false,
         refetchOnMount: false,
         refetchOnReconnect: false,
-        manual: true,
       }
     );
+
+  /*
+  - prevent irrelevant users to see unpublished analogies 
+  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+
+  const authorId = singleAnalogyData?.user?.id;
+  const isAuthor = authorId === sessionData?.user?.id;
+  const isModerator = ["ADMIN", "EDITOR"].includes(sessionData?.user?.role);
+  const isPublished = singleAnalogyData?.status === "PUBLISHED";
+
+  // if analogy status is anything but PUBLISHED, only author, ADMIN & EDITOR can see it.
+  const unauthorizedAccess = !isPublished && !isAuthor && !isModerator;
+
+  /* <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< */
 
   return (
     <>
@@ -41,7 +56,8 @@ export default function SingleAnalogyPage() {
       </Head>
       <PageLayout>
         {/* if analogy is not found - invalid route */}
-        {singleAnalogyStatus === "error" ? (
+        {singleAnalogyFetchingStatus === "error" ? (
+          // || unauthorizedAccess
           <EntityNotFound entity="Analogy" />
         ) : (
           <>

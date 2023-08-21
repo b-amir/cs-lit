@@ -41,7 +41,6 @@ const ProfileFeed = (props: { userId: string }) => {
       refetchOnWindowFocus: false,
       refetchOnMount: false,
       refetchOnReconnect: false,
-      manual: true,
     }
   );
 
@@ -121,7 +120,6 @@ const ProfilePage: NextPage<object> = () => {
         refetchOnWindowFocus: false,
         refetchOnMount: false,
         refetchOnReconnect: false,
-        manual: true,
       }
     );
 

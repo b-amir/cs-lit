@@ -13,7 +13,9 @@ import { type Analogy, type Prisma } from "@prisma/client";
 import { prisma } from "@/server/db"
 import { getTopicNameById, getUserNameById } from "./topics";
 
+
 // const prisma = new PrismaClient();
+
 
 
 
@@ -262,9 +264,15 @@ export const analogiesRouter = createTRPCRouter({
         .findUnique({
           where: {
             id: input.id,
-          },
-          include: {
-            author: true,
+            OR: [
+              {
+                status: ["ADMIN", "EDITOR"].includes(ctx?.session.user.role) ? { not: "DELETED" } : "PUBLISHED",
+              },
+              {
+                status: { not: "DELETED" },
+                authorId: ctx?.session?.user?.id,
+              },
+            ],
           },
         })
         .then((analogy) => {
@@ -355,14 +363,15 @@ export const analogiesRouter = createTRPCRouter({
       });
 
       let items;
-      const isAdmin = ctx.session?.user.role === "ADMIN";
+      const isModerator = ["ADMIN", "EDITOR"].includes(ctx?.session?.user.role);
+
+      if (!input.viewerId) { items = publishedItems }
       if (input.viewerId && publishedItems_plus_ViewersUnpublishedItems.length > 0) {
         items = publishedItems_plus_ViewersUnpublishedItems
       }
-      if (isAdmin) {
+      if (isModerator) {
         items = allItems;
       }
-      if (!input.viewerId) { items = publishedItems }
 
       let nextCursor: typeof cursor | undefined = undefined;
       if (items.length > limit) {

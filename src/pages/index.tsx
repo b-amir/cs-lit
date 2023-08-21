@@ -114,7 +114,6 @@ const Home: NextPage = () => {
       refetchOnWindowFocus: false,
       refetchOnMount: false,
       refetchOnReconnect: false,
-      manual: true,
     }
   );
 
@@ -126,7 +125,6 @@ const Home: NextPage = () => {
       refetchOnWindowFocus: false,
       refetchOnMount: false,
       refetchOnReconnect: false,
-      manual: true,
     }
   );
 
@@ -343,7 +341,7 @@ function CategoriesSection({
       />
       <div className="  my-4 flex min-h-screen w-full flex-col text-[#E6E6E6]  sm:right-0 sm:my-10 md:max-w-[calc(5*100vw/5)] lg:right-0 lg:mx-24 lg:ml-auto lg:max-w-[calc(3*100vw/5)]">
         <h2
-          className={`${archivo.className} h-3/12 mx-auto  my-14 flex min-h-[calc(15dvh)] w-full flex-row justify-center px-6 text-center text-3xl font-bold [text-shadow:_1px_1px_0px_rgb(66_80_99_/_30%)] [text-shadow:_0px_1px_5px_rgb(66_80_99_/_45%)] sm:text-4xl`}
+          className={`${archivo.className} h-3/12 mx-auto  my-14 flex min-h-[calc(15dvh)] w-full flex-row justify-center px-6 text-center text-3xl font-bold [text-shadow:_0px_1px_5px_rgb(66_80_99_/_45%)] [text-shadow:_1px_1px_0px_rgb(66_80_99_/_30%)] sm:text-4xl`}
         >
           {/* So far we have these categories: */}
           Choose a category and dive in:

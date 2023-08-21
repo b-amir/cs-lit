@@ -12,7 +12,6 @@ export function SidebarCategoriesSection() {
         refetchOnWindowFocus: false,
         refetchOnMount: false,
         refetchOnReconnect: false,
-        manual: true,
       }
     );
 

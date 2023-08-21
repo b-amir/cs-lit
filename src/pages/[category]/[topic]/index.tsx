@@ -39,7 +39,6 @@ export default function TopicPage(props) {
         refetchOnWindowFocus: false,
         refetchOnMount: false,
         refetchOnReconnect: false,
-        manual: true,
       }
     );
 

@@ -22,7 +22,6 @@ export function AdminSidePanel() {
       refetchOnWindowFocus: false,
       refetchOnMount: false,
       refetchOnReconnect: false,
-      manual: true,
     }
   );
 

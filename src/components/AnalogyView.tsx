@@ -99,7 +99,6 @@ export const AnalogyView: React.FC<IAnalogyViewProps> = (props) => {
         refetchOnWindowFocus: false,
         refetchOnMount: false,
         refetchOnReconnect: false,
-        manual: true,
       }
     );
 
@@ -113,7 +112,6 @@ export const AnalogyView: React.FC<IAnalogyViewProps> = (props) => {
         refetchOnWindowFocus: false,
         refetchOnMount: false,
         refetchOnReconnect: false,
-        manual: true,
       }
     );
 
