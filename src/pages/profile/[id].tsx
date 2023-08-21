@@ -103,7 +103,6 @@ function ProfileHeader({ profileData }: { profileData: unknown }) {
 }
 
 const ProfilePage: NextPage<object> = () => {
-  // api.analogy.getAll.useQuery();
 
   // now we have to get the user id from the url
   // we can do this by using the useRouter hook

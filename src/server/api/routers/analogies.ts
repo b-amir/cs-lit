@@ -103,6 +103,9 @@ export const analogiesRouter = createTRPCRouter({
 
       const items = await ctx.prisma.analogy.findMany({
         take: limit + 1,
+        where: {
+          status: "PUBLISHED"
+        },
         cursor: cursor ? { id: cursor } : undefined,
         orderBy: {
           createdAt: order as Prisma.SortOrder

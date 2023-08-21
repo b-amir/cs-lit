@@ -17,12 +17,6 @@ export const Feed: React.FC<IFeedProps> = ({
   setAnalogyInput,
   setAnalogyEditorState,
 }) => {
-  // const {
-  //   data,
-  //   isLoading: analogiesLoading,
-  //   refetch: refetchAnalogies,
-  // } = api.analogy.getAll.useQuery();
-
   // if (analogiesLoading) return <>Loading analogies...</>;
   // if (!data) return <>Something went wrong. no data</>;
   return (
