@@ -1,12 +1,9 @@
-import { useSession } from "next-auth/react";
 import { SidebarCategoriesSection } from "./SidebarCategoriesSection";
 import { AddCategorySection } from "./AddCategorySection";
 import { LogoSection } from "./LogoSection";
 import { IoClose } from "react-icons/io5";
 
 export function SidebarLeft({ visible, hide }) {
-  const { data: sessionData } = useSession();
-
   return (
     <div className="flex ">
       <aside
@@ -22,9 +19,8 @@ export function SidebarLeft({ visible, hide }) {
         <div className="align-around h-full overflow-y-auto  bg-white px-0 pb-0 ">
           <SidebarCategoriesSection />
         </div>
-        {["ADMIN", "EDITOR"].includes(sessionData?.user.role) && (
-          <AddCategorySection />
-        )}
+
+        <AddCategorySection />
       </aside>
 
       {visible && (

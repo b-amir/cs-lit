@@ -64,7 +64,6 @@ function WidgetSection() {
   );
   const { data: TopThreeData } = api.profile.getTopThree.useQuery();
 
-
   // if window height is small, show one widget at a time and hide the other
   const [activeWidgetIndex, setActiveWidgetIndex] = useState([0]);
   const size = useWindowSize();
@@ -227,8 +226,8 @@ function AdminLink() {
   return (
     <Link
       href="/admin"
-      className=" mx-4 mb-4 flex items-center space-y-2 overflow-x-clip 
-            truncate text-ellipsis whitespace-nowrap rounded-lg p-2 px-3 text-sm font-medium text-[#2a2a2e9a] hover:bg-gray-100"
+      className=" mx-2 mb-4 flex items-center space-y-2 overflow-x-clip 
+            truncate text-ellipsis whitespace-nowrap rounded-lg p-2 px-3 text-xs font-medium text-[#2a2a2e9a] hover:bg-gray-100"
     >
       <AiFillControl className="mb-0.5 mr-4 scale-125" /> Admin panel
     </Link>

@@ -23,6 +23,16 @@ export const pendingRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       const limit = input.limit ?? 10;
       const { cursor } = input;
+      const categories = await ctx.prisma.category.findMany({
+        take: limit + 1,
+        cursor: cursor ? { id: cursor } : undefined,
+        where: {
+          status: 'PENDING'
+        },
+        orderBy: {
+          createdAt: 'desc',
+        },
+      });
       const topics = await ctx.prisma.topic.findMany({
         take: limit + 1,
         cursor: cursor ? { id: cursor } : undefined,
@@ -58,7 +68,7 @@ export const pendingRouter = createTRPCRouter({
       const analogiesWithData = await analogiesWithUserAndTopicAndCategoryData(analogies);
       const commentsWithData = await commentsWithUserData(comments)
 
-      const items = [...topicsWithData, ...analogiesWithData, ...commentsWithData];
+      const items = [...categories, ...topicsWithData, ...analogiesWithData, ...commentsWithData];
       let nextCursor: typeof cursor | undefined = undefined;
       if (items.length > limit) {
         const nextItem = items.pop();

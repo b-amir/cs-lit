@@ -48,7 +48,14 @@ export function useCreateItem(item: ITopicInput, type: string) {
         });
         void ctx.category.getAll.invalidate();
         void ctx.category.getAllWithQuery.invalidate();
-        toast.success("Category created successfully.");
+        const isModerator = ["ADMIN", "EDITOR"].includes(
+          sessionData?.user.role
+        );
+        if (isModerator) {
+          toast.success("Category created successfully.");
+        } else {
+          toast.success("Thanks for your suggestion!");
+        }
       },
       onError: (e) => {
         const errorMessage = e.data?.zodError?.fieldErrors;
@@ -60,6 +67,8 @@ export function useCreateItem(item: ITopicInput, type: string) {
           e.message.includes("Unique constraint failed on the fields: (`name`)")
         ) {
           toast.error("A category with the same name already exists.");
+        } else if (e.message.includes("UNAUTHORIZED")) {
+          toast.error("You need to sign in first.");
         } else {
           toast.error("Something went wrong.");
         }

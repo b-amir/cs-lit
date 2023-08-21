@@ -122,6 +122,26 @@ export function CategoryEditForm({
             className="focus:shadow-outline mb-2 w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none"
           />
         </div>
+        <div className="mb-4">
+          <label
+            htmlFor="status"
+            className="mb-2 block text-sm font-bold text-gray-700"
+          >
+            Status
+          </label>
+          <select
+            name="status"
+            id="status"
+            defaultValue={editorModalInput?.item?.status ?? ""}
+            onChange={handleChange}
+            className="focus:shadow-outline mb-2 w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none"
+          >
+            <option value="PENDING"> Pending</option>
+            <option value="PUBLISHED">Published</option>
+            <option value="REJECTED">Rejected</option>
+            <option value="DELETED">Deleted</option>
+          </select>
+        </div>
         <div
           id="editor-modal-buttons"
           // align items at right
