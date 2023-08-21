@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { CgSpinner } from "react-icons/cg";
 import React from "react";
 import Link from "next/link";
 import { getStatusIcon } from "@/utils/getStatusIcon";
@@ -56,7 +55,10 @@ export function TopicsList({
             <th scope="col" className="px-6 py-3">
               <span className="sr-only">Status</span>
             </th>
-            <th scope="col" className="hidden px-0.5 py-3 text-center sm:flex">
+            <th
+              scope="col"
+              className="hidden min-w-max justify-center px-6 py-3 text-center sm:flex"
+            >
               last update
             </th>
             {sessionData &&
@@ -83,7 +85,7 @@ export function TopicsList({
                   </th>
                 </Link>
                 <td className="px-6 py-4">{getStatusIcon(topic.status)}</td>
-                <td className="hidden px-0.5 py-4 text-center text-xs sm:flex">
+                <td className="hidden px-6 py-4 text-center text-xs sm:flex">
                   {RelativeTime(topic.updatedAt)}
                   {/* {new Date(topic.updatedAt).toLocaleDateString()} */}
                 </td>

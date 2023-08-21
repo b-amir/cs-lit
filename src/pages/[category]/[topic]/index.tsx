@@ -124,7 +124,7 @@ export default function TopicPage(props) {
                 </>
               ) : (
                 <Feed
-                  topicAnalogies={topicAnalogies}
+                  analogies={topicAnalogies}
                   hasNextPage={hasNextPage}
                   fetchNextPage={fetchNextPage}
                   isFetchingNextPage={isFetchingNextPage}

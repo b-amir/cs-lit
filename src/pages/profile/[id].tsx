@@ -1,38 +1,38 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import { api } from "@/utils/api";
-import { AnalogyView } from "@/components/AnalogyView";
 import { PageLayout } from "@/components/layout";
-import { generateSSGHelper } from "@/server/helpers/ssgHelper";
 import { CornerLoading } from "@/components/loading";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { LoadMoreButton } from "@/components/LoadMoreButton";
-import { useSession } from "next-auth/react";
-import type { Metadata, ResolvingMetadata } from "next";
+import { Feed } from "@/components/Feed";
+// import { generateSSGHelper } from "@/server/helpers/ssgHelper";
 
-// this is a page that is renderd when a user visits /profile/[id]
-// the point of this page is to show a user's profile and all analogies that they created
+const ProfilePage: NextPage<object> = () => {
+  const router = useRouter();
+  const { id: UrlId } = router.query;
 
-const ProfileFeed = (props: { userId: string }) => {
-  const { data: sessionData } = useSession();
-  const isAdmin = sessionData?.user.role === "ADMIN" || "EDITOR";
-  const isAuthor = sessionData?.user.id === props.userId;
-  const canSeeUnpublished = isAdmin || isAuthor;
-
-  const getAnalogiesByUserId = canSeeUnpublished
-    ? "getAllAnalogiesByUserId"
-    : "getPublishedAnalogiesByUserId";
+  const { data: profileData, status: profileFetchingStatus } =
+    api.profile.getProfileById.useQuery(
+      {
+        id: UrlId as string,
+      },
+      {
+        refetchOnWindowFocus: false,
+        refetchOnMount: false,
+        refetchOnReconnect: false,
+      }
+    );
 
   const {
-    data: analogyData,
-    status: analogyFetchingStatus,
+    data: userAnalogies,
+    // status: analogiesFetchingStatus,
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
   } = api.analogy.getAnalogiesByUserId.useInfiniteQuery(
     {
-      userId: props.userId,
+      userId: UrlId as string,
       order: "desc",
       limit: 10,
     },
@@ -44,33 +44,38 @@ const ProfileFeed = (props: { userId: string }) => {
     }
   );
 
-  if (analogyFetchingStatus === "loading") return <CornerLoading />;
-  if (!analogyData || analogyData?.pages[0]?.length === 0) {
-    return <>User has not posted any analogies.</>;
-  }
+  if (profileFetchingStatus === "loading") return <CornerLoading />;
+  if (profileFetchingStatus === "error") return <div>User not found</div>;
 
   return (
-    <div className="flex w-full flex-col items-center justify-center sm:px-10 lg:px-[16.666667%]">
-      {analogyData?.pages?.map((page) =>
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        page?.items?.map((analogy: Analogy) => (
-          <AnalogyView
-            analogy={{
-              id: analogy.id,
-            }}
-            needsLink={true}
-            needsLocationInfo
-            key={analogy.id}
-          />
-        ))
-      )}
-      {hasNextPage && (
-        <LoadMoreButton
-          fetchNextPage={fetchNextPage}
-          isFetchingNextPage={isFetchingNextPage}
+    <>
+      <Head>
+        <title>
+          {`${profileData?.name ? profileData?.name : profileData?.email}'s
+          Profile`}
+        </title>
+        <meta
+          name="description"
+          content="Explain Computer science like I'm 10 Years Old!"
         />
-      )}
-    </div>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <PageLayout>
+        <div
+          id="profile-page"
+          className="grow-1 min-h-[calc(100dvh)] w-full [overflow:overlay]"
+        >
+          <ProfileHeader profileData={profileData} />
+          <Feed
+            analogies={userAnalogies}
+            hasNextPage={hasNextPage}
+            fetchNextPage={fetchNextPage}
+            isFetchingNextPage={isFetchingNextPage}
+            isProfile
+          />
+        </div>
+      </PageLayout>
+    </>
   );
 };
 
@@ -101,56 +106,6 @@ function ProfileHeader({ profileData }: { profileData: unknown }) {
     </div>
   );
 }
-
-const ProfilePage: NextPage<object> = () => {
-
-  // now we have to get the user id from the url
-  // we can do this by using the useRouter hook
-
-  const router = useRouter();
-  const { id: UrlId } = router.query;
-
-  const { data: profileData, status: profileFetchingStatus } =
-    api.profile.getProfileById.useQuery(
-      {
-        id: UrlId as string,
-      },
-      {
-        refetchOnWindowFocus: false,
-        refetchOnMount: false,
-        refetchOnReconnect: false,
-      }
-    );
-
-  if (profileFetchingStatus === "loading") return <CornerLoading />;
-  if (profileFetchingStatus === "error") return <div>User not found</div>;
-
-  return (
-    <>
-      <Head>
-        <title>
-          {`${profileData?.name ? profileData?.name : profileData?.email}'s
-          Profile`}
-        </title>
-        <meta
-          name="description"
-          content="Explain Computer science like I'm 10 Years Old!"
-        />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <PageLayout>
-        <div
-          id="profile-page"
-          className="z-10 mx-auto mb-20 flex w-full flex-col items-start justify-between "
-        >
-          <ProfileHeader profileData={profileData} />
-          <ProfileFeed userId={profileData.id} />
-        </div>
-      </PageLayout>
-    </>
-  );
-};
-
 export default ProfilePage;
 
 // export const getStaticProps: GetStaticProps = async (context) => {

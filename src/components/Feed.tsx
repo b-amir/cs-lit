@@ -3,14 +3,16 @@ import { type Analogy } from "@prisma/client";
 import { LoadMoreButton } from "./LoadMoreButton";
 
 interface IFeedProps {
-  topicAnalogies: Analogy[];
+  analogies: Analogy[];
   hasNextPage: boolean;
   fetchNextPage: () => void;
   isFetchingNextPage: boolean;
+  isProfile: boolean;
 }
 
 export const Feed: React.FC<IFeedProps> = ({
-  topicAnalogies,
+  isProfile = false,
+  analogies,
   hasNextPage,
   fetchNextPage,
   isFetchingNextPage,
@@ -25,7 +27,7 @@ export const Feed: React.FC<IFeedProps> = ({
         id="analogies-array"
         className={`mb-auto flex flex-col items-center  pb-16 sm:px-10 lg:px-[16.666667%]`}
       >
-        {topicAnalogies?.pages?.map((page) =>
+        {analogies?.pages?.map((page) =>
           // eslint-disable-next-line @typescript-eslint/no-unsafe-return
           page?.items?.map((analogy: Analogy) => (
             <AnalogyView
@@ -33,9 +35,10 @@ export const Feed: React.FC<IFeedProps> = ({
                 id: analogy.id,
               }}
               key={analogy.id}
-              needsLink={true}
               setAnalogyInput={setAnalogyInput}
               setAnalogyEditorState={setAnalogyEditorState}
+              needsLink={true}
+              needsLocationInfo={isProfile ? true : false}
             />
           ))
         )}

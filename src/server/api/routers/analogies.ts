@@ -103,9 +103,6 @@ export const analogiesRouter = createTRPCRouter({
 
       const items = await ctx.prisma.analogy.findMany({
         take: limit + 1,
-        where: {
-          status: "PUBLISHED"
-        },
         cursor: cursor ? { id: cursor } : undefined,
         orderBy: {
           createdAt: order as Prisma.SortOrder
@@ -232,9 +229,9 @@ export const analogiesRouter = createTRPCRouter({
       }).then(analogiesWithUserData);
 
       let items = publishedItems;
-      const isAdmin = ctx.session?.user.role === "ADMIN";
+      const isModerator = ["ADMIN", "EDITOR"].includes(ctx?.session?.user.role);
       const itemsCurrentUserStarted = allItems?.filter(item => item.authorId === ctx.session?.user.id);
-      const hasAccessToUnpublished = isAdmin || itemsCurrentUserStarted.length
+      const hasAccessToUnpublished = isModerator || itemsCurrentUserStarted.length
 
       if (hasAccessToUnpublished) {
         items = allItems;
