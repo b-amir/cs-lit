@@ -17,7 +17,7 @@ export function SidebarLeft({ visible, hide }) {
         <LogoSection />
 
         <div className="align-around h-full overflow-y-auto  bg-white px-0 pb-0 ">
-          <SidebarCategoriesSection />
+          <SidebarCategoriesSection hide={hide} />
         </div>
 
         <AddCategorySection />

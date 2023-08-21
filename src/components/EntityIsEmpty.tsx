@@ -5,7 +5,7 @@ export function EntityIsEmpty({ entity, action = null }: { entity: string }) {
   return (
     <div className="flex max-h-screen flex-col items-center justify-center gap-2">
       <span className="flex flex-col items-center justify-center gap-3 font-semibold text-gray-500">
-        <FaGhost className=" animate-hover my-10 text-9xl text-[#ffffff71] drop-shadow-xl " />
+        <FaGhost className=" animate-hover my-10 text-9xl text-[#DDDCD9]  " />
 
         {entity === "profileFeed" ? (
           <span>User hasn&apos;t posted any analogies.</span>

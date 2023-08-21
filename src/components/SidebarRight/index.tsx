@@ -34,7 +34,7 @@ export function SidebarRight({ visible, hide }) {
             userSectionShown={userSectionShown}
             setUserSectionShown={setUserSectionShown}
           />
-          <WidgetSection />
+          <WidgetSection hide={hide} />
         </div>
         {["ADMIN", "EDITOR"].includes(sessionData?.user.role) && <AdminLink />}
       </aside>
@@ -57,7 +57,7 @@ export function SidebarRight({ visible, hide }) {
   );
 }
 
-function WidgetSection() {
+function WidgetSection({ hide }) {
   const { data: AnalogiesData } = api.analogy.getAll.useInfiniteQuery(
     { limit: 5, order: "desc" },
     {}
@@ -101,6 +101,7 @@ function WidgetSection() {
                 <Link
                   // href={`/${analogy.category}/${analogy.topic}/${analogy.id}`}
                   href={`${routeHandler(analogy, "Analogies")}`}
+                  onClick={hide}
                 >
                   <span
                     className={`ml-0 flex w-full flex-col items-center whitespace-nowrap rounded-sm ${
@@ -145,7 +146,7 @@ function WidgetSection() {
             {/* as long as user._count.analogies is not 0 */}
             {user.analogiesCount !== 0 && (
               <li key={user.id}>
-                <Link href={`/profile/${user.id}`}>
+                <Link href={`/profile/${user.id}`} onClick={hide}>
                   <span
                     className={`ml-0 flex w-full flex-col items-center whitespace-nowrap rounded-sm ${
                       TopThreeData &&
