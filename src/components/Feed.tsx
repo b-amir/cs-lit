@@ -1,6 +1,7 @@
 import { AnalogyView } from "../components/AnalogyView";
 import { type Analogy } from "@prisma/client";
 import { LoadMoreButton } from "./LoadMoreButton";
+import { EntityIsEmpty } from "./EntityIsEmpty";
 
 interface IFeedProps {
   analogies: Analogy[];
@@ -8,6 +9,9 @@ interface IFeedProps {
   fetchNextPage: () => void;
   isFetchingNextPage: boolean;
   isProfile: boolean;
+  fetchingStatus: "error" | "loading" | "success";
+  setAnalogyInput: (arg: any) => void;
+  setAnalogyEditorState: (arg: any) => void;
 }
 
 export const Feed: React.FC<IFeedProps> = ({
@@ -16,11 +20,26 @@ export const Feed: React.FC<IFeedProps> = ({
   hasNextPage,
   fetchNextPage,
   isFetchingNextPage,
+  fetchingStatus,
   setAnalogyInput,
   setAnalogyEditorState,
 }) => {
-  // if (analogiesLoading) return <>Loading analogies...</>;
-  // if (!data) return <>Something went wrong. no data</>;
+  if (fetchingStatus === "success" && analogies?.pages[0]?.items.length === 0) {
+    return (
+      <EntityIsEmpty
+        entity={isProfile ? "profileFeed" : "topicFeed"}
+        action={
+          isProfile
+            ? null
+            : () => {
+                setAnalogyEditorState({ shown: true, purpose: "Create" });
+              }
+        }
+      />
+    );
+  }
+
+  console.log("analogies:", analogies);
   return (
     <>
       <div

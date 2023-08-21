@@ -15,6 +15,7 @@ import { TopicsList } from "./TopicsList";
 import { type Topic, type Category } from "@prisma/client";
 import { FormTrigger } from "../../components/FormTrigger";
 import { EntityNotFound } from "@/components/EntityNotFound";
+import { EntityIsEmpty } from "@/components/EntityIsEmpty";
 
 export default function CategoryPage() {
   const [topicEditorState, setTopicEditorState] = useState({
@@ -116,11 +117,7 @@ export default function CategoryPage() {
           <>
             <div
               // if there's only 0-5 topics, include form trigger in viewport
-              className={`grow-1 w-full [overflow:overlay] sm:${
-                topicsData && topicsData.pages.length > 5
-                  ? " min-h-[calc(100dvh-0px)]"
-                  : " min-h-[calc(100dvh-0px)]"
-              }`}
+              className={`grow-1 min-h-[calc(100dvh-0px)] w-full [overflow:overlay] `}
             >
               <CategoryHeader
                 categoryFetchingStatus={categoryFetchingStatus}
@@ -130,7 +127,7 @@ export default function CategoryPage() {
                 setTopicEditorState={setTopicEditorState}
               />
 
-              <div className="mx-auto mb-12 mt-8 flex sm:px-10 lg:px-[16.666667%] ">
+              <div className="mx-auto mb-12 mt-8 flex justify-center sm:px-10 lg:px-[16.666667%] ">
                 {/* handle loading states */}
                 {categoryFetching && <CornerLoading />}
                 {topicsFetchingStatus === "loading" && <TableSkeleton />}
@@ -152,9 +149,11 @@ export default function CategoryPage() {
                 {/* if there's no topics */}
                 {topicsFetchingStatus === "success" &&
                 topicsData?.pages[0]?.items?.length <= 0 ? (
-                  <NoTopics
-                    topicEditorState={topicEditorState}
-                    setTopicEditorState={setTopicEditorState}
+                  <EntityIsEmpty
+                    entity="category"
+                    action={() => {
+                      setTopicEditorState({ shown: true, purpose: "Create" });
+                    }}
                   />
                 ) : null}
               </div>
@@ -211,37 +210,6 @@ interface ICategoryHeaderProps {
       purpose: "Create" | "Edit" | null;
     }>
   >;
-}
-interface INoTopicsProps {
-  topicEditorState: { shown: boolean; purpose: "Create" | "Edit" | null };
-  setTopicEditorState: React.Dispatch<
-    React.SetStateAction<{
-      shown: boolean;
-      purpose: "Create" | "Edit" | null;
-    }>
-  >;
-}
-
-function NoTopics({
-  topicEditorState,
-  setTopicEditorState,
-}: INoTopicsProps): React.ReactNode {
-  return (
-    <div className="font-merriweathersans mx-auto my-auto mt-12 flex h-full flex-col items-center  justify-center gap-10 text-lg font-semibold text-[#8c8c8cdd]">
-      <FaGhost className="text-9xl text-[#a3a3a380]" />
-      <span>
-        No topics yet.{" "}
-        <span
-          className="cursor-pointer hover:text-[#4a4a4add]"
-          onClick={() => {
-            setTopicEditorState({ shown: true, purpose: "Create" });
-          }}
-        >
-          Create one!
-        </span>
-      </span>
-    </div>
-  );
 }
 function CategoryHeader({
   categoryFetchingStatus,

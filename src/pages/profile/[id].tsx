@@ -26,7 +26,7 @@ const ProfilePage: NextPage<object> = () => {
 
   const {
     data: userAnalogies,
-    // status: analogiesFetchingStatus,
+    status: analogiesFetchingStatus,
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
@@ -71,6 +71,7 @@ const ProfilePage: NextPage<object> = () => {
             hasNextPage={hasNextPage}
             fetchNextPage={fetchNextPage}
             isFetchingNextPage={isFetchingNextPage}
+            fetchingStatus={analogiesFetchingStatus}
             isProfile
           />
         </div>

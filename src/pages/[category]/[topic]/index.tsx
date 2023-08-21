@@ -126,29 +126,13 @@ export default function TopicPage(props) {
                 <Feed
                   analogies={topicAnalogies}
                   hasNextPage={hasNextPage}
+                  fetchingStatus={analogiesFetchingStatus}
                   fetchNextPage={fetchNextPage}
                   isFetchingNextPage={isFetchingNextPage}
                   setAnalogyInput={setAnalogyInput}
                   setAnalogyEditorState={setAnalogyEditorState}
                 />
               )}
-
-              <div
-                className={`relative bottom-6 left-auto right-auto mx-auto flex w-full cursor-pointer select-none flex-row justify-center px-6 py-1 text-center text-[#808080ae]
-                ${topicAnalogies ? "mt-auto" : "mt-[calc(50dvh)]"}
-                `}
-                onClick={() => {
-                  window.scrollTo({
-                    top: document?.body?.scrollHeight,
-                    behavior: "smooth",
-                  });
-                }}
-              >
-                <p className="grow-1 group flex flex-col  items-center justify-center font-light italic sm:text-lg">
-                  <span>- You can totally add your own analogy here! -</span>
-                  <FiArrowDown className=" mt-6 animate-bounce duration-100 group-hover:block group-hover:-translate-y-2" />
-                </p>
-              </div>
             </div>
 
             {/* {sessionData ? ( */}

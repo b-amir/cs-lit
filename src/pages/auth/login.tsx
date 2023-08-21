@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { type SignInErrorTypes } from "next-auth/src/core/pages/signin";
 import { CornerLoading } from "@/components/loading";
+import { GoBackButton } from "@/components/GoBackButton";
 
 const LoginPage = () => {
   const { session, status } = useSession();
@@ -28,17 +29,7 @@ const LoginPage = () => {
     return (
       <div className="flex h-screen w-full select-none flex-col items-center justify-center text-gray-500">
         You&apos;re already signed in
-        <div
-          onClick={() => {
-            const previousRoute = router.back();
-            if (previousRoute === undefined) {
-              router.push("/");
-            }
-          }}
-          className="mt-2 cursor-pointer text-sm font-semibold transition-all hover:text-black"
-        >
-          Wanna go back?
-        </div>
+        <GoBackButton />
       </div>
     );
   }
