@@ -75,7 +75,6 @@ export function PendingItemView({ item }) {
   const [showExtendedActionMenu, setShowExtendedActionMenu] = useState(false);
   const [itemCopy, setItemCopy] = useState(null);
 
-  console.log("pending item:", item);
   const itemType = item?.topicId
     ? "Analogies"
     : item?.analogyId

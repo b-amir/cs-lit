@@ -37,6 +37,7 @@ export const categoriesRouter = createTRPCRouter({
 
       const items = await ctx.prisma.category.findMany({
         take: limit + 1,
+        where: { status: "PUBLISHED" },
         cursor: cursor ? { id: cursor } : undefined,
         orderBy: {
           createdAt: order as Prisma.SortOrder
@@ -172,6 +173,7 @@ export const categoriesRouter = createTRPCRouter({
         id: z.string(),
         name: z.string().min(3).max(32),
         slug: z.string(),
+        status: z.enum(["PENDING", "PUBLISHED", "REJECTED", "DELETED"]),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -180,6 +182,7 @@ export const categoriesRouter = createTRPCRouter({
         data: {
           name: input.name,
           slug: input.slug,
+          status: input.status,
         },
       });
       return category;

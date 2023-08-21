@@ -52,7 +52,12 @@ export function useUpdateItem(item: ITopicInput, type: string) {
           action: "updated",
         });
 
-        updateCategory({ id: item.id, name: item.name, slug: item.slug });
+        updateCategory({
+          id: item.id,
+          name: item.name,
+          slug: item.slug,
+          status: item.status,
+        });
       } catch (e) {
         toast.error("Something went wrong");
       }
