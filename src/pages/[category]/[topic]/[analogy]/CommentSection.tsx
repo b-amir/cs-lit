@@ -14,7 +14,10 @@ import { LoadMoreButton } from "@/components/LoadMoreButton";
 import { useSession } from "next-auth/react";
 import { signIn } from "next-auth/react";
 
-export function CommentSection({ analogyId }: { analogyId: string }) {
+interface ICommentSectionProps {
+  analogyId: string | undefined;
+}
+export function CommentSection({ analogyId }: ICommentSectionProps) {
   const { status: sessionStatus } = useSession();
   const {
     data: comments,

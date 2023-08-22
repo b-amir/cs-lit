@@ -5,26 +5,24 @@ import React, { useRef, useState } from "react";
 import { animated, useSpring } from "@react-spring/web";
 import { api } from "@/utils/api";
 import { CornerLoading } from "@/components/loading";
-import { FaGhost } from "react-icons/fa";
 import Head from "next/head";
 import { archivo } from "@/styles/customFonts";
 import { useSession } from "next-auth/react";
 import { TableSkeleton } from "@/components/Skeleton";
 import { TopicEditorForm } from "./TopicEditorForm";
 import { TopicsList } from "./TopicsList";
-import { type Topic, type Category } from "@prisma/client";
+import { type Category } from "@prisma/client";
 import { FormTrigger } from "../../components/FormTrigger";
 import { EntityNotFound } from "@/components/EntityNotFound";
 import { EntityIsEmpty } from "@/components/EntityIsEmpty";
 
 export default function CategoryPage() {
+  const { data: sessionData } = useSession();
   const [topicEditorState, setTopicEditorState] = useState({
     entity: "topic" as null | "topic",
     shown: false,
     purpose: null as null | "Edit" | "Create",
   });
-
-  const { data: sessionData } = useSession();
   const [topicInput, setTopicInput] = useState({
     id: "",
     title: "",
@@ -80,7 +78,7 @@ export default function CategoryPage() {
 
   // --- animation setup for editor ---> //
   const contentRef = useRef(null);
-  const animationProps = useSpring({
+  const editorAnimationProps = useSpring({
     height: !topicEditorState.shown ? 0 : sessionData ? 620 : 150,
     config: {
       tension: 200,
@@ -116,8 +114,7 @@ export default function CategoryPage() {
         ) : (
           <>
             <div
-              // if there's only 0-5 topics, include form trigger in viewport
-              className={`grow-1 min-h-[calc(100dvh-0px)] w-full [overflow:overlay] `}
+              className={`grow-1 min-h-[calc(100dvh-0px)] w-full [overflow:overlay]`}
             >
               <CategoryHeader
                 categoryFetchingStatus={categoryFetchingStatus}
@@ -129,7 +126,8 @@ export default function CategoryPage() {
 
               <div className="mx-auto mb-12 mt-8 flex justify-center sm:px-10 lg:px-[16.666667%] ">
                 {/* handle loading states */}
-                {categoryFetching && <CornerLoading />}
+                {categoryFetching ||
+                  (topicsFetchingStatus === "loading" && <CornerLoading />)}
                 {topicsFetchingStatus === "loading" && <TableSkeleton />}
 
                 {/* show a list of topics */}
@@ -165,8 +163,7 @@ export default function CategoryPage() {
                 topicEditorState.shown
                   ? "sticky bottom-0 h-full max-h-[calc(100vh-90px-1px)] bg-[#2a2a2e3b] pb-5 pt-7 shadow-[0px_-1px_6px_2px_#00000015,0px_0px_0px_1px_#00000030,0px_-11px_20px_2px_#00000005,0px_-20px_55px_0px_#00000005]"
                   : "sticky bottom-[-200px] bg-[#2a2a2e3b] py-2 sm:pb-7 sm:pt-9"
-              } ${topicEditorState.purpose === "Edit" ? "" : ""}
-              ?`}
+              }`}
             >
               <FormTrigger
                 setInput={setTopicInput}
@@ -176,7 +173,7 @@ export default function CategoryPage() {
               />
 
               <animated.div
-                style={animationProps}
+                style={editorAnimationProps}
                 ref={contentRef}
                 className="w-full"
               >
@@ -197,7 +194,7 @@ export default function CategoryPage() {
   );
 }
 
-// ------------------ COMPONENTS ------------------
+// ------------------ COMPONENTS ------------------ //
 
 interface ICategoryHeaderProps {
   categoryFetchingStatus: string;

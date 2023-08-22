@@ -46,8 +46,10 @@ export function Voting({ analogyId }: { analogyId: string }) {
         if (errorMessage.vote) {
           toast.error(errorMessage?.vote.join(" "));
         }
+      } else if (e.message.includes("UNAUTHORIZED")) {
+        toast.error("Sign in to vote.");
       } else {
-        toast.error("Sign in to vote!");
+        toast.error("Something went wrong!");
       }
     },
   });

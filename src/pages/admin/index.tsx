@@ -1,14 +1,15 @@
-import React, { useState } from "react";
-import { api } from "@/utils/api";
-import { PageLayout } from "@/components/layout";
+import React, { useState, type ComponentType } from "react";
 import Head from "next/head";
-
+import { api } from "@/utils/api";
 import { PillsRow } from "../../components/Pills";
 import { ListView } from "./ListView";
-import { AdminSidePanel } from "./AdminSidePanel";
+import { PageLayout } from "@/components/layout";
+import { useSession } from "next-auth/react";
+import { AiFillLock } from "react-icons/ai";
 import { AdminFooter } from "./AdminFooter";
 import { useDebounce } from "@/hooks/useDebounce";
-
+import { CornerLoading } from "@/components/loading";
+import { AdminSidePanel } from "./AdminSidePanel";
 import {
   EditorModal,
   CategoryEditForm,
@@ -17,185 +18,96 @@ import {
   UserEditForm,
   CommentEditForm,
 } from "./EditorModal";
-import { useSession } from "next-auth/react";
-import { AiFillLock } from "react-icons/ai";
-import { CornerLoading } from "@/components/loading";
 
-export default function AdminPage(props) {
+export default function AdminPage({}) {
+  const { data: sessionData, status: sessionStatus } = useSession();
+
+  const [activeSection, setActiveSection] = useState("Categories");
+  const [editorModalShown, setEditorModalShown] = useState(false);
+  const [editorModalInput, setEditorModalInput] = useState("");
   const [AdminFooterCollapsed, setAdminFooterCollapsed] = useState(false);
   const [orderBy, setOrderBy] = useState<"desc" | "asc" | null>("desc");
   const [searchQuery, setSearchQuery] = useState("");
 
   const debouncedSearch = useDebounce(searchQuery, 500);
 
+  interface Api {
+    category: typeof api.category;
+    topic: typeof api.topic;
+    analogy: typeof api.analogy;
+    profile: typeof api.profile;
+    comment: typeof api.comment;
+  }
+  const fetchData = (
+    api: Api,
+    entityType: "category" | "topic" | "analogy" | "profile" | "comment",
+    query: string,
+    order: "asc" | "desc" | null,
+    limit: number
+  ) => {
+    return api[entityType].getAllWithQuery.useInfiniteQuery(
+      {
+        query,
+        order,
+        limit,
+      },
+      {
+        getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor,
+        refetchOnWindowFocus: false,
+        refetchOnMount: false,
+        refetchOnReconnect: false,
+      }
+    );
+  };
   const {
     data: categoriesData,
     hasNextPage: categoriesHasNextPage,
-    fetchNextPage: fetchNextCategoryPage,
-    isFetchingNextPage: isFetchingNextCategoryPage,
-  } = api.category.getAllWithQuery.useInfiniteQuery(
-    {
-      query: debouncedSearch,
-      order: orderBy,
-      limit: 15,
-    },
-    {
-      getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor,
-      refetchOnWindowFocus: false,
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-    }
-  );
-
+    fetchNextPage: fetchNextCategoriesPage,
+    isFetchingNextPage: isFetchingNextCategoriesPage,
+  } = fetchData(api, "category", debouncedSearch, orderBy, 15);
   const {
     data: topicsData,
     hasNextPage: topicsHasNextPage,
-    fetchNextPage: fetchNextTopicPage,
-    isFetchingNextPage: isFetchingNextTopicPage,
-  } = api.topic.getAllWithQuery.useInfiniteQuery(
-    {
-      query: debouncedSearch,
-      order: orderBy,
-      limit: 15,
-    },
-    {
-      getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor,
-      refetchOnWindowFocus: false,
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-    }
-  );
-
+    fetchNextPage: fetchNextTopicsPage,
+    isFetchingNextPage: isFetchingNextTopicsPage,
+  } = fetchData(api, "topic", debouncedSearch, orderBy, 15);
   const {
     data: analogiesData,
     hasNextPage: analogiesHasNextPage,
-    fetchNextPage: fetchNextAnalogyPage,
-    isFetchingNextPage: isFetchingNextAnalogyPage,
-  } = api.analogy.getAllWithQuery.useInfiniteQuery(
-    {
-      query: debouncedSearch,
-      order: orderBy,
-      limit: 15,
-    },
-    {
-      getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor,
-      refetchOnWindowFocus: false,
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-    }
-  );
-
+    fetchNextPage: fetchNextAnalogiesPage,
+    isFetchingNextPage: isFetchingNextAnalogiesPage,
+  } = fetchData(api, "analogy", debouncedSearch, orderBy, 15);
   const {
     data: usersData,
     hasNextPage: usersHasNextPage,
-    fetchNextPage: fetchNextUserPage,
-    isFetchingNextPage: isFetchingNextUserPage,
-  } = api.profile.getAllWithQuery.useInfiniteQuery(
-    {
-      query: debouncedSearch,
-      order: orderBy,
-      limit: 15,
-    },
-    {
-      getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor,
-      refetchOnWindowFocus: false,
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-    }
-  );
-
+    fetchNextPage: fetchNextUsersPage,
+    isFetchingNextPage: isFetchingNextUsersPage,
+  } = fetchData(api, "profile", debouncedSearch, orderBy, 15);
   const {
     data: commentsData,
     hasNextPage: commentsHasNextPage,
-    fetchNextPage: fetchNextCommentPage,
-    isFetchingNextPage: isFetchingNextCommentPage,
-  } = api.comment.getAllWithQuery.useInfiniteQuery(
-    {
-      query: debouncedSearch,
-      order: orderBy,
-      limit: 15,
-    },
-    {
-      getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor,
-      refetchOnWindowFocus: false,
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-    }
+    fetchNextPage: fetchNextCommentsPage,
+    isFetchingNextPage: isFetchingNextCommentsPage,
+  } = fetchData(api, "comment", debouncedSearch, orderBy, 15);
+
+  // --- render correct editor form based on entity type --- //
+  interface EditorModalInput {
+    type: "Categories" | "Topics" | "Analogies" | "Users" | "Comments";
+  }
+  const editorFormMap: Record<EditorModalInput["type"], ComponentType<any>> = {
+    Categories: CategoryEditForm,
+    Topics: TopicEditForm,
+    Analogies: AnalogyEditForm,
+    Users: UserEditForm,
+    Comments: CommentEditForm,
+  };
+  const EditorForm =
+    editorFormMap[editorModalInput?.type] || (() => "There's an error");
+
+  // --- recognize user roles with access --- //
+  const isModerator = ["ADMIN", "EDITOR"].includes(
+    sessionData?.user.role ?? ""
   );
-  const [activeSection, setActiveSection] = useState("Categories");
-
-  function getData(activeSection: string) {
-    switch (activeSection) {
-      case "Categories":
-        return categoriesData;
-      case "Topics":
-        return topicsData;
-      case "Analogies":
-        return analogiesData;
-      case "Users":
-        return usersData;
-      case "Comments":
-        return commentsData;
-      default:
-        return [];
-    }
-  }
-
-  function getHasNextPage(activeSection: string) {
-    switch (activeSection) {
-      case "Categories":
-        return categoriesHasNextPage;
-      case "Topics":
-        return topicsHasNextPage;
-      case "Analogies":
-        return analogiesHasNextPage;
-      case "Users":
-        return usersHasNextPage;
-      case "Comments":
-        return commentsHasNextPage;
-      default:
-        return false;
-    }
-  }
-
-  function getFetchNextPage(activeSection: string) {
-    switch (activeSection) {
-      case "Categories":
-        return fetchNextCategoryPage;
-      case "Topics":
-        return fetchNextTopicPage;
-      case "Analogies":
-        return fetchNextAnalogyPage;
-      case "Users":
-        return fetchNextUserPage;
-      case "Comments":
-        return fetchNextCommentPage;
-      default:
-        return;
-    }
-  }
-
-  function getIsFetchingNextPage(activeSection: string) {
-    switch (activeSection) {
-      case "Categories":
-        return isFetchingNextCategoryPage;
-      case "Topics":
-        return isFetchingNextTopicPage;
-      case "Analogies":
-        return isFetchingNextAnalogyPage;
-      case "Users":
-        return isFetchingNextUserPage;
-      case "Comments":
-        return isFetchingNextCommentPage;
-      default:
-        return false;
-    }
-  }
-
-  const [editorModalShown, setEditorModalShown] = useState(false);
-  const [editorModalInput, setEditorModalInput] = useState("");
-
-  const { data: sessionData, status: sessionStatus } = useSession();
 
   return (
     <>
@@ -210,7 +122,7 @@ export default function AdminPage(props) {
       <PageLayout>
         {sessionStatus === "loading" ? (
           <CornerLoading />
-        ) : sessionData?.user.role === "ADMIN" ? (
+        ) : isModerator ? (
           <>
             <div
               id="admin=page"
@@ -236,16 +148,24 @@ export default function AdminPage(props) {
                       "Analogies",
                       "Comments",
                     ]}
-                    setActiveSection={setActiveSection}
-                    activeSection={activeSection}
+                    setActive={setActiveSection}
+                    active={activeSection}
                   />
 
                   <ListView
                     type={activeSection}
-                    data={getData(activeSection)}
-                    hasNextPage={getHasNextPage(activeSection)}
-                    fetchNextPage={getFetchNextPage(activeSection)}
-                    isFetchingNextPage={getIsFetchingNextPage(activeSection)}
+                    data={eval(`${activeSection.toLowerCase()}Data`) as object}
+                    hasNextPage={
+                      eval(
+                        `Boolean(${activeSection.toLowerCase()}HasNextPage)`
+                      ) as boolean
+                    }
+                    fetchNextPage={
+                      eval(`fetchNext${activeSection}Page`) as () => void
+                    }
+                    isFetchingNextPage={
+                      eval(`isFetchingNext${activeSection}Page`) as boolean
+                    }
                     setEditorModalInput={setEditorModalInput}
                     setEditorModalShown={setEditorModalShown}
                     setOrderBy={setOrderBy}
@@ -257,56 +177,24 @@ export default function AdminPage(props) {
                 <AdminSidePanel />
               </div>
               <AdminFooter
-                AdminFooterCollapsed={AdminFooterCollapsed}
-                setAdminFooterCollapsed={setAdminFooterCollapsed}
+                collapsed={AdminFooterCollapsed}
+                setCollapsed={setAdminFooterCollapsed}
               />
             </div>
 
             <EditorModal
-              editorModalShown={editorModalShown}
-              setEditorModalShown={setEditorModalShown}
+              shown={editorModalShown}
+              setShown={setEditorModalShown}
             >
-              {editorModalInput?.type === "Categories" ? (
-                <CategoryEditForm
-                  editorModalInput={editorModalInput}
-                  setEditorModalShown={setEditorModalShown}
-                  setEditorModalInput={setEditorModalInput}
-                />
-              ) : editorModalInput?.type === "Topics" ? (
-                <TopicEditForm
-                  editorModalInput={editorModalInput}
-                  setEditorModalShown={setEditorModalShown}
-                  setEditorModalInput={setEditorModalInput}
-                />
-              ) : editorModalInput?.type === "Analogies" ? (
-                <AnalogyEditForm
-                  editorModalInput={editorModalInput}
-                  setEditorModalShown={setEditorModalShown}
-                  setEditorModalInput={setEditorModalInput}
-                />
-              ) : editorModalInput?.type === "Users" ? (
-                <UserEditForm
-                  editorModalInput={editorModalInput}
-                  setEditorModalShown={setEditorModalShown}
-                  setEditorModalInput={setEditorModalInput}
-                />
-              ) : editorModalInput?.type === "Comments" ? (
-                <CommentEditForm
-                  editorModalInput={editorModalInput}
-                  setEditorModalShown={setEditorModalShown}
-                  setEditorModalInput={setEditorModalInput}
-                />
-              ) : (
-                "There's an error"
-              )}
+              <EditorForm
+                setShown={setEditorModalShown}
+                input={editorModalInput}
+                setInput={setEditorModalInput}
+              />
             </EditorModal>
           </>
         ) : (
-          <div
-            // className="flex select-none flex-col items-center justify-center text-gray-500"
-            className="mt-[90px] flex h-[calc(100dvh-90px-2px)] w-full flex-col items-center justify-center border border-y-[#5555552a] text-gray-500"
-          >
-            {" "}
+          <div className="mt-[90px] flex h-[calc(100dvh-90px-2px)] w-full flex-col items-center justify-center border border-y-[#5555552a] text-gray-500">
             <AiFillLock />
             <span className="mt-2">Unauthorized Access</span>
           </div>

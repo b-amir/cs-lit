@@ -20,7 +20,7 @@ interface IListViewProps {
   isfetchingNextPage: boolean;
   setEditorModalInput: React.Dispatch<React.SetStateAction<any>>;
   setEditorModalShown: React.Dispatch<React.SetStateAction<boolean>>;
-  orderBy: string;
+  orderBy: "desc" | "asc" | null;
   setOrderBy: React.Dispatch<React.SetStateAction<string>>;
   searchQuery: string;
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;

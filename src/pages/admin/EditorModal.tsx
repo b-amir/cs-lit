@@ -6,14 +6,10 @@ import { MdClose, MdOutlineModeEdit } from "react-icons/md";
 
 // a modal consisting of a form to update the item. but the form input items differ for each item type
 
-export function EditorModal({
-  children,
-  editorModalShown,
-  setEditorModalShown,
-}) {
+export function EditorModal({ children, shown, setShown }) {
   return (
     <>
-      {editorModalShown && (
+      {shown && (
         <div
           id="editor-modal-bg"
           // full page modal
@@ -21,7 +17,7 @@ export function EditorModal({
           aria-labelledby="modal-title"
           role="dialog"
           aria-modal="true"
-          onClick={() => setEditorModalShown(false)}
+          onClick={() => setShown(false)}
         >
           <div
             id="editor-modal-box"
@@ -42,7 +38,7 @@ export function EditorModal({
               </span>
               <MdClose
                 className="h-11 w-11 cursor-pointer rounded-full p-2 transition-all hover:bg-gray-100 "
-                onClick={() => setEditorModalShown(false)}
+                onClick={() => setShown(false)}
               />
             </div>
             {children}
@@ -53,28 +49,24 @@ export function EditorModal({
   );
 }
 
-export function CategoryEditForm({
-  editorModalInput,
-  setEditorModalShown,
-  setEditorModalInput,
-}) {
-  const { item, type } = editorModalInput;
+export function CategoryEditForm({ input, setShown, setInput }) {
+  const { item, type } = input;
   const updateItem = useUpdateItem(item, type);
 
-  // editorModalInput.item,
-  // editorModalInput.type
+  // input.item,
+  // input.type
 
   const handleSave = (e) => {
     //prevent default
     e.preventDefault();
-    setEditorModalShown(false);
+    setShown(false);
     updateItem();
   };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
 
-    setEditorModalInput((prev) => {
+    setInput((prev) => {
       return {
         ...prev,
         item: {
@@ -99,7 +91,7 @@ export function CategoryEditForm({
             type="text"
             name="name"
             id="name"
-            defaultValue={editorModalInput?.item?.name ?? ""}
+            defaultValue={input?.item?.name ?? ""}
             onChange={handleChange}
             placeholder="Enter title"
             className="focus:shadow-outline mb-2 w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none"
@@ -116,7 +108,7 @@ export function CategoryEditForm({
             type="text"
             name="slug"
             id="slug"
-            defaultValue={editorModalInput?.item?.slug ?? ""}
+            defaultValue={input?.item?.slug ?? ""}
             onChange={handleChange}
             placeholder="Enter slug"
             className="focus:shadow-outline mb-2 w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none"
@@ -132,7 +124,7 @@ export function CategoryEditForm({
           <select
             name="status"
             id="status"
-            defaultValue={editorModalInput?.item?.status ?? ""}
+            defaultValue={input?.item?.status ?? ""}
             onChange={handleChange}
             className="focus:shadow-outline mb-2 w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none"
           >
@@ -149,7 +141,7 @@ export function CategoryEditForm({
         >
           <button
             className="px-2 py-2 pr-5 text-sm font-semibold text-gray-500 transition-all hover:underline"
-            onClick={() => setEditorModalShown(false)}
+            onClick={() => setShown(false)}
           >
             cancel
           </button>
@@ -170,24 +162,20 @@ export function CategoryEditForm({
   );
 }
 
-export function TopicEditForm({
-  editorModalInput,
-  setEditorModalShown,
-  setEditorModalInput,
-}) {
-  const { item, type } = editorModalInput;
+export function TopicEditForm({ input, setShown, setInput }) {
+  const { item, type } = input;
   const updateItem = useUpdateItem(item, type);
 
   const handleSave = (e) => {
     e.preventDefault();
-    setEditorModalShown(false);
+    setShown(false);
     updateItem();
   };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
 
-    setEditorModalInput((prev) => {
+    setInput((prev) => {
       return {
         ...prev,
         item: {
@@ -212,7 +200,7 @@ export function TopicEditForm({
             type="text"
             name="title"
             id="title"
-            defaultValue={editorModalInput?.item?.title ?? ""}
+            defaultValue={input?.item?.title ?? ""}
             onChange={handleChange}
             placeholder="Enter title"
             className="focus:shadow-outline mb-2 w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none"
@@ -229,7 +217,7 @@ export function TopicEditForm({
             type="text"
             name="slug"
             id="slug"
-            defaultValue={editorModalInput?.item?.slug ?? ""}
+            defaultValue={input?.item?.slug ?? ""}
             onChange={handleChange}
             placeholder="Enter slug"
             className="focus:shadow-outline mb-2 w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none"
@@ -246,7 +234,7 @@ export function TopicEditForm({
             type="text"
             name="url"
             id="url"
-            defaultValue={editorModalInput?.item?.url ?? ""}
+            defaultValue={input?.item?.url ?? ""}
             onChange={handleChange}
             placeholder="Enter url"
             className="focus:shadow-outline mb-2 w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none"
@@ -262,7 +250,7 @@ export function TopicEditForm({
           <select
             name="status"
             id="status"
-            defaultValue={editorModalInput?.item?.status ?? ""}
+            defaultValue={input?.item?.status ?? ""}
             onChange={handleChange}
             className="focus:shadow-outline mb-2 w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none"
           >
@@ -280,7 +268,7 @@ export function TopicEditForm({
         >
           <button
             className="px-2 py-2 pr-5 text-sm font-semibold text-gray-500 transition-all hover:underline"
-            onClick={() => setEditorModalShown(false)}
+            onClick={() => setShown(false)}
           >
             cancel
           </button>
@@ -301,28 +289,24 @@ export function TopicEditForm({
   );
 }
 
-export function AnalogyEditForm({
-  editorModalInput,
-  setEditorModalShown,
-  setEditorModalInput,
-}) {
-  const { item, type } = editorModalInput;
+export function AnalogyEditForm({ input, setShown, setInput }) {
+  const { item, type } = input;
   const updateItem = useUpdateItem(item, type);
 
-  // editorModalInput.item,
-  // editorModalInput.type
+  // input.item,
+  // input.type
 
   const handleSave = (e) => {
     //prevent default
     e.preventDefault();
-    setEditorModalShown(false);
+    setShown(false);
     updateItem();
   };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
 
-    setEditorModalInput((prev) => {
+    setInput((prev) => {
       return {
         ...prev,
         item: {
@@ -347,7 +331,7 @@ export function AnalogyEditForm({
             type="text"
             name="title"
             id="title"
-            defaultValue={editorModalInput?.item?.title ?? ""}
+            defaultValue={input?.item?.title ?? ""}
             onChange={handleChange}
             placeholder="Enter title"
             className="focus:shadow-outline mb-2 w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none"
@@ -363,7 +347,7 @@ export function AnalogyEditForm({
           <textarea
             name="description"
             id="description"
-            defaultValue={editorModalInput?.item?.description ?? ""}
+            defaultValue={input?.item?.description ?? ""}
             onChange={handleChange}
             placeholder="Enter description"
             className="focus:shadow-outline mb-2 w-full resize-y appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none"
@@ -380,11 +364,11 @@ export function AnalogyEditForm({
             type="checkbox"
             name="pinned"
             id="pinned"
-            // defaultValue={editorModalInput?.item?.pinned ?? ""}
-            checked={editorModalInput?.item?.pinned ?? ""}
+            // defaultValue={input?.item?.pinned ?? ""}
+            checked={input?.item?.pinned ?? ""}
             onChange={(e) => {
               const { name, checked } = e.target;
-              setEditorModalInput((prev) => {
+              setInput((prev) => {
                 return {
                   ...prev,
                   item: {
@@ -406,7 +390,7 @@ export function AnalogyEditForm({
           <select
             name="status"
             id="status"
-            defaultValue={editorModalInput?.item?.status ?? ""}
+            defaultValue={input?.item?.status ?? ""}
             onChange={handleChange}
             className="focus:shadow-outline mb-2 w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none"
           >
@@ -424,7 +408,7 @@ export function AnalogyEditForm({
         >
           <button
             className="px-2 py-2 pr-5 text-sm font-semibold text-gray-500 transition-all hover:underline"
-            onClick={() => setEditorModalShown(false)}
+            onClick={() => setShown(false)}
           >
             cancel
           </button>
@@ -445,28 +429,24 @@ export function AnalogyEditForm({
   );
 }
 
-export function UserEditForm({
-  editorModalInput,
-  setEditorModalShown,
-  setEditorModalInput,
-}) {
-  const { item, type } = editorModalInput;
+export function UserEditForm({ input, setShown, setInput }) {
+  const { item, type } = input;
   const updateItem = useUpdateItem(item, type);
 
-  // editorModalInput.item,
-  // editorModalInput.type
+  // input.item,
+  // input.type
 
   const handleSave = (e) => {
     //prevent default
     e.preventDefault();
-    setEditorModalShown(false);
+    setShown(false);
     updateItem();
   };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
 
-    setEditorModalInput((prev) => {
+    setInput((prev) => {
       return {
         ...prev,
         item: {
@@ -491,7 +471,7 @@ export function UserEditForm({
             type="text"
             name="username"
             id="username"
-            defaultValue={editorModalInput?.item?.username ?? ""}
+            defaultValue={input?.item?.username ?? ""}
             onChange={handleChange}
             placeholder="Enter username"
             className="focus:shadow-outline mb-2 w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none"
@@ -508,7 +488,7 @@ export function UserEditForm({
             type="text"
             name="name"
             id="name"
-            defaultValue={editorModalInput?.item?.name ?? ""}
+            defaultValue={input?.item?.name ?? ""}
             onChange={handleChange}
             placeholder="Enter name"
             className="focus:shadow-outline mb-2 w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none"
@@ -525,7 +505,7 @@ export function UserEditForm({
             type="text"
             name="email"
             id="email"
-            defaultValue={editorModalInput?.item?.email ?? ""}
+            defaultValue={input?.item?.email ?? ""}
             onChange={handleChange}
             placeholder="Enter email"
             className="focus:shadow-outline mb-2 w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none"
@@ -541,7 +521,7 @@ export function UserEditForm({
           <select
             name="role"
             id="role"
-            defaultValue={editorModalInput?.item?.role ?? ""}
+            defaultValue={input?.item?.role ?? ""}
             onChange={handleChange}
             className="focus:shadow-outline mb-2 w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none"
           >
@@ -560,7 +540,7 @@ export function UserEditForm({
           <select
             name="status"
             id="status"
-            defaultValue={editorModalInput?.item?.status ?? ""}
+            defaultValue={input?.item?.status ?? ""}
             onChange={handleChange}
             className="focus:shadow-outline mb-2 w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none"
           >
@@ -577,7 +557,7 @@ export function UserEditForm({
         >
           <button
             className="px-2 py-2 pr-5 text-sm font-semibold text-gray-500 transition-all hover:underline"
-            onClick={() => setEditorModalShown(false)}
+            onClick={() => setShown(false)}
           >
             cancel
           </button>
@@ -598,28 +578,24 @@ export function UserEditForm({
   );
 }
 
-export function CommentEditForm({
-  editorModalInput,
-  setEditorModalShown,
-  setEditorModalInput,
-}) {
-  const { item, type } = editorModalInput;
+export function CommentEditForm({ input, setShown, setInput }) {
+  const { item, type } = input;
   const updateItem = useUpdateItem(item, type);
 
-  // editorModalInput.item,
-  // editorModalInput.type
+  // input.item,
+  // input.type
 
   const handleSave = (e) => {
     //prevent default
     e.preventDefault();
-    setEditorModalShown(false);
+    setShown(false);
     updateItem();
   };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
 
-    setEditorModalInput((prev) => {
+    setInput((prev) => {
       return {
         ...prev,
         item: {
@@ -644,7 +620,7 @@ export function CommentEditForm({
             type="text"
             name="content"
             id="content"
-            defaultValue={editorModalInput?.item?.content ?? ""}
+            defaultValue={input?.item?.content ?? ""}
             onChange={handleChange}
             placeholder="Enter content"
             className="focus:shadow-outline mb-2 w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none"
@@ -660,7 +636,7 @@ export function CommentEditForm({
           <select
             name="status"
             id="status"
-            defaultValue={editorModalInput?.item?.status ?? ""}
+            defaultValue={input?.item?.status ?? ""}
             onChange={handleChange}
             className="focus:shadow-outline mb-2 w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none"
           >
@@ -678,7 +654,7 @@ export function CommentEditForm({
         >
           <button
             className="px-2 py-2 pr-5 text-sm font-semibold text-gray-500 transition-all hover:underline"
-            onClick={() => setEditorModalShown(false)}
+            onClick={() => setShown(false)}
           >
             cancel
           </button>

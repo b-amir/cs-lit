@@ -3,5 +3,12 @@
   "WillLuke.nextjs.addTypesOnSave": true,
   "WillLuke.nextjs.hasPrompted": true,
   "cSpell.enableFiletypes": ["tailwindcss"],
-  "cSpell.words": ["callstack", "coldark", "CSLIT", "sidepanel", "trpc"]
+  "cSpell.words": [
+    "callstack",
+    "coldark",
+    "CSLIT",
+    "isfetching",
+    "sidepanel",
+    "trpc"
+  ]
 }

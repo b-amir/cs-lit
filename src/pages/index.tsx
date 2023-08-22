@@ -47,8 +47,7 @@ const Home: NextPage = () => {
     carouselItems[1],
     carouselItems[2],
   ]);
-  // const [firstCycleComplete, setFirstCycleComplete] = useState(false);
-  // useTransition for the carousel items to animate slide-up
+  // --- useTransition for the carousel items to animate slide-up --- //
   const carouselTransitions = useTransition([currentCarouselItems[0]], {
     from: {
       opacity: 0,
@@ -72,7 +71,6 @@ const Home: NextPage = () => {
   });
 
   useEffect(() => {
-    // if (!firstCycleComplete) {
     const interval = setInterval(() => {
       const currentIndex = carouselItems.findIndex(
         (item) => item === currentCarouselItems[0]
@@ -96,7 +94,6 @@ const Home: NextPage = () => {
           carouselItems[1],
           carouselItems[2],
         ]);
-        // setFirstCycleComplete(false);
       }
     }, 2000);
     return () => clearInterval(interval);
@@ -119,7 +116,7 @@ const Home: NextPage = () => {
 
   const { data: analogyData } = api.analogy.getById.useQuery(
     {
-      id: "seiydzNj",
+      id: "seiydzNj", // A specific analogy to showcase in homepage.
     },
     {
       refetchOnWindowFocus: false,
@@ -139,18 +136,13 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <HeaderSection sessionData={sessionData} sessionStatus={sessionStatus} />
-
       <HeroSection carouselTransitions={carouselTransitions} />
-
       <CategoriesSection
         categories={categories}
         categoriesFetchingStatus={categoriesFetchingStatus}
       />
-
       <ExampleSection analogyData={analogyData} />
-
       <ShareSection sessionData={sessionData} sessionStatus={sessionStatus} />
-
       <FooterSection />
     </>
   );

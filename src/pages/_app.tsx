@@ -34,8 +34,6 @@ const MyApp: AppType<{ session: Session | null }> = ({
             maxWidth: "fit-content",
             borderRadius: "17px",
             backgroundColor: "#2A2A2E",
-            // paddingLeft: "25px",
-            // paddingRight: "25px",
           },
         }}
       />

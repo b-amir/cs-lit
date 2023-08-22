@@ -1,22 +1,18 @@
 import React from "react";
 
 interface IpillsRowProps {
-  setActiveSection: React.Dispatch<React.SetStateAction<string>>;
-  activeSection: string;
+  setActive: React.Dispatch<React.SetStateAction<string>>;
+  active: string;
   pills: string[];
 }
 
 interface IPillProps {
   title: string;
-  setActiveSection: React.Dispatch<React.SetStateAction<string>>;
-  activeSection: string;
+  setActive: React.Dispatch<React.SetStateAction<string>>;
+  active: string;
 }
 
-export function PillsRow({
-  setActiveSection,
-  activeSection,
-  pills,
-}: IpillsRowProps) {
+export function PillsRow({ setActive, active, pills }: IpillsRowProps) {
   return (
     <div
       id="pills-row"
@@ -26,24 +22,24 @@ export function PillsRow({
         <Pill
           key={pillName}
           title={pillName}
-          setActiveSection={setActiveSection}
-          activeSection={activeSection}
+          setActive={setActive}
+          active={active}
         />
       ))}
     </div>
   );
 }
 
-export function Pill({ title, setActiveSection, activeSection }: IPillProps) {
+export function Pill({ title, setActive, active }: IPillProps) {
   return (
     <div
       id="single-pill"
       className={`flex cursor-pointer items-center justify-center rounded-[12px] border px-5 py-1 shadow-sm ${
-        activeSection === title
+        active === title
           ? "border-[#d15b4e] bg-[#ff7263] text-white "
           : "border-[#d1d1d1] bg-[#ffffff] text-[#2A2A2E]"
       }`}
-      onClick={() => setActiveSection(title)}
+      onClick={() => setActive(title)}
     >
       <h3 className={` text-sm font-bold`}>{title}</h3>
     </div>

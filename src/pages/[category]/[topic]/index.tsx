@@ -7,18 +7,14 @@ import { api } from "@/utils/api";
 import Head from "next/head";
 import Link from "next/link";
 import { archivo } from "@/styles/customFonts";
-import { signIn, signOut, useSession } from "next-auth/react";
-import {
-  AnalogySkeleton,
-  MediumSkeleton,
-  TableSkeleton,
-} from "@/components/Skeleton";
+import { useSession } from "next-auth/react";
+import { AnalogySkeleton } from "@/components/Skeleton";
 import { useRef, useState } from "react";
 import { FormTrigger } from "../../../components/FormTrigger";
 import { animated, useSpring } from "@react-spring/web";
 import { type Analogy } from "@prisma/client";
 import { EntityNotFound } from "../../../components/EntityNotFound";
-import { FiArrowDown } from "react-icons/fi";
+import { CornerLoading } from "@/components/loading";
 
 export default function TopicPage(props) {
   const router = useRouter();
@@ -71,7 +67,7 @@ export default function TopicPage(props) {
     }
   );
 
-  // --- animation setup for editor ---> //
+  // --- animation setup for editor --- //
   const contentRef = useRef(null);
   const animationProps = useSpring({
     height: !analogyEditorState.shown ? 0 : sessionData ? 620 : 150,
@@ -89,6 +85,7 @@ export default function TopicPage(props) {
   };
 
   const analogiesCount = topicAnalogies?.pages[0].total;
+
   return (
     <>
       <Head>
@@ -115,7 +112,8 @@ export default function TopicPage(props) {
                 topicFetchingStatus={topicFetchingStatus}
                 topicsData={topicsData}
               />
-
+              {topicFetchingStatus === "loading" ||
+                (analogiesFetchingStatus === "loading" && <CornerLoading />)}
               {analogiesFetchingStatus === "loading" ? (
                 <>
                   <AnalogySkeleton />
