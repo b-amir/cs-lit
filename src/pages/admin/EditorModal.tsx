@@ -137,7 +137,9 @@ export function EditorBodyBlueprint({
     </form>
   );
 }
-
+// ------------------------------------------------------
+// --- each entity type has a different form body: --- //
+// ------------------------------------------------------
 export function CategoryEditForm({ input, setShown, setInput }: FormProps) {
   const fields: FormField[] = [
     { name: "name", label: "Title", variety: "text" },

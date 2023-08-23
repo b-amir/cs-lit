@@ -1,36 +1,13 @@
 import React from "react";
 import { api } from "@/utils/api";
 import { TbActivity } from "react-icons/tb";
-import { CgSpinner } from "react-icons/cg";
 import { archivo } from "@/styles/customFonts";
 import { IoIosArrowUp } from "react-icons/io";
-import { HiOutlineDotsVertical } from "react-icons/hi";
-import { MdDone, MdClose, MdOutlineOpenInNew } from "react-icons/md";
-import { date } from "zod";
 import { RelativeTime } from "@/utils/relativeTime";
 import { LoadMoreButton } from "@/components/LoadMoreButton";
-
-export interface IAdminFooterProps {
-  collapsed: boolean;
-  setCollapsed: React.Dispatch<React.SetStateAction<boolean>>;
-}
+import { type IActivityLogItemProps, type IAdminFooterProps } from "./types";
 
 export function AdminFooter({ collapsed, setCollapsed }: IAdminFooterProps) {
-  const {
-    data: activityData,
-    hasNextPage,
-    fetchNextPage,
-    isFetchingNextPage,
-  } = api.activity.getAll.useInfiniteQuery(
-    {},
-    {
-      getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor,
-      refetchOnWindowFocus: false,
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-    }
-  );
-
   return (
     <div
       id="admin-footer"
@@ -54,35 +31,53 @@ export function AdminFooter({ collapsed, setCollapsed }: IAdminFooterProps) {
           }`}
         />
       </div>
-      {!collapsed && (
-        <div
-          id="activity-log-list "
-          className="h-[calc(20dvh-2.05rem)] w-full overflow-y-scroll "
-        >
-          <div className="mx-auto w-full text-sm text-gray-600">
-            {activityData?.pages?.map((page) =>
-              page?.items?.map((item) => (
-                <ActivityItemView key={item.id} item={item} />
-              ))
-            )}
-
-            {hasNextPage && (
-              <LoadMoreButton
-                fetchNextPage={fetchNextPage}
-                isFetchingNextPage={isFetchingNextPage}
-              />
-            )}
-          </div>
-        </div>
-      )}
+      {!collapsed && <ActivityLogs />}
     </div>
   );
 }
 
-export function ActivityItemView({ item }) {
+function ActivityLogs() {
+  const {
+    data: activityData,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = api.activity.getAll.useInfiniteQuery(
+    {},
+    {
+      getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor,
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+    }
+  );
+  return (
+    <div
+      id="activity-log-list "
+      className="h-[calc(20dvh-2.05rem)] w-full overflow-y-scroll "
+    >
+      <div className="mx-auto w-full text-sm text-gray-600">
+        {activityData?.pages?.map((page) =>
+          page?.items?.map((item) => (
+            <ActivityLogItem key={item.id} item={item} />
+          ))
+        )}
+
+        {hasNextPage && (
+          <LoadMoreButton
+            fetchNextPage={fetchNextPage}
+            isFetchingNextPage={isFetchingNextPage}
+          />
+        )}
+      </div>
+    </div>
+  );
+}
+
+export function ActivityLogItem({ item }: IActivityLogItemProps) {
   const { data: userData } = api.profile.getProfileById.useQuery(
     {
-      id: item.userId as string,
+      id: item.userId,
     },
     {
       refetchOnWindowFocus: false,

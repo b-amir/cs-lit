@@ -77,4 +77,17 @@ export interface EditorBodyBlueprint {
   type: "topic" | "category" | "user" | "comment" | "analogy"
 
 }
-
+export interface IAdminFooterProps {
+  collapsed: boolean;
+  setCollapsed: React.Dispatch<React.SetStateAction<boolean>>;
+}
+export interface IActivityLogItemProps {
+  item: {
+    id: string;
+    userId: string;
+    entityType: string;
+    entityTitle: string;
+    action: string;
+    timestamp: Date;
+  };
+}
