@@ -1,30 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { api } from "@/utils/api";
-import { TbUrgent } from "react-icons/tb";
-import { archivo } from "@/styles/customFonts";
-import { MdDone as Approve, MdClose as Dismiss } from "react-icons/md";
-import { ActionMenu } from "./ActionMenu";
-import { useUpdateItem } from "@/hooks/useUpdateItem";
 import Link from "next/link";
+import { api } from "@/utils/api";
+import { archivo } from "@/styles/customFonts";
+import { TbUrgent } from "react-icons/tb";
+import { ActionMenu } from "./ActionMenu";
 import { routeHandler } from "@/utils/routeHandler";
+import { useUpdateItem } from "@/hooks/useUpdateItem";
 import { LoadMoreButton } from "@/components/LoadMoreButton";
+import { type IPendingItemProps, type PendingItem } from "./types";
+import { MdDone as Approve, MdClose as Dismiss } from "react-icons/md";
 
 export function AdminSidePanel() {
-  const {
-    data: pendingData,
-    hasNextPage,
-    fetchNextPage,
-    isFetchingNextPage,
-  } = api.pending.getAll.useInfiniteQuery(
-    {},
-    {
-      getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor,
-      refetchOnWindowFocus: false,
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-    }
-  );
-
   return (
     <div
       id="admin-sidepanel"
@@ -44,36 +30,55 @@ export function AdminSidePanel() {
         </div>
       </div>
 
-      <div className=" overflow-y-auto sm:h-[calc(100dvh-20dvh-90px-96px)]">
-        {pendingData?.pages?.map((page) =>
-          page?.items?.map((item) => (
-            <PendingItemView key={item.id} item={item} />
-          ))
-        )}
-
-        {pendingData?.pages[0]?.items.length === 0 && (
-          <div className="flex w-full items-center justify-center ">
-            <p className="select-none py-10 text-sm text-gray-400">
-              Nothing is pending.
-            </p>
-          </div>
-        )}
-
-        {hasNextPage && (
-          <LoadMoreButton
-            fetchNextPage={fetchNextPage}
-            isFetchingNextPage={isFetchingNextPage}
-          />
-        )}
-      </div>
+      <PendingItems />
     </div>
   );
 }
 
-export function PendingItemView({ item }) {
+function PendingItems() {
+  const {
+    data: pendingData,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = api.pending.getAll.useInfiniteQuery(
+    {},
+    {
+      getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor,
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+    }
+  );
+
+  return (
+    <div className=" overflow-y-auto sm:h-[calc(100dvh-20dvh-90px-96px)]">
+      {pendingData?.pages?.map((page) =>
+        page?.items?.map((item) => <PendingItem key={item.id} item={item} />)
+      )}
+
+      {pendingData?.pages[0]?.items.length === 0 && (
+        <div className="flex w-full items-center justify-center ">
+          <p className="select-none py-10 text-sm text-gray-400">
+            Nothing is pending.
+          </p>
+        </div>
+      )}
+
+      {hasNextPage && (
+        <LoadMoreButton
+          fetchNextPage={fetchNextPage}
+          isFetchingNextPage={isFetchingNextPage}
+        />
+      )}
+    </div>
+  );
+}
+
+export function PendingItem({ item }: IPendingItemProps) {
   const [showActionMenuDots, setShowActionMenuDots] = useState(false);
-  const [showExtendedActionMenu, setShowExtendedActionMenu] = useState(false);
-  const [itemCopy, setItemCopy] = useState(null);
+  const [showExtendedActionMenu] = useState(false);
+  const [itemCopy, setItemCopy] = useState<PendingItem | null>(null);
 
   const itemType = item?.topicId
     ? "Analogies"
@@ -82,6 +87,7 @@ export function PendingItemView({ item }) {
     : item?.starterId
     ? "Topics"
     : "Categories";
+
   const updateItem = useUpdateItem(itemCopy, itemType);
 
   const handleStatusUpdate = (newStatus: string) => {
@@ -98,13 +104,12 @@ export function PendingItemView({ item }) {
   return (
     <div
       className=" flex h-14 w-full cursor-pointer flex-row items-center  justify-between border-b-[1px] border-[#00000012] py-6 pl-6 transition-all hover:bg-[#00000012]"
-      // key={item.id}
       onMouseEnter={() => setShowActionMenuDots(true)}
       onMouseLeave={() => setShowActionMenuDots(false)}
     >
       <div className="flex flex-col items-start justify-start overflow-clip ">
         <Link
-          href={`${routeHandler(item, itemType)}  `}
+          href={`${routeHandler(item, itemType) ?? ""}  `}
           className="w-11/12 overflow-clip overflow-ellipsis whitespace-nowrap"
         >
           <h1

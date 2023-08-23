@@ -2,12 +2,12 @@ import React, { useState, type ComponentType } from "react";
 import Head from "next/head";
 import { api } from "@/utils/api";
 import { PillsRow } from "../../components/Pills";
-import { ListView } from "./ListView";
 import { PageLayout } from "@/components/layout";
 import { useSession } from "next-auth/react";
 import { AiFillLock } from "react-icons/ai";
 import { AdminFooter } from "./AdminFooter";
 import { useDebounce } from "@/hooks/useDebounce";
+import { AdminMainList } from "./AdminMainList";
 import { CornerLoading } from "@/components/loading";
 import { AdminSidePanel } from "./AdminSidePanel";
 import {
@@ -152,7 +152,7 @@ export default function AdminPage({}) {
                     active={activeSection}
                   />
 
-                  <ListView
+                  <AdminMainList
                     type={activeSection}
                     data={eval(`${activeSection.toLowerCase()}Data`) as object}
                     hasNextPage={

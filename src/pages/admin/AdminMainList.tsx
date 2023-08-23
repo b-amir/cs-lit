@@ -1,31 +1,17 @@
-import React, { useState } from "react";
-import { ActionMenu } from "./ActionMenu";
-import { useDeleteItem } from "@/hooks/useDeleteItem";
-
-import { archivo } from "@/styles/customFonts";
-import { TbSortAscending2, TbSortDescending2 } from "react-icons/tb";
-import { MdOutlineModeEdit as Edit } from "react-icons/md";
-import { CgSpinner } from "react-icons/cg";
-import { RiDeleteBin6Line as Delete } from "react-icons/ri";
 import Link from "next/link";
+import React, { useState } from "react";
+import { archivo } from "@/styles/customFonts";
+import { ActionMenu } from "./ActionMenu";
 import { routeHandler } from "@/utils/routeHandler";
+import { OrderByInput } from "./OrderByInput";
+import { useDeleteItem } from "@/hooks/useDeleteItem";
 import { getStatusIcon } from "@/utils/getStatusIcon";
 import { LoadMoreButton } from "@/components/LoadMoreButton";
+import { MdOutlineModeEdit as Edit } from "react-icons/md";
+import { RiDeleteBin6Line as Delete } from "react-icons/ri";
+import { type IListItemProps, type IListViewProps } from "./types";
 
-interface IListViewProps {
-  type: string;
-  data: any;
-  hasNextPage: boolean | undefined;
-  fetchNextPage: () => void;
-  isfetchingNextPage: boolean;
-  setEditorModalInput: React.Dispatch<React.SetStateAction<any>>;
-  setEditorModalShown: React.Dispatch<React.SetStateAction<boolean>>;
-  orderBy: "desc" | "asc" | null;
-  setOrderBy: React.Dispatch<React.SetStateAction<string>>;
-  searchQuery: string;
-  setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
-}
-export function ListView({
+export function AdminMainList({
   data,
   type,
   hasNextPage,
@@ -38,9 +24,9 @@ export function ListView({
   setSearchQuery,
 }: IListViewProps) {
   return (
-    <div className=" relative z-20 mx-auto h-full  overflow-x-clip overflow-y-scroll  rounded-sm  bg-white px-0  transition-all ">
+    <div className=" relative z-20 mx-auto h-full overflow-x-clip overflow-y-scroll rounded-sm bg-white px-0 transition-all ">
       <>
-        <div className="flex flex-col gap-5  border-b border-[#5555552a] bg-gradient-to-tr from-[#f4e6e07d] to-[#f9ece57d] px-6 py-6 sm:px-16">
+        <div className="flex flex-col gap-5 border-b border-[#5555552a] bg-gradient-to-tr from-[#f4e6e07d] to-[#f9ece57d] px-6 py-6 sm:px-16">
           <div
             id="count-title"
             className="flex flex-row items-center justify-start"
@@ -50,7 +36,7 @@ export function ListView({
               {data?.pages ? data?.pages[0]?.total : 0}
             </span>
             <h1
-              className={` ${archivo.className}  flex flex-row items-center gap-1 text-3xl font-bold`}
+              className={` ${archivo.className} flex flex-row items-center gap-1 text-3xl font-bold`}
             >
               {type}
             </h1>
@@ -67,14 +53,14 @@ export function ListView({
               onChange={(e) => setSearchQuery(e.target.value)}
             />
 
-            <RadioOptions setOrderBy={setOrderBy} />
+            <OrderByInput setOrderBy={setOrderBy} />
           </div>
         </div>
         <div className=" flex w-full flex-col ">
           <div className="flex w-full flex-col ">
             {data?.pages?.map((page) =>
               page?.items?.map((item) => (
-                <ListItemView
+                <AdminMainListItem
                   key={item.id}
                   item={item}
                   type={type}
@@ -95,74 +81,19 @@ export function ListView({
     </div>
   );
 }
-
-function RadioOptions({ setOrderBy }) {
-  return (
-    <div className="grid grid-cols-2 gap-1 rounded-md bg-[#6e3c2024] px-[0] py-1 text-xs text-[#2f2f2f] sm:text-sm">
-      <div>
-        <input
-          type="radio"
-          name="option"
-          id="newest"
-          value="newest"
-          className="peer hidden"
-          defaultChecked
-          onClick={() => setOrderBy("desc")}
-        />
-        <label
-          htmlFor="newest"
-          className="flex cursor-pointer select-none flex-row items-center
-           justify-center gap-1 rounded-md border border-transparent 
-           px-3 py-1 text-center transition-transform peer-checked:translate-x-1
-            peer-checked:border-[#00000045] 
-            peer-checked:bg-gradient-to-r peer-checked:from-[#fff] peer-checked:to-[#f0efef]
-             peer-checked:font-bold peer-checked:text-gray-800 
-             peer-checked:shadow-lg peer-checked:duration-200"
-        >
-          <TbSortDescending2 className="mb-[3px] hidden sm:flex" /> Newest
-        </label>
-      </div>
-      <div>
-        <input
-          type="radio"
-          name="option"
-          id="oldest"
-          value="oldest"
-          className="peer hidden"
-          onClick={() => setOrderBy("asc")}
-        />
-        <label
-          htmlFor="oldest"
-          className=" flex cursor-pointer select-none flex-row items-center 
-          justify-center gap-1 rounded-md border border-transparent px-3 py-1 
-          text-center transition-transform peer-checked:-translate-x-1
-           peer-checked:border-[#00000045] 
-           peer-checked:bg-gradient-to-l peer-checked:from-[#fff] peer-checked:to-[#f0efef]
-           peer-checked:font-bold peer-checked:text-gray-800 
-           peer-checked:shadow-sm peer-checked:duration-200
-           "
-        >
-          <TbSortAscending2 className="mb-[4px] hidden sm:flex" />
-          Oldest
-        </label>
-      </div>
-    </div>
-  );
-}
-
-export function ListItemView({
+export function AdminMainListItem({
   item,
   type,
   setEditorModalInput,
   setEditorModalShown,
-}) {
+}: IListItemProps) {
   const [showActionMenuDots, setShowActionMenuDots] = useState(false);
 
   const deleteItem = useDeleteItem(item, type);
 
   return (
     <div
-      className="z-0 flex h-8 w-full cursor-pointer flex-row items-center justify-between border-b-[1px] border-gray-100  py-6 pl-16 transition-all hover:bg-gray-100"
+      className="z-0 flex h-8 w-full cursor-pointer flex-row items-center justify-between border-b-[1px] border-gray-100 py-6 pl-16 transition-all hover:bg-gray-100"
       // key={item.id}
       onMouseEnter={() => setShowActionMenuDots(true)}
       onMouseLeave={() => setShowActionMenuDots(false)}
