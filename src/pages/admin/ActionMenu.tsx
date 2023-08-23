@@ -5,7 +5,7 @@ import { type PropsWithChildren, useRef, useState } from "react";
 
 export function ActionMenu(props: PropsWithChildren<ActionMenuProps>) {
   const [showExtendedActionMenu, setShowExtendedActionMenu] = useState(false);
-  const contentRef = useRef(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const animationProps = useSpring({
     width: showExtendedActionMenu ? 80 || 0 : 0,
     config: { duration: 200, mass: 1, tension: 170, friction: 26 },

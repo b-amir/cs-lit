@@ -68,7 +68,7 @@ export default function TopicPage(props) {
   );
 
   // --- animation setup for editor --- //
-  const contentRef = useRef(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const animationProps = useSpring({
     height: !analogyEditorState.shown ? 0 : sessionData ? 620 : 150,
     config: {

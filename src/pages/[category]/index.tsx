@@ -77,7 +77,7 @@ export default function CategoryPage() {
   );
 
   // --- animation setup for editor ---> //
-  const contentRef = useRef(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const editorAnimationProps = useSpring({
     height: !topicEditorState.shown ? 0 : sessionData ? 620 : 150,
     config: {

@@ -107,7 +107,7 @@ function AnalogyEditorBody({
   handleChange,
 }) {
   // --- animation setup for reference ---> //
-  const contentRef = useRef(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const animationProps = useSpring({
     height: input?.hasReference ? 0 : 80,
     opacity: input?.hasReference ? 0 : 1,

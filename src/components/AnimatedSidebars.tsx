@@ -1,11 +1,22 @@
 import { useSpring, animated } from "@react-spring/web";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { SidebarLeft } from "./SidebarLeft";
 import { SidebarRight } from "./SidebarRight";
 
-export function AnimatedSidebars({ visibleL, hideL, visibleR, hideR }) {
-  const sidebarRef = useRef(null);
-
+export interface IAnimatedSidebarsProps {
+  visibleL: boolean;
+  hideL: () => void;
+  visibleR: boolean;
+  hideR: () => void;
+}
+export function AnimatedSidebars({
+  visibleL,
+  hideL,
+  visibleR,
+  hideR,
+}: IAnimatedSidebarsProps) {
+  // animation settings:
+  const sidebarRef = useRef<HTMLDivElement>(null);
   const sidebarAnimation = useSpring({
     opacity: visibleL || visibleR ? 1 : 1,
     width: visibleL || visibleR ? sidebarRef.current?.offsetWidth || 0 : 0,
@@ -17,11 +28,9 @@ export function AnimatedSidebars({ visibleL, hideL, visibleR, hideR }) {
   });
 
   return (
-    <>
-      <animated.div style={sidebarAnimation} ref={sidebarRef}>
-        <SidebarLeft visible={visibleL} hide={hideL} />
-        <SidebarRight visible={visibleR} hide={hideR} />
-      </animated.div>
-    </>
+    <animated.div style={sidebarAnimation} ref={sidebarRef}>
+      <SidebarLeft visible={visibleL} hide={hideL} />
+      <SidebarRight visible={visibleR} hide={hideR} />
+    </animated.div>
   );
 }

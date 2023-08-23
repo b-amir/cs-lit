@@ -6,7 +6,7 @@ import { IoIosArrowUp } from "react-icons/io";
 
 export function Footer() {
   const [collapsed, setCollapsed] = useState(true);
-  const contentRef = useRef(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const animationProps = useSpring({
     height: collapsed ? 0 : contentRef.current?.scrollHeight || 0,
     // smooth slide up/down animation. no bouncing
