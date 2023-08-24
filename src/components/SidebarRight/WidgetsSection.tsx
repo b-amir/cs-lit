@@ -17,27 +17,28 @@ import {
 } from "./types";
 
 export function WidgetsSection({ hide }: IWidgetsSectionProps) {
-  //
+  const { width: windowWidth, height: windowHeight } = useWindowSize();
   // if window height is small, show one widget at a time and hide the other
   const [activeWidgetIndex, setActiveWidgetIndex] = useState<number[]>([0]);
-  const size = useWindowSize();
   useEffect(() => {
-    if (size?.height && size?.height > 830) {
+    if (windowHeight && windowHeight > 830) {
       setActiveWidgetIndex([0, 1]);
     }
-  }, [size]);
+  }, [windowHeight]);
 
   return (
     <ul className="mt-6 space-y-2 text-sm font-medium ">
       <RecentAnalogiesWidget
         activeWidgetIndex={activeWidgetIndex}
         hide={hide}
+        windowWidth={windowWidth}
         setActiveWidgetIndex={setActiveWidgetIndex}
       />
 
       <TopContributorsWidget
         activeWidgetIndex={activeWidgetIndex}
         hide={hide}
+        windowWidth={windowWidth}
         setActiveWidgetIndex={setActiveWidgetIndex}
       />
     </ul>
@@ -96,6 +97,7 @@ export function WidgetLayout(props: PropsWithChildren<IWidgetLayoutProps>) {
 export function RecentAnalogiesWidget({
   activeWidgetIndex,
   hide,
+  windowWidth,
   setActiveWidgetIndex,
 }: ISingleWidgetProps) {
   const { data: AnalogiesData } = api.analogy.getAll.useInfiniteQuery(
@@ -126,7 +128,10 @@ export function RecentAnalogiesWidget({
             <li key={analogy.id}>
               <Link
                 href={`${routeHandler(analogy, "Analogies") ?? ""}`}
-                onClick={hide}
+                onClick={() => {
+                  // only hide after click for mobile
+                  if (windowWidth && windowWidth < 640) hide;
+                }}
               >
                 <span
                   className={`ml-0 flex w-full flex-col items-center whitespace-nowrap rounded-sm px-3 py-2.5 pl-6 pt-3 text-xs font-normal hover:bg-[#efefef84] ${
@@ -158,6 +163,7 @@ export function RecentAnalogiesWidget({
 export function TopContributorsWidget({
   activeWidgetIndex,
   hide,
+  windowWidth,
   setActiveWidgetIndex,
 }: ISingleWidgetProps) {
   const { data: TopThreeData } = api.profile.getTopThree.useQuery();
@@ -179,7 +185,13 @@ export function TopContributorsWidget({
         <>
           {contributor.analogiesCount !== 0 && (
             <li key={contributor.id}>
-              <Link href={`/profile/${contributor.id}`} onClick={hide}>
+              <Link
+                href={`/profile/${contributor.id}`}
+                onClick={() => {
+                  // only hide after click for mobile
+                  if (windowWidth && windowWidth < 640) hide;
+                }}
+              >
                 <span
                   className={`ml-0 flex w-full flex-col items-center whitespace-nowrap rounded-sm px-3 py-2.5 pl-6 pt-3 text-xs font-normal hover:bg-[#efefef84] ${
                     TopThreeData &&

@@ -2,8 +2,11 @@ import Link from "next/link";
 import { getCategoryIcon } from "@/utils/getCategoryIcon";
 import { api } from "@/utils/api";
 import { SidebarCategorySkeleton } from "@/components/Skeleton";
+import { useWindowSize } from "@/hooks/useWindowSize";
 
 export function SidebarCategoriesSection({ hide }) {
+  const { width: windowWidth } = useWindowSize();
+
   const { data: categories, status: categoryFetchingStatus } =
     api.category.getAll.useInfiniteQuery(
       { limit: 15 },
@@ -29,7 +32,10 @@ export function SidebarCategoriesSection({ hide }) {
                   className="flex items-center p-2 text-sm text-[#2A2A2E] hover:bg-gray-100 lg:rounded-lg"
                   // onClick={() => {}}
                   href={`/${category.slug}`}
-                  onClick={hide}
+                  onClick={() => {
+                    // only hide after click for mobile
+                    if (windowWidth && windowWidth < 640) hide;
+                  }}
                 >
                   {getCategoryIcon(category?.slug)}
                   <span className="ml-3 flex-1 overflow-x-clip truncate text-ellipsis whitespace-nowrap">

@@ -14,6 +14,7 @@ export interface IWidgetLayoutProps {
 export interface ISingleWidgetProps {
   activeWidgetIndex: number[];
   hide: () => void;
+  windowWidth: number | undefined;
   setActiveWidgetIndex: (activeWidgetIndex: number[]) => void;
 }
 
