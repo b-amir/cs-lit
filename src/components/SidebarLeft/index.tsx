@@ -3,23 +3,24 @@ import { AddCategorySection } from "./AddCategorySection";
 import { LogoSection } from "./LogoSection";
 import { IoClose } from "react-icons/io5";
 
-export function SidebarLeft({ visible, hide }) {
+interface ISidebarLeftProps {
+  visible: boolean;
+  hide: () => void;
+}
+export function SidebarLeft({ visible, hide }: ISidebarLeftProps) {
   return (
     <div className="flex ">
       <aside
         id="left-sidebar"
-        className={`fixed left-0 top-0 z-50 flex h-screen w-9/12 flex-col  place-content-stretch items-stretch justify-between border-r 
-    border-white bg-white pt-0 shadow-md transition-transform duration-300  ease-in-out sm:w-4/12 md:w-1/6 
-   ${visible ? "translate-x-0" : "-translate-x-full"}
-    `}
+        className={`fixed left-0 top-0 z-50 flex h-screen w-9/12 flex-col place-content-stretch items-stretch justify-between border-r border-white bg-white pt-0 shadow-md transition-transform duration-300 ease-in-out sm:w-4/12 md:w-1/6 ${
+          visible ? "translate-x-0" : "-translate-x-full"
+        } `}
         aria-label="Sidebar"
       >
         <LogoSection />
-
-        <div className="align-around h-full overflow-y-auto  bg-white px-0 pb-0 ">
+        <div className="align-around h-full overflow-y-auto bg-white px-0 pb-0 ">
           <SidebarCategoriesSection hide={hide} />
         </div>
-
         <AddCategorySection />
       </aside>
 

@@ -20,7 +20,9 @@ export function AddCategorySection() {
     setInput({ name: "", slug: "", id: "" });
   };
 
-  const isModerator = ["ADMIN", "EDITOR"].includes(sessionData?.user.role);
+  const isModerator = ["ADMIN", "EDITOR"].includes(
+    sessionData?.user.role ?? ""
+  );
   return (
     <form
       className=" mx-auto my-4 flex w-full flex-row items-center justify-center gap-0 px-3 align-middle text-xs font-medium lg:text-sm"

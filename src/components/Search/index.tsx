@@ -1,30 +1,23 @@
-import { IoSearch } from "react-icons/io5";
 import { api } from "@/utils/api";
-import { type ChangeEvent, useEffect, useRef, useState } from "react";
-import { useSpring, type SpringValues } from "@react-spring/web";
-import { useDebounce } from "@/hooks/useDebounce";
 import { Results } from "./Results";
+import { IoSearch } from "react-icons/io5";
 import { useRouter } from "next/router";
-import { type Topic } from "@prisma/client";
-
-export interface IExtendedTopic extends Topic {
-  category: {
-    name: string;
-    slug: string;
-  };
-}
+import { useSpring } from "@react-spring/web";
+import { useDebounce } from "@/hooks/useDebounce";
+import { type IExtendedTopic } from "./types";
+import { type ChangeEvent, useEffect, useRef, useState } from "react";
 
 export function Search() {
+  const [loading, setLoading] = useState(false);
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const [showResultsPanel, setShowResultsPanel] = useState(false);
   const [results, setResults] = useState<IExtendedTopic[] | undefined>([]);
-  const [searchQuery, setSearchQuery] = useState<string>("");
-  const [loading, setLoading] = useState(false);
+  const debouncedSearch = useDebounce(searchQuery, 500);
+  const searchInputRef = useRef(null);
 
   // --- check if in homepage. if so, render a different styling for search input --- //
   const router = useRouter();
   const homepage = router.pathname === "/";
-
-  const searchInputRef = useRef(null);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
@@ -44,17 +37,16 @@ export function Search() {
     }
   );
 
-  const debouncedSearch = useDebounce(searchQuery, 500);
-
   useEffect(() => {
     function fetchData() {
       setLoading(true);
       setResults([]);
-      const fetchedTopics = topicsData;
       // this delay is just gives the satisfaction of "searching"!
       // It's purely a UX decision and obviously not to be used big projects.
       setTimeout(() => {
-        setResults(fetchedTopics);
+        if (topicsData) {
+          setResults(topicsData as IExtendedTopic[]);
+        }
         setLoading(false);
       }, 800);
     }
@@ -81,8 +73,10 @@ export function Search() {
               : "relative z-50 flex w-36 items-end justify-end text-gray-600"
           }`}
         >
+          {/* in homepage a button will trigger the real input */}
           {homepage ? (
             <button
+              className="flex h-10 w-72 cursor-pointer select-none items-center justify-start rounded-2xl border border-[#5c2c1d2a] bg-[#f9f9f9a8] px-5 py-6 pl-10 text-sm text-gray-400 shadow-md shadow-[#6c6c6c0b] outline-none backdrop-blur-lg backdrop-filter transition-all duration-300 hover:border-[#9e9e9ec0] focus:bg-white focus:shadow-sm focus:outline-none sm:w-96 lg:w-96 lg:focus:w-96"
               onClick={() => {
                 setShowResultsPanel(true);
                 // taking this task out of callstack until we have a "counter-input" in the DOM
@@ -94,7 +88,6 @@ export function Search() {
                   }
                 }, 0);
               }}
-              className="flex h-10 w-72 cursor-pointer select-none items-center justify-start rounded-2xl border border-[#5c2c1d2a] bg-[#f9f9f9a8] px-5 py-6 pl-10 text-sm text-gray-400 shadow-md shadow-[#6c6c6c0b] outline-none backdrop-blur-lg backdrop-filter transition-all duration-300 hover:border-[#9e9e9ec0] focus:bg-white focus:shadow-sm focus:outline-none sm:w-96 lg:w-96 lg:focus:w-96"
             >
               <IoSearch className="absolute left-4 top-4 " />
               <span> Find topics...</span>
@@ -115,11 +108,9 @@ export function Search() {
               />
               <button
                 type="submit"
-                className={`${"absolute right-0 top-0 mr-4 mt-3"}`}
+                className={`absolute right-0 top-0 mr-4 mt-3`}
               >
                 {loading ? (
-                  // show spinner
-                  // <CgSpinner className="animate-spin" />
                   <IoSearch className="animate-pulse cursor-not-allowed text-gray-400" />
                 ) : (
                   <IoSearch />
@@ -130,7 +121,6 @@ export function Search() {
         </div>
       </div>
 
-      {/* search results */}
       {showResultsPanel && (
         <Results
           panelAnimation={panelAnimation}

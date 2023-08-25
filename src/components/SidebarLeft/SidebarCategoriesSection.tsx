@@ -1,10 +1,10 @@
 import Link from "next/link";
-import { getCategoryIcon } from "@/utils/getCategoryIcon";
 import { api } from "@/utils/api";
-import { SidebarCategorySkeleton } from "@/components/Skeleton";
 import { useWindowSize } from "@/hooks/useWindowSize";
+import { getCategoryIcon } from "@/utils/getCategoryIcon";
+import { SidebarCategorySkeleton } from "@/components/Skeleton";
 
-export function SidebarCategoriesSection({ hide }) {
+export function SidebarCategoriesSection({ hide }: { hide: () => void }) {
   const { width: windowWidth } = useWindowSize();
 
   const { data: categories, status: categoryFetchingStatus } =
@@ -24,13 +24,11 @@ export function SidebarCategoriesSection({ hide }) {
         <SidebarCategorySkeleton />
       ) : (
         <ul className="mb-auto mt-6 space-y-2 px-3 text-sm font-medium">
-          {/* map through category items from database */}
           {categories?.pages?.map((page) =>
             page?.items?.map((category) => (
               <li key={category.id}>
                 <Link
                   className="flex items-center p-2 text-sm text-[#2A2A2E] hover:bg-gray-100 lg:rounded-lg"
-                  // onClick={() => {}}
                   href={`/${category.slug}`}
                   onClick={() => {
                     // only hide after click for mobile
