@@ -19,6 +19,7 @@ import { HiOutlineDotsVertical } from "react-icons/hi";
 import { RelativeTime } from "@/utils/relativeTime";
 import router, { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
+import { getScreenName } from "@/utils/getScreenName";
 
 interface IAnalogyViewProps {
   analogy: {
@@ -227,13 +228,7 @@ function AnalogyBody({
                     href={`/profile/${analogyData?.authorId}`}
                     className="flex items-center align-middle text-sm transition-all hover:text-gray-800"
                   >
-                    {
-                      analogyData?.user?.name
-                        ? analogyData?.user?.name
-                        : analogyData?.user?.email
-                      // ? author?.email
-                      // : "Anonymous"
-                    }
+                    {getScreenName(analogyData?.user)}
                   </Link>
                   <span className="text-sm font-normal">&apos;s analogy</span>
                 </div>

@@ -6,6 +6,7 @@ import { CornerLoading } from "@/components/loading";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { Feed } from "@/components/Feed";
+import { getScreenName } from "@/utils/getScreenName";
 // import { generateSSGHelper } from "@/server/helpers/ssgHelper";
 
 const ProfilePage: NextPage<object> = () => {
@@ -51,7 +52,7 @@ const ProfilePage: NextPage<object> = () => {
     <>
       <Head>
         <title>
-          {`${profileData?.name ? profileData?.name : profileData?.email}'s
+          {`${getScreenName(profileData)}'s
           Profile`}
         </title>
         <meta
@@ -97,7 +98,7 @@ function ProfileHeader({ profileData }: { profileData: unknown }) {
           />
 
           <p className=" text-md font-bold text-[#343437] sm:text-2xl ">
-            {profileData?.name ? profileData?.name : profileData?.email}
+            {getScreenName(profileData)}
             <span className="font-semibold text-[#535357]">
               &apos;s Analogies
             </span>

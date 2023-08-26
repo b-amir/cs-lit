@@ -13,6 +13,7 @@ import { useCreateItem } from "@/hooks/useCreateItem";
 import { LoadMoreButton } from "@/components/LoadMoreButton";
 import { useSession } from "next-auth/react";
 import { signIn } from "next-auth/react";
+import { getScreenName } from "@/utils/getScreenName";
 
 interface ICommentSectionProps {
   analogyId: string | undefined;
@@ -113,7 +114,7 @@ function SingleComment({ comment }: { comment: Comment }) {
             id="name"
             className="mt-0.5 text-xs font-semibold text-slate-700"
           >
-            {comment.user.name ? comment.user.name : comment.user.email}
+            {getScreenName(comment.user)}
           </div>
         </Link>
         <div id="time" className="mt-0.5 text-xs font-normal text-slate-400">

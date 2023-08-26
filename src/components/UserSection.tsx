@@ -1,10 +1,11 @@
-import Image from "next/image";
-import { signIn, signOut, useSession } from "next-auth/react";
-import { HiOutlineLogout, HiOutlineLogin } from "react-icons/hi";
-import { UserSkeleton } from "./Skeleton";
 import Link from "next/link";
+import Image from "next/image";
+import { UserSkeleton } from "./Skeleton";
 import { type USER_ROLE } from "@prisma/client";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { FaRegUserCircle as EmptyAvatar } from "react-icons/fa";
+import { HiOutlineLogout, HiOutlineLogin } from "react-icons/hi";
+import { getScreenName } from "@/utils/getScreenName";
 
 export interface USER {
   id: string;
@@ -24,34 +25,33 @@ export const UserSection = () => {
       ) : (
         <div className="flex w-full flex-row">
           <Avatar user={user} />
-          <div className="flex flex-col">
+          <div className="flex flex-col justify-center">
             <p className="font-regular mb-1 px-1 text-left text-sm font-medium text-[#2A2A2E]">
               {sessionData ? (
                 <Link
                   href={`/profile/${user?.id}`}
-                  className="cursor-pointer overflow-clip overflow-ellipsis whitespace-nowrap"
+                  className="cursor-pointer overflow-clip overflow-ellipsis whitespace-nowrap hover:underline"
                 >
-                  {user?.name || user?.email}
+                  {getScreenName(user)}
                 </Link>
-              ) : (
-                "Wanna contribute?"
-              )}
+              ) : null}
             </p>
-            <button className="text-gray rounded-full bg-white/10 px-1 py-0 text-left text-xs font-light no-underline transition-all">
+            <button className="text-gray rounded-full bg-white/10 px-1 py-0 text-left text-[0.7rem] font-light no-underline transition-all">
               {sessionData ? (
                 <div
-                  className="flex flex-row items-center text-[#606060] hover:text-[#000] "
+                  className="group flex flex-row items-center text-[#606060] hover:text-[#000] "
                   onClick={() => void signOut()}
                 >
-                  <HiOutlineLogout className=" mr-1 stroke-[#606060] " /> Sign
-                  out
+                  <HiOutlineLogout className=" mr-1 stroke-[#606060] group-hover:stroke-[#000]" />{" "}
+                  Sign out
                 </div>
               ) : (
                 <div
-                  className="flex flex-row items-center text-[#606060] hover:text-[#000] "
+                  className="group flex flex-row items-center px-2 text-sm font-semibold text-[#606060] hover:text-[#000] "
                   onClick={() => void signIn()}
                 >
-                  <HiOutlineLogin className=" mr-1 stroke-[#606060] " /> Sign in
+                  <HiOutlineLogin className="mx-1 stroke-[#606060] group-hover:stroke-[#000] sm:mb-0.5" />{" "}
+                  Sign in here
                 </div>
               )}
             </button>
@@ -77,12 +77,15 @@ function Avatar({ user }: { user: USER }) {
             className="h-9 w-9 rounded-full bg-[#F9F9F9] ring-2 ring-[#5858582b] transition-all hover:ring-gray-300"
             width={36}
             height={36}
-            alt={`${user?.name ?? ""}'s image`}
+            alt={`${getScreenName(user) ?? ""}'s image`}
           />
         </Link>
       ) : (
-        <div className="my-auto flex h-10 w-10 items-center justify-center rounded-full bg-[#95959521] shadow-sm ">
-          <EmptyAvatar className="h-6 w-6 text-[#3f3f3f3d]" />
+        <div className="my-auto flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-transparent bg-[#95959521] shadow-sm transition-all hover:border-[#0000002c]">
+          <EmptyAvatar
+            onClick={() => void signIn()}
+            className="h-6 w-6  text-[#3f3f3f3d] "
+          />
         </div>
       )}
     </>

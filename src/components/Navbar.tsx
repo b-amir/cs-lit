@@ -6,6 +6,7 @@ import { Search } from "./Search";
 import Image from "next/image";
 import { CgMenuLeft } from "react-icons/cg";
 import { FaRegUserCircle } from "react-icons/fa";
+import { getScreenName } from "@/utils/getScreenName";
 
 export function Navbar({
   mainWidthClass,
@@ -164,10 +165,7 @@ function Breadcrumbs() {
             className="max-w-[calc(12vw)] truncate"
           >
             <span className="cursor-pointer font-semibold text-[#2A2A2E] transition-all hover:text-black">
-              {AnalogyData?.author?.name
-                ? AnalogyData?.author?.name
-                : AnalogyData?.author?.email}
-              's Analogy
+              {getScreenName(AnalogyData?.user)}'s Analogy
             </span>
           </Link>
         </>
@@ -177,7 +175,7 @@ function Breadcrumbs() {
         <>
           <span className="mx-2 text-[#69696975]">/</span>
           <span className="cursor-pointer font-semibold text-[#2A2A2E]">
-            {profileData?.name || profileData?.email}
+            {getScreenName(profileData)}
           </span>
         </>
       )}

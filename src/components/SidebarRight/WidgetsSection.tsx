@@ -15,6 +15,7 @@ import {
   type IWidgetLayoutProps,
   type IWidgetsSectionProps,
 } from "./types";
+import { getScreenName } from "@/utils/getScreenName";
 
 export function WidgetsSection({ hide }: IWidgetsSectionProps) {
   const { width: windowWidth, height: windowHeight } = useWindowSize();
@@ -145,10 +146,7 @@ export function RecentAnalogiesWidget({
                     {analogy.topic?.title}
                   </span>
                   <span className="self-start text-xs font-light text-gray-500">
-                    by{" "}
-                    {analogy.user?.name
-                      ? analogy.user?.name
-                      : analogy.user?.email}
+                    by {getScreenName(analogy.user)}
                   </span>
                 </span>
               </Link>
