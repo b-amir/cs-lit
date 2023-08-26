@@ -1,53 +1,104 @@
-import { type NextPage } from "next";
+import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
-import { signIn, useSession } from "next-auth/react";
-import { archivo } from "../styles/customFonts";
-import { useEffect, useState } from "react";
-import { animated, useTransition } from "@react-spring/web";
-import { FiArrowDown } from "react-icons/fi";
 import { api } from "@/utils/api";
-import { getCategoryIcon } from "@/utils/getCategoryIcon";
-import { AnalogyView } from "@/components/AnalogyView";
-import { FaGithub, FaLinkedin } from "react-icons/fa";
-import { AiOutlineLink } from "react-icons/ai";
-import { AvatarSkeleton, HomeCategorySkeleton } from "@/components/Skeleton";
-import { HomeUserSkeleton } from "@/components/Skeleton";
-import Head from "next/head";
-import { RiImageLine } from "react-icons/ri";
 import { Search } from "@/components/Search";
+import { archivo } from "../styles/customFonts";
+import { AnalogyView } from "@/components/AnalogyView";
+import { RiImageLine } from "react-icons/ri";
+import { FiArrowDown } from "react-icons/fi";
+import { AiOutlineLink } from "react-icons/ai";
+import { getCategoryIcon } from "@/utils/getCategoryIcon";
+import { HomeUserSkeleton } from "@/components/Skeleton";
+import { useSession } from "next-auth/react";
+import { useEffect, useMemo, useState } from "react";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { animated, useTransition } from "@react-spring/web";
+import { AvatarSkeleton, HomeCategorySkeleton } from "@/components/Skeleton";
+import { UserSection } from "@/components/UserSection";
 
-const carouselItems = [
-  {
-    name: "CS",
-    color: "#ff7263",
-  },
-  {
-    name: "JavaScript",
-    color: "#a19753",
-  },
-  {
-    name: "Data Structure",
-    color: "#508f7a",
-  },
-  {
-    name: "React.js",
-    color: "#578894",
-  },
-  {
-    name: "Next.js",
-    color: "#977e52",
-  },
-];
+export default function Home() {
+  return (
+    <>
+      <Head>
+        <title>CS Like I&apos;m 10 !</title>
+        <meta
+          name="description"
+          content="Explain Computer science like I'm 10 Years Old!"
+        />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <HeaderSection />
+      <HeroSection />
+      <CategoriesSection />
+      <ExampleSection />
+      <ShareSection />
+      <FooterSection />
+    </>
+  );
+}
 
-const Home: NextPage = () => {
-  const { data: sessionData, status: sessionStatus } = useSession();
-  const [currentCarouselItems, setCurrentCarouselItems] = useState([
-    carouselItems[0],
-    carouselItems[1],
-    carouselItems[2],
-  ]);
-  // --- useTransition for the carousel items to animate slide-up --- //
+function HeaderSection() {
+  const { status: sessionStatus } = useSession();
+
+  return (
+    <nav
+      id="header-section"
+      className="top-0 flex h-[60px] w-full items-center justify-between px-8 pt-8 sm:h-[90px] lg:px-40 lg:pt-20"
+    >
+      <Link href="/" className="flex items-center justify-center">
+        <Image
+          src={"/assets/logo17.svg"}
+          width={100}
+          height={0}
+          alt={"CS LIT: like I'm 10"}
+          className="z-10 p-0 sm:min-w-[180px]"
+        />
+      </Link>
+      <div className="flex items-center justify-center">
+        {sessionStatus === "loading" ? (
+          <HomeUserSkeleton />
+        ) : (
+          <div className="flex items-center gap-0 rounded-full border border-[#5c2c1d2b] bg-[#ffffff36] px-2 py-2 pr-4 backdrop-blur-sm transition-all duration-300 hover:border-[#5c2c1d91] hover:bg-[#ff73631c]">
+            <UserSection />
+          </div>
+        )}
+      </div>
+    </nav>
+  );
+}
+
+function HeroSection() {
+  const carouselItems = useMemo(
+    () => [
+      {
+        name: "CS",
+        color: "#ff7263",
+      },
+      {
+        name: "JavaScript",
+        color: "#a19753",
+      },
+      {
+        name: "Data Structure",
+        color: "#508f7a",
+      },
+      {
+        name: "React.js",
+        color: "#578894",
+      },
+      {
+        name: "Next.js",
+        color: "#977e52",
+      },
+    ],
+    []
+  );
+  const [currentCarouselItems, setCurrentCarouselItems] = useState(
+    carouselItems.slice(0, 3)
+  );
+
+  // --- using react-spring for the carousel items to slide-in --- //
   const carouselTransitions = useTransition([currentCarouselItems[0]], {
     from: {
       opacity: 0,
@@ -66,162 +117,18 @@ const Home: NextPage = () => {
     config: { duration: 300, mass: 1, tension: 170, friction: 26 },
 
     unique: true, // Use the key to identify unique items
-    trail: 200, // Stagger delay
+    trail: 300, // Remove the first flicker
     delay: 350, // Delay before the animation starts
   });
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const currentIndex = carouselItems.findIndex(
-        (item) => item === currentCarouselItems[0]
-      );
-
-      if (currentIndex < carouselItems.length - 2) {
-        setCurrentCarouselItems([
-          carouselItems[currentIndex + 1],
-          carouselItems[currentIndex + 2],
-          carouselItems[currentIndex + 3],
-        ]);
-      } else if (currentIndex === carouselItems.length - 2) {
-        setCurrentCarouselItems([
-          carouselItems[currentIndex + 1],
-          carouselItems[currentIndex + 2],
-          carouselItems[0],
-        ]);
-      } else if (currentIndex === carouselItems.length - 1) {
-        setCurrentCarouselItems([
-          carouselItems[0],
-          carouselItems[1],
-          carouselItems[2],
-        ]);
-      }
+      const currentIndex = carouselItems.indexOf(currentCarouselItems[0]);
+      const nextIndex = (currentIndex + 1) % carouselItems.length;
+      setCurrentCarouselItems(carouselItems.slice(nextIndex, nextIndex + 3));
     }, 2000);
     return () => clearInterval(interval);
-    // }
-  }, [currentCarouselItems]);
-
-  const {
-    data: categories,
-    status: categoriesFetchingStatus,
-    refetch: refetchCategories,
-  } = api.category.getAll.useInfiniteQuery(
-    { limit: 15 },
-    {
-      getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor,
-      refetchOnWindowFocus: false,
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-    }
-  );
-
-  const { data: analogyData } = api.analogy.getById.useQuery(
-    {
-      id: "seiydzNj", // A specific analogy to showcase in homepage.
-    },
-    {
-      refetchOnWindowFocus: false,
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-    }
-  );
-
-  return (
-    <>
-      <Head>
-        <title>CS Like I&apos;m 10!</title>
-        <meta
-          name="description"
-          content="Explain Computer science like I'm 10 Years Old!"
-        />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <HeaderSection sessionData={sessionData} sessionStatus={sessionStatus} />
-      <HeroSection carouselTransitions={carouselTransitions} />
-      <CategoriesSection
-        categories={categories}
-        categoriesFetchingStatus={categoriesFetchingStatus}
-      />
-      <ExampleSection analogyData={analogyData} />
-      <ShareSection sessionData={sessionData} sessionStatus={sessionStatus} />
-      <FooterSection />
-    </>
-  );
-};
-
-function HeaderSection({
-  sessionData,
-  sessionStatus,
-}: {
-  sessionData: unknown;
-  sessionStatus: unknown;
-}) {
-  return (
-    <nav
-      id="header-section"
-      className="top-0 flex h-[60px] w-full items-center justify-between px-8 pt-8 sm:h-[90px] lg:px-40 lg:pt-20"
-    >
-      <Link href="/" className="flex items-center justify-center">
-        <Image
-          src={"/assets/logo17.svg"}
-          width={100}
-          height={0}
-          alt={"CS LIT: like I'm 10"}
-          className="z-10 p-0 sm:min-w-[180px]"
-        />
-      </Link>
-      <div className="flex items-center justify-center">
-        {/* user section */}
-        {sessionStatus === "loading" ? (
-          <HomeUserSkeleton />
-        ) : (
-          <div className="flex items-center gap-0 rounded-full border border-[#5c2c1d2b] bg-[#ffffff36] px-0 py-0 backdrop-blur-sm transition-all duration-300 hover:border-[#5c2c1d91] hover:bg-[#ff73631c]">
-            {/* <Link
-              href={` ${sessionData && `/profile/${sessionData?.user?.id}`}`}
-            > */}
-
-            <Image
-              src={
-                sessionData?.user?.image
-                  ? sessionData?.user?.image
-                  : "/assets/defaultpp.svg"
-              }
-              onClick={() => (!sessionData ? signIn() : null)}
-              width={24}
-              height={24}
-              alt={"profile picture"}
-              className={`m-2 min-w-[24px] rounded-full sm:min-w-[30px] ${
-                !sessionData && "cursor-pointer"
-              }`}
-            />
-            {/* </Link> */}
-            {sessionData ? (
-              <Link href={`/profile/${sessionData?.user?.id}`}>
-                <span className="hidden pr-4 sm:block">
-                  {sessionData?.user.name
-                    ? sessionData?.user.name
-                    : sessionData?.user.email}
-                </span>
-              </Link>
-            ) : (
-              <div
-                className="hidden cursor-pointer py-2 pr-4 sm:block"
-                onClick={() => signIn()}
-              >
-                Login
-              </div>
-            )}
-          </div>
-        )}
-      </div>
-    </nav>
-  );
-}
-
-function HeroSection({
-  carouselTransitions,
-}: {
-  carouselTransitions: unknown;
-}) {
+  }, [carouselItems, currentCarouselItems]);
   return (
     <div
       id="hero-section"
@@ -252,7 +159,7 @@ function HeroSection({
                   <animated.div
                     key={item?.name}
                     style={{ ...props, color: item.color }}
-                    className={`fontColor: lg:h-16" w-24  whitespace-nowrap font-normal lg:mb-1`}
+                    className={`lg:h-16" w-24  whitespace-nowrap font-normal lg:mb-1`}
                   >
                     {item?.name}
                   </animated.div>
@@ -306,13 +213,20 @@ function HeroSection({
   );
 }
 
-function CategoriesSection({
-  categories,
-  categoriesFetchingStatus,
-}: {
-  categories: unknown;
-  categoriesFetchingStatus: unknown;
-}) {
+function CategoriesSection() {
+  const {
+    data: categories,
+    status: categoriesFetchingStatus,
+    refetch: refetchCategories,
+  } = api.category.getAll.useInfiniteQuery(
+    { limit: 15 },
+    {
+      getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor,
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+    }
+  );
   return (
     <div
       id="category-section"
@@ -376,7 +290,17 @@ function CategoriesSection({
   );
 }
 
-function ExampleSection({ analogyData }: { analogyData: unknown }) {
+function ExampleSection() {
+  const { data: analogyData } = api.analogy.getById.useQuery(
+    {
+      id: "seiydzNj", // A specific analogy to showcase in homepage.
+    },
+    {
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+    }
+  );
   return (
     <div
       id="example-section"
@@ -447,13 +371,9 @@ function ExampleSection({ analogyData }: { analogyData: unknown }) {
   );
 }
 
-function ShareSection({
-  sessionData,
-  sessionStatus,
-}: {
-  sessionData: unknown;
-  sessionStatus: unknown;
-}) {
+function ShareSection() {
+  const { data: sessionData, status: sessionStatus } = useSession();
+
   return (
     <div
       id="share-section"
@@ -626,5 +546,3 @@ function FooterSection() {
     </footer>
   );
 }
-
-export default Home;

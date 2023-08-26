@@ -23,7 +23,9 @@ export function SidebarRight({ visible, hide }: ISidebarRightProps) {
         aria-label="Sidebar"
       >
         <div className="overflow-y-auto bg-white pb-0">
-          <UserSection />
+          <div className="top-0 mb-0 h-[calc(90px+1.5px)] items-center justify-center  border-b bg-[#F9F9F9] px-5 py-6 align-middle shadow-sm transition-all">
+            <UserSection />
+          </div>
           <WidgetsSection hide={hide} />
         </div>
         {["ADMIN", "EDITOR"].includes(sessionData?.user.role ?? "") && (
