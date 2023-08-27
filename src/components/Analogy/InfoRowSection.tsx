@@ -7,7 +7,7 @@ import { RelativeTime } from "@/utils/relativeTime";
 import { AiOutlineLink } from "react-icons/ai";
 import { getStatusIcon } from "@/utils/getStatusIcon";
 import { HiOutlineChatAlt } from "react-icons/hi";
-import { type ExtendedAnalogy } from "../SidebarRight/types";
+import { type ExtendedAnalogy } from "../PageLayout/SidebarRight/types";
 import { HiOutlineDotsVertical as DotsMenu } from "react-icons/hi";
 import {
   type IPostTimeProps,

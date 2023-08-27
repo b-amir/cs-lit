@@ -1,6 +1,6 @@
 import { type Session } from "next-auth";
 import { type InfiniteData } from "@tanstack/react-query";
-import { type ExtendedAnalogy } from "../SidebarRight/types";
+import { type ExtendedAnalogy } from "../PageLayout/SidebarRight/types";
 import { type Comment, type User } from "@prisma/client";
 import { type Dispatch, type SetStateAction } from "react";
 

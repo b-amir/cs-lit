@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { FaArrowLeft } from "react-icons/fa";
 import { GoBackButton } from "@/components/GoBackButton";
-import { CornerLoading } from "@/components/loading";
+import { CornerLoading } from "@/components/Loading";
 import { signIn, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { type SignInErrorTypes } from "next-auth/src/core/pages/signin";

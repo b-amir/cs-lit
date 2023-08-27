@@ -1,5 +1,5 @@
 import { FaGhost } from "react-icons/fa";
-import { GoBackButton } from "./GoBackButton";
+import { GoBackButton } from "../GoBackButton";
 
 export interface IEntityIsEmptyProps {
   entity: string;

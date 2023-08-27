@@ -1,12 +1,13 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import { api } from "@/utils/api";
-import { PageLayout } from "@/components/layout";
-import { CornerLoading } from "@/components/loading";
+import { PageLayout } from "@/components/PageLayout";
+import { CornerLoading } from "@/components/Loading";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { Feed } from "@/components/Feed";
+import { AnalogiesFeed } from "@/components/AnalogiesFeed";
 import { getScreenName } from "@/utils/getScreenName";
+import { EntityNotFound } from "@/components/Messages/EntityNotFound";
 // import { generateSSGHelper } from "@/server/helpers/ssgHelper";
 
 const ProfilePage: NextPage<object> = () => {
@@ -45,9 +46,6 @@ const ProfilePage: NextPage<object> = () => {
     }
   );
 
-  if (profileFetchingStatus === "loading") return <CornerLoading />;
-  if (profileFetchingStatus === "error") return <div>User not found</div>;
-
   return (
     <>
       <Head>
@@ -62,20 +60,26 @@ const ProfilePage: NextPage<object> = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <PageLayout>
-        <div
-          id="profile-page"
-          className="grow-1 min-h-[calc(100dvh)] w-full [overflow:overlay]"
-        >
-          <ProfileHeader profileData={profileData} />
-          <Feed
-            analogies={userAnalogies}
-            hasNextPage={hasNextPage}
-            fetchNextPage={fetchNextPage}
-            isFetchingNextPage={isFetchingNextPage}
-            fetchingStatus={analogiesFetchingStatus}
-            isProfile
-          />
-        </div>
+        {profileFetchingStatus === "loading" ? (
+          <CornerLoading />
+        ) : profileFetchingStatus === "error" ? (
+          <EntityNotFound entity="User" />
+        ) : (
+          <div
+            id="profile-page"
+            className="grow-1 min-h-[calc(100dvh)] w-full [overflow:overlay]"
+          >
+            <ProfileHeader profileData={profileData} />
+            <AnalogiesFeed
+              analogies={userAnalogies}
+              hasNextPage={hasNextPage}
+              fetchNextPage={fetchNextPage}
+              isFetchingNextPage={isFetchingNextPage}
+              fetchingStatus={analogiesFetchingStatus}
+              isProfile
+            />
+          </div>
+        )}
       </PageLayout>
     </>
   );
@@ -98,7 +102,7 @@ function ProfileHeader({ profileData }: IProfileHeaderProps) {
       <div className="mb-12 w-full border-b-2  border-[#827c7c2b]   ">
         <div className="flex w-full flex-col  justify-center gap-4 bg-gradient-to-tr from-[#ff73631a] to-transparent  px-4 pb-4 pt-28 text-center sm:flex-row sm:justify-start sm:gap-0 sm:px-12 sm:pb-12 sm:pt-32  sm:text-start lg:px-[18%]">
           <Image
-            src={profileData.profileImageUrl ?? "/assets/defaultpp.svg"}
+            src={profileData?.profileImageUrl ?? "/assets/defaultpp.svg"}
             className="max-w-14 mx-auto -mt-1.5 max-h-14 rounded-full ring-1 ring-[#827c7cb8] sm:mx-0 sm:mr-4"
             alt={"Profile Picture"}
             width={42}

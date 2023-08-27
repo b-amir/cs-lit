@@ -1,14 +1,14 @@
-import React, { useRef } from "react";
 import { api } from "@/utils/api";
 import slugify from "slugify";
-import { useSession } from "next-auth/react";
 import { type Topic } from "@prisma/client";
-import { EditorLayout } from "@/components/EditorLayout";
+import { useSession } from "next-auth/react";
+import { NotSignedIn } from "@/components/Messages/NotSignedIn";
+import { EditorLayout } from "@/components/EditorForm/EditorLayout";
+import React, { useRef } from "react";
 import { useUpdateItem } from "@/hooks/useUpdateItem";
 import { useCreateItem } from "@/hooks/useCreateItem";
 import { useDeleteItem } from "@/hooks/useDeleteItem";
 import { animated, useSpring } from "@react-spring/web";
-import { NotSignedIn } from "../../components/NotSignedIn";
 
 interface ITopicEditorFormProps {
   UrlCategory: string;

@@ -1,5 +1,5 @@
-import { PageLayout } from "@/components/layout";
-import { Feed } from "@/components/Feed";
+import { PageLayout } from "@/components/PageLayout";
+import { AnalogiesFeed } from "@/components/AnalogiesFeed";
 import { AnalogyEditorForm } from "@/pages/[category]/[topic]/AnalogyEditorForm";
 import { useRouter } from "next/router";
 import { LuExternalLink } from "react-icons/lu";
@@ -10,11 +10,11 @@ import { archivo } from "@/styles/customFonts";
 import { useSession } from "next-auth/react";
 import { AnalogySkeleton } from "@/components/Skeleton";
 import { useRef, useState } from "react";
-import { FormTrigger } from "../../../components/FormTrigger";
+import { FormTrigger } from "../../../components/EditorForm/FormTrigger";
 import { animated, useSpring } from "@react-spring/web";
 import { type Analogy as AnalogyType } from "@prisma/client";
-import { EntityNotFound } from "../../../components/EntityNotFound";
-import { CornerLoading } from "@/components/loading";
+import { EntityNotFound } from "../../../components/Messages/EntityNotFound";
+import { CornerLoading } from "@/components/Loading";
 
 export default function TopicPage(props) {
   const router = useRouter();
@@ -121,7 +121,7 @@ export default function TopicPage(props) {
                   <AnalogySkeleton />
                 </>
               ) : (
-                <Feed
+                <AnalogiesFeed
                   analogies={topicAnalogies}
                   hasNextPage={hasNextPage}
                   fetchingStatus={analogiesFetchingStatus}

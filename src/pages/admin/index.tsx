@@ -2,12 +2,12 @@ import React, { useState, type ComponentType } from "react";
 import Head from "next/head";
 import { api } from "@/utils/api";
 import { PillsRow } from "../../components/Pills";
-import { PageLayout } from "@/components/layout";
+import { PageLayout } from "@/components/PageLayout";
 import { useSession } from "next-auth/react";
 import { AdminFooter } from "./AdminFooter";
 import { useDebounce } from "@/hooks/useDebounce";
 import { AdminMainList } from "./AdminMainList";
-import { CornerLoading } from "@/components/loading";
+import { CornerLoading } from "@/components/Loading";
 import { AdminSidePanel } from "./AdminSidePanel";
 import { AiFillLock as Lock } from "react-icons/ai";
 import {

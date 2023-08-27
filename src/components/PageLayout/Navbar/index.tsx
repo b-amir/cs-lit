@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Search } from "../Search";
+import { Search } from "@/components/Search";
 import { CgMenuLeft } from "react-icons/cg";
 import { Breadcrumbs } from "./Breadcrumbs";
 import { FaRegUserCircle } from "react-icons/fa";

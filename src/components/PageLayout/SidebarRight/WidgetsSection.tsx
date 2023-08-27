@@ -1,8 +1,9 @@
 import { useEffect, type PropsWithChildren, useRef, useState } from "react";
 import Link from "next/link";
 import { api } from "@/utils/api";
-import { archivo } from "../../styles/customFonts";
+import { archivo } from "../../../styles/customFonts";
 import { routeHandler } from "@/utils/routeHandler";
+import { getScreenName } from "@/utils/getScreenName";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { animated, useSpring } from "@react-spring/web";
 import { TbStarFilled as Star } from "react-icons/tb";
@@ -15,7 +16,6 @@ import {
   type IWidgetLayoutProps,
   type IWidgetsSectionProps,
 } from "./types";
-import { getScreenName } from "@/utils/getScreenName";
 
 export function WidgetsSection({ hide }: IWidgetsSectionProps) {
   const { width: windowWidth, height: windowHeight } = useWindowSize();

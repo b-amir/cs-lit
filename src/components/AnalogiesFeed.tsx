@@ -1,7 +1,7 @@
 import { Analogy } from "./Analogy";
-import { type Analogy as AnalogyType } from "@prisma/client";
+import { EntityIsEmpty } from "./Messages/EntityIsEmpty";
 import { LoadMoreButton } from "./LoadMoreButton";
-import { EntityIsEmpty } from "./EntityIsEmpty";
+import { type Analogy as AnalogyType } from "@prisma/client";
 
 interface IFeedProps {
   analogies: AnalogyType[];
@@ -14,7 +14,7 @@ interface IFeedProps {
   setAnalogyEditorState: (arg: any) => void;
 }
 
-export const Feed: React.FC<IFeedProps> = ({
+export const AnalogiesFeed: React.FC<IFeedProps> = ({
   isProfile = false,
   analogies,
   hasNextPage,

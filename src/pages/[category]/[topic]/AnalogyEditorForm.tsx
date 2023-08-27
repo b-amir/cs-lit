@@ -1,16 +1,13 @@
 import { api } from "@/utils/api";
-// import { useUser } from "@clerk/nextjs";
-import { useSession } from "next-auth/react";
-import toast from "react-hot-toast";
-
 import { useRef } from "react";
-import { CornerLoading } from "../../../components/loading";
-import { EditorLayout } from "@/components/EditorLayout";
-import { animated, useSpring } from "@react-spring/web";
-import { NotSignedIn } from "../../../components/NotSignedIn";
+import { useSession } from "next-auth/react";
+import { NotSignedIn } from "@/components/Messages/NotSignedIn";
+import { EditorLayout } from "@/components/EditorForm/EditorLayout";
 import { useCreateItem } from "@/hooks/useCreateItem";
 import { useUpdateItem } from "@/hooks/useUpdateItem";
 import { useDeleteItem } from "@/hooks/useDeleteItem";
+import { CornerLoading } from "@/components/Loading";
+import { animated, useSpring } from "@react-spring/web";
 import { type Analogy as AnalogyType } from "@prisma/client";
 
 export const AnalogyEditorForm = ({

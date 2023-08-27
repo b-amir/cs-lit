@@ -2,11 +2,11 @@ import Head from "next/head";
 import { api } from "@/utils/api";
 import { NavShare } from "./NavShare";
 import { useRouter } from "next/router";
-import { PageLayout } from "@/components/layout";
+import { PageLayout } from "@/components/PageLayout";
 import { MainSection } from "./MainSection";
 import { InfoSection } from "./InfoSection";
 import { CommentSection } from "./CommentSection";
-import { EntityNotFound } from "@/components/EntityNotFound";
+import { EntityNotFound } from "@/components/Messages/EntityNotFound";
 import { AboutWebsiteSection } from "./AboutWebsiteSection";
 
 export default function SingleAnalogyPage() {

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { IoClose } from "react-icons/io5";
 import { useSession } from "next-auth/react";
-import { UserSection } from "../UserSection";
+import { UserSection } from "../../UserSection";
 import { AiFillControl } from "react-icons/ai";
 import { WidgetsSection } from "./WidgetsSection";
 

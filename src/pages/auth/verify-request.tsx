@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { FaArrowLeft } from "react-icons/fa";
 import { IoMailUnread } from "react-icons/io5";
-import { CornerLoading } from "@/components/loading";
+import { CornerLoading } from "@/components/Loading";
 
 const VerifyRequestPage = () => {
   const { data: sessionData, status } = useSession();
