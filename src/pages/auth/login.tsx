@@ -1,16 +1,16 @@
-import { signIn, useSession } from "next-auth/react";
-import { BsGoogle, BsDiscord, BsGithub } from "react-icons/bs";
 import Link from "next/link";
 import Image from "next/image";
-import { FaArrowLeft } from "react-icons/fa";
 import { useRouter } from "next/router";
+import { FaArrowLeft } from "react-icons/fa";
+import { GoBackButton } from "@/components/GoBackButton";
+import { CornerLoading } from "@/components/loading";
+import { signIn, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { type SignInErrorTypes } from "next-auth/src/core/pages/signin";
-import { CornerLoading } from "@/components/loading";
-import { GoBackButton } from "@/components/GoBackButton";
+import { BsGoogle, BsDiscord, BsGithub } from "react-icons/bs";
 
 const LoginPage = () => {
-  const { session, status } = useSession();
+  const { status } = useSession();
   const router = useRouter();
 
   // --- get error from router query and store as state --- //
@@ -97,7 +97,7 @@ const LoginPage = () => {
           <button
             onClick={() =>
               void signIn("google", {
-                callbackUrl: callbackURL,
+                callbackUrl: callbackURL as string,
               })
             }
             className="mx-auto mb-3 flex w-full place-content-center items-center rounded-2xl border border-gray-300 bg-white px-6 py-2 shadow-sm transition-all duration-200 hover:border-gray-400  hover:bg-blue-100 hover:text-gray-900  "
@@ -107,7 +107,7 @@ const LoginPage = () => {
           <button
             onClick={() =>
               void signIn("discord", {
-                callbackUrl: callbackURL,
+                callbackUrl: callbackURL as string,
               })
             }
             className="mx-auto mb-3 flex w-full place-content-center items-center rounded-2xl border border-gray-300 bg-white px-6 py-2 shadow-sm transition-all duration-200 hover:border-gray-400 hover:bg-indigo-100 hover:text-gray-900 "
@@ -117,7 +117,7 @@ const LoginPage = () => {
           <button
             onClick={() =>
               void signIn("github", {
-                callbackUrl: callbackURL,
+                callbackUrl: callbackURL as string,
               })
             }
             className="mx-auto mb-3 flex w-full place-content-center items-center rounded-2xl border border-gray-300 bg-white px-6 py-2 shadow-sm transition-all duration-200 hover:border-gray-400 hover:bg-gray-200 hover:text-gray-900 "
@@ -134,7 +134,7 @@ const LoginPage = () => {
               if (e.key === "Enter") {
                 e.preventDefault();
                 void signIn("email", {
-                  callbackUrl: callbackURL,
+                  callbackUrl: callbackURL as string,
                   email: e.currentTarget.value,
                 });
               }

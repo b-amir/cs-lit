@@ -1,20 +1,20 @@
-import { PageLayout } from "@/components/layout";
-import { useRouter } from "next/router";
-import { CgFolderAdd } from "react-icons/cg";
-import React, { useRef, useState } from "react";
-import { animated, useSpring } from "@react-spring/web";
-import { api } from "@/utils/api";
-import { CornerLoading } from "@/components/loading";
 import Head from "next/head";
+import { api } from "@/utils/api";
 import { archivo } from "@/styles/customFonts";
-import { useSession } from "next-auth/react";
-import { TableSkeleton } from "@/components/Skeleton";
-import { TopicEditorForm } from "./TopicEditorForm";
+import { useRouter } from "next/router";
+import { PageLayout } from "@/components/layout";
 import { TopicsList } from "./TopicsList";
-import { type Category } from "@prisma/client";
+import { useSession } from "next-auth/react";
+import { CgFolderAdd } from "react-icons/cg";
 import { FormTrigger } from "../../components/FormTrigger";
-import { EntityNotFound } from "@/components/EntityNotFound";
+import { type Category } from "@prisma/client";
+import { CornerLoading } from "@/components/loading";
+import { TableSkeleton } from "@/components/Skeleton";
 import { EntityIsEmpty } from "@/components/EntityIsEmpty";
+import { EntityNotFound } from "@/components/EntityNotFound";
+import { TopicEditorForm } from "./TopicEditorForm";
+import { animated, useSpring } from "@react-spring/web";
+import React, { useRef, useState } from "react";
 
 export default function CategoryPage() {
   const { data: sessionData } = useSession();

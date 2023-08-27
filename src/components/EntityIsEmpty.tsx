@@ -1,7 +1,14 @@
 import { FaGhost } from "react-icons/fa";
 import { GoBackButton } from "./GoBackButton";
 
-export function EntityIsEmpty({ entity, action = null }: { entity: string }) {
+export interface IEntityIsEmptyProps {
+  entity: string;
+  action?: () => void | null;
+}
+export function EntityIsEmpty({
+  entity,
+  action = () => null,
+}: IEntityIsEmptyProps) {
   return (
     <div className="flex max-h-screen flex-col items-center justify-center gap-2">
       <span className="flex flex-col items-center justify-center gap-3 font-semibold text-gray-500">

@@ -1,6 +1,6 @@
 export const routeHandler = (item, type) => {
   if (type === "Topics") {
-    return `/${item.category?.name}/${item.slug}`;
+    return `/${item.category?.slug}/${item.slug}`;
   } else if (type === "Categories") {
     return `/${item.slug}`;
   } else if (type === "Users") {

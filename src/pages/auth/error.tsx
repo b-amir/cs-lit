@@ -1,10 +1,9 @@
-import { useSession } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
-import { FaArrowLeft } from "react-icons/fa";
 import { useRouter } from "next/router";
-import { IoMailUnread } from "react-icons/io5";
+import { FaArrowLeft } from "react-icons/fa";
 import { RiErrorWarningFill } from "react-icons/ri";
+
 export type ErrorType =
   | "default"
   | "configuration"
@@ -12,8 +11,6 @@ export type ErrorType =
   | "verification";
 
 export interface ErrorProps {
-  url?: InternalUrl;
-  theme?: Theme;
   error?: ErrorType;
 }
 
@@ -24,9 +21,7 @@ interface ErrorView {
   signin?: JSX.Element;
 }
 
-const ErrorPage = (props: ErrorProps) => {
-  // const { url, error = "default" } = props;
-  // const signinPageUrl = `${url}/signin`;
+const ErrorPage = () => {
   const router = useRouter();
   const url = router.query.url;
   const signinPageUrl = router.query.signinPageUrl;

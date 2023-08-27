@@ -1,15 +1,14 @@
+import { FaGithub } from "react-icons/fa";
+import { FaLinkedin } from "react-icons/fa";
+import { IoIosArrowUp } from "react-icons/io";
 import { useRef, useState } from "react";
 import { useSpring, animated } from "@react-spring/web";
-import { FaLinkedin } from "react-icons/fa";
-import { FaGithub } from "react-icons/fa";
-import { IoIosArrowUp } from "react-icons/io";
 
 export function Footer() {
   const [collapsed, setCollapsed] = useState(true);
   const contentRef = useRef<HTMLDivElement>(null);
   const animationProps = useSpring({
     height: collapsed ? 0 : contentRef.current?.scrollHeight || 0,
-    // smooth slide up/down animation. no bouncing
     config: { mass: 1, tension: 170, friction: 26 },
   });
 
@@ -48,7 +47,6 @@ export function Footer() {
             />
           </div>
         </div>{" "}
-        {/* <div className="inline-flex "> */}
         <animated.div style={animationProps} ref={contentRef} className="">
           {" "}
           <br /> <br /> And I make{" "}
@@ -56,7 +54,6 @@ export function Footer() {
             className="inline-flex  flex-wrap font-semibold hover:underline"
             href="#"
           >
-            {/* <AiOutlineLink className="mr-0.5" /> */}
             <span className="mr-1">quirky things</span>
           </a>
           on the internet.
@@ -70,7 +67,6 @@ export function Footer() {
             <span>to this project.</span>
           </div>
         </animated.div>
-        {/* </div> */}
       </div>
     </div>
   );

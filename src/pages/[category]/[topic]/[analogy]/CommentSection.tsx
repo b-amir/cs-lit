@@ -1,19 +1,19 @@
-import { api } from "@/utils/api";
-import { AiFillLock } from "react-icons/ai";
-import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
+import { api } from "@/utils/api";
+import { coy } from "react-syntax-highlighter/dist/cjs/styles/prism";
+import { signIn } from "next-auth/react";
+import ReactMarkdown from "react-markdown";
+import { useSession } from "next-auth/react";
 import { type Comment } from "@prisma/client";
 import { RelativeTime } from "../../../../utils/relativeTime";
-import Image from "next/image";
-import ReactMarkdown from "react-markdown";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { coy } from "react-syntax-highlighter/dist/cjs/styles/prism";
-import { CommentSkeleton } from "@/components/Skeleton";
 import { useCreateItem } from "@/hooks/useCreateItem";
-import { LoadMoreButton } from "@/components/LoadMoreButton";
-import { useSession } from "next-auth/react";
-import { signIn } from "next-auth/react";
 import { getScreenName } from "@/utils/getScreenName";
+import { LoadMoreButton } from "@/components/LoadMoreButton";
+import { CommentSkeleton } from "@/components/Skeleton";
+import { AiFillLock as Lock } from "react-icons/ai";
+import { useEffect, useState } from "react";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 
 interface ICommentSectionProps {
   analogyId: string | undefined;
@@ -76,7 +76,7 @@ export function CommentSection({ analogyId }: ICommentSectionProps) {
               className={`my-4 flex w-full cursor-pointer select-none resize-none items-center rounded-lg border border-[#ffffff45] bg-[#ffffff45] px-3 py-2 text-sm text-gray-500 transition-all duration-200 hover:bg-[#ffffff6c] hover:text-gray-600`}
               onClick={() => signIn()}
             >
-              <AiFillLock className="mb-0.5 mr-2" /> You need to be logged in to
+              <Lock className="mb-0.5 mr-2" /> You need to be logged in to
               comment
             </div>
           )}

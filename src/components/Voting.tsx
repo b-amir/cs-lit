@@ -1,7 +1,7 @@
 import { api } from "@/utils/api";
-import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { IoIosArrowUp } from "react-icons/io";
+import { useEffect, useState } from "react";
 
 export function Voting({ analogyId }: { analogyId: string }) {
   const { data: whatDidCurrentUserVote } =

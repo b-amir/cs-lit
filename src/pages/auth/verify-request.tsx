@@ -1,18 +1,19 @@
-import { useSession } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
-import { FaArrowLeft } from "react-icons/fa";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
+import { FaArrowLeft } from "react-icons/fa";
 import { IoMailUnread } from "react-icons/io5";
+import { CornerLoading } from "@/components/loading";
 
 const VerifyRequestPage = () => {
-  const { session, loading } = useSession();
+  const { data: sessionData, status } = useSession();
   const router = useRouter();
 
-  if (loading) {
-    return <div className="text-center">Loading...</div>;
+  if (status === "loading") {
+    return <CornerLoading />;
   }
-  if (session) {
+  if (sessionData) {
     return <div className="text-center">You are already signed in.</div>;
   }
 
@@ -51,11 +52,7 @@ const VerifyRequestPage = () => {
           <p className="text-md mb-4 text-center text-sm font-normal text-gray-700">
             A sign in link has been sent to your email address.
           </p>
-          <p>
-            {/* <a className="site" href={url.origin}>
-            {url.host}
-          </a> */}
-          </p>
+          <p></p>
         </div>
       </div>
     </div>

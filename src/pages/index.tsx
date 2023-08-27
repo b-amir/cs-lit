@@ -4,6 +4,7 @@ import Image from "next/image";
 import { api } from "@/utils/api";
 import { Search } from "@/components/Search";
 import { archivo } from "../styles/customFonts";
+import { UserSection } from "@/components/UserSection";
 import { AnalogyView } from "@/components/AnalogyView";
 import { RiImageLine } from "react-icons/ri";
 import { FiArrowDown } from "react-icons/fi";
@@ -15,7 +16,6 @@ import { useEffect, useMemo, useState } from "react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { animated, useTransition } from "@react-spring/web";
 import { AvatarSkeleton, HomeCategorySkeleton } from "@/components/Skeleton";
-import { UserSection } from "@/components/UserSection";
 
 export default function Home() {
   return (
@@ -59,7 +59,7 @@ function HeaderSection() {
         {sessionStatus === "loading" ? (
           <HomeUserSkeleton />
         ) : (
-          <div className="flex items-center gap-0 rounded-full border border-[#5c2c1d2b] bg-[#ffffff36] px-2 py-2 pr-4 backdrop-blur-sm transition-all duration-300 hover:border-[#5c2c1d91] hover:bg-[#ff73631c]">
+          <div className="flex items-center gap-0 rounded-full border border-[#5c2c1d2b] bg-[#ffffff36] px-2 py-1 pr-4 backdrop-blur-sm transition-all duration-300 hover:border-[#5c2c1d91] hover:bg-[#ff73631c] sm:py-2 ">
             <UserSection />
           </div>
         )}
@@ -214,19 +214,16 @@ function HeroSection() {
 }
 
 function CategoriesSection() {
-  const {
-    data: categories,
-    status: categoriesFetchingStatus,
-    refetch: refetchCategories,
-  } = api.category.getAll.useInfiniteQuery(
-    { limit: 15 },
-    {
-      getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor,
-      refetchOnWindowFocus: false,
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-    }
-  );
+  const { data: categories, status: categoriesFetchingStatus } =
+    api.category.getAll.useInfiniteQuery(
+      { limit: 15 },
+      {
+        getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor,
+        refetchOnWindowFocus: false,
+        refetchOnMount: false,
+        refetchOnReconnect: false,
+      }
+    );
   return (
     <div
       id="category-section"
@@ -261,8 +258,7 @@ function CategoriesSection() {
               page?.items?.map((category) => (
                 <li key={category.id} className="">
                   <Link
-                    className="group flex max-w-[calc(100vw-10vw)] flex-row items-center justify-center overflow-x-clip rounded-2xl border border-[#d5d9df33] bg-[#d6e2f62c] bg-gradient-to-tr from-[#d6e2f60b] via-[#d6e2f60b]  to-[#d4d4d432] px-6 py-3 text-[#29313d]  shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.15)_0px_1px_1px_0px] backdrop-blur-lg
- transition-shadow  duration-300 [text-shadow:_0_1px_3px_rgb(255_255_255_/_25%)] hover:-translate-y-0.5 hover:border-[#d4d4d4d5] hover:bg-[#d4d4d4a3] hover:shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]  sm:mx-auto sm:max-w-[calc(40vw)] sm:bg-[#d6e2f60b] sm:py-9"
+                    className="group flex max-w-[calc(100vw-10vw)] flex-row items-center justify-center overflow-x-clip rounded-2xl border border-[#d5d9df33] bg-[#d6e2f62c] bg-gradient-to-tr from-[#d6e2f60b] via-[#d6e2f60b]  to-[#d4d4d432] px-6 py-3 text-[#29313d]  shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.15)_0px_1px_1px_0px] backdrop-blur-lg transition-shadow  duration-300 [text-shadow:_0_1px_3px_rgb(255_255_255_/_25%)] hover:-translate-y-0.5 hover:border-[#d4d4d4d5] hover:bg-[#d4d4d4a3] hover:shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]  sm:mx-auto sm:max-w-[calc(40vw)] sm:bg-[#d6e2f60b] sm:py-9"
                     // onClick={() => {}}
                     href={`/${category.slug}`}
                   >
@@ -325,13 +321,7 @@ function ExampleSection() {
           id="vertical-line"
           className="mx-auto my-1 flex h-12 w-[1px] flex-col items-center justify-center bg-[#5c2c1d2b]"
         />
-        <div
-          className="mx-auto my-[-4px] flex w-full max-w-[760px] flex-row rounded-xl border-[1px] border-[#5c2c1d2b] bg-[#5c2c1d09] py-0.5 sm:rounded-3xl sm:px-5 sm:py-10 "
-          // style={{
-          // backgroundImage: `url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%232c1d2b' fill-opacity='0.05' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E")`,
-          // backgroundColor: "#f9eae9",
-          // }}
-        >
+        <div className="mx-auto my-[-4px] flex w-full max-w-[760px] flex-row rounded-xl border-[1px] border-[#5c2c1d2b] bg-[#5c2c1d09] py-0.5 sm:rounded-3xl sm:px-5 sm:py-10 ">
           <AnalogyView
             analogy={{
               id: analogyData?.id,
@@ -357,11 +347,7 @@ function ExampleSection() {
           className="mx-auto my-1 flex h-12 w-[1px] flex-col items-center justify-center bg-[#5c2c1d2b]"
         />
 
-        <button
-          className="font-regular text-md group mx-auto mb-3 mt-[-4px] flex flex-row content-center items-center justify-center
- rounded-xl border border-[#5c2c1d2b] bg-[#ffffff98] px-8 py-2 text-sm font-semibold text-[#292626a9] shadow-sm
- transition-all duration-200 hover:border-[#5c2c1d66] hover:px-8 hover:shadow-md"
-        >
+        <button className="font-regular text-md group mx-auto mb-3 mt-[-4px] flex flex-row content-center items-center justify-center rounded-xl border border-[#5c2c1d2b] bg-[#ffffff98] px-8 py-2 text-sm font-semibold text-[#292626a9] shadow-sm transition-all duration-200 hover:border-[#5c2c1d66] hover:px-8 hover:shadow-md">
           <span className="cursor-pointer transition-all duration-300 group-hover:-translate-x-0.5">
             Explore Closure Topic
           </span>
@@ -462,11 +448,7 @@ function ShareSection() {
           </div>
         </div>
 
-        <button
-          className="font-regular text-md text-md group mx-auto mb-1 flex flex-row content-center items-center
- justify-center rounded-xl border border-[#5c2c1d2b] bg-[#ff7263] px-8 py-3 font-semibold text-[#ffffffd3] shadow-sm
- transition-all duration-200 hover:border-[#5c2c1d66] hover:px-8 hover:shadow-md"
-        >
+        <button className="font-regular text-md text-md group mx-auto mb-1 flex flex-row content-center items-center justify-center rounded-xl border border-[#5c2c1d2b] bg-[#ff7263] px-8 py-3 font-semibold text-[#ffffffd3] shadow-sm transition-all duration-200 hover:border-[#5c2c1d66] hover:px-8 hover:shadow-md">
           <span
             className="cursor-pointer transition-all duration-300 group-hover:-translate-x-0.5"
             onClick={() => {
@@ -492,10 +474,6 @@ function FooterSection() {
     <footer
       id="footer-section"
       className="mx-auto flex w-full flex-col items-center justify-center border-t border-t-[#ffffff] bg-[#1C282E] px-12 py-6 shadow-inner shadow-[#1d262b] sm:flex-row"
-      // style={{
-      // backgroundImage: "url(/assets/noise.webp)",
-      // backgroundBlendMode: "overlay",
-      // }}
     >
       <Image
         id="grayscaled-logo"

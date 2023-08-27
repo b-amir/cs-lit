@@ -5,7 +5,7 @@ import { EntityIsEmpty } from "./EntityIsEmpty";
 
 interface IFeedProps {
   analogies: Analogy[];
-  hasNextPage: boolean;
+  hasNextPage: boolean | undefined;
   fetchNextPage: () => void;
   isFetchingNextPage: boolean;
   isProfile: boolean;
@@ -39,7 +39,6 @@ export const Feed: React.FC<IFeedProps> = ({
     );
   }
 
-  console.log("analogies:", analogies);
   return (
     <>
       <div

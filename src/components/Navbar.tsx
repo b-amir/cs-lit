@@ -1,24 +1,39 @@
-import { TiHome } from "react-icons/ti";
-import { useRouter } from "next/router";
 import Link from "next/link";
-import { api } from "@/utils/api";
-import { Search } from "./Search";
 import Image from "next/image";
+import { api } from "@/utils/api";
+import { TiHome } from "react-icons/ti";
+import { Search } from "./Search";
+import { type User } from "@prisma/client";
+import { useRouter } from "next/router";
 import { CgMenuLeft } from "react-icons/cg";
-import { FaRegUserCircle } from "react-icons/fa";
+import { routeHandler } from "@/utils/routeHandler";
 import { getScreenName } from "@/utils/getScreenName";
+import { FaRegUserCircle } from "react-icons/fa";
+import { useScrolledDown } from "@/hooks/useScrolledDown";
+
+export interface INavbarProps {
+  mainWidthClass: string;
+  toggleLeftSidebar: () => void;
+  toggleRightSidebar: () => void;
+}
 
 export function Navbar({
   mainWidthClass,
   toggleLeftSidebar,
   toggleRightSidebar,
-}) {
+}: INavbarProps) {
+  const scrolledDown = useScrolledDown();
+
   return (
     <nav
-      className={`fixed top-0 z-40 mx-auto flex min-h-[90px] ${mainWidthClass} items-center justify-between border-b !border-[#ebe8e869] border-opacity-20 bg-transparent bg-gradient-to-b from-[#EBEAE8] to-[#ebeae84a] px-2 backdrop-blur-sm sm:px-10`}
+      className={`fixed top-0 z-40 mx-auto flex  ${mainWidthClass} items-center justify-between px-2 backdrop-blur-lg backdrop-filter sm:px-10 ${
+        scrolledDown
+          ? "min-h-[50px] border-b !border-[#ebe8e869] border-opacity-20 bg-transparent bg-gradient-to-b from-[#ebeae837] to-[#ebeae84a] shadow-sm  transition-all duration-500 ease-in-out"
+          : "min-h-[90px] transition-all duration-500 ease-in-out"
+      }}`}
     >
       <div className="flex w-full items-center justify-between px-3 py-1 sm:py-3 lg:px-5 ">
-        <div className=" flex h-10 items-center  justify-start rounded-full bg-[#EBEAE800] px-0 py-1 backdrop-filter-none">
+        <div className=" flex h-10 items-center justify-start rounded-full bg-[#EBEAE800] px-0 py-1 backdrop-filter-none">
           <CgMenuLeft
             className="flex h-12 w-12 cursor-pointer select-none rounded-lg p-[0.8rem] text-[#4f4e4d97] transition-all hover:bg-[#ffffff96] sm:hidden"
             onClick={toggleLeftSidebar}
@@ -58,31 +73,29 @@ function Breadcrumbs() {
     id: UrlProfile,
   } = router.query;
 
-  const { data: topicsData, isFetching: topicFetching } =
-    api.topic.getBySlug.useQuery(
-      {
-        slug: UrlTopic as string,
-      },
-      {
-        enabled: !!UrlTopic,
-        refetchOnWindowFocus: false,
-        refetchOnMount: false,
-        refetchOnReconnect: false,
-      }
-    );
+  const { data: topicsData } = api.topic.getBySlug.useQuery(
+    {
+      slug: UrlTopic as string,
+    },
+    {
+      enabled: !!UrlTopic,
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+    }
+  );
 
-  const { data: categoryData, isFetching: categoryFetching } =
-    api.category.getBySlug.useQuery(
-      {
-        slug: UrlCategory as string,
-      },
-      {
-        enabled: !!UrlCategory,
-        refetchOnWindowFocus: false,
-        refetchOnMount: false,
-        refetchOnReconnect: false,
-      }
-    );
+  const { data: categoryData } = api.category.getBySlug.useQuery(
+    {
+      slug: UrlCategory as string,
+    },
+    {
+      enabled: !!UrlCategory,
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+    }
+  );
 
   const { data: AnalogyData } = api.analogy.getSingleAnalogyById.useQuery(
     {
@@ -127,12 +140,12 @@ function Breadcrumbs() {
         <>
           <span className="mx-2 text-[#69696975] ">/</span>
           <Link
-            href={`/${UrlCategory}`}
-            className="max-w-[calc(7vw)] truncate  "
+            href={`${routeHandler(categoryData, "Categories") ?? ""}`}
+            className="max-w-[calc(7vw)] truncate "
           >
             <span
               className={` cursor-pointer text-[#2A2A2E] transition-all hover:text-black ${
-                !UrlTopic && "font-semibold"
+                UrlTopic ? "" : "font-semibold"
               }`}
             >
               {categoryData?.name}
@@ -142,14 +155,14 @@ function Breadcrumbs() {
       )}
       {topicsData && (
         <>
-          <span className="mx-2 text-[#69696975]  ">/</span>
+          <span className="mx-2 text-[#69696975] ">/</span>
           <Link
-            href={`/${UrlCategory}/${UrlTopic}`}
+            href={`${routeHandler(topicsData, "Topics") ?? ""}`}
             className="max-w-[calc(11vw)] truncate "
           >
             <span
               className={`cursor-pointer text-[#2A2A2E] transition-all hover:text-black ${
-                !UrlAnalogyId && "font-semibold"
+                UrlAnalogyId ? "" : "font-semibold"
               }`}
             >
               {topicsData?.title}
@@ -161,11 +174,11 @@ function Breadcrumbs() {
         <>
           <span className="mx-2 text-[#69696975]">/</span>
           <Link
-            href={`/${UrlCategory}/${UrlTopic}`}
+            href={`${routeHandler(AnalogyData, "Analogies") ?? ""}`}
             className="max-w-[calc(12vw)] truncate"
           >
             <span className="cursor-pointer font-semibold text-[#2A2A2E] transition-all hover:text-black">
-              {getScreenName(AnalogyData?.user)}'s Analogy
+              {getScreenName(AnalogyData?.user as User)}&apos;s Analogy
             </span>
           </Link>
         </>

@@ -1,8 +1,8 @@
-import { type PropsWithChildren } from "react";
 import { Navbar } from "./Navbar";
-import useSidebarVisibility from "@/hooks/useSidebarVisibility";
 import useNavbarVisibility from "@/hooks/useNavbarVisibility";
+import useSidebarVisibility from "@/hooks/useSidebarVisibility";
 import { AnimatedSidebars } from "./AnimatedSidebars";
+import { type PropsWithChildren } from "react";
 
 export const PageLayout = (props: PropsWithChildren<object>) => {
   const navbarVisible = useNavbarVisibility();

@@ -19,14 +19,14 @@ export const UserSection = () => {
   const user = sessionData?.user as USER;
 
   return (
-    <div>
+    <>
       {status === "loading" ? (
         <UserSkeleton />
       ) : (
         <div className="flex w-full flex-row">
           <Avatar user={user} />
           <div className="flex flex-col justify-center">
-            <p className="font-regular mb-1 px-1 text-left text-sm font-medium text-[#2A2A2E]">
+            <p className="font-regular px-1 text-left text-sm font-medium text-[#2A2A2E] sm:mb-1">
               {sessionData ? (
                 <Link
                   href={`/profile/${user?.id}`}
@@ -47,7 +47,7 @@ export const UserSection = () => {
                 </div>
               ) : (
                 <div
-                  className="group flex flex-row items-center px-2 text-sm font-semibold text-[#606060] hover:text-[#000] "
+                  className="group flex flex-row items-center px-0.5 text-sm font-semibold text-[#606060] hover:text-[#000] sm:px-2 "
                   onClick={() => void signIn()}
                 >
                   <HiOutlineLogin className="mx-1 stroke-[#606060] group-hover:stroke-[#000] sm:mb-0.5" />{" "}
@@ -58,7 +58,7 @@ export const UserSection = () => {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
 

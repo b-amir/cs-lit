@@ -81,7 +81,15 @@ const ProfilePage: NextPage<object> = () => {
   );
 };
 
-function ProfileHeader({ profileData }: { profileData: unknown }) {
+export interface IProfileHeaderProps {
+  profileData: {
+    id: string;
+    name: string;
+    email: string;
+    profileImageUrl: string | null;
+  };
+}
+function ProfileHeader({ profileData }: IProfileHeaderProps) {
   return (
     <div
       id="profile-header"

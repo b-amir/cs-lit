@@ -1,5 +1,5 @@
-import { MdOutlineWrongLocation } from "react-icons/md";
 import { GoBackButton } from "./GoBackButton";
+import { MdOutlineWrongLocation } from "react-icons/md";
 
 export function EntityNotFound({ entity }: { entity: string }) {
   return (

@@ -294,7 +294,20 @@ export const topicsRouter = createTRPCRouter({
         where: {
           slug: input.slug,
         },
-      });
+      })
+        .then((topic) => {
+          // add category data 
+          if (topic) {
+            return ctx.prisma.category.findUnique({
+              where: { id: topic.categoryId },
+            }).then((category) => {
+              return { ...topic, category };
+            })
+          }
+          return topic;
+        })
+
+
       if (!topic) throw new TRPCError({ code: "NOT_FOUND" });
       return topic;
     }),

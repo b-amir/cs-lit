@@ -4,12 +4,12 @@ import { api } from "@/utils/api";
 import { PillsRow } from "../../components/Pills";
 import { PageLayout } from "@/components/layout";
 import { useSession } from "next-auth/react";
-import { AiFillLock } from "react-icons/ai";
 import { AdminFooter } from "./AdminFooter";
 import { useDebounce } from "@/hooks/useDebounce";
 import { AdminMainList } from "./AdminMainList";
 import { CornerLoading } from "@/components/loading";
 import { AdminSidePanel } from "./AdminSidePanel";
+import { AiFillLock as Lock } from "react-icons/ai";
 import {
   EditorModal,
   CategoryEditForm,
@@ -195,7 +195,7 @@ export default function AdminPage({}) {
           </>
         ) : (
           <div className="mt-[90px] flex h-[calc(100dvh-90px-2px)] w-full flex-col items-center justify-center border border-y-[#5555552a] text-gray-500">
-            <AiFillLock />
+            <Lock />
             <span className="mt-2">Unauthorized Access</span>
           </div>
         )}

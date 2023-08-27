@@ -1,7 +1,7 @@
-import { CgFolderAdd } from "react-icons/cg";
-import { IoClose } from "react-icons/io5";
 import React from "react";
-import { type Topic, type Category, type Analogy } from "@prisma/client";
+import { IoClose } from "react-icons/io5";
+import { type Topic } from "@prisma/client";
+import { CgFolderAdd } from "react-icons/cg";
 
 export interface IFormTriggerProps {
   setInput: React.Dispatch<React.SetStateAction<Topic>>;
@@ -29,8 +29,7 @@ export function FormTrigger({
   return (
     <div
       id="add-topic-header"
-      className={` mb-4 inline-flex w-full cursor-pointer flex-row items-center rounded-[12px] border border-[#dcdcdca1] bg-[#efefef] px-10
-                  py-4 text-xl font-bold shadow-sm transition-all duration-300 hover:border-[#8b8b8ba5] hover:bg-[#ffffff] sm:mb-4 sm:py-6 `}
+      className={` mb-4 inline-flex w-full cursor-pointer flex-row items-center rounded-[12px] border border-[#dcdcdca1] bg-[#efefef] px-10 py-4 text-xl font-bold shadow-sm transition-all duration-300 hover:border-[#8b8b8ba5] hover:bg-[#ffffff] sm:mb-4 sm:py-6 `}
       onClick={() => {
         setEditorState?.({
           ...editorState,

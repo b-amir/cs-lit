@@ -4,12 +4,15 @@
   "WillLuke.nextjs.hasPrompted": true,
   "cSpell.enableFiletypes": ["tailwindcss"],
   "cSpell.words": [
+    "accessdenied",
+    "Bazgir",
     "callstack",
     "coldark",
     "CSLIT",
     "defaultpp",
     "isfetching",
     "sidepanel",
+    "signin",
     "trpc"
   ]
 }

@@ -1,5 +1,5 @@
-import { FaArrowLeft } from "react-icons/fa";
 import { useRouter } from "next/router";
+import { FaArrowLeft } from "react-icons/fa";
 
 export function GoBackButton() {
   const router = useRouter();
