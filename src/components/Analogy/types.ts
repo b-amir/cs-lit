@@ -1,104 +1,52 @@
-import { type ExtendedAnalogy } from "../SidebarRight/types";
 import { type Session } from "next-auth";
-import { type Comment, type User } from "@prisma/client";
 import { type InfiniteData } from "@tanstack/react-query";
+import { type ExtendedAnalogy } from "../SidebarRight/types";
+import { type Comment, type User } from "@prisma/client";
+import { type Dispatch, type SetStateAction } from "react";
 
+export type Analogy = {
+  id: string;
+};
+export type AnalogyEditorState = {
+  entity: string;
+  shown: boolean;
+  purpose: string;
+};
+export type AnalogyInput = {
+  id: string;
+  title: string;
+  description: string;
+  reference: string;
+  status: string;
+  pinned: boolean;
+  topicId: string;
+  authorId: string;
+};
 export interface IAnalogyProps {
-  analogy: {
-    id: string;
-  };
+  analogy: Analogy;
   needsInfoRow?: boolean;
   needsLink?: boolean;
   needsLocationInfo?: boolean;
-  setAnalogyEditorState: React.Dispatch<
-    React.SetStateAction<{
-      entity: string;
-      shown: boolean;
-      purpose: string;
-    }>
-  >;
-  setAnalogyInput: React.Dispatch<
-    React.SetStateAction<{
-      id: string;
-      title: string;
-      description: string;
-      reference: string;
-      status: string;
-      pinned: boolean;
-      topicId: string;
-      authorId: string;
-    }>
-  >;
+  setAnalogyEditorState?: React.Dispatch<React.SetStateAction<AnalogyEditorState>>;
+  setAnalogyInput?: React.Dispatch<React.SetStateAction<AnalogyInput>>;
   analogyData: ExtendedAnalogy | undefined;
-
   analogyStatus?: string;
   votingAverage: number;
   votingStatus?: string;
 }
-export interface IAnalogyBodyProps {
-  analogy: {
-    id: string;
-  };
-  analogyData: ExtendedAnalogy | undefined;
-
-  analogyStatus?: string;
-  needsInfoRow?: boolean;
-  needsLocationInfo?: boolean;
-  setAnalogyEditorState: React.Dispatch<
-    React.SetStateAction<{
-      entity: string;
-      shown: boolean;
-      purpose: string;
-    }>
-  >;
-  setAnalogyInput: React.Dispatch<React.SetStateAction<{
-    id: string;
-    title: string;
-    description: string;
-    reference: string;
-    status: string;
-    pinned: boolean;
-    topicId: string;
-    authorId: string;
-  }>>
-  votingAverage: number;
-  votingStatus?: string;
-}
+export type IAnalogyBodyProps = IAnalogyProps
 export interface IContentSectionProps {
   analogyData: ExtendedAnalogy | undefined;
   analogyStatus?: string;
 }
-export interface IHeaderSectionProps {
-  analogy: {
-    id: string;
-  };
-  analogyData: ExtendedAnalogy | undefined;
-  analogyStatus: string | undefined;
-  votingAverage: number;
-  votingStatus: string | undefined;
-}
-
+export type IHeaderSectionProps = IAnalogyProps
 export interface IInfoRowSectionProps {
-  needsLocationInfo: boolean | undefined;
-  analogyData: ExtendedAnalogy | undefined;
-  setAnalogyInput: React.Dispatch<React.SetStateAction<{
-    id: string;
-    title: string;
-    description: string;
-    reference: string;
-    status: string;
-    pinned: boolean;
-    topicId: string;
-    authorId: string;
-  }>>
-  setAnalogyEditorState: React.Dispatch<
-    React.SetStateAction<{
-      entity: string;
-      shown: boolean;
-      purpose: string;
-    }>
-  >;
-
+  needsLocationInfo?: boolean;
+  analogyData?: ExtendedAnalogy;
+  setAnalogyInput: Dispatch<SetStateAction<AnalogyInput>> | undefined;
+  setAnalogyEditorState: Dispatch<
+    SetStateAction<{ entity: string; shown: boolean; purpose: string }>
+  > | undefined;
 }
 export interface IPostTimeProps {
   analogyData: ExtendedAnalogy | undefined;
@@ -114,30 +62,15 @@ export interface IPostCommentCountProps {
     pageInfo: {
       count: number;
       nextCursor: string | undefined;
-      hasNextPage: boolean | undefined
+      hasNextPage: boolean | undefined;
     };
   }> | undefined;
 }
-
 export interface IPostEditButtonProps {
   analogyData: ExtendedAnalogy | undefined;
-  sessionData: Session | null
-  setAnalogyEditorState: React.Dispatch<
-    React.SetStateAction<{
-      entity: string;
-      shown: boolean;
-      purpose: string;
-    }>
-  >;
-  setAnalogyInput: React.Dispatch<React.SetStateAction<{
-    id: string;
-    title: string;
-    description: string;
-    reference: string;
-    status: string;
-    pinned: boolean;
-    topicId: string;
-    authorId: string;
-  }>>
-
+  sessionData: Session | null;
+  setAnalogyEditorState: Dispatch<
+    SetStateAction<AnalogyEditorState>
+  > | undefined;
+  setAnalogyInput: Dispatch<SetStateAction<AnalogyInput>> | undefined;
 }

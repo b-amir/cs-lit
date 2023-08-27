@@ -14,7 +14,7 @@ export function AddCategorySection() {
   const item = input as Category;
   const type = "Categories";
   const createItem = useCreateItem(item, type);
-  const handleCreate = (e) => {
+  const handleCreate = (e: React.SyntheticEvent) => {
     e.preventDefault();
     createItem();
     setInput({ name: "", slug: "", id: "" });

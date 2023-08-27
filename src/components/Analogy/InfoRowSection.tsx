@@ -8,7 +8,7 @@ import { AiOutlineLink } from "react-icons/ai";
 import { getStatusIcon } from "@/utils/getStatusIcon";
 import { HiOutlineChatAlt } from "react-icons/hi";
 import { type ExtendedAnalogy } from "../SidebarRight/types";
-import { HiOutlineDotsVertical } from "react-icons/hi";
+import { HiOutlineDotsVertical as DotsMenu } from "react-icons/hi";
 import {
   type IPostTimeProps,
   type IInfoRowSectionProps,
@@ -154,38 +154,44 @@ function PostEditButton({
   setAnalogyEditorState,
   setAnalogyInput,
 }: IPostEditButtonProps) {
+  //
+  const handleEdit = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    <div title="guardrails">🛡️ no matching repositories found</div>;
+    setAnalogyEditorState &&
+      setAnalogyEditorState({
+        entity: "analogy",
+        shown: true,
+        purpose: "Edit",
+      });
+    if (setAnalogyInput) {
+      setAnalogyInput((prev) => {
+        return {
+          ...prev,
+          id: analogyData?.id || prev.id,
+          title: analogyData?.title || prev.title,
+          description: analogyData?.description || prev.description,
+          reference: analogyData?.reference || prev.reference,
+          status: analogyData?.status || prev.status,
+          pinned: analogyData?.pinned || prev.pinned,
+          topicId: analogyData?.topicId || prev.topicId,
+          authorId: analogyData?.authorId || prev.authorId,
+        };
+      });
+    }
+  };
+
   return (
     <>
       {sessionData &&
-        setAnalogyEditorState &&
-        ["ADMIN", "EDITOR"].includes(sessionData?.user.role) && (
+        ["ADMIN", "EDITOR"].includes(sessionData?.user.role ?? "") && (
           <a
             href="#"
             className="font-medium text-gray-400 hover:underline"
-            onClick={(e) => {
-              e.preventDefault();
-              setAnalogyEditorState({
-                entity: "analogy",
-                shown: true,
-                purpose: "Edit",
-              });
-              setAnalogyInput((prev) => {
-                return {
-                  ...prev,
-                  id: analogyData?.id || prev.id,
-                  title: analogyData?.title || prev.title,
-                  description: analogyData?.description || prev.description,
-                  reference: analogyData?.reference || prev.reference,
-                  status: analogyData?.status || prev.status,
-                  pinned: analogyData?.pinned || prev.pinned,
-                  topicId: analogyData?.topicId || prev.topicId,
-                  authorId: analogyData?.authorId || prev.authorId,
-                };
-              });
-            }}
+            onClick={handleEdit}
           >
             <span className="mx-2 flex cursor-pointer rounded-lg border border-transparent p-1 text-xs text-gray-600 hover:border-gray-300 hover:bg-gray-100">
-              <HiOutlineDotsVertical className="mt-0.5 scale-125" />
+              <DotsMenu className="mt-0.5 scale-125" />
             </span>
           </a>
         )}

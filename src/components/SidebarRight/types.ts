@@ -17,13 +17,11 @@ export interface ISingleWidgetProps {
   windowWidth: number | undefined;
   setActiveWidgetIndex: (activeWidgetIndex: number[]) => void;
 }
-
 export interface CONTRIBUTOR {
   id: string;
   name: string;
   analogiesCount: number | undefined;
 }
-
 export interface ExtendedAnalogy extends Analogy {
   user: User | null;
   topic: Topic | null;
