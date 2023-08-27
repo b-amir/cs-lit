@@ -4,7 +4,6 @@ import { useSession } from "next-auth/react";
 import { UserSection } from "../UserSection";
 import { AiFillControl } from "react-icons/ai";
 import { WidgetsSection } from "./WidgetsSection";
-import { useWindowSize } from "@/hooks/useWindowSize";
 
 interface ISidebarRightProps {
   visible: boolean;

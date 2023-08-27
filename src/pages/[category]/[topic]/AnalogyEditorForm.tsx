@@ -11,7 +11,7 @@ import { NotSignedIn } from "../../../components/NotSignedIn";
 import { useCreateItem } from "@/hooks/useCreateItem";
 import { useUpdateItem } from "@/hooks/useUpdateItem";
 import { useDeleteItem } from "@/hooks/useDeleteItem";
-import { type Analogy } from "@prisma/client";
+import { type Analogy as AnalogyType } from "@prisma/client";
 
 export const AnalogyEditorForm = ({
   topicId,
@@ -25,7 +25,7 @@ export const AnalogyEditorForm = ({
   // const { user, isLoaded: userLoaded, isSignedIn } = useUser();
   const { data: sessionData, status: sessionStatus } = useSession();
 
-  const item = input as Analogy;
+  const item = input as AnalogyType;
   const type = "Analogies";
 
   const updateItem = useUpdateItem(item, type);

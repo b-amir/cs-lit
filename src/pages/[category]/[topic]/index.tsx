@@ -12,7 +12,7 @@ import { AnalogySkeleton } from "@/components/Skeleton";
 import { useRef, useState } from "react";
 import { FormTrigger } from "../../../components/FormTrigger";
 import { animated, useSpring } from "@react-spring/web";
-import { type Analogy } from "@prisma/client";
+import { type Analogy as AnalogyType } from "@prisma/client";
 import { EntityNotFound } from "../../../components/EntityNotFound";
 import { CornerLoading } from "@/components/loading";
 

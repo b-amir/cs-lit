@@ -6,7 +6,7 @@ export const routeHandler = (item, type) => {
   } else if (type === "Users") {
     return `/profile/${item.id}`;
   } else if (type === "Analogies") {
-    return `/${item.category?.slug}/${item.topic?.slug}/${item.id}`;
+    return `/${item?.category?.slug}/${item?.topic?.slug}/${item?.id}`;
   } else if (type === "Comments") {
     return "/";
   } else return;

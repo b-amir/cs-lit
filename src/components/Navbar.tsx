@@ -26,10 +26,10 @@ export function Navbar({
 
   return (
     <nav
-      className={`fixed top-0 z-40 mx-auto flex  ${mainWidthClass} items-center justify-between px-2 backdrop-blur-lg backdrop-filter sm:px-10 ${
+      className={`fixed top-0 z-40 mx-auto flex  ${mainWidthClass} items-center justify-between bg-transparent bg-gradient-to-b from-[#ebeae8] to-[#ebeae84a] px-2 backdrop-blur-lg backdrop-filter transition-all duration-500 ease-in-out sm:px-10 ${
         scrolledDown
-          ? "min-h-[50px] border-b !border-[#ebe8e869] border-opacity-20 bg-transparent bg-gradient-to-b from-[#ebeae837] to-[#ebeae84a] shadow-sm  transition-all duration-500 ease-in-out"
-          : "min-h-[90px] transition-all duration-500 ease-in-out"
+          ? "min-h-[50px] border-b !border-[#ebe8e869] border-opacity-20 from-[#ebeae840] shadow-sm "
+          : "min-h-[90px] "
       }}`}
     >
       <div className="flex w-full items-center justify-between px-3 py-1 sm:py-3 lg:px-5 ">

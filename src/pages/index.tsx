@@ -5,7 +5,7 @@ import { api } from "@/utils/api";
 import { Search } from "@/components/Search";
 import { archivo } from "../styles/customFonts";
 import { UserSection } from "@/components/UserSection";
-import { AnalogyView } from "@/components/AnalogyView";
+import { Analogy } from "@/components/Analogy";
 import { RiImageLine } from "react-icons/ri";
 import { FiArrowDown } from "react-icons/fi";
 import { AiOutlineLink } from "react-icons/ai";
@@ -322,7 +322,7 @@ function ExampleSection() {
           className="mx-auto my-1 flex h-12 w-[1px] flex-col items-center justify-center bg-[#5c2c1d2b]"
         />
         <div className="mx-auto my-[-4px] flex w-full max-w-[760px] flex-row rounded-xl border-[1px] border-[#5c2c1d2b] bg-[#5c2c1d09] py-0.5 sm:rounded-3xl sm:px-5 sm:py-10 ">
-          <AnalogyView
+          <Analogy
             analogy={{
               id: analogyData?.id,
             }}

@@ -9,7 +9,7 @@ import {
 // import type { User } from "@clerk/nextjs/api";
 import { TRPCError } from "@trpc/server";
 import { filterUserForClient } from "@/server/helpers/filterUserForClient";
-import { type Analogy, type Prisma } from "@prisma/client";
+import { type Analogy as AnalogyType, type Prisma } from "@prisma/client";
 import { prisma } from "@/server/db"
 import { getTopicNameById, getUserNameById } from "./topics";
 
@@ -20,7 +20,7 @@ import { getTopicNameById, getUserNameById } from "./topics";
 
 
 
-export const analogiesWithUserData = async (analogies: Analogy[]) => {
+export const analogiesWithUserData = async (analogies: AnalogyType[]) => {
   // const prisma = new PrismaClient();
   const analogiesWithUserData = await Promise.all(
     analogies.map(async (analogy) => {
@@ -34,7 +34,7 @@ export const analogiesWithUserData = async (analogies: Analogy[]) => {
 };
 
 
-export const analogiesWithUserAndTopicData = async (analogies: Analogy[]) => {
+export const analogiesWithUserAndTopicData = async (analogies: AnalogyType[]) => {
   // const prisma = new PrismaClient();
   const analogiesWithUserAndTopicData = await Promise.all(
     analogies.map(async (analogy) => {
@@ -50,7 +50,7 @@ export const analogiesWithUserAndTopicData = async (analogies: Analogy[]) => {
   return analogiesWithUserAndTopicData;
 };
 
-export const analogiesWithUserAndTopicAndCategoryData = async (analogies: Analogy[]) => {
+export const analogiesWithUserAndTopicAndCategoryData = async (analogies: AnalogyType[]) => {
   const analogiesWithUserAndTopicAndCategoryData = await Promise.all(
 
     analogies.map(async (analogy) => {
@@ -69,7 +69,7 @@ export const analogiesWithUserAndTopicAndCategoryData = async (analogies: Analog
   return analogiesWithUserAndTopicAndCategoryData;
 };
 
-export const singleAnalogyWithUserAndTopicAndCategoryData = async (analogy: Analogy) => {
+export const singleAnalogyWithUserAndTopicAndCategoryData = async (analogy: AnalogyType) => {
   const user = await prisma.user.findUnique({
     where: { id: analogy.authorId },
   });
@@ -269,7 +269,7 @@ export const analogiesRouter = createTRPCRouter({
             id: input.id,
             OR: [
               {
-                status: ["ADMIN", "EDITOR"].includes(ctx?.session.user.role) ? { not: "DELETED" } : "PUBLISHED",
+                status: ["ADMIN", "EDITOR"].includes(ctx?.session?.user.role) ? { not: "DELETED" } : "PUBLISHED",
               },
               {
                 status: { not: "DELETED" },

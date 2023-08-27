@@ -30,7 +30,7 @@ export const UserSection = () => {
               {sessionData ? (
                 <Link
                   href={`/profile/${user?.id}`}
-                  className="cursor-pointer overflow-clip overflow-ellipsis whitespace-nowrap hover:underline"
+                  className="cursor-pointer truncate whitespace-nowrap hover:underline"
                 >
                   {getScreenName(user)}
                 </Link>
@@ -47,7 +47,7 @@ export const UserSection = () => {
                 </div>
               ) : (
                 <div
-                  className="group flex flex-row items-center px-0.5 text-sm font-semibold text-[#606060] hover:text-[#000] sm:px-2 "
+                  className="group flex flex-row items-center px-0.5 text-xs font-semibold text-[#606060] hover:text-[#000] sm:px-2 sm:text-sm "
                   onClick={() => void signIn()}
                 >
                   <HiOutlineLogin className="mx-1 stroke-[#606060] group-hover:stroke-[#000] sm:mb-0.5" />{" "}
@@ -74,17 +74,17 @@ function Avatar({ user }: { user: USER }) {
         >
           <Image
             src={user?.image || "/assets/defaultpp.svg"}
-            className="h-9 w-9 rounded-full bg-[#F9F9F9] ring-2 ring-[#5858582b] transition-all hover:ring-gray-300"
+            className="h-7 w-7 rounded-full  bg-[#F9F9F9] ring-2 ring-[#5858582b] transition-all hover:ring-gray-300 sm:h-9 sm:w-9"
             width={36}
             height={36}
             alt={`${getScreenName(user) ?? ""}'s image`}
           />
         </Link>
       ) : (
-        <div className="my-auto flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-transparent bg-[#95959521] shadow-sm transition-all hover:border-[#0000002c]">
+        <div className="my-auto flex h-6 w-6 cursor-pointer items-center justify-center rounded-full border border-transparent bg-[#95959521] shadow-sm transition-all hover:border-[#0000002c] sm:h-10 sm:w-10">
           <EmptyAvatar
             onClick={() => void signIn()}
-            className="h-6 w-6  text-[#3f3f3f3d] "
+            className="text-[#3f3f3f3d] sm:h-6  sm:w-6 "
           />
         </div>
       )}

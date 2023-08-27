@@ -1,10 +1,10 @@
-import { AnalogyView } from "../components/AnalogyView";
-import { type Analogy } from "@prisma/client";
+import { Analogy } from "./Analogy";
+import { type Analogy as AnalogyType } from "@prisma/client";
 import { LoadMoreButton } from "./LoadMoreButton";
 import { EntityIsEmpty } from "./EntityIsEmpty";
 
 interface IFeedProps {
-  analogies: Analogy[];
+  analogies: AnalogyType[];
   hasNextPage: boolean | undefined;
   fetchNextPage: () => void;
   isFetchingNextPage: boolean;
@@ -48,7 +48,7 @@ export const Feed: React.FC<IFeedProps> = ({
         {analogies?.pages?.map((page) =>
           // eslint-disable-next-line @typescript-eslint/no-unsafe-return
           page?.items?.map((analogy: Analogy) => (
-            <AnalogyView
+            <Analogy
               analogy={{
                 id: analogy.id,
               }}

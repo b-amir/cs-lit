@@ -1,0 +1,194 @@
+import Link from "next/link";
+import React from "react";
+import { api } from "@/utils/api";
+import { useSession } from "next-auth/react";
+import { routeHandler } from "@/utils/routeHandler";
+import { RelativeTime } from "@/utils/relativeTime";
+import { AiOutlineLink } from "react-icons/ai";
+import { getStatusIcon } from "@/utils/getStatusIcon";
+import { HiOutlineChatAlt } from "react-icons/hi";
+import { type ExtendedAnalogy } from "../SidebarRight/types";
+import { HiOutlineDotsVertical } from "react-icons/hi";
+import {
+  type IPostTimeProps,
+  type IInfoRowSectionProps,
+  type IPostCommentCountProps,
+  type IPostEditButtonProps,
+} from "./types";
+
+export function InfoRowSection({
+  needsLocationInfo,
+  analogyData,
+  setAnalogyInput,
+  setAnalogyEditorState,
+}: IInfoRowSectionProps) {
+  const { data: sessionData } = useSession();
+
+  // --- get comments from api --- //
+  const { data: commentsData } = api.comment.getByAnalogyId.useInfiniteQuery(
+    {
+      id: analogyData?.id as string,
+      order: "desc",
+      limit: 10,
+    },
+    {}
+  );
+
+  return (
+    <div
+      id="analogy-info-row"
+      className="flex h-12 w-full cursor-default items-center justify-start"
+    >
+      <span className="flex shrink-0 grow">
+        <PostTime analogyData={analogyData} />
+
+        {/*  if needed, show where analogy is posted. ex: in profile page */}
+        {needsLocationInfo ? <PostLocation analogyData={analogyData} /> : null}
+
+        {/* if there's a reference */}
+        {analogyData?.reference ? (
+          <PostReference analogyData={analogyData} />
+        ) : null}
+
+        {/* if analogy has comments */}
+        {commentsData?.pages?.[0] && commentsData.pages[0].total > 0 ? (
+          <PostCommentCount
+            analogyData={analogyData}
+            commentsData={commentsData}
+          />
+        ) : null}
+
+        <PostStatus analogyData={analogyData} />
+      </span>
+      <span className="shrink grow-0">
+        <PostEditButton
+          analogyData={analogyData}
+          sessionData={sessionData}
+          setAnalogyEditorState={setAnalogyEditorState}
+          setAnalogyInput={setAnalogyInput}
+        />
+      </span>
+    </div>
+  );
+}
+
+// -------------------------------- //
+// --- Available Badge Options: --- //
+// -------------------------------- //
+function PostTime({ analogyData }: IPostTimeProps) {
+  return (
+    <Link
+      className="mx-2 flex rounded-lg border bg-gray-100 px-3 py-1 text-xs text-gray-500 hover:border-gray-300 hover:bg-[#e9e9e988]"
+      href={`${routeHandler(analogyData, "Analogies") ?? ""}`}
+    >
+      {analogyData && RelativeTime(analogyData.createdAt)}
+    </Link>
+  );
+}
+function PostLocation({
+  analogyData,
+}: {
+  analogyData: ExtendedAnalogy | undefined;
+}) {
+  return (
+    <div className="mx-2 flex max-w-[15rem] overflow-clip truncate text-ellipsis rounded-lg border bg-gray-100 px-3 py-1 text-xs text-gray-500 hover:border-gray-300 hover:bg-[#e9e9e988]">
+      <span className=" font-normal ">about&nbsp;</span>
+      <Link
+        className="flex max-w-[5rem] cursor-pointer items-center overflow-clip text-ellipsis align-middle font-semibold transition-all hover:text-gray-800"
+        href={`/${analogyData?.category?.slug ?? "#"}/${
+          analogyData?.topic?.slug ?? "#"
+        }`}
+      >
+        {analogyData?.topic?.title}
+      </Link>
+      <span className=" font-normal">&nbsp;in&nbsp;</span>
+      <Link
+        className="flex max-w-[5rem] cursor-pointer items-center truncate align-middle font-semibold transition-all hover:text-gray-800"
+        href={`/${analogyData?.category?.slug ?? "#"}`}
+      >
+        {analogyData?.category?.name}
+      </Link>
+    </div>
+  );
+}
+function PostReference({
+  analogyData,
+}: {
+  analogyData: ExtendedAnalogy | undefined;
+}) {
+  return (
+    <Link
+      href={`${analogyData?.reference ?? "#"}`}
+      className="mx-2 flex cursor-pointer rounded-lg border bg-indigo-50 px-3 py-1 text-xs text-indigo-600 hover:border-indigo-300 hover:bg-indigo-100"
+    >
+      <AiOutlineLink className="mr-2 mt-0.5 scale-125" /> reference
+    </Link>
+  );
+}
+function PostCommentCount({
+  analogyData,
+  commentsData,
+}: IPostCommentCountProps) {
+  return (
+    <Link
+      href={`/${analogyData?.category?.slug ?? "#"}/${
+        analogyData?.topic?.slug ?? "#"
+      }/${analogyData?.id ?? "#"}`}
+      className="mx-2 flex cursor-pointer rounded-lg border bg-cyan-50 px-3 py-1 text-xs text-cyan-600 hover:border-cyan-300 hover:bg-cyan-100"
+    >
+      <HiOutlineChatAlt className="mr-2 mt-0.5 scale-125" />{" "}
+      {commentsData?.pages ? commentsData?.pages[0]?.total : 0}
+    </Link>
+  );
+}
+function PostStatus({
+  analogyData,
+}: {
+  analogyData: ExtendedAnalogy | undefined;
+}) {
+  return <span>{getStatusIcon(analogyData?.status ?? "")}</span>;
+}
+function PostEditButton({
+  analogyData,
+  sessionData,
+  setAnalogyEditorState,
+  setAnalogyInput,
+}: IPostEditButtonProps) {
+  return (
+    <>
+      {sessionData &&
+        setAnalogyEditorState &&
+        ["ADMIN", "EDITOR"].includes(sessionData?.user.role) && (
+          <a
+            href="#"
+            className="font-medium text-gray-400 hover:underline"
+            onClick={(e) => {
+              e.preventDefault();
+              setAnalogyEditorState({
+                entity: "analogy",
+                shown: true,
+                purpose: "Edit",
+              });
+              setAnalogyInput((prev) => {
+                return {
+                  ...prev,
+                  id: analogyData?.id || prev.id,
+                  title: analogyData?.title || prev.title,
+                  description: analogyData?.description || prev.description,
+                  reference: analogyData?.reference || prev.reference,
+                  status: analogyData?.status || prev.status,
+                  pinned: analogyData?.pinned || prev.pinned,
+                  topicId: analogyData?.topicId || prev.topicId,
+                  authorId: analogyData?.authorId || prev.authorId,
+                };
+              });
+            }}
+          >
+            <span className="mx-2 flex cursor-pointer rounded-lg border border-transparent p-1 text-xs text-gray-600 hover:border-gray-300 hover:bg-gray-100">
+              <HiOutlineDotsVertical className="mt-0.5 scale-125" />
+            </span>
+          </a>
+        )}
+    </>
+  );
+}

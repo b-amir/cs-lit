@@ -1,4 +1,4 @@
-import { AnalogyView } from "@/components/AnalogyView";
+import { Analogy } from "@/components/Analogy";
 import { useEffect, useState } from "react";
 
 // interface IMainSectionProps {
@@ -26,19 +26,24 @@ export function MainSection({ singleAnalogyData }) {
       {/* this div is a trick to hide the flicker when capturing image */}
       <div id="single-analogy" className="rounded-[23px] pb-1 sm:px-5">
         <div className="flex flex-row justify-between px-7 pb-1 pt-8 ">
-          <span className="flex flex-row text-sm font-semibold text-[#efefefc7]">
-            <span id="single-analogy-cat" className=" max-w-[8rem] truncate">
+          <span className="flex max-w-[95%] flex-row text-sm font-semibold text-[#efefefc7]">
+            <span id="single-analogy-cat" className="  truncate">
               {singleAnalogyData?.category?.name}
             </span>
             <span className="mx-2"> {singleAnalogyData?.topic && "/"}</span>
-            <span id="single-analogy-topic" className=" max-w-[16rem] truncate">
+            <span
+              id="single-analogy-topic"
+              className="max-w-[55%] truncate sm:max-w-[45%]"
+            >
               {singleAnalogyData?.topic?.title}
             </span>
           </span>{" "}
-          <span className="text-sm text-[#efefefa7]">{domainName}</span>
+          <span className="hidden max-w-[25%] truncate text-sm text-[#efefefa7] sm:flex">
+            {domainName}
+          </span>
         </div>
 
-        <AnalogyView
+        <Analogy
           analogy={{
             id: singleAnalogyData?.id,
           }}
