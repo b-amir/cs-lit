@@ -3,7 +3,7 @@ import React from "react";
 import { api } from "@/utils/api";
 import { AnalogyView } from "./AnalogyView";
 import { routeHandler } from "@/utils/routeHandler";
-import { CornerLoading } from "../Loading";
+import { CornerLoading } from "../Loading/Spinner";
 import { type IAnalogyProps } from "./types";
 import { useEffect, useState } from "react";
 

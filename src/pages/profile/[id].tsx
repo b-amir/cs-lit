@@ -2,7 +2,7 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import { api } from "@/utils/api";
 import { PageLayout } from "@/components/PageLayout";
-import { CornerLoading } from "@/components/Loading";
+import { CenteredLoading } from "@/components/Loading/Spinner";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { AnalogiesFeed } from "@/components/AnalogiesFeed";
@@ -61,7 +61,7 @@ const ProfilePage: NextPage<object> = () => {
       </Head>
       <PageLayout>
         {profileFetchingStatus === "loading" ? (
-          <CornerLoading />
+          <CenteredLoading />
         ) : profileFetchingStatus === "error" ? (
           <EntityNotFound entity="User" />
         ) : (

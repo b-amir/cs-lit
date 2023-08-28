@@ -6,7 +6,7 @@ import { EditorLayout } from "@/components/EditorForm/EditorLayout";
 import { useCreateItem } from "@/hooks/useCreateItem";
 import { useUpdateItem } from "@/hooks/useUpdateItem";
 import { useDeleteItem } from "@/hooks/useDeleteItem";
-import { CornerLoading } from "@/components/Loading";
+import { CornerLoading } from "@/components/Loading/Spinner";
 import { animated, useSpring } from "@react-spring/web";
 import { type Analogy as AnalogyType } from "@prisma/client";
 

@@ -10,7 +10,7 @@ import { RelativeTime } from "../../../../utils/relativeTime";
 import { useCreateItem } from "@/hooks/useCreateItem";
 import { getScreenName } from "@/utils/getScreenName";
 import { LoadMoreButton } from "@/components/LoadMoreButton";
-import { CommentSkeleton } from "@/components/Skeleton";
+import { CommentSkeleton } from "@/components/Loading/Skeleton";
 import { AiFillLock as Lock } from "react-icons/ai";
 import { useEffect, useState } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
@@ -53,7 +53,7 @@ export function CommentSection({ analogyId }: ICommentSectionProps) {
           {comments?.pages[0]?.total > 0 ? (
             comments?.pages?.map((page) =>
               page?.items?.map((comment: Comment) => (
-                <SingleComment comment={comment} />
+                <SingleComment comment={comment} key={comment.id} />
               ))
             )
           ) : (
@@ -142,7 +142,8 @@ function SingleComment({ comment }: { comment: Comment }) {
                   language={match[1]}
                   PreTag="div"
                   customStyle={{
-                    padding: "1.1em",
+                    padding: "0em",
+                    margin: "0.8em",
                   }}
                 />
               ) : (

@@ -9,7 +9,11 @@ import { getScreenName } from "@/utils/getScreenName";
 import { useEffect, useState } from "react";
 import { type IHeaderSectionProps } from "./types";
 import { IoIosArrowUp as VotingArrow } from "react-icons/io";
-import { AvatarSkeleton, MediumSkeleton, SmallSkeleton } from "../Skeleton";
+import {
+  AvatarSkeleton,
+  MediumSkeleton,
+  SmallSkeleton,
+} from "../Loading/Skeleton";
 
 export function HeaderSection({
   analogy,

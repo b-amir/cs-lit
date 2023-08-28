@@ -1,5 +1,5 @@
 import { FiArrowDown } from "react-icons/fi";
-import { LoadingSpinner } from "./Loading";
+import { LoadingSpinner } from "./Loading/Spinner";
 
 export interface ILoadMoreButtonProps {
   fetchNextPage: () => void;

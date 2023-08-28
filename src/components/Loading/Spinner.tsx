@@ -3,7 +3,7 @@ export const LoadingSpinner = (props: { size?: number }) => {
     <div role="status">
       <svg
         aria-hidden="true"
-        className="animate-spin fill-[#FF7263] text-gray-400 dark:text-slate-600"
+        className="animate-spin fill-[#FF7263] text-gray-300 dark:text-slate-600"
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -42,8 +42,8 @@ export const InlineLoading = () => {
 
 export const CenteredLoading = () => {
   return (
-    <div className="flex w-full flex-col items-center justify-center p-16">
-      <LoadingSpinner size={16} />
+    <div className="z-50 flex h-screen w-full flex-col items-center justify-center p-16">
+      <LoadingSpinner size={48} />
     </div>
   );
 };

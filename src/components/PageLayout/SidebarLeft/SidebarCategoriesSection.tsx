@@ -2,7 +2,7 @@ import Link from "next/link";
 import { api } from "@/utils/api";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { getCategoryIcon } from "@/utils/getCategoryIcon";
-import { SidebarCategorySkeleton } from "@/components/Skeleton";
+import { SidebarCategorySkeleton } from "@/components/Loading/Skeleton";
 
 export function SidebarCategoriesSection({ hide }: { hide: () => void }) {
   const { width: windowWidth } = useWindowSize();

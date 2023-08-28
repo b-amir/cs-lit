@@ -95,7 +95,7 @@ export function HeroSection() {
                 {carouselTransitions((props, item) => (
                   <animated.div
                     key={item?.name}
-                    style={{ ...props, color: item.color }}
+                    style={{ ...props, color: item?.color }}
                     className={`lg:h-16" w-24  whitespace-nowrap font-normal lg:mb-1`}
                   >
                     {item?.name}

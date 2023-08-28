@@ -1,14 +1,14 @@
 import Link from "next/link";
 import { api } from "@/utils/api";
-import { TiHome } from "react-icons/ti";
 import { type User } from "@prisma/client";
 import { useRouter } from "next/router";
 import { routeHandler } from "@/utils/routeHandler";
 import { getScreenName } from "@/utils/getScreenName";
+import { TiHome as HomeIcon } from "react-icons/ti";
 
 export function Breadcrumbs() {
+  //
   const router = useRouter();
-
   const {
     category: UrlCategory,
     topic: UrlTopic,
@@ -16,58 +16,34 @@ export function Breadcrumbs() {
     id: UrlProfile,
   } = router.query;
 
+  const queryOptions = {
+    enabled: !!UrlCategory || !!UrlTopic || !!UrlAnalogyId || !!UrlProfile,
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
+  };
+
   const { data: topicsData } = api.topic.getBySlug.useQuery(
-    {
-      slug: UrlTopic as string,
-    },
-    {
-      enabled: !!UrlTopic,
-      refetchOnWindowFocus: false,
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-    }
+    { slug: UrlTopic as string },
+    queryOptions
   );
-
   const { data: categoryData } = api.category.getBySlug.useQuery(
-    {
-      slug: UrlCategory as string,
-    },
-    {
-      enabled: !!UrlCategory,
-      refetchOnWindowFocus: false,
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-    }
+    { slug: UrlCategory as string },
+    queryOptions
   );
-
   const { data: AnalogyData } = api.analogy.getSingleAnalogyById.useQuery(
-    {
-      id: UrlAnalogyId as string,
-    },
-    {
-      enabled: !!UrlAnalogyId,
-      refetchOnWindowFocus: false,
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-    }
+    { id: UrlAnalogyId as string },
+    queryOptions
   );
-
   const { data: profileData } = api.profile.getProfileById.useQuery(
-    {
-      id: UrlProfile as string,
-    },
-    {
-      enabled: !!UrlProfile,
-      refetchOnWindowFocus: false,
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-    }
+    { id: UrlProfile as string },
+    queryOptions
   );
 
   return (
     <div id="breadcrumbs" className="my-auto hidden text-sm sm:inline-flex">
       <Link href="/">
-        <TiHome className="mt-[0px] cursor-pointer !text-lg text-[#2A2A2E] transition-all hover:text-black" />
+        <HomeIcon className="mt-[0px] cursor-pointer !text-lg text-[#2A2A2E] transition-all hover:text-black" />
       </Link>
 
       {router.pathname === "/admin" && (
@@ -91,11 +67,12 @@ export function Breadcrumbs() {
                 UrlTopic ? "" : "font-semibold"
               }`}
             >
-              {categoryData?.name}
+              {categoryData.name}
             </span>
           </Link>
         </>
       )}
+
       {topicsData && (
         <>
           <span className="mx-2 text-[#69696975] ">/</span>
@@ -108,11 +85,12 @@ export function Breadcrumbs() {
                 UrlAnalogyId ? "" : "font-semibold"
               }`}
             >
-              {topicsData?.title}
+              {topicsData.title}
             </span>
           </Link>
         </>
       )}
+
       {AnalogyData && (
         <>
           <span className="mx-2 text-[#69696975]">/</span>
@@ -121,7 +99,7 @@ export function Breadcrumbs() {
             className="max-w-[calc(12vw)] truncate"
           >
             <span className="cursor-pointer font-semibold text-[#2A2A2E] transition-all hover:text-black">
-              {getScreenName(AnalogyData?.user as User)}&apos;s Analogy
+              {getScreenName(AnalogyData.user as User)}&apos;s Analogy
             </span>
           </Link>
         </>

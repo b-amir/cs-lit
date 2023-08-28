@@ -3,7 +3,7 @@ import Image from "next/image";
 import { api } from "@/utils/api";
 import { archivo } from "../../styles/customFonts";
 import { getCategoryIcon } from "@/utils/getCategoryIcon";
-import { HomeCategorySkeleton } from "@/components/Skeleton";
+import { HomeCategorySkeleton } from "@/components/Loading/Skeleton";
 
 export function CategoriesSection() {
   const { data: categories, status: categoriesFetchingStatus } =
@@ -34,31 +34,28 @@ export function CategoriesSection() {
         width={400}
         alt="lighthouse"
       />
-      <div className="  my-4 flex min-h-screen w-full flex-col text-[#E6E6E6]  sm:right-0 sm:my-10 md:max-w-[calc(5*100vw/5)] lg:right-0 lg:mx-24 lg:ml-auto lg:max-w-[calc(3*100vw/5)]">
+      <div className=" my-4 flex min-h-screen w-full flex-col text-[#E6E6E6] sm:right-0 sm:my-10 md:max-w-[calc(5*100vw/5)] lg:right-0 lg:mx-24 lg:ml-auto lg:max-w-[calc(3*100vw/5)]">
         <h2
-          className={`${archivo.className} h-3/12 mx-auto  my-14 flex min-h-[calc(15dvh)] w-full flex-row justify-center px-6 text-center text-3xl font-bold [text-shadow:_0px_1px_5px_rgb(66_80_99_/_45%)] [text-shadow:_1px_1px_0px_rgb(66_80_99_/_30%)] sm:text-4xl`}
+          className={`${archivo.className} h-3/12 mx-auto my-14 flex min-h-[calc(15dvh)] w-full flex-row justify-center px-6 text-center text-3xl font-bold [text-shadow:_0px_1px_5px_rgb(66_80_99_/_45%)] [text-shadow:_1px_1px_0px_rgb(66_80_99_/_30%)] sm:text-4xl`}
         >
-          {/* So far we have these categories: */}
           Choose a category and dive in:
         </h2>
         {categoriesFetchingStatus === "loading" ? (
           <HomeCategorySkeleton />
         ) : (
           <ul className="h-8/12 mx-auto mb-20 grid w-full justify-center gap-6 text-lg font-normal sm:grid-cols-2 lg:grid-cols-3">
-            {/* map through category items from database */}
             {categories?.pages?.map((page) =>
               page?.items?.map((category) => (
                 <li key={category.id} className="">
                   <Link
-                    className="group flex max-w-[calc(100vw-10vw)] flex-row items-center justify-center overflow-x-clip rounded-2xl border border-[#d5d9df33] bg-[#d6e2f62c] bg-gradient-to-tr from-[#d6e2f60b] via-[#d6e2f60b]  to-[#d4d4d432] px-6 py-3 text-[#29313d]  shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.15)_0px_1px_1px_0px] backdrop-blur-lg transition-shadow  duration-300 [text-shadow:_0_1px_3px_rgb(255_255_255_/_25%)] hover:-translate-y-0.5 hover:border-[#d4d4d4d5] hover:bg-[#d4d4d4a3] hover:shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]  sm:mx-auto sm:max-w-[calc(40vw)] sm:bg-[#d6e2f60b] sm:py-9"
-                    // onClick={() => {}}
+                    className="group flex max-w-[calc(100vw-10vw)] flex-row items-center justify-center overflow-x-clip rounded-2xl border border-[#d5d9df33] bg-[#d6e2f62c] bg-gradient-to-tr from-[#d6e2f60b] via-[#d6e2f60b] to-[#d4d4d432] px-6 py-3 text-[#29313d] shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.15)_0px_1px_1px_0px] backdrop-blur-lg transition-shadow duration-300 [text-shadow:_0_1px_3px_rgb(255_255_255_/_25%)] hover:-translate-y-0.5 hover:border-[#d4d4d4d5] hover:bg-[#d4d4d4a3] hover:shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px] sm:mx-auto sm:max-w-[calc(40vw)] sm:bg-[#d6e2f60b] sm:py-9"
                     href={`/${category.slug}`}
                   >
                     <span className="text-2xl">
                       {getCategoryIcon(category?.slug)}
                     </span>
 
-                    <span className="ml-4 flex-1 truncate text-ellipsis whitespace-nowrap font-semibold  transition-all duration-200 ">
+                    <span className="ml-4 flex-1 truncate text-ellipsis whitespace-nowrap font-semibold transition-all duration-200 ">
                       {category.name}
                     </span>
                   </Link>
@@ -67,8 +64,8 @@ export function CategoriesSection() {
             )}
           </ul>
         )}
-        <div className=" h-1/12  my-12 flex-col items-end">
-          <p className="font-regular   z-10  flex  flex-row  justify-center rounded-lg border border-[#d5d9df33] bg-[#d6e2f634] px-4 py-2 text-sm text-[#292626a9] shadow-sm backdrop-blur-sm sm:bg-[#d6e2f600] sm:shadow-none md:border-0 md:bg-none md:backdrop-blur-0">
+        <div className=" h-1/12 my-12 flex-col items-end">
+          <p className="font-regular z-10 flex flex-row justify-center rounded-lg border border-[#d5d9df33] bg-[#d6e2f634] px-4 py-2 text-sm text-[#292626a9] shadow-sm backdrop-blur-sm sm:bg-[#d6e2f600] sm:shadow-none md:border-0 md:bg-none md:backdrop-blur-0">
             If you find a category missing, you can add it via GitHub
             contribution. It&apos;s an open-sourced project.
           </p>

@@ -1,7 +1,7 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
 import { coldarkDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
-import { MultilineSkeleton } from "../Skeleton";
+import { MultilineSkeleton } from "../Loading/Skeleton";
 import { type IContentSectionProps } from "./types";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 

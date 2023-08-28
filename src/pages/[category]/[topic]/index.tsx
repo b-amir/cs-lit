@@ -8,13 +8,13 @@ import Head from "next/head";
 import Link from "next/link";
 import { archivo } from "@/styles/customFonts";
 import { useSession } from "next-auth/react";
-import { AnalogySkeleton } from "@/components/Skeleton";
+import { AnalogySkeleton } from "@/components/Loading/Skeleton";
 import { useRef, useState } from "react";
 import { FormTrigger } from "../../../components/EditorForm/FormTrigger";
 import { animated, useSpring } from "@react-spring/web";
 import { type Analogy as AnalogyType } from "@prisma/client";
 import { EntityNotFound } from "../../../components/Messages/EntityNotFound";
-import { CornerLoading } from "@/components/Loading";
+import { CenteredLoading } from "@/components/Loading/Spinner";
 
 export default function TopicPage(props) {
   const router = useRouter();
@@ -113,7 +113,7 @@ export default function TopicPage(props) {
                 topicsData={topicsData}
               />
               {topicFetchingStatus === "loading" ||
-                (analogiesFetchingStatus === "loading" && <CornerLoading />)}
+                (analogiesFetchingStatus === "loading" && <CenteredLoading />)}
               {analogiesFetchingStatus === "loading" ? (
                 <>
                   <AnalogySkeleton />

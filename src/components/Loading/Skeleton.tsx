@@ -80,9 +80,6 @@ export function AnalogySkeleton() {
     rounded-[17px] border border-[#cdcdcd7d] bg-gray-50  pb-5 shadow-sm "
       >
         <div className="mb-0.5 flex h-14 w-full animate-pulse justify-between rounded-t-[17px]  border-b bg-gray-100 align-middle" />
-        {/* <div className="mx-4 my-0.5 flex h-4 w-6/12 animate-pulse justify-between rounded-md  bg-gray-200 align-middle" />
-        <div className="mx-4 my-0.5 flex h-4 w-5/12 animate-pulse  justify-between rounded-md  bg-gray-200 align-middle" />
-        <div className="mx-4 my-0.5  flex h-4 w-5/12 animate-pulse items-center justify-between rounded-md  bg-gray-200 align-middle" /> */}
       </div>
     </div>
   );

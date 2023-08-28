@@ -7,7 +7,7 @@ import { useSession } from "next-auth/react";
 import { AdminFooter } from "./AdminFooter";
 import { useDebounce } from "@/hooks/useDebounce";
 import { AdminMainList } from "./AdminMainList";
-import { CornerLoading } from "@/components/Loading";
+import { CenteredLoading } from "@/components/Loading/Spinner";
 import { AdminSidePanel } from "./AdminSidePanel";
 import { AiFillLock as Lock } from "react-icons/ai";
 import {
@@ -121,7 +121,7 @@ export default function AdminPage({}) {
       </Head>
       <PageLayout>
         {sessionStatus === "loading" ? (
-          <CornerLoading />
+          <CenteredLoading />
         ) : isModerator ? (
           <>
             <div

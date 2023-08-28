@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { UserSection } from "@/components/UserSection";
-import { HomeUserSkeleton } from "@/components/Skeleton";
+import { HomeUserSkeleton } from "@/components/Loading/Skeleton";
 import { useSession } from "next-auth/react";
 
 export function HeaderSection() {

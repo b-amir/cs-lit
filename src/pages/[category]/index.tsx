@@ -8,8 +8,8 @@ import { useSession } from "next-auth/react";
 import { CgFolderAdd } from "react-icons/cg";
 import { FormTrigger } from "../../components/EditorForm/FormTrigger";
 import { type Category } from "@prisma/client";
-import { CornerLoading } from "@/components/Loading";
-import { TableSkeleton } from "@/components/Skeleton";
+import { CenteredLoading } from "@/components/Loading/Spinner";
+import { TableSkeleton } from "@/components/Loading/Skeleton";
 import { EntityIsEmpty } from "@/components/Messages/EntityIsEmpty";
 import { EntityNotFound } from "@/components/Messages/EntityNotFound";
 import { TopicEditorForm } from "./TopicEditorForm";
@@ -127,7 +127,7 @@ export default function CategoryPage() {
               <div className="mx-auto mb-12 mt-8 flex justify-center sm:px-10 lg:px-[16.666667%] ">
                 {/* handle loading states */}
                 {categoryFetching ||
-                  (topicsFetchingStatus === "loading" && <CornerLoading />)}
+                  (topicsFetchingStatus === "loading" && <CenteredLoading />)}
                 {topicsFetchingStatus === "loading" && <TableSkeleton />}
 
                 {/* show a list of topics */}

@@ -16,10 +16,14 @@ export function FooterSection() {
         alt="logo"
         className="mb-6 sm:mb-0 sm:mr-6"
       />
+
       <div
         id="vertical-line"
         className="my-1 hidden h-16  w-[1px] flex-col items-center justify-center bg-[#e5e1e031] sm:flex"
       />
+
+      {/* links: */}
+
       <div className="flex flex-col text-xs text-[#dadadac1] sm:ml-6">
         <div className="inline-flex ">
           <FaLinkedin className="mr-1.5 mt-0.5" />
@@ -41,6 +45,7 @@ export function FooterSection() {
           <AiOutlineLink className="mr-1.5 mt-0.5" />
           And I make quirky things on the internet.
         </a>
+
         <div className="inline-flex ">
           <FaGithub className="mr-1.5 mt-0.5" />
           <span className="mr-1"> You can</span>
