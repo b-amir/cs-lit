@@ -1,16 +1,47 @@
 import React from "react";
-import { IoClose } from "react-icons/io5";
-import { type Topic } from "@prisma/client";
-import { CgFolderAdd } from "react-icons/cg";
+import { type TopicInput, type EditorInput } from "@/pages/[category]/types";
+import { IoClose as XIcon } from "react-icons/io5";
+import { CgFolderAdd as AddIcon } from "react-icons/cg";
+import { type CATEGORY_STATUS } from "@prisma/client";
+import { type GetResult } from "@prisma/client/runtime/library";
 
 export interface IFormTriggerProps {
-  setInput: React.Dispatch<React.SetStateAction<Topic>>;
-  newInput: object;
+  setInput: React.Dispatch<React.SetStateAction<TopicInput>>;
+  newInput: {
+    id: string;
+    title: string;
+    url: string;
+    slug: string;
+    category:
+      | (GetResult<
+          {
+            id: string;
+            name: string;
+            slug: string;
+            status: CATEGORY_STATUS;
+            createdAt: Date;
+            updatedAt: Date;
+          },
+          { [x: string]: () => unknown }
+        > &
+          object)
+      | undefined;
+    analogies: {
+      id: string;
+      description: string;
+      reference: string;
+    }[];
+    starter: {
+      id: string;
+    };
+  };
+
   editorState: {
     entity: null | "analogy" | "topic";
     shown: boolean;
     purpose: "Create" | "Edit" | null;
   };
+
   setEditorState: React.Dispatch<
     React.SetStateAction<{
       entity: null | "analogy" | "topic";
@@ -39,16 +70,15 @@ export function FormTrigger({
         setInput(newInput);
       }}
     >
-      <CgFolderAdd className="mb-0.5 mr-2.5" />
+      <AddIcon className="mb-0.5 mr-2.5" />
       <span className=" grow select-none">
         <h2>
-          {editorState.purpose ?? "Create"} {editorState.entity}
+          {editorState.purpose ?? "Create"} {editorState.entity ?? ""}
         </h2>
       </span>
-      {/* rotate icon between X and + */}
-      <IoClose
+      <XIcon
         className={`mb-1 transform cursor-pointer text-2xl text-[#737373] transition-transform delay-500 duration-200 hover:text-black ${
-          editorState.shown ? "" : "rotate-45"
+          editorState.shown ? "" : "rotate-45" // rotate + into x
         }`}
       />
     </div>

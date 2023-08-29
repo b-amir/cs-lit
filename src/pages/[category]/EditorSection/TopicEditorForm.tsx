@@ -1,6 +1,4 @@
-import { api } from "@/utils/api";
-import slugify from "slugify";
-import { type Topic } from "@prisma/client";
+import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { NotSignedIn } from "@/components/Messages/NotSignedIn";
 import { EditorLayout } from "@/components/EditorForm/EditorLayout";
@@ -9,72 +7,45 @@ import { useUpdateItem } from "@/hooks/useUpdateItem";
 import { useCreateItem } from "@/hooks/useCreateItem";
 import { useDeleteItem } from "@/hooks/useDeleteItem";
 import { animated, useSpring } from "@react-spring/web";
-
-interface ITopicEditorFormProps {
-  UrlCategory: string;
-  categoryData: { id: string; name: string };
-  input: Topic;
-  setInput: React.Dispatch<React.SetStateAction<Topic>>;
-  topicEditorState: {
-    shown: boolean;
-    purpose: "Create" | "Edit" | null;
-  };
-  setTopicEditorState: React.Dispatch<
-    React.SetStateAction<{
-      shown: boolean;
-      purpose: "Create" | "Edit" | null;
-    }>
-  >;
-}
-interface ITopicEditorBodyProps {
-  input: Topic;
-  setInput: React.Dispatch<React.SetStateAction<Topic>>;
-  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  topicEditorState: {
-    shown: boolean;
-    purpose: "Create" | "Edit" | null;
-  };
-  UrlCategory: string;
-}
+import {
+  type ITopicEditorBodyProps,
+  type ITopicEditorFormProps,
+} from "../types";
 
 export function TopicEditorForm({
-  UrlCategory,
-  // categoryData,
   input,
   setInput,
   topicEditorState,
   setTopicEditorState,
 }: ITopicEditorFormProps) {
-  const ctx = api.useContext();
   const { data: sessionData } = useSession();
-  const topicSlug = slugify(input.title, { lower: true });
 
-  const item = input as Topic;
+  const item = input;
   const type = "Topics";
 
   const updateItem = useUpdateItem(item, type);
-  const handleUpdate = (e) => {
+  const handleUpdate = (e: React.MouseEvent) => {
     e.preventDefault();
     setTopicEditorState({ entity: "topic", shown: false, purpose: null });
     updateItem();
   };
 
   const createItem = useCreateItem(item, type);
-  const handleCreate = (e) => {
+  const handleCreate = (e: React.MouseEvent) => {
     e.preventDefault();
     setTopicEditorState({ entity: "topic", shown: false, purpose: null });
     createItem();
   };
 
   const deleteItem = useDeleteItem(item, type);
-  const handleDelete = (e) => {
+  const handleDelete = (e: React.MouseEvent) => {
     e.preventDefault();
     setTopicEditorState({ entity: "topic", shown: false, purpose: null });
     deleteItem();
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
+    const { name, value } = e.target as HTMLInputElement;
 
     setInput((prev) => {
       return {
@@ -95,15 +66,12 @@ export function TopicEditorForm({
               handleUpdate={handleUpdate}
               handleCreate={handleCreate}
               handleDelete={handleDelete}
-              // deleteTopicHandler={deleteTopicHandler}
-              input={input}
               editorState={topicEditorState}
             >
               <TopicEditorBody
                 topicEditorState={topicEditorState}
                 input={input}
                 setInput={setInput}
-                UrlCategory={UrlCategory}
                 handleChange={handleChange}
               />
             </EditorLayout>
@@ -121,8 +89,10 @@ function TopicEditorBody({
   handleChange,
   //  isSubmitting,
   topicEditorState,
-  UrlCategory,
 }: ITopicEditorBodyProps) {
+  const router = useRouter();
+  const UrlCategory = router.query.category as string;
+
   // --- animation setup for reference ---> //
   const contentRef = useRef<HTMLDivElement>(null);
   const animationProps = useSpring({
@@ -130,9 +100,7 @@ function TopicEditorBody({
     opacity: input?.hasReference ? 0 : 1,
     visibility: input?.hasReference ? "hidden" : "visible",
     config: {
-      // fast animation
       duration: 100,
-      // smooth animation
     },
   });
 
@@ -151,10 +119,8 @@ function TopicEditorBody({
             name="title"
             className="mt-1 block w-full  max-w-[100%] rounded-[12px] border border-gray-300 px-3 py-2 shadow-sm !outline-none ring-0 focus:border-[#c1c1c1] focus:ring-[#c1c1c1] sm:text-sm"
             placeholder="Ex: Closure"
-            // defaultValue={""}
             required
             defaultValue={input?.title ?? ""}
-            // value={input?.title}
             onChange={handleChange}
             // disabled={isSubmitting}
           />
@@ -208,7 +174,7 @@ function TopicEditorBody({
                 placeholder="Add your analogy ..."
                 required
                 value={input?.firstAnalogy}
-                onChange={(event) =>
+                onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) =>
                   setInput({
                     ...input,
                     firstAnalogy: event.target.value,
@@ -230,7 +196,6 @@ function TopicEditorBody({
               </div>
             </div>
           </div>
-          {/* {input?.hasReference ? null : ( */}
           <animated.div
             style={animationProps}
             ref={contentRef}
@@ -242,18 +207,16 @@ function TopicEditorBody({
                   Each topic must have at least one analogy to get started.
                 </li>
                 <li className="list-disc py-1">
-                  {/* define what an analogy is */}
                   An analogy is a short explanation of a topic that helps you
                   understand it better.
                 </li>
                 <li className="list-disc py-1">
-                  After submition, analogies must be verified by admins to be
+                  After submission, analogies must be verified by admins to be
                   published.
                 </li>
               </ul>
             </p>
           </animated.div>
-          {/* )} */}
 
           {/* a checkmark to indicate if analogy has a reference link */}
           <div className="mt-8 flex w-fit items-center rounded-lg px-2 py-1 transition-all duration-200 hover:bg-gray-50 sm:mt-4">

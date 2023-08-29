@@ -1,8 +1,8 @@
 import { type Session } from "next-auth";
 import { type InfiniteData } from "@tanstack/react-query";
 import { type ExtendedAnalogy } from "../PageLayout/SidebarRight/types";
-import { type Comment, type User } from "@prisma/client";
 import { type Dispatch, type SetStateAction } from "react";
+import { type ANALOGY_STATUS, type Comment, type User } from "@prisma/client";
 
 export type Analogy = {
   id: string;
@@ -17,7 +17,7 @@ export type AnalogyInput = {
   title: string;
   description: string;
   reference: string;
-  status: string;
+  status: ANALOGY_STATUS;
   pinned: boolean;
   topicId: string;
   authorId: string;
@@ -29,9 +29,9 @@ export interface IAnalogyProps {
   needsLocationInfo?: boolean;
   setAnalogyEditorState?: React.Dispatch<React.SetStateAction<AnalogyEditorState>>;
   setAnalogyInput?: React.Dispatch<React.SetStateAction<AnalogyInput>>;
-  analogyData: ExtendedAnalogy | undefined;
+  analogyData?: ExtendedAnalogy | undefined;
   analogyStatus?: string;
-  votingAverage: number;
+  votingAverage?: number;
   votingStatus?: string;
 }
 export type IAnalogyBodyProps = IAnalogyProps

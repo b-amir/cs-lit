@@ -1,40 +1,17 @@
+import slugify from "slugify";
 import { api } from "@/utils/api";
 import { toast } from "react-hot-toast";
-import { addActivityLog } from "@/utils/addActivityLog";
-import { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
-import slugify from "slugify";
 import { useSession } from "next-auth/react";
-import { IoTerminal } from "react-icons/io5";
+import { v4 as uuidv4 } from "uuid";
+import { addActivityLog } from "@/utils/addActivityLog";
+import { useInputType } from "./useUpdateItem";
 
-export interface ITopicInput {
-  id: string;
-  title: string;
-  slug: string;
-  name: string;
-  url: string;
-  category: string;
-  firstAnalogy: string;
-  description: string;
-  status: "PENDING" | "PUBLISHED" | "REJECTED" | "DELETED";
-  userStatus: "ACTIVE" | "BANNED" | "DELETED";
-  pinned: boolean;
-  topicId: string;
-  authorId: string;
-  categoryId: string;
-  reference: string;
-  email: string;
-  username: string;
-  linkToDocs: string;
-  role: "ADMIN" | "USER" | "EDITOR";
-}
-
-export function useCreateItem(item: ITopicInput, type: string) {
+export function useCreateItem(item: useInputType, type: string): () => void {
   const ctx = api.useContext();
 
   // adding activity log entry
   const createActivityLogEntry = addActivityLog();
-  const { data: sessionData, status: sessionStatus } = useSession();
+  const { data: sessionData } = useSession();
 
   if (type === "Categories") {
     // creating category

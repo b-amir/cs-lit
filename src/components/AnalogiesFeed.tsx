@@ -1,10 +1,21 @@
 import { Analogy } from "./Analogy";
 import { EntityIsEmpty } from "./Messages/EntityIsEmpty";
 import { LoadMoreButton } from "./LoadMoreButton";
-import { type Analogy as AnalogyType } from "@prisma/client";
+import { type InfiniteData } from "@tanstack/react-query";
+import { type ExtendedAnalogy } from "./PageLayout/SidebarRight/types";
 
 interface IFeedProps {
-  analogies: AnalogyType[];
+  analogies:
+    | InfiniteData<{
+        items: ExtendedAnalogy[];
+        total: number;
+        pageInfo: {
+          count: number;
+          nextCursor: string | undefined;
+          hasNextPage: boolean | undefined;
+        };
+      }>
+    | undefined;
   hasNextPage: boolean | undefined;
   fetchNextPage: () => void;
   isFetchingNextPage: boolean;
@@ -24,13 +35,14 @@ export const AnalogiesFeed: React.FC<IFeedProps> = ({
   setAnalogyInput,
   setAnalogyEditorState,
 }) => {
+  //
   if (fetchingStatus === "success" && analogies?.pages[0]?.items.length === 0) {
     return (
       <EntityIsEmpty
         entity={isProfile ? "profileFeed" : "topicFeed"}
         action={
           isProfile
-            ? null
+            ? undefined
             : () => {
                 setAnalogyEditorState({ shown: true, purpose: "Create" });
               }
@@ -40,34 +52,32 @@ export const AnalogiesFeed: React.FC<IFeedProps> = ({
   }
 
   return (
-    <>
-      <div
-        id="analogies-array"
-        className={`mb-auto flex flex-col items-center  pb-16 sm:px-10 lg:px-[16.666667%]`}
-      >
-        {analogies?.pages?.map((page) =>
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-          page?.items?.map((analogy: Analogy) => (
-            <Analogy
-              analogy={{
-                id: analogy.id,
-              }}
-              key={analogy.id}
-              setAnalogyInput={setAnalogyInput}
-              setAnalogyEditorState={setAnalogyEditorState}
-              needsLink={true}
-              needsLocationInfo={isProfile ? true : false}
-            />
-          ))
-        )}
-
-        {hasNextPage && (
-          <LoadMoreButton
-            fetchNextPage={fetchNextPage}
-            isFetchingNextPage={isFetchingNextPage}
+    <div
+      id="analogies-array"
+      className={`mb-auto flex flex-col items-center  pb-16 sm:px-10 lg:px-[16.666667%]`}
+    >
+      {analogies?.pages?.map((page) =>
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        page?.items?.map((analogy: ExtendedAnalogy) => (
+          <Analogy
+            analogy={{
+              id: analogy.id,
+            }}
+            key={analogy.id}
+            setAnalogyInput={setAnalogyInput}
+            setAnalogyEditorState={setAnalogyEditorState}
+            needsLink={true}
+            needsLocationInfo={isProfile ? true : false}
           />
-        )}
-      </div>
-    </>
+        ))
+      )}
+
+      {hasNextPage && (
+        <LoadMoreButton
+          fetchNextPage={fetchNextPage}
+          isFetchingNextPage={isFetchingNextPage}
+        />
+      )}
+    </div>
   );
 };

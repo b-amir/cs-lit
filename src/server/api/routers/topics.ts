@@ -175,7 +175,7 @@ export const topicsRouter = createTRPCRouter({
         orderBy: {
           createdAt: order as Prisma.SortOrder
         }
-      })
+      }).then(topicsWithCategoryData)
 
       const allItems = await ctx.prisma.topic.findMany({
         take: limit + 1,
@@ -186,7 +186,7 @@ export const topicsRouter = createTRPCRouter({
         orderBy: {
           createdAt: order as Prisma.SortOrder
         }
-      });
+      }).then(topicsWithCategoryData)
 
       const publishedItems_plus_ViewersUnpublishedItems = await ctx.prisma.topic.findMany({
         take: limit + 1,
@@ -209,7 +209,7 @@ export const topicsRouter = createTRPCRouter({
         orderBy: {
           createdAt: order as Prisma.SortOrder
         }
-      });
+      }).then(topicsWithCategoryData)
 
       let items;
       const isModerator = ["ADMIN", "EDITOR"].includes(ctx?.session?.user.role);

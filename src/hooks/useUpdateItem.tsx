@@ -1,14 +1,25 @@
 import { api } from "@/utils/api";
 import { toast } from "react-hot-toast";
 import { addActivityLog } from "@/utils/addActivityLog";
+import {
+  type Analogy,
+  type Category,
+  type Topic,
+  type Comment,
+  type User,
+  type Activity,
+} from "@prisma/client";
+import { type ExtendedAnalogy } from "@/components/PageLayout/SidebarRight/types";
+import { type ExtendedComment } from "@/components/Analogy/types";
+import { type ExtendedTopic } from "@/pages/[category]/types";
 
-export interface ITopicInput {
+export type ExtraInput = {
   id: string;
   title: string;
-  slug: string;
   name: string;
+  slug: string;
   url: string;
-  category: string;
+  category: Category | string;
   firstAnalogy: string;
   description: string;
   status: "PENDING" | "PUBLISHED" | "REJECTED" | "DELETED";
@@ -22,23 +33,36 @@ export interface ITopicInput {
   username: string;
   content: string;
   role: "ADMIN" | "USER" | "EDITOR";
-}
+  hasReference: boolean;
+  reference: string;
+  analogies: Analogy[];
+};
 
-export function useUpdateItem(item: ITopicInput, type: string) {
+export type useInputType = Analogy &
+  Category &
+  Topic &
+  Comment &
+  User &
+  ExtendedAnalogy &
+  ExtendedComment &
+  ExtendedTopic &
+  Activity &
+  ExtraInput;
+
+export function useUpdateItem(item: useInputType, type: string): () => void {
   const ctx = api.useContext();
 
   // adding activity log entry
   const createActivityLogEntry = addActivityLog();
 
   if (type === "Categories") {
-    // updating category
     const { mutate: updateCategory } = api.category.update.useMutation({
       onSuccess: () => {
         void ctx.category.getAll.invalidate();
         void ctx.category.getAllWithQuery.invalidate();
         toast.success("Category updated successfully.");
       },
-      onError: (e) => {
+      onError: () => {
         toast.error("Something went wrong");
       },
     });
@@ -154,7 +178,7 @@ export function useUpdateItem(item: ITopicInput, type: string) {
         void ctx.profile.getAllWithQuery.invalidate();
         toast.success("User updated successfully.");
       },
-      onError: (e) => {
+      onError: () => {
         toast.error("Something went wrong");
       },
     });
@@ -215,4 +239,9 @@ export function useUpdateItem(item: ITopicInput, type: string) {
     };
     return updateTopicHandler;
   }
+
+  // Default return for TypeScript reasons
+  return () => {
+    console.warn(`Type "${type}" is not handled.`);
+  };
 }

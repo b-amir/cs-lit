@@ -1,9 +1,10 @@
 import { FaGhost } from "react-icons/fa";
 import { GoBackButton } from "../GoBackButton";
+import { type MouseEventHandler } from "react";
 
 export interface IEntityIsEmptyProps {
   entity: string;
-  action?: () => void | null;
+  action: (() => void) | MouseEventHandler<HTMLSpanElement> | undefined;
 }
 export function EntityIsEmpty({
   entity,

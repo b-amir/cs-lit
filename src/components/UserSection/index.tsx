@@ -1,10 +1,13 @@
 import Link from "next/link";
+import { Avatar } from "./Avatar";
 import { UserSkeleton } from "../Loading/Skeleton";
+import { getScreenName } from "@/utils/getScreenName";
 import { type USER_ROLE } from "@prisma/client";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { HiOutlineLogout, HiOutlineLogin } from "react-icons/hi";
-import { getScreenName } from "@/utils/getScreenName";
-import { Avatar } from "./Avatar";
+import {
+  HiOutlineLogout as SignOutIcon,
+  HiOutlineLogin as SignInIcon,
+} from "react-icons/hi";
 
 export interface USER {
   id: string;
@@ -35,13 +38,14 @@ export const UserSection = () => {
                 </Link>
               ) : null}
             </p>
+
             <button className="text-gray rounded-full bg-white/10 px-1 py-0 text-left text-[0.7rem] font-light no-underline transition-all">
               {sessionData ? (
                 <div
                   className="group flex flex-row items-center text-[#606060] hover:text-[#000] "
                   onClick={() => void signOut()}
                 >
-                  <HiOutlineLogout className=" mr-1 stroke-[#606060] group-hover:stroke-[#000]" />{" "}
+                  <SignOutIcon className=" mr-1 stroke-[#606060] group-hover:stroke-[#000]" />{" "}
                   Sign out
                 </div>
               ) : (
@@ -49,7 +53,7 @@ export const UserSection = () => {
                   className="group flex flex-row items-center px-0.5 text-xs font-semibold text-[#606060] hover:text-[#000] sm:px-2 sm:text-sm "
                   onClick={() => void signIn()}
                 >
-                  <HiOutlineLogin className="mx-1 stroke-[#606060] group-hover:stroke-[#000] sm:mb-0.5" />{" "}
+                  <SignInIcon className="mx-1 stroke-[#606060] group-hover:stroke-[#000] sm:mb-0.5" />{" "}
                   Sign in here
                 </div>
               )}

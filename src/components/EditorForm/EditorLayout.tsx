@@ -3,9 +3,9 @@ import { RiDeleteBin6Line as Delete } from "react-icons/ri";
 
 interface IEditorLayoutProps {
   children: React.ReactNode;
-  handleUpdate: (e: React.FormEvent<HTMLFormElement>) => void;
-  handleCreate: (e: React.FormEvent<HTMLFormElement>) => void;
-  handleDelete: (e: React.FormEvent<HTMLFormElement>) => void;
+  handleUpdate: (e: React.MouseEvent) => void;
+  handleCreate: (e: React.MouseEvent) => void;
+  handleDelete: (e: React.MouseEvent) => void;
   editorState: {
     entity: null | "analogy" | "topic";
     shown: boolean;
@@ -22,7 +22,7 @@ export function EditorLayout({
   editorState,
 }: // isSubmitting,
 IEditorLayoutProps) {
-  const { entity, shown, purpose } = editorState;
+  const { entity, purpose } = editorState;
 
   return (
     <form
@@ -54,7 +54,9 @@ IEditorLayoutProps) {
             className="group  flex flex-row justify-center rounded-xl border border-[#5c2c1d2b] bg-[#ff7263] px-6 py-1.5 text-sm font-semibold text-[#ffffffd3] shadow-sm transition-all duration-200 [text-shadow:_0_1px_0_rgb(0_0_0_/_10%)] hover:border-[#5c2c1d66]  hover:shadow-md"
           >
             <span className="cursor-pointer transition-transform duration-300 group-hover:-translate-x-0.5 group-hover:[text-shadow:_0_2px_0_rgb(0_0_0_/_15%)]">
-              {purpose === "Edit" ? `Update ${entity}` : `Submit ${entity}`}
+              {purpose === "Edit"
+                ? `Update ${entity ?? ""}`
+                : `Submit ${entity ?? ""}`}
             </span>
           </button>
         </div>

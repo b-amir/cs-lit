@@ -1,18 +1,9 @@
 import { api } from "@/utils/api";
 import { toast } from "react-hot-toast";
 import { addActivityLog } from "@/utils/addActivityLog";
+import { type useInputType } from "./useUpdateItem";
 
-export interface ITopicInput {
-  id: string;
-  title: string;
-  name: string;
-  content: string;
-  linkToDocs: string;
-  category: string;
-  firstAnalogy: string;
-}
-
-export function useDeleteItem(item: ITopicInput, type: string) {
+export function useDeleteItem(item: useInputType, type: string): () => void {
   const ctx = api.useContext();
 
   // adding activity log entry
