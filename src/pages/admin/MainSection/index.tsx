@@ -1,17 +1,18 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import { archivo } from "@/styles/customFonts";
-import { ActionMenu } from "./ActionMenu";
+import { ActionMenu } from "../components/ActionMenu";
 import { routeHandler } from "@/utils/routeHandler";
-import { OrderByInput } from "./OrderByInput";
+import { OrderBy } from "./OrderBy";
 import { useDeleteItem } from "@/hooks/CRUD/useDeleteItem";
 import { getStatusIcon } from "@/utils/getStatusIcon";
+import { getScreenTitle } from "@/utils/getScreenName";
 import { LoadMoreButton } from "@/components/LoadMoreButton";
 import { MdOutlineModeEdit as Edit } from "react-icons/md";
 import { RiDeleteBin6Line as Delete } from "react-icons/ri";
-import { type IListItemProps, type IListViewProps } from "./types";
+import { type IListItemProps, type IListViewProps } from "../types";
 
-export function AdminMainList({
+export function MainSection({
   data,
   type,
   hasNextPage,
@@ -32,7 +33,6 @@ export function AdminMainList({
             className="flex flex-row items-center justify-start"
           >
             <span className="mr-3 rounded-md border border-[#73717180] bg-[#00000013] px-2 pt-0.5 text-sm text-gray-500 shadow-sm">
-              {/* {data?.pages?.pageInfo.count ?? 0} */}
               {data?.pages ? data?.pages[0]?.total : 0}
             </span>
             <h1
@@ -53,14 +53,14 @@ export function AdminMainList({
               onChange={(e) => setSearchQuery(e.target.value)}
             />
 
-            <OrderByInput setOrderBy={setOrderBy} />
+            <OrderBy setOrderBy={setOrderBy} />
           </div>
         </div>
         <div className=" flex w-full flex-col ">
           <div className="flex w-full flex-col ">
             {data?.pages?.map((page) =>
               page?.items?.map((item) => (
-                <AdminMainListItem
+                <MainSectionItem
                   key={item.id}
                   item={item}
                   type={type}
@@ -81,7 +81,7 @@ export function AdminMainList({
     </div>
   );
 }
-export function AdminMainListItem({
+export function MainSectionItem({
   item,
   type,
   setEditorModalInput,
@@ -94,20 +94,13 @@ export function AdminMainListItem({
   return (
     <div
       className="z-0 flex h-8 w-full cursor-pointer flex-row items-center justify-between border-b-[1px] border-gray-100 py-6 pl-16 transition-all hover:bg-gray-100"
-      // key={item.id}
       onMouseEnter={() => setShowActionMenuDots(true)}
       onMouseLeave={() => setShowActionMenuDots(false)}
     >
       <div className="flex flex-row items-center overflow-clip overflow-ellipsis whitespace-nowrap">
-        <Link href={`${routeHandler(item, type)}`}>
+        <Link href={`${routeHandler(item, type) ?? ""}`}>
           <h1 className={`font max-w-[360px] truncate text-sm font-bold`}>
-            {item.title
-              ? item.title
-              : item.content
-              ? item.content
-              : item.name
-              ? item.name
-              : item.id}
+            {getScreenTitle(item)}
           </h1>
         </Link>
       </div>

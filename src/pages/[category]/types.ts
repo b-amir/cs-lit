@@ -1,6 +1,6 @@
 import { type Session } from "next-auth";
 import { type GetResult } from "@prisma/client/runtime/library";
-import { type ExtraInput } from "@/hooks/CRUD/useUpdateItem";
+import { type ExtraInput } from "@/hooks/CRUD/types";
 import { type Dispatch, type SetStateAction } from "react";
 import { type Topic, type CATEGORY_STATUS, type TOPIC_STATUS, type Category } from "@prisma/client";
 import { type InfiniteData, type FetchNextPageOptions, type InfiniteQueryObserverResult } from "@tanstack/react-query";
@@ -47,7 +47,7 @@ export type TopicsData = InfiniteData<{
       status: CATEGORY_STATUS;
       createdAt: Date;
       updatedAt: Date;
-    }, { [x: string]: () => unknown; }> & {}) | null;
+    }, { [x: string]: () => unknown; }> & object) | null;
     id: string;
     title: string;
     slug: string;

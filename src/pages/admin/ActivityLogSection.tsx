@@ -5,9 +5,15 @@ import { archivo } from "@/styles/customFonts";
 import { IoIosArrowUp } from "react-icons/io";
 import { RelativeTime } from "@/utils/relativeTime";
 import { LoadMoreButton } from "@/components/LoadMoreButton";
-import { type IActivityLogItemProps, type IAdminFooterProps } from "./types";
+import {
+  type IActivityLogItemProps,
+  type IActivityLogSectionProps,
+} from "./types";
 
-export function AdminFooter({ collapsed, setCollapsed }: IAdminFooterProps) {
+export function ActivityLogSection({
+  collapsed,
+  setCollapsed,
+}: IActivityLogSectionProps) {
   return (
     <div
       id="admin-footer"
@@ -59,7 +65,7 @@ function ActivityLogs() {
       <div className="mx-auto w-full text-sm text-gray-600">
         {activityData?.pages?.map((page) =>
           page?.items?.map((item) => (
-            <ActivityLogItem key={item.id} item={item} />
+            <SingleActivityLogItem key={item.id} item={item} />
           ))
         )}
 
@@ -74,7 +80,7 @@ function ActivityLogs() {
   );
 }
 
-export function ActivityLogItem({ item }: IActivityLogItemProps) {
+export function SingleActivityLogItem({ item }: IActivityLogItemProps) {
   const { data: userData } = api.profile.getProfileById.useQuery(
     {
       id: item.userId,

@@ -1,6 +1,5 @@
 import { AnalogiesFeed } from "@/components/AnalogiesFeed";
 import { AnalogySkeleton } from "@/components/Loading/Skeleton";
-import { CenteredLoading } from "@/components/Loading/Spinner";
 import { type IMainSectionProps } from "../types";
 
 export function MainSection({
@@ -16,8 +15,7 @@ export function MainSection({
   return (
     <>
       {topicFetchingStatus === "loading" ||
-        (analogiesFetchingStatus === "loading" && <CenteredLoading />)}
-      {analogiesFetchingStatus === "loading" ? (
+      analogiesFetchingStatus === "loading" ? (
         <>
           <AnalogySkeleton />
           <AnalogySkeleton />

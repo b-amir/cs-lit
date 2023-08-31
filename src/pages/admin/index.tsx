@@ -1,14 +1,14 @@
 import React, { useState, type ComponentType } from "react";
 import Head from "next/head";
 import { api } from "@/utils/api";
-import { PillsRow } from "../../components/Pills";
+import { PillsRow } from "./components/Pills";
 import { PageLayout } from "@/components/PageLayout";
 import { useSession } from "next-auth/react";
-import { AdminFooter } from "./AdminFooter";
+import { ActivityLogSection } from "./ActivityLogSection";
 import { useDebounce } from "@/hooks/useDebounce";
-import { AdminMainList } from "./AdminMainList";
+import { MainSection } from "./MainSection";
 import { CenteredLoading } from "@/components/Loading/Spinner";
-import { AdminSidePanel } from "./AdminSidePanel";
+import { PendingSection } from "./PendingSection";
 import { AiFillLock as Lock } from "react-icons/ai";
 import {
   EditorModal,
@@ -17,15 +17,22 @@ import {
   AnalogyEditForm,
   UserEditForm,
   CommentEditForm,
-} from "./EditorModal";
+} from "./components/EditorModal";
+import {
+  type FetchNextPage,
+  type GeneralData,
+  type IEditorModalInput,
+} from "./types";
 
 export default function AdminPage({}) {
   const { data: sessionData, status: sessionStatus } = useSession();
 
   const [activeSection, setActiveSection] = useState("Categories");
   const [editorModalShown, setEditorModalShown] = useState(false);
-  const [editorModalInput, setEditorModalInput] = useState("");
-  const [AdminFooterCollapsed, setAdminFooterCollapsed] = useState(false);
+  const [editorModalInput, setEditorModalInput] =
+    useState<IEditorModalInput | null>(null);
+  const [ActivityLogSectionCollapsed, setActivityLogSectionCollapsed] =
+    useState(false);
   const [orderBy, setOrderBy] = useState<"desc" | "asc" | null>("desc");
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -59,6 +66,9 @@ export default function AdminPage({}) {
       }
     );
   };
+
+  /* eslint-disable @typescript-eslint/no-unused-vars */
+  // --- following items are used in mainListProps, despite what eslint thinks --- //
   const {
     data: categoriesData,
     hasNextPage: categoriesHasNextPage,
@@ -94,6 +104,7 @@ export default function AdminPage({}) {
   interface EditorModalInput {
     type: "Categories" | "Topics" | "Analogies" | "Users" | "Comments";
   }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const editorFormMap: Record<EditorModalInput["type"], ComponentType<any>> = {
     Categories: CategoryEditForm,
     Topics: TopicEditForm,
@@ -102,12 +113,46 @@ export default function AdminPage({}) {
     Comments: CommentEditForm,
   };
   const EditorForm =
-    editorFormMap[editorModalInput?.type] || (() => "There's an error");
+    (editorModalInput && editorFormMap[editorModalInput.type]) ||
+    (() => "There's an error");
 
   // --- recognize user roles with access --- //
   const isModerator = ["ADMIN", "EDITOR"].includes(
     sessionData?.user.role ?? ""
   );
+
+  const pillsRowProps = {
+    pills: ["Categories", "Topics", "Users", "Analogies", "Comments"],
+    setActive: setActiveSection,
+    active: activeSection,
+  };
+  const mainListProps = {
+    type: activeSection,
+    data: eval(`${activeSection.toLowerCase()}Data`) as GeneralData,
+    hasNextPage: eval(
+      `Boolean(${activeSection.toLowerCase()}HasNextPage)`
+    ) as boolean,
+    fetchNextPage: eval(`fetchNext${activeSection}Page`) as FetchNextPage,
+    isFetchingNextPage: eval(`isFetchingNext${activeSection}Page`) as boolean,
+    setEditorModalInput,
+    setEditorModalShown,
+    setOrderBy,
+    searchQuery,
+    setSearchQuery,
+  };
+  const footerProps = {
+    collapsed: ActivityLogSectionCollapsed,
+    setCollapsed: setActivityLogSectionCollapsed,
+  };
+  const editorModalProps = {
+    shown: editorModalShown,
+    setShown: setEditorModalShown,
+  };
+  const editorFormProps = {
+    input: editorModalInput,
+    setInput: setEditorModalInput,
+    setShown: setEditorModalShown,
+  };
 
   return (
     <>
@@ -135,62 +180,23 @@ export default function AdminPage({}) {
                 <div
                   id="admin-lists"
                   className={`w-full overflow-x-clip overflow-y-clip border border-r-[#5555552a] pb-[92px] transition-all sm:w-3/4 ${
-                    AdminFooterCollapsed
+                    ActivityLogSectionCollapsed
                       ? "h-[calc(100dvh-2rem-90px)]"
                       : "h-[calc(100dvh-20dvh-90px)]"
                   }`}
                 >
-                  <PillsRow
-                    pills={[
-                      "Categories",
-                      "Topics",
-                      "Users",
-                      "Analogies",
-                      "Comments",
-                    ]}
-                    setActive={setActiveSection}
-                    active={activeSection}
-                  />
-
-                  <AdminMainList
-                    type={activeSection}
-                    data={eval(`${activeSection.toLowerCase()}Data`) as object}
-                    hasNextPage={
-                      eval(
-                        `Boolean(${activeSection.toLowerCase()}HasNextPage)`
-                      ) as boolean
-                    }
-                    fetchNextPage={
-                      eval(`fetchNext${activeSection}Page`) as () => void
-                    }
-                    isFetchingNextPage={
-                      eval(`isFetchingNext${activeSection}Page`) as boolean
-                    }
-                    setEditorModalInput={setEditorModalInput}
-                    setEditorModalShown={setEditorModalShown}
-                    setOrderBy={setOrderBy}
-                    searchQuery={searchQuery}
-                    setSearchQuery={setSearchQuery}
-                  />
+                  <PillsRow {...pillsRowProps} />
+                  <MainSection {...mainListProps} />
                 </div>
 
-                <AdminSidePanel />
+                <PendingSection />
               </div>
-              <AdminFooter
-                collapsed={AdminFooterCollapsed}
-                setCollapsed={setAdminFooterCollapsed}
-              />
+
+              <ActivityLogSection {...footerProps} />
             </div>
 
-            <EditorModal
-              shown={editorModalShown}
-              setShown={setEditorModalShown}
-            >
-              <EditorForm
-                setShown={setEditorModalShown}
-                input={editorModalInput}
-                setInput={setEditorModalInput}
-              />
+            <EditorModal {...editorModalProps}>
+              <EditorForm {...editorFormProps} />
             </EditorModal>
           </>
         ) : (

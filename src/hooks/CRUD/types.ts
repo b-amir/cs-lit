@@ -7,6 +7,7 @@ import {
   type ENTITY_TYPE,
 } from "@prisma/client";
 import { type CommentInput } from "@/pages/[category]/[topic]/[analogy]/types";
+import { type BaseItem, type AdminInputType, type ListItem } from "@/pages/admin/types";
 
 export type ExtraInput = {
   id?: string;
@@ -42,6 +43,9 @@ export type ExtraInput = {
   entityTitle?: string;
   action?: ACTIVITY_ACTION;
   timestamp?: Date;
+
+  item: "string";
+  type: "string";
 };
 
-export type GeneralInputType = ExtraInput & (AnalogyInput | TopicInput | CommentInput);
+export type GeneralInputType = ExtraInput & (AnalogyInput | TopicInput | CommentInput | AdminInputType);

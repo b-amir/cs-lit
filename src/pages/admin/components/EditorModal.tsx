@@ -1,13 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React from "react";
 import { archivo } from "@/styles/customFonts";
-import { useAdminEditorForm } from "@/hooks/useAdminEditorForm";
+import { useAdminEditorForm } from "../hooks/useAdminEditorForm";
 import { MdClose, MdOutlineModeEdit } from "react-icons/md";
 import {
   type FormField,
   type FormProps,
   type EditorModalProps,
   type EditorBodyBlueprint,
-} from "./types";
+} from "../types";
 
 export function EditorModal({ children, shown, setShown }: EditorModalProps) {
   return (
@@ -78,7 +79,7 @@ export function EditorBodyBlueprint({
             <select
               name={field.name}
               id={field.name}
-              value={input.item[field.name] || ""}
+              value={input.item[field.name] ?? null}
               onChange={handleChange}
               className="focus:shadow-outline mb-2 w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none"
             >

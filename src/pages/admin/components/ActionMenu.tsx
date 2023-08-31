@@ -1,5 +1,5 @@
 import { useSpring, animated } from "@react-spring/web";
-import { type ActionMenuProps } from "./types";
+import { type ActionMenuProps } from "../types";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { type PropsWithChildren, useRef, useState } from "react";
 

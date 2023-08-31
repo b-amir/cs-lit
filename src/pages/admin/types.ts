@@ -1,9 +1,30 @@
-import { type ReactNode } from "react";
+import { type FetchNextPageOptions, type InfiniteQueryObserverResult } from "@tanstack/react-query";
+import { type Dispatch, type SetStateAction, type ReactNode } from "react";
 
+export type AdminInputType = {
+  item: BaseItem;
+  type: "category" | "user" | "comment" | "topic" | "analogy";
+}
+export type FetchNextPage = (options?: FetchNextPageOptions | undefined) => Promise<InfiniteQueryObserverResult<unknown, unknown>>;
+export type GeneralData = {
+  pages: [{
+    items: [
+      ListItem
+    ],
+    pageInfo: {
+      count: number
+      hasNextPage: boolean
+      nextCursor: string
+    }
+    total: number
+  }]
+}
 // ADMIN EDITOR:
 export interface BaseItem {
   id: string;
   status: 'PENDING' | 'PUBLISHED' | 'REJECTED' | 'DELETED' | 'BANNED' | 'ACTIVE';
+  item: "string";
+  type: "string";
 }
 export interface Category extends BaseItem {
   name: string;
@@ -42,8 +63,8 @@ export interface FormProps {
     item: BaseItem;
     type: "category" | "user" | "comment" | "topic" | "analogy";
   };
-  setShown: (shown: boolean) => void;
-  setInput: (input: FormInput) => void;
+  setShown: Dispatch<SetStateAction<boolean>>;
+  setInput: Dispatch<SetStateAction<FormInput>>;
   fields: FormField[];
   type: "category" | "user" | "comment" | "topic" | "analogy"
 }
@@ -58,6 +79,9 @@ export interface EditorModalProps {
 
 
 }
+export interface IEditorModalInput {
+  type: "Categories" | "Topics" | "Analogies" | "Users" | "Comments";
+}
 
 // ADMIN SIDEPANEL:
 export interface EditorBodyBlueprint {
@@ -65,13 +89,13 @@ export interface EditorBodyBlueprint {
     item: BaseItem;
     type: "category" | "user" | "comment" | "topic" | "analogy";
   };
-  setShown: (shown: boolean) => void;
-  setInput: (input: FormInput) => void;
+  setShown: Dispatch<SetStateAction<boolean>>;
+  setInput: Dispatch<SetStateAction<FormInput>>;
   fields: FormField[];
   type: "topic" | "category" | "user" | "comment" | "analogy"
 
 }
-export interface IAdminFooterProps {
+export interface IActivityLogSectionProps {
   collapsed: boolean;
   setCollapsed: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -131,33 +155,21 @@ export interface ListItem {
   url: string;
   category: string;
   firstAnalogy: string;
-  status: string;
+  status: "PENDING" | "PUBLISHED" | "REJECTED" | "DELETED";
+  item: "string";
+  type: "string";
 }
 export interface IListViewProps {
   type: string;
   hasNextPage: boolean | undefined;
-  fetchNextPage: () => void;
+  fetchNextPage: FetchNextPage;
   isFetchingNextPage: boolean;
   setEditorModalInput: React.Dispatch<React.SetStateAction<any>>;
   setEditorModalShown: React.Dispatch<React.SetStateAction<boolean>>;
-  orderBy: "desc" | "asc" | null;
-  setOrderBy: React.Dispatch<React.SetStateAction<string>>;
+  setOrderBy: React.Dispatch<React.SetStateAction<"desc" | "asc" | null>>;
   searchQuery: string;
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
-  data: {
-    pages: [{
-      items: [
-        ListItem[]
-
-      ],
-      pageInfo: {
-        count: number
-        hasNextPage: boolean
-        nextCursor: string
-      }
-      total: number
-    }]
-  }
+  data: GeneralData;
 }
 export interface IListItemProps {
   item: ListItem;
@@ -167,6 +179,6 @@ export interface IListItemProps {
 }
 
 // ORDER BY INPUT:
-export interface OrderByInputProps {
-  setOrderBy: React.Dispatch<React.SetStateAction<string>>;
+export interface OrderByProps {
+  setOrderBy: React.Dispatch<React.SetStateAction<"asc" | "desc" | null>>;
 }
