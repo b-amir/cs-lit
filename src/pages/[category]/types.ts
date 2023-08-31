@@ -1,9 +1,9 @@
 import { type Session } from "next-auth";
 import { type GetResult } from "@prisma/client/runtime/library";
+import { type ExtraInput } from "@/hooks/CRUD/useUpdateItem";
 import { type Dispatch, type SetStateAction } from "react";
-import { type ExtraInput, type useInputType } from "@/hooks/useUpdateItem";
-import { InfiniteData, type FetchNextPageOptions, type InfiniteQueryObserverResult } from "@tanstack/react-query";
 import { type Topic, type CATEGORY_STATUS, type TOPIC_STATUS, type Category } from "@prisma/client";
+import { type InfiniteData, type FetchNextPageOptions, type InfiniteQueryObserverResult } from "@tanstack/react-query";
 
 export type ExtendedTopic = Topic & {
   category: Category;

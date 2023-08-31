@@ -4,7 +4,7 @@ import { archivo } from "@/styles/customFonts";
 import { ActionMenu } from "./ActionMenu";
 import { routeHandler } from "@/utils/routeHandler";
 import { OrderByInput } from "./OrderByInput";
-import { useDeleteItem } from "@/hooks/useDeleteItem";
+import { useDeleteItem } from "@/hooks/CRUD/useDeleteItem";
 import { getStatusIcon } from "@/utils/getStatusIcon";
 import { LoadMoreButton } from "@/components/LoadMoreButton";
 import { MdOutlineModeEdit as Edit } from "react-icons/md";

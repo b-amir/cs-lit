@@ -35,6 +35,7 @@ type AnalogyData = {
 };
 
 export type AnalogyInput = {
+  id?: string;
   description: string;
   topicId: string | undefined;
   hasReference?: boolean | undefined;

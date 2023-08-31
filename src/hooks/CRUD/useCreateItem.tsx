@@ -2,11 +2,14 @@ import slugify from "slugify";
 import { api } from "@/utils/api";
 import { toast } from "react-hot-toast";
 import { useSession } from "next-auth/react";
-import { v4 as uuidv4 } from "uuid";
+import { type Category } from "@prisma/client";
 import { addActivityLog } from "@/utils/addActivityLog";
-import { useInputType } from "./useUpdateItem";
+import { type GeneralInputType } from "./types";
 
-export function useCreateItem(item: useInputType, type: string): () => void {
+export function useCreateItem(
+  item: GeneralInputType,
+  type: string
+): () => void {
   const ctx = api.useContext();
 
   // adding activity log entry
@@ -14,19 +17,18 @@ export function useCreateItem(item: useInputType, type: string): () => void {
   const { data: sessionData } = useSession();
 
   if (type === "Categories") {
-    // creating category
     const { mutate: createCategory } = api.category.create.useMutation({
       onSuccess: () => {
         createActivityLogEntry({
           entityType: "category",
           entityId: "",
-          entityTitle: item.name,
+          entityTitle: item.name as string,
           action: "created",
         });
         void ctx.category.getAll.invalidate();
         void ctx.category.getAllWithQuery.invalidate();
         const isModerator = ["ADMIN", "EDITOR"].includes(
-          sessionData?.user.role
+          sessionData?.user.role ?? ""
         );
         if (isModerator) {
           toast.success("Category created successfully.");
@@ -54,19 +56,19 @@ export function useCreateItem(item: useInputType, type: string): () => void {
 
     const createCategoryHandler = () => {
       try {
-        const categorySlug = slugify(item.name, { lower: true });
+        const categorySlug = slugify(item.name as string, { lower: true });
 
         createActivityLogEntry({
           entityType: "category",
-          entityId: item.id,
-          entityTitle: item.name,
+          entityId: item.id as string,
+          entityTitle: item.name as string,
           action: "created",
         });
 
         createCategory({
-          name: item.name,
+          name: item.name as string,
           slug: categorySlug,
-          id: item.id !== "" ? item.id : "",
+          id: item.id !== "" ? (item.id as string) : "",
         });
       } catch (e) {
         toast.error("Something went wrong");
@@ -76,8 +78,7 @@ export function useCreateItem(item: useInputType, type: string): () => void {
   }
 
   if (type === "Topics") {
-    // creating topic
-    const topicSlug = slugify(item.title, { lower: true });
+    const topicSlug = slugify(item.title as string, { lower: true });
 
     const { mutate: createTopic } = api.topic.create.useMutation({
       onSuccess: () => {
@@ -115,21 +116,21 @@ export function useCreateItem(item: useInputType, type: string): () => void {
       try {
         createActivityLogEntry({
           entityType: "topic",
-          entityId: item.id,
-          entityTitle: item.title,
+          entityId: item.id as string,
+          entityTitle: item.title as string,
           action: "created",
         });
         createTopic({
-          id: item.id !== "" ? item.id : "",
-          title: item.title,
-          url: item.url,
+          id: item.id !== "" ? (item.id as string) : "",
+          title: item.title as string,
+          url: item.url as string,
           slug: topicSlug,
-          category: item.category,
-          starter: { id: sessionData?.user?.id! },
+          category: item.category as Category,
+          starter: { id: sessionData?.user?.id ?? "" },
           analogies: [
             {
               id: "",
-              description: item.firstAnalogy,
+              description: item.firstAnalogy as string,
               reference: item.reference,
             },
           ],
@@ -142,7 +143,6 @@ export function useCreateItem(item: useInputType, type: string): () => void {
   }
 
   if (type === "Analogies") {
-    // creating analogy
     const { mutate: createAnalogy } = api.analogy.create.useMutation({
       onSuccess: () => {
         void ctx.analogy.getAll.invalidate();
@@ -180,13 +180,13 @@ export function useCreateItem(item: useInputType, type: string): () => void {
         });
 
         createAnalogy({
-          id: item.id,
+          id: item.id as string,
           title: item.title,
-          description: item.description,
+          description: item.description as string,
           reference: item.reference,
           status: item.status,
           pinned: item.pinned,
-          topicId: item.topicId,
+          topicId: item.topicId as string,
           authorId: item.authorId,
         });
       } catch (e) {
@@ -197,15 +197,17 @@ export function useCreateItem(item: useInputType, type: string): () => void {
   }
 
   if (type === "Comments") {
-    // creating comment
     const { mutate: createComment } = api.comment.create.useMutation({
       onSuccess: () => {
         void ctx.comment.getByAnalogyId.invalidate();
 
-        window.scrollTo({
-          top: document.getElementById("comments-section")?.offsetTop - 90,
-          behavior: "smooth",
-        });
+        const commentsSection = document?.getElementById("comments-section");
+        if (commentsSection) {
+          window.scrollTo({
+            top: commentsSection.offsetTop - 90,
+            behavior: "smooth",
+          });
+        }
 
         toast.success("You posted your comment!");
       },
@@ -231,8 +233,8 @@ export function useCreateItem(item: useInputType, type: string): () => void {
         });
 
         createComment({
-          content: item.content,
-          analogyId: item.analogyId,
+          content: item.content as string,
+          analogyId: item.analogyId as string,
         });
       } catch (e) {
         toast.error("Something went wrong");
@@ -241,39 +243,8 @@ export function useCreateItem(item: useInputType, type: string): () => void {
     return createCommentHandler;
   }
 
-  // if (type === "Users") {
-  //   // updating user
-  //   const { mutate: updateUser } = api.profile.update.useMutation({
-  //     onSuccess: () => {
-  //       void ctx.profile.getTopThree.invalidate();
-  //       toast.success("User updated successfully.");
-  //     },
-  //     onError: (e) => {
-  //       toast.error("Something went wrong");
-  //     },
-  //   });
-
-  //   const updateUserHandler = () => {
-  //     try {
-  //       createActivityLogEntry({
-  //         entityType: "user",
-  //         entityId: item.id,
-  //         entityTitle: item.name,
-  //         action: "updated",
-  //       });
-
-  //       updateUser({
-  //         id: item.id,
-  //         name: item.name,
-  //         email: item.email,
-  //         username: item.username,
-  //         role: item.role,
-  //         status: item.status,
-  //       });
-  //     } catch (e) {
-  //       toast.error("Something went wrong");
-  //     }
-  //   };
-  //   return updateUserHandler;
-  // }
+  // Default return for TypeScript reasons
+  return () => {
+    console.warn(`Type "${type}" is not handled.`);
+  };
 }

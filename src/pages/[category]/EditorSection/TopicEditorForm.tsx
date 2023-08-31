@@ -3,9 +3,9 @@ import { useSession } from "next-auth/react";
 import { NotSignedIn } from "@/components/Messages/NotSignedIn";
 import { EditorLayout } from "@/components/EditorForm/EditorLayout";
 import React, { useRef } from "react";
-import { useUpdateItem } from "@/hooks/useUpdateItem";
-import { useCreateItem } from "@/hooks/useCreateItem";
-import { useDeleteItem } from "@/hooks/useDeleteItem";
+import { useUpdateItem } from "@/hooks/CRUD/useUpdateItem";
+import { useCreateItem } from "@/hooks/CRUD/useCreateItem";
+import { useDeleteItem } from "@/hooks/CRUD/useDeleteItem";
 import { animated, useSpring } from "@react-spring/web";
 import {
   type ITopicEditorBodyProps,

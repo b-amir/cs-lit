@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { RiMenuAddFill, RiAddFill } from "react-icons/ri";
 import { type Category } from "@prisma/client";
-import { useCreateItem } from "@/hooks/useCreateItem";
+import { useCreateItem } from "@/hooks/CRUD/useCreateItem";
 import { useSession } from "next-auth/react";
 
 export function AddCategorySection() {

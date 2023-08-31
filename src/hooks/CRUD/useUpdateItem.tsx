@@ -1,54 +1,12 @@
 import { api } from "@/utils/api";
 import { toast } from "react-hot-toast";
 import { addActivityLog } from "@/utils/addActivityLog";
-import {
-  type Analogy,
-  type Category,
-  type ENTITY_TYPE,
-  type ACTIVITY_ACTION,
-} from "@prisma/client";
-import { type TopicInput } from "@/pages/[category]/types";
-import { type AnalogyInput } from "@/pages/[category]/[topic]/types";
+import { type GeneralInputType } from "./types";
 
-export type ExtraInput = {
-  id?: string;
-  title?: string;
-  name?: string;
-  slug?: string;
-  url?: string;
-
-  category?: Category | string;
-  firstAnalogy?: string;
-  description?: string;
-  status?: "PENDING" | "PUBLISHED" | "REJECTED" | "DELETED";
-  userStatus?: "ACTIVE" | "BANNED" | "DELETED";
-
-  pinned?: boolean;
-  topicId?: string;
-  analogyId?: string;
-  commenterId?: string;
-  authorId?: string;
-
-  email?: string;
-  username?: string;
-  content?: string;
-  role?: "ADMIN" | "USER" | "EDITOR";
-  hasReference?: boolean;
-
-  reference?: string;
-  analogies?: Analogy[];
-  userId?: string;
-  entityType?: ENTITY_TYPE;
-  entityId?: string;
-
-  entityTitle?: string;
-  action?: ACTIVITY_ACTION;
-  timestamp?: Date;
-};
-
-export type useInputType = ExtraInput & (AnalogyInput | TopicInput);
-
-export function useUpdateItem(item: useInputType, type: string): () => void {
+export function useUpdateItem(
+  item: GeneralInputType,
+  type: string
+): () => void {
   const ctx = api.useContext();
 
   // adding activity log entry

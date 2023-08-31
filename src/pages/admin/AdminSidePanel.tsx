@@ -5,7 +5,7 @@ import { archivo } from "@/styles/customFonts";
 import { TbUrgent } from "react-icons/tb";
 import { ActionMenu } from "./ActionMenu";
 import { routeHandler } from "@/utils/routeHandler";
-import { useUpdateItem } from "@/hooks/useUpdateItem";
+import { useUpdateItem } from "@/hooks/CRUD/useUpdateItem";
 import { LoadMoreButton } from "@/components/LoadMoreButton";
 import { type IPendingItemProps, type PendingItem } from "./types";
 import { MdDone as Approve, MdClose as Dismiss } from "react-icons/md";

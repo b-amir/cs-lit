@@ -1,9 +1,12 @@
 import { api } from "@/utils/api";
 import { toast } from "react-hot-toast";
 import { addActivityLog } from "@/utils/addActivityLog";
-import { type useInputType } from "./useUpdateItem";
+import { type GeneralInputType } from "./types";
 
-export function useDeleteItem(item: useInputType, type: string): () => void {
+export function useDeleteItem(
+  item: GeneralInputType,
+  type: string
+): () => void {
   const ctx = api.useContext();
 
   // adding activity log entry
@@ -24,11 +27,11 @@ export function useDeleteItem(item: useInputType, type: string): () => void {
       try {
         createActivityLogEntry({
           entityType: "topic",
-          entityId: item.id,
-          entityTitle: item.title,
+          entityId: item.id as string,
+          entityTitle: item.title as string,
           action: "deleted",
         });
-        deleteTopic({ id: item.id });
+        deleteTopic({ id: item.id as string });
       } catch (e) {
         toast.error("Something went wrong");
       }
@@ -44,7 +47,7 @@ export function useDeleteItem(item: useInputType, type: string): () => void {
         void ctx.category.getAllWithQuery.invalidate();
         toast.success("Category deleted successfully.");
       },
-      onError: (e) => {
+      onError: () => {
         toast.error("Something went wrong");
       },
     });
@@ -53,11 +56,11 @@ export function useDeleteItem(item: useInputType, type: string): () => void {
       try {
         createActivityLogEntry({
           entityType: "category",
-          entityId: item.id,
-          entityTitle: item.name,
+          entityId: item.id as string,
+          entityTitle: item.name as string,
           action: "deleted",
         });
-        deleteCategory({ id: item.id });
+        deleteCategory({ id: item.id as string });
       } catch (e) {
         toast.error("Something went wrong");
       }
@@ -74,7 +77,7 @@ export function useDeleteItem(item: useInputType, type: string): () => void {
         void ctx.analogy.getByTopicId.invalidate();
         toast.success("Analogy deleted successfully.");
       },
-      onError: (e) => {
+      onError: () => {
         toast.error("Something went wrong");
       },
     });
@@ -83,11 +86,11 @@ export function useDeleteItem(item: useInputType, type: string): () => void {
       try {
         createActivityLogEntry({
           entityType: "analogy",
-          entityId: item.id,
-          entityTitle: item.title,
+          entityId: item.id as string,
+          entityTitle: item.title as string,
           action: "deleted",
         });
-        deleteAnalogy({ id: item.id });
+        deleteAnalogy({ id: item.id as string });
       } catch (e) {
         toast.error("Something went wrong");
       }
@@ -103,7 +106,7 @@ export function useDeleteItem(item: useInputType, type: string): () => void {
         void ctx.profile.getAllWithQuery.invalidate();
         toast.success("User deleted successfully.");
       },
-      onError: (e) => {
+      onError: () => {
         toast.error("Something went wrong");
       },
     });
@@ -112,11 +115,11 @@ export function useDeleteItem(item: useInputType, type: string): () => void {
       try {
         createActivityLogEntry({
           entityType: "user",
-          entityId: item.id,
-          entityTitle: item.name,
+          entityId: item.id as string,
+          entityTitle: item.name as string,
           action: "deleted",
         });
-        deleteUser({ id: item.id });
+        deleteUser({ id: item.id as string });
       } catch (e) {
         toast.error("Something went wrong");
       }
@@ -133,7 +136,7 @@ export function useDeleteItem(item: useInputType, type: string): () => void {
 
         toast.success("Comment deleted successfully.");
       },
-      onError: (e) => {
+      onError: () => {
         toast.error("Something went wrong");
       },
     });
@@ -142,11 +145,11 @@ export function useDeleteItem(item: useInputType, type: string): () => void {
       try {
         createActivityLogEntry({
           entityType: "comment",
-          entityId: item.id,
-          entityTitle: item.content,
+          entityId: item.id as string,
+          entityTitle: item.content as string,
           action: "deleted",
         });
-        deleteComment({ id: item.id });
+        deleteComment({ id: item.id as string });
       } catch (e) {
         toast.error("Something went wrong");
       }

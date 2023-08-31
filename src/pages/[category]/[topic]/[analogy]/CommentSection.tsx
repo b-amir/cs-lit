@@ -7,7 +7,7 @@ import ReactMarkdown from "react-markdown";
 import { useSession } from "next-auth/react";
 import { type Comment } from "@prisma/client";
 import { RelativeTime } from "../../../../utils/relativeTime";
-import { useCreateItem } from "@/hooks/useCreateItem";
+import { useCreateItem } from "@/hooks/CRUD/useCreateItem";
 import { getScreenName } from "@/utils/getScreenName";
 import { LoadMoreButton } from "@/components/LoadMoreButton";
 import { CommentSkeleton } from "@/components/Loading/Skeleton";
