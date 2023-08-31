@@ -2,7 +2,7 @@ import { type Session } from "next-auth";
 import { type GetResult } from "@prisma/client/runtime/library";
 import { type Dispatch, type SetStateAction } from "react";
 import { type ExtraInput, type useInputType } from "@/hooks/useUpdateItem";
-import { type FetchNextPageOptions, type InfiniteQueryObserverResult } from "@tanstack/react-query";
+import { InfiniteData, type FetchNextPageOptions, type InfiniteQueryObserverResult } from "@tanstack/react-query";
 import { type Topic, type CATEGORY_STATUS, type TOPIC_STATUS, type Category } from "@prisma/client";
 
 export type ExtendedTopic = Topic & {
@@ -23,6 +23,8 @@ export type TopicInput = {
   firstAnalogy: string;
   slug: string;
   status: TOPIC_STATUS;
+  hasReference?: boolean;
+  reference?: string;
 };
 
 type GenericData<T extends Record<any, any>> = GetResult<T, { [x: string]: () => unknown; }> | undefined;
@@ -36,27 +38,32 @@ export type CategoryData = GenericData<{
   updatedAt: Date;
 }>;
 
-export type TopicsData = {
-  pages: {
-    items: (GenericData<{
+export type TopicsData = InfiniteData<{
+  items: {
+    category: (GetResult<{
       id: string;
-      title: string;
+      name: string;
       slug: string;
-      status: TOPIC_STATUS;
-      url: string;
+      status: CATEGORY_STATUS;
       createdAt: Date;
       updatedAt: Date;
-      starterId: string;
-      categoryId: string;
-    }> | null | string)[];
-    total: number;
-    pageInfo: {
-      hasNextPage: boolean | undefined;
-      nextCursor: string | undefined | null;
-    };
+    }, { [x: string]: () => unknown; }> & {}) | null;
+    id: string;
+    title: string;
+    slug: string;
+    status: TOPIC_STATUS;
+    url: string;
+    createdAt: Date;
+    updatedAt: Date;
+    starterId: string;
+    categoryId: string;
   }[] | undefined;
-  pageParams: unknown[];
-};
+  total: number;
+  pageInfo: {
+    hasNextPage: boolean;
+    nextCursor: string | null | undefined;
+  };
+}> | undefined
 
 export interface ITopicEditorState {
   entity: null | "analogy" | "topic";
@@ -108,15 +115,15 @@ export interface IInput {
 
 export interface ITopicEditorFormProps {
   categoryData: CategoryData;
-  input: useInputType;
-  setInput: React.Dispatch<React.SetStateAction<useInputType>>;
+  input: TopicInput;
+  setInput: React.Dispatch<React.SetStateAction<TopicInput>>;
   topicEditorState: ITopicEditorState;
   setTopicEditorState: React.Dispatch<React.SetStateAction<ITopicEditorState>>;
 }
 
 export interface ITopicEditorBodyProps {
-  input: useInputType;
-  setInput: React.Dispatch<React.SetStateAction<useInputType>>;
+  input: TopicInput;
+  setInput: React.Dispatch<React.SetStateAction<TopicInput>>;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   topicEditorState: {
     shown: boolean;
@@ -131,29 +138,7 @@ export interface ITitleRowProps {
 export interface INormalRowProps {
   handleEdit: (e: React.MouseEvent, topic: Topic) => void;
   sessionData: Session | null;
-  topicsData: {
-    pages: {
-      items: {
-        category: string;
-        id: string;
-        title: string;
-        slug: string;
-        status: TOPIC_STATUS;
-        url: string;
-        createdAt: Date;
-        updatedAt: Date;
-        starterId: string;
-        categoryId: string;
-        firstAnalogy: string;
-      }[] | undefined;
-      total: number;
-      pageInfo: {
-        hasNextPage: boolean | undefined;
-        nextCursor: string | undefined | null;
-      };
-    }[] | undefined;
-    pageParams: unknown[]
-  } | undefined;
+  topicsData: TopicsData;
 }
 
 export interface ITopicEditorState {

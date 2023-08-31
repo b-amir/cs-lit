@@ -4,50 +4,49 @@ import { addActivityLog } from "@/utils/addActivityLog";
 import {
   type Analogy,
   type Category,
-  type Topic,
-  type Comment,
-  type User,
-  type Activity,
+  type ENTITY_TYPE,
+  type ACTIVITY_ACTION,
 } from "@prisma/client";
-import { type ExtendedAnalogy } from "@/components/PageLayout/SidebarRight/types";
-import { type ExtendedComment } from "@/components/Analogy/types";
-import { type ExtendedTopic } from "@/pages/[category]/types";
+import { type TopicInput } from "@/pages/[category]/types";
+import { type AnalogyInput } from "@/pages/[category]/[topic]/types";
 
 export type ExtraInput = {
-  id: string;
-  title: string;
-  name: string;
-  slug: string;
-  url: string;
-  category: Category | string;
-  firstAnalogy: string;
-  description: string;
-  status: "PENDING" | "PUBLISHED" | "REJECTED" | "DELETED";
-  userStatus: "ACTIVE" | "BANNED" | "DELETED";
-  pinned: boolean;
-  topicId: string;
-  analogyId: string;
-  commenterId: string;
-  authorId: string;
-  email: string;
-  username: string;
-  content: string;
-  role: "ADMIN" | "USER" | "EDITOR";
-  hasReference: boolean;
-  reference: string;
-  analogies: Analogy[];
+  id?: string;
+  title?: string;
+  name?: string;
+  slug?: string;
+  url?: string;
+
+  category?: Category | string;
+  firstAnalogy?: string;
+  description?: string;
+  status?: "PENDING" | "PUBLISHED" | "REJECTED" | "DELETED";
+  userStatus?: "ACTIVE" | "BANNED" | "DELETED";
+
+  pinned?: boolean;
+  topicId?: string;
+  analogyId?: string;
+  commenterId?: string;
+  authorId?: string;
+
+  email?: string;
+  username?: string;
+  content?: string;
+  role?: "ADMIN" | "USER" | "EDITOR";
+  hasReference?: boolean;
+
+  reference?: string;
+  analogies?: Analogy[];
+  userId?: string;
+  entityType?: ENTITY_TYPE;
+  entityId?: string;
+
+  entityTitle?: string;
+  action?: ACTIVITY_ACTION;
+  timestamp?: Date;
 };
 
-export type useInputType = Analogy &
-  Category &
-  Topic &
-  Comment &
-  User &
-  ExtendedAnalogy &
-  ExtendedComment &
-  ExtendedTopic &
-  Activity &
-  ExtraInput;
+export type useInputType = ExtraInput & (AnalogyInput | TopicInput);
 
 export function useUpdateItem(item: useInputType, type: string): () => void {
   const ctx = api.useContext();
@@ -71,16 +70,20 @@ export function useUpdateItem(item: useInputType, type: string): () => void {
       try {
         createActivityLogEntry({
           entityType: "category",
-          entityId: item.id,
-          entityTitle: item.name,
+          entityId: item.id as string,
+          entityTitle: item.name as string,
           action: "updated",
         });
 
         updateCategory({
-          id: item.id,
-          name: item.name,
-          slug: item.slug,
-          status: item.status,
+          id: item.id as string,
+          name: item.name as string,
+          slug: item.slug as string,
+          status: item.status as
+            | "PENDING"
+            | "PUBLISHED"
+            | "REJECTED"
+            | "DELETED",
         });
       } catch (e) {
         toast.error("Something went wrong");
@@ -105,16 +108,20 @@ export function useUpdateItem(item: useInputType, type: string): () => void {
       try {
         createActivityLogEntry({
           entityType: "topic",
-          entityId: item.id,
-          entityTitle: item.title,
+          entityId: item.id as string,
+          entityTitle: item.title as string,
           action: "updated",
         });
         updateTopic({
-          id: item.id,
-          title: item.title,
-          slug: item.slug,
-          url: item.url,
-          status: item.status,
+          id: item.id as string,
+          title: item.title as string,
+          slug: item.slug as string,
+          url: item.url as string,
+          status: item.status as
+            | "PENDING"
+            | "PUBLISHED"
+            | "REJECTED"
+            | "DELETED",
         });
       } catch (e) {
         toast.error("Something went wrong");
@@ -149,19 +156,23 @@ export function useUpdateItem(item: useInputType, type: string): () => void {
       try {
         createActivityLogEntry({
           entityType: "analogy",
-          entityId: item.id,
-          entityTitle: item.title,
+          entityId: item.id as string,
+          entityTitle: item.title as string,
           action: "updated",
         });
 
         updateAnalogy({
-          id: item.id,
-          title: item.title,
-          description: item.description,
-          status: item.status,
-          pinned: item.pinned,
-          topicId: item.topicId,
-          authorId: item.authorId,
+          id: item.id as string,
+          title: item.title as string,
+          description: item.description as string,
+          status: item.status as
+            | "PENDING"
+            | "PUBLISHED"
+            | "REJECTED"
+            | "DELETED",
+          pinned: item.pinned as boolean,
+          topicId: item.topicId as string,
+          authorId: item.authorId as string,
         });
       } catch (e) {
         toast.error("Something went wrong");
@@ -187,18 +198,18 @@ export function useUpdateItem(item: useInputType, type: string): () => void {
       try {
         createActivityLogEntry({
           entityType: "user",
-          entityId: item.id,
-          entityTitle: item.name,
+          entityId: item.id as string,
+          entityTitle: item.name as string,
           action: "updated",
         });
 
         updateUser({
-          id: item.id,
-          name: item.name,
-          email: item.email,
-          username: item.username,
-          role: item.role,
-          status: item.status,
+          id: item.id as string,
+          name: item.name as string,
+          email: item.email as string,
+          username: item.username as string,
+          role: item.role as "ADMIN" | "USER" | "EDITOR",
+          status: item.status as "ACTIVE" | "BANNED" | "DELETED",
         });
       } catch (e) {
         toast.error("Something went wrong");
@@ -222,16 +233,20 @@ export function useUpdateItem(item: useInputType, type: string): () => void {
       try {
         createActivityLogEntry({
           entityType: "comment",
-          entityId: item.id,
-          entityTitle: item.content,
+          entityId: item.id as string,
+          entityTitle: item.content as string,
           action: "updated",
         });
         updateComment({
-          id: item.id,
-          content: item.content,
-          status: item.status,
-          analogyId: item.analogyId,
-          commenterId: item.commenterId,
+          id: item.id as string,
+          content: item.content as string,
+          status: item.status as
+            | "PENDING"
+            | "PUBLISHED"
+            | "REJECTED"
+            | "DELETED",
+          analogyId: item.analogyId as string,
+          commenterId: item.commenterId as string,
         });
       } catch (e) {
         toast.error("Something went wrong");

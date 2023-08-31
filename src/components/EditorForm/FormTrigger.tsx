@@ -1,40 +1,48 @@
 import React from "react";
-import { type TopicInput, type EditorInput } from "@/pages/[category]/types";
-import { IoClose as XIcon } from "react-icons/io5";
-import { CgFolderAdd as AddIcon } from "react-icons/cg";
-import { type CATEGORY_STATUS } from "@prisma/client";
 import { type GetResult } from "@prisma/client/runtime/library";
+import { type TopicInput } from "@/pages/[category]/types";
+import { IoClose as XIcon } from "react-icons/io5";
+import { type AnalogyInput } from "@/pages/[category]/[topic]/types";
+import { type CATEGORY_STATUS } from "@prisma/client";
+import { CgFolderAdd as AddIcon } from "react-icons/cg";
 
 export interface IFormTriggerProps {
-  setInput: React.Dispatch<React.SetStateAction<TopicInput>>;
-  newInput: {
-    id: string;
-    title: string;
-    url: string;
-    slug: string;
-    category:
-      | (GetResult<
-          {
-            id: string;
-            name: string;
-            slug: string;
-            status: CATEGORY_STATUS;
-            createdAt: Date;
-            updatedAt: Date;
-          },
-          { [x: string]: () => unknown }
-        > &
-          object)
-      | undefined;
-    analogies: {
-      id: string;
-      description: string;
-      reference: string;
-    }[];
-    starter: {
-      id: string;
-    };
-  };
+  setInput:
+    | React.Dispatch<React.SetStateAction<TopicInput>>
+    | React.Dispatch<React.SetStateAction<AnalogyInput>>;
+  newInput:
+    | {
+        id: string;
+        title: string;
+        url: string;
+        slug: string;
+        category:
+          | (GetResult<
+              {
+                id: string;
+                name: string;
+                slug: string;
+                status: CATEGORY_STATUS;
+                createdAt: Date;
+                updatedAt: Date;
+              },
+              { [x: string]: () => unknown }
+            > &
+              object)
+          | undefined;
+        analogies: {
+          id: string;
+          description: string;
+          reference: string;
+        }[];
+        starter: {
+          id: string;
+        };
+      }
+    | {
+        description: string;
+        topicId: string | undefined;
+      };
 
   editorState: {
     entity: null | "analogy" | "topic";

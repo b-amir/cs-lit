@@ -1,25 +1,49 @@
 import { Analogy } from "./Analogy";
 import { EntityIsEmpty } from "./Messages/EntityIsEmpty";
 import { LoadMoreButton } from "./LoadMoreButton";
-import { type InfiniteData } from "@tanstack/react-query";
+import {
+  type FetchNextPageOptions,
+  type InfiniteQueryObserverResult,
+  type InfiniteData,
+} from "@tanstack/react-query";
 import { type ExtendedAnalogy } from "./PageLayout/SidebarRight/types";
+import { type ANALOGY_STATUS } from "@prisma/client";
 
 interface IFeedProps {
   analogies:
-    | InfiniteData<{
-        items: ExtendedAnalogy[];
-        total: number;
-        pageInfo: {
-          count: number;
-          nextCursor: string | undefined;
-          hasNextPage: boolean | undefined;
-        };
-      }>
+    | {
+        pages:
+          | {
+              items:
+                | {
+                    id: string;
+                    title: string;
+                    description: string;
+                    reference: string | null;
+                    status: ANALOGY_STATUS;
+                    pinned: boolean;
+                    createdAt: Date;
+                    updatedAt: Date;
+                    authorId: string;
+                    topicId: string;
+                  }[]
+                | undefined;
+              total: number;
+              pageInfo: {
+                hasNextPage: boolean | undefined;
+                nextCursor: string | null | undefined;
+              };
+            }[]
+          | undefined;
+        pageParams: unknown[];
+      }
     | undefined;
   hasNextPage: boolean | undefined;
-  fetchNextPage: () => void;
+  fetchNextPage: (
+    options?: FetchNextPageOptions | undefined
+  ) => Promise<InfiniteQueryObserverResult<unknown, unknown>>;
   isFetchingNextPage: boolean;
-  isProfile: boolean;
+  isProfile?: boolean;
   fetchingStatus: "error" | "loading" | "success";
   setAnalogyInput: (arg: any) => void;
   setAnalogyEditorState: (arg: any) => void;

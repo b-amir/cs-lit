@@ -153,4 +153,8 @@ export function useDeleteItem(item: useInputType, type: string): () => void {
     };
     return deleteCommentHandler;
   }
+  // Default return for TypeScript reasons
+  return () => {
+    console.warn(`Type "${type}" is not handled.`);
+  };
 }

@@ -50,7 +50,7 @@ export function TopicEditorForm({
     setInput((prev) => {
       return {
         ...prev,
-        ...prev.item,
+        // ...prev.item,
         [name]: value,
       };
     });
