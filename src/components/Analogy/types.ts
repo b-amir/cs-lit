@@ -3,6 +3,7 @@ import { type InfiniteData } from "@tanstack/react-query";
 import { type ExtendedAnalogy } from "../PageLayout/SidebarRight/types";
 import { type Dispatch, type SetStateAction } from "react";
 import { type ANALOGY_STATUS, type Comment, type User } from "@prisma/client";
+import { type SingleAnalogyData } from "@/pages/[category]/[topic]/[analogy]/types";
 
 export type Analogy = {
   id: string;
@@ -29,7 +30,7 @@ export interface IAnalogyProps {
   needsLocationInfo?: boolean;
   setAnalogyEditorState?: React.Dispatch<React.SetStateAction<AnalogyEditorState>>;
   setAnalogyInput?: React.Dispatch<React.SetStateAction<AnalogyInput>>;
-  analogyData?: ExtendedAnalogy | undefined;
+  analogyData?: SingleAnalogyData;
   analogyStatus?: string;
   votingAverage?: number;
   votingStatus?: string;
@@ -42,9 +43,9 @@ export interface IContentSectionProps {
 export type IHeaderSectionProps = IAnalogyProps
 export interface IInfoRowSectionProps {
   needsLocationInfo?: boolean;
-  analogyData?: ExtendedAnalogy;
-  setAnalogyInput: Dispatch<SetStateAction<AnalogyInput>> | undefined;
-  setAnalogyEditorState: Dispatch<
+  analogyData?: SingleAnalogyData;
+  setAnalogyInput?: Dispatch<SetStateAction<AnalogyInput>> | undefined;
+  setAnalogyEditorState?: Dispatch<
     SetStateAction<{ entity: string; shown: boolean; purpose: string }>
   > | undefined;
 }

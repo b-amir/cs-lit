@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { api } from "@/utils/api";
-import { NavShare } from "./NavShare";
+import { SharingSection } from "./SharingSection";
 import { useRouter } from "next/router";
 import { PageLayout } from "@/components/PageLayout";
 import { MainSection } from "./MainSection";
@@ -10,7 +10,6 @@ import { EntityNotFound } from "@/components/Messages/EntityNotFound";
 import { AboutWebsiteSection } from "./AboutWebsiteSection";
 
 export default function SingleAnalogyPage() {
-  // --- Getting the data --- //
   const router = useRouter();
   const { analogy: UrlAnalogyId } = router.query;
 
@@ -38,14 +37,14 @@ export default function SingleAnalogyPage() {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
       <PageLayout>
-        {/* if analogy is not found - invalid route */}
         {singleAnalogyFetchingStatus === "error" ? (
           <EntityNotFound entity="Analogy" />
         ) : (
           <>
-            <div className="mx-auto flex  max-w-[900px] flex-col justify-between pt-28 sm:px-10 sm:pt-40 lg:px-14">
-              <NavShare router={router} />
+            <div className="mx-auto flex max-w-[900px] flex-col justify-between pt-28 sm:px-10 sm:pt-40 lg:px-14">
+              <SharingSection />
               <MainSection singleAnalogyData={singleAnalogyData} />
               <InfoSection singleAnalogyData={singleAnalogyData} />
               <CommentSection analogyId={singleAnalogyData?.id} />

@@ -1,10 +1,13 @@
+import { useState } from "react";
+import { saveImage } from "@/utils/saveImage";
+import { useRouter } from "next/router";
 import { FaArrowLeft } from "react-icons/fa";
 import { RiImageLine } from "react-icons/ri";
 import { AiOutlineLink } from "react-icons/ai";
-import { useState } from "react";
-import { saveImage } from "@/utils/saveImage";
 
-export function NavShare({ router }) {
+export function SharingSection() {
+  const router = useRouter();
+
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
@@ -34,14 +37,14 @@ export function NavShare({ router }) {
         Share As:{" "}
         <button
           className="mx-2 inline-flex flex-row items-center rounded-[12px] border border-[#d2d2d28e] bg-[#ffffffc1] px-4 py-1 text-sm transition-all hover:border-[#c8c8c8] hover:bg-[#ffffff]"
-          onClick={saveImage}
+          onClick={saveImage as () => void}
         >
           <RiImageLine className="mr-1" />
           Image{" "}
         </button>{" "}
         or{" "}
         <button
-          onClick={handleCopy}
+          onClick={handleCopy as () => void}
           className="mx-2 inline-flex flex-row items-center rounded-[12px] border border-[#d2d2d28e] bg-[#ffffffc1] px-4 py-1 text-sm transition-all hover:border-[#c8c8c8] hover:bg-[#ffffff]"
         >
           {!copied ? <AiOutlineLink className="mr-1" /> : null}

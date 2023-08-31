@@ -1,11 +1,7 @@
 import { InfoRowSection } from "@/components/Analogy/InfoRowSection";
-import { type Analogy as AnalogyType } from "@prisma/client";
+import { type IInfoSectionProps } from "./types";
 
-export function InfoSection({
-  singleAnalogyData,
-}: {
-  singleAnalogyData: AnalogyType;
-}) {
+export function InfoSection({ singleAnalogyData }: IInfoSectionProps) {
   return (
     <div className="mb-auto mt-8 rounded-md bg-[#d7d7d7] px-2 py-2  sm:rounded-[23px] sm:px-6">
       <InfoRowSection

@@ -6,6 +6,7 @@ import {
   type Category,
   type ENTITY_TYPE,
 } from "@prisma/client";
+import { type CommentInput } from "@/pages/[category]/[topic]/[analogy]/types";
 
 export type ExtraInput = {
   id?: string;
@@ -43,4 +44,4 @@ export type ExtraInput = {
   timestamp?: Date;
 };
 
-export type GeneralInputType = ExtraInput & (AnalogyInput | TopicInput);
+export type GeneralInputType = ExtraInput & (AnalogyInput | TopicInput | CommentInput);

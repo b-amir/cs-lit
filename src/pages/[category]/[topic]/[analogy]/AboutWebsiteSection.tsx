@@ -1,7 +1,7 @@
-import { LuExternalLink } from "react-icons/lu";
-import { useState } from "react";
-import { archivo } from "@/styles/customFonts";
 import Link from "next/link";
+import { archivo } from "@/styles/customFonts";
+import { useState } from "react";
+import { LuExternalLink as LinkIcon } from "react-icons/lu";
 
 export function AboutWebsiteSection() {
   const [aboutIsHidden, setAboutIsHidden] = useState(true);
@@ -44,8 +44,7 @@ export function AboutWebsiteSection() {
           <br />
           <Link href="/">
             <span className="inline-flex cursor-pointer flex-row text-sm font-semibold hover:underline ">
-              <LuExternalLink className="mr-1 mt-0.5" /> See more analogies like
-              this
+              <LinkIcon className="mr-1 mt-0.5" /> See more analogies like this
             </span>
           </Link>
         </div>
