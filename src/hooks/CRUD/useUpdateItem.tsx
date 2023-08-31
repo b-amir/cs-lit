@@ -19,8 +19,15 @@ export function useUpdateItem(
         void ctx.category.getAllWithQuery.invalidate();
         toast.success("Category updated successfully.");
       },
-      onError: () => {
-        toast.error("Something went wrong");
+      onError: (e) => {
+        const errorMessage = e.data?.zodError?.fieldErrors;
+        if (errorMessage) {
+          if (errorMessage.name) {
+            toast.error(errorMessage?.name.join(" "));
+          } else {
+            toast.error("Something went wrong.");
+          }
+        }
       },
     });
 

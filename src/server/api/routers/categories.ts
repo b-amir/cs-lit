@@ -8,8 +8,7 @@ import {
 // import { clerkClient } from "@clerk/nextjs/server";
 // import type { User } from "@clerk/nextjs/api";
 import { TRPCError } from "@trpc/server";
-import { filterUserForClient } from "@/server/helpers/filterUserForClient";
-import { PrismaClient, type Category, Prisma } from "@prisma/client";
+import { type Prisma } from "@prisma/client";
 
 
 export const categoriesRouter = createTRPCRouter({
@@ -171,7 +170,7 @@ export const categoriesRouter = createTRPCRouter({
     .input(
       z.object({
         id: z.string(),
-        name: z.string().min(3).max(32),
+        name: z.string().min(3, "Category name must be < 2 characters!").max(32, "Category name must be < 32 characters!"),
         slug: z.string(),
         status: z.enum(["PENDING", "PUBLISHED", "REJECTED", "DELETED"]),
       })

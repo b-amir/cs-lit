@@ -316,7 +316,7 @@ export const topicsRouter = createTRPCRouter({
   create: protectedProcedure
     .input(
       z.object({
-        title: z.string().min(2, "Title is too short!").max(32, "Title is too long!"),
+        title: z.string().min(2, "Title is too short!").max(100, "Title is too long!"),
         slug: z.string(),
         id: z.string(),
         category: z.object({
@@ -369,7 +369,7 @@ export const topicsRouter = createTRPCRouter({
     .input(
       z.object({
         id: z.string(),
-        title: z.string().min(2).max(100),
+        title: z.string().min(2, "Title is too short!").max(100, "Title is too long!"),
         slug: z.string(),
         // category: z.object({
         //   id: z.string(),
