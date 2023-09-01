@@ -8,7 +8,6 @@ export async function saveImage() {
     "single-analogy-topic"
   );
   const analogyAuthor = document.getElementById("analogy-author");
-  // const analogyContent = document.getElementById("analogy-content");
 
 
   // Store the original styles

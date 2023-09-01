@@ -1,13 +1,15 @@
 import { Analogy } from "./Analogy";
 import { EntityIsEmpty } from "./Messages/EntityIsEmpty";
 import { LoadMoreButton } from "./LoadMoreButton";
+import { type AnalogyInput } from "./Analogy/types";
+import {
+  type Analogy as AnalogyType,
+  type ANALOGY_STATUS,
+} from "@prisma/client";
 import {
   type FetchNextPageOptions,
   type InfiniteQueryObserverResult,
-  type InfiniteData,
 } from "@tanstack/react-query";
-import { type ExtendedAnalogy } from "./PageLayout/SidebarRight/types";
-import { type ANALOGY_STATUS } from "@prisma/client";
 
 interface IFeedProps {
   analogies:
@@ -45,7 +47,9 @@ interface IFeedProps {
   isFetchingNextPage: boolean;
   isProfile?: boolean;
   fetchingStatus: "error" | "loading" | "success";
-  setAnalogyInput: (arg: any) => void;
+  setAnalogyInput:
+    | React.Dispatch<React.SetStateAction<AnalogyInput>>
+    | undefined;
   setAnalogyEditorState: (arg: any) => void;
 }
 
@@ -60,7 +64,11 @@ export const AnalogiesFeed: React.FC<IFeedProps> = ({
   setAnalogyEditorState,
 }) => {
   //
-  if (fetchingStatus === "success" && analogies?.pages[0]?.items.length === 0) {
+  if (
+    fetchingStatus === "success" &&
+    analogies?.pages &&
+    !analogies?.pages[0]?.items?.length
+  ) {
     return (
       <EntityIsEmpty
         entity={isProfile ? "profileFeed" : "topicFeed"}
@@ -81,8 +89,7 @@ export const AnalogiesFeed: React.FC<IFeedProps> = ({
       className={`mb-auto flex flex-col items-center  pb-16 sm:px-10 lg:px-[16.666667%]`}
     >
       {analogies?.pages?.map((page) =>
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        page?.items?.map((analogy: ExtendedAnalogy) => (
+        page?.items?.map((analogy: AnalogyType) => (
           <Analogy
             analogy={{
               id: analogy.id,

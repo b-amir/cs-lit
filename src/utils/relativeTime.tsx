@@ -1,5 +1,4 @@
 import React from "react";
-import RelativeTimeFormat from "@formatjs/intl-relativetimeformat";
 
 export const RelativeTime = (time: string | number | Date) => {
   const formatter = new Intl.RelativeTimeFormat(undefined, {
