@@ -82,7 +82,6 @@ export function useCreateItem(
 
     const { mutate: createTopic } = api.topic.create.useMutation({
       onSuccess: () => {
-        void ctx.topic.getAll.invalidate();
         void ctx.topic.getByCategoryId.invalidate();
         window.scrollTo({
           top: document.body.offsetTop - 90,

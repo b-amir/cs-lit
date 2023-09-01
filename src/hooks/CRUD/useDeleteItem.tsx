@@ -16,7 +16,6 @@ export function useDeleteItem(
     // deleting topic
     const { mutate: deleteTopic } = api.topic.delete.useMutation({
       onSuccess: () => {
-        void ctx.topic.getAll.invalidate();
         void ctx.topic.getAllWithQuery.invalidate();
         void ctx.topic.getByCategoryId.invalidate();
         toast.success("Topic deleted successfully.");
@@ -102,7 +101,6 @@ export function useDeleteItem(
     // deleting user
     const { mutate: deleteUser } = api.profile.delete.useMutation({
       onSuccess: () => {
-        void ctx.profile.getAll.invalidate();
         void ctx.profile.getAllWithQuery.invalidate();
         toast.success("User deleted successfully.");
       },

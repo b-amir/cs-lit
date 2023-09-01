@@ -1,14 +1,15 @@
 import { z } from "zod";
+import { prisma } from "@/server/db"
+import { type Comment, type Prisma } from "@prisma/client";
 import {
   createTRPCRouter,
   publicProcedure,
   protectedProcedure,
   adminProcedure,
 } from "@/server/api/trpc";
-import { type Comment, type Prisma } from "@prisma/client";
-import { prisma } from "@/server/db"
 
 
+// --- append user data to comments --- //
 export const commentsWithUserData = async (comments: Comment[]) => {
   const commentsWithUserData = await Promise.all(
     comments.map(async (comment) => {
@@ -21,10 +22,11 @@ export const commentsWithUserData = async (comments: Comment[]) => {
   return commentsWithUserData;
 };
 
+
 export const commentsRouter = createTRPCRouter({
 
-
-
+  // --- Get all comments, with search ability --- //
+  // used in admin panel
   getAllWithQuery: publicProcedure
     .input(z.object({
       query: z.string().max(64).nullish(),
@@ -74,7 +76,8 @@ export const commentsRouter = createTRPCRouter({
     }),
 
 
-
+  // --- Get all comments for a specific analogy --- //
+  // used in single analogy page & info row
   getByAnalogyId: publicProcedure
     .input(
       z.object({
@@ -120,7 +123,8 @@ export const commentsRouter = createTRPCRouter({
     }),
 
 
-
+  // --- create a comment --- //
+  // used in a custom hook --> single analogy page
   create: protectedProcedure
     .input(
       z.object({
@@ -142,7 +146,8 @@ export const commentsRouter = createTRPCRouter({
     }),
 
 
-
+  // --- edit a comment --- //
+  // used in a custom hook --> admin panel
   update: protectedProcedure
     .input(
       z.object({
@@ -154,7 +159,6 @@ export const commentsRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ ctx, input }) => {
-
       const comment = await ctx.prisma.comment.update({
         where: {
           id: input.id,
@@ -170,7 +174,8 @@ export const commentsRouter = createTRPCRouter({
     }),
 
 
-
+  // --- delete a comment --- //
+  // used in a custom hook --> admin panel
   delete: adminProcedure
     .input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {
@@ -179,6 +184,5 @@ export const commentsRouter = createTRPCRouter({
       });
       return comment;
     }),
-
 
 });

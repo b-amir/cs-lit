@@ -61,11 +61,20 @@ export function useUpdateItem(
     // updating topic
     const { mutate: updateTopic } = api.topic.update.useMutation({
       onSuccess: () => {
-        void ctx.topic.getAll.invalidate();
         void ctx.topic.getAllWithQuery.invalidate();
         void ctx.topic.getByCategoryId.invalidate();
         void ctx.pending.getAll.invalidate();
         toast.success("Topic updated successfully.");
+      },
+      onError: (e) => {
+        const errorMessage = e.data?.zodError?.fieldErrors;
+        if (errorMessage) {
+          if (errorMessage.title) {
+            toast.error(errorMessage?.title.join(" "));
+          } else {
+            toast.error("Something went wrong.");
+          }
+        }
       },
     });
 

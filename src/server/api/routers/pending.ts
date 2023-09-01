@@ -1,18 +1,17 @@
 import { z } from "zod";
+import { commentsWithUserData } from "./comments";
+import { topicsWithCategoryData } from "./topics";
+import { analogiesWithUserـ& ـTopicـ & ـCategoryData } from "./analogies";
 import {
   createTRPCRouter,
-  publicProcedure,
   protectedProcedure,
 } from "@/server/api/trpc";
-import { topicsWithCategoryData } from "./topics";
-import { analogiesWithUserAndTopicAndCategoryData } from "./analogies";
-import { commentsWithUserData } from "./comments";
 
 
 export const pendingRouter = createTRPCRouter({
 
-  // get all topics, analogies and comments with the status of PENDING
-
+  // --- get all topics, analogies and comments with the status of PENDING --- //
+  // used in admin panel
   getAll: protectedProcedure
     .input(
       z.object({
@@ -65,7 +64,7 @@ export const pendingRouter = createTRPCRouter({
       });
 
       const topicsWithData = await topicsWithCategoryData(topics);
-      const analogiesWithData = await analogiesWithUserAndTopicAndCategoryData(analogies);
+      const analogiesWithData = await analogiesWithUserـ & ـTopicـ & ـCategoryData(analogies);
       const commentsWithData = await commentsWithUserData(comments)
 
       const items = [...categories, ...topicsWithData, ...analogiesWithData, ...commentsWithData];

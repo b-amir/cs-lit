@@ -1,61 +1,17 @@
 
-// import { clerkClient } from "@clerk/nextjs/server";
-import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-// import { signIn, signOut, useSession, } from "next-auth/react";
-
-
-import { adminProcedure, createTRPCRouter, protectedProcedure, publicProcedure } from "@/server/api/trpc";
-import { filterUserForClient, filterUsersForClient } from "@/server/helpers/filterUserForClient";
-import { SessionContext, SessionProvider } from "next-auth/react";
-import { Session } from "inspector";
 import { prisma } from "@/server/db";
-import { Prisma } from "@prisma/client";
-// const { data: sessionData } = useSession();
+import { TRPCError } from "@trpc/server";
+import { filterUserForClient, filterUsersForClient } from "@/server/helpers/filterUserForClient";
+import { adminProcedure, createTRPCRouter, protectedProcedure, publicProcedure } from "@/server/api/trpc";
 
-export const UsersAnalogyCount = async (userId: string) => {
-  const analogies = await prisma.analogy.findMany({
-    where: {
-      authorId: userId,
-    },
-  });
-  return analogies.length;
-}
+
 
 export const profileRouter = createTRPCRouter({
 
-  getAll: publicProcedure
-    .input(
-      z.object({
-        limit: z.number().min(1).max(100).nullish(),
-        cursor: z.string().nullish(),
-      }),
-    )
-    .query(async ({ ctx, input }) => {
-      const limit = input.limit ?? 15;
-      const { cursor } = input;
-      const items = await ctx.prisma.user.findMany({
-        take: limit + 1,
-        cursor: cursor ? { id: cursor } : undefined,
-        orderBy: {
-          emailVerified: 'asc',
-        },
-      });
-      let nextCursor: typeof cursor | undefined = undefined;
-      if (items.length > limit) {
-        const nextItem = items.pop();
-        nextCursor = nextItem?.id as typeof cursor;
-      }
-      return {
-        items,
-        total: await ctx.prisma.user.count(),
-        pageInfo: {
-          hasNextPage: items.length > limit,
-          nextCursor,
-        },
-      };
-    }),
 
+  // --- Get all users, with search ability --- //
+  // used in admin panel
   getAllWithQuery: publicProcedure
     .input(z.object({
       query: z.string().max(64).nullish(),
@@ -104,38 +60,10 @@ export const profileRouter = createTRPCRouter({
       };
     }),
 
-  getUserId: publicProcedure
-    .input(z.object({ id: z.string() }))
-    .query(async ({ ctx, input }) => {
 
-      const user = ctx?.session?.user;
-      if (!user) {
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: "User not found",
-        });
-      }
-      return user.id;
-    }
-    ),
 
-  // gets profile for the currently logged in user
-  getCurrentUsersProfile: publicProcedure
-    .input(z.object({ id: z.string() }))
-    .query(async ({ ctx, input }) => {
-
-      const user = ctx?.session?.user;
-      if (!user) {
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: "User not found",
-        });
-      }
-      return filterUserForClient(user);
-    }
-    ),
-
-  // gets profile for any user with the given id
+  // --- get profile for user with the given id ---//
+  // used in breadcrumbs, activity logs, profile page
   getProfileById: publicProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ ctx, input }) => {
@@ -155,6 +83,8 @@ export const profileRouter = createTRPCRouter({
     ),
 
 
+  // --- get top 3 contributors with most published analogies --- //
+  // used in sidebar-right widget
   getTopThree: publicProcedure
     .query(async () => {
       const users = await prisma.user.findMany({
@@ -184,7 +114,6 @@ export const profileRouter = createTRPCRouter({
           {
             analogies: {
               _count: 'desc',
-
             },
           },
         ],
@@ -193,7 +122,8 @@ export const profileRouter = createTRPCRouter({
     }),
 
 
-
+  // --- edit a user --- //
+  // used in a custom hook --> admin panel
   update: protectedProcedure
     .input(
       z.object({
@@ -206,7 +136,6 @@ export const profileRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ ctx, input }) => {
-
       const user = await ctx.prisma.user.update({
         where: {
           id: input.id,
@@ -222,14 +151,15 @@ export const profileRouter = createTRPCRouter({
       return user;
     }),
 
+
+  // --- delete a user --- //
+  // used in a custom hook --> admin panel
   delete: adminProcedure
     .input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {
-
       const user = await ctx.prisma.user.delete({
         where: { id: input.id },
       });
-
       return user;
     }),
 

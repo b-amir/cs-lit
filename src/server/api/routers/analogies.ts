@@ -1,27 +1,19 @@
 import { z } from "zod";
+import { prisma } from "@/server/db"
+import { TRPCError } from "@trpc/server";
+import { getTopicNameById, getUserNameById } from "./topics";
+import { type Analogy as AnalogyType, type Prisma } from "@prisma/client";
 import {
   createTRPCRouter,
   publicProcedure,
   protectedProcedure,
   adminProcedure,
 } from "@/server/api/trpc";
-// import { clerkClient } from "@clerk/nextjs/server";
-// import type { User } from "@clerk/nextjs/api";
-import { TRPCError } from "@trpc/server";
-import { filterUserForClient } from "@/server/helpers/filterUserForClient";
-import { type Analogy as AnalogyType, type Prisma } from "@prisma/client";
-import { prisma } from "@/server/db"
-import { getTopicNameById, getUserNameById } from "./topics";
-
-
-// const prisma = new PrismaClient();
 
 
 
-
-
+// --- append user data to analogies --- //
 export const analogiesWithUserData = async (analogies: AnalogyType[]) => {
-  // const prisma = new PrismaClient();
   const analogiesWithUserData = await Promise.all(
     analogies.map(async (analogy) => {
       const user = await prisma.user.findUnique({
@@ -33,25 +25,9 @@ export const analogiesWithUserData = async (analogies: AnalogyType[]) => {
   return analogiesWithUserData;
 };
 
-
-export const analogiesWithUserAndTopicData = async (analogies: AnalogyType[]) => {
-  // const prisma = new PrismaClient();
-  const analogiesWithUserAndTopicData = await Promise.all(
-    analogies.map(async (analogy) => {
-      const user = await prisma.user.findUnique({
-        where: { id: analogy.authorId },
-      });
-      const topic = await prisma.topic.findUnique({
-        where: { id: analogy.topicId },
-      });
-      return { ...analogy, user, topic };
-    })
-  );
-  return analogiesWithUserAndTopicData;
-};
-
-export const analogiesWithUserAndTopicAndCategoryData = async (analogies: AnalogyType[]) => {
-  const analogiesWithUserAndTopicAndCategoryData = await Promise.all(
+// --- append user & topic & category data to analogies --- //
+export const analogiesWithUserـTopicـCategoryData = async (analogies: AnalogyType[]) => {
+  const analogiesWithUserـTopicـCategoryData = await Promise.all(
 
     analogies.map(async (analogy) => {
       const user = await prisma.user.findUnique({
@@ -66,10 +42,11 @@ export const analogiesWithUserAndTopicAndCategoryData = async (analogies: Analog
       return { ...analogy, user, topic, category };
     })
   );
-  return analogiesWithUserAndTopicAndCategoryData;
+  return analogiesWithUserـTopicـCategoryData;
 };
 
-export const singleAnalogyWithUserAndTopicAndCategoryData = async (analogy: AnalogyType) => {
+// --- append user & topic & category data to a single analogy --- //
+export const singleAnalogyWithUserـTopicـCategoryData = async (analogy: AnalogyType) => {
   const user = await prisma.user.findUnique({
     where: { id: analogy.authorId },
   });
@@ -79,14 +56,16 @@ export const singleAnalogyWithUserAndTopicAndCategoryData = async (analogy: Anal
   const category = topic ? await prisma.category.findUnique({
     where: { id: topic.categoryId },
   }) : null;
-  const singleAnalogyWithUserAndTopicAndCategoryData = { ...analogy, user, topic, category }
-
-  return singleAnalogyWithUserAndTopicAndCategoryData;
+  const singleAnalogyWithUserـTopicـCategoryData = { ...analogy, user, topic, category }
+  return singleAnalogyWithUserـTopicـCategoryData;
 }
 
 
 
 export const analogiesRouter = createTRPCRouter({
+
+  // --- get all published analogies --- //
+  // used in sidebar-right recent analogies
   getAll: publicProcedure
     .input(
       z.object({
@@ -96,11 +75,9 @@ export const analogiesRouter = createTRPCRouter({
       })
     )
     .query(async ({ ctx, input }) => {
-
       const limit = input.limit ?? 15
       const { cursor } = input
       const order = input.order ?? "asc"
-
       const items = await ctx.prisma.analogy.findMany({
         take: limit + 1,
         where: {
@@ -117,7 +94,7 @@ export const analogiesRouter = createTRPCRouter({
         nextCursor = nextItem?.id as typeof cursor;
       }
       return {
-        items: await analogiesWithUserAndTopicAndCategoryData(items),
+        items: await analogiesWithUserـTopicـCategoryData(items),
         total: await ctx.prisma.analogy.count(),
         pageInfo: {
           hasNextPage: items.length > limit,
@@ -126,6 +103,9 @@ export const analogiesRouter = createTRPCRouter({
       };
     }),
 
+
+  // --- Get all analogies, with search ability --- //
+  // used in admin panel
   getAllWithQuery: publicProcedure
     .input(z.object({
       query: z.string().max(64).nullish(),
@@ -164,7 +144,7 @@ export const analogiesRouter = createTRPCRouter({
         nextCursor = nextItem?.id as typeof cursor;
       }
       return {
-        items: await analogiesWithUserAndTopicAndCategoryData(items),
+        items: await analogiesWithUserـTopicـCategoryData(items),
         total: await ctx.prisma.analogy.count(),
         pageInfo: {
           count: items.length,
@@ -174,7 +154,8 @@ export const analogiesRouter = createTRPCRouter({
       };
     }),
 
-
+  // --- get single analogy for given id --- //
+  // used in analogy component & landing pages's example section
   getById: publicProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ ctx, input }) => {
@@ -184,11 +165,12 @@ export const analogiesRouter = createTRPCRouter({
         },
       });
       if (!analogy) throw new TRPCError({ code: "NOT_FOUND" });
-      // return (await addUsersDataToAnalogies([analogy]))[0];
-      return singleAnalogyWithUserAndTopicAndCategoryData(analogy);
+      return singleAnalogyWithUserـTopicـCategoryData(analogy);
     }),
 
 
+  // --- get all analogies for given user id --- //
+  // used in profile page
   getAnalogiesByUserId: publicProcedure
     .input(
       z.object({
@@ -198,7 +180,6 @@ export const analogiesRouter = createTRPCRouter({
         order: z.enum(["asc", "desc"]).nullish()
       }))
     .query(async ({ ctx, input }) => {
-
       const limit = input.limit ?? 15
       const { cursor } = input
       const order = input.order ?? "asc"
@@ -208,6 +189,7 @@ export const analogiesRouter = createTRPCRouter({
           status: "PUBLISHED"
         }
       });
+
       const publishedItems = await ctx.prisma.analogy.findMany({
         take: limit + 1,
         cursor: cursor ? { id: cursor } : undefined,
@@ -235,7 +217,6 @@ export const analogiesRouter = createTRPCRouter({
       const isModerator = ["ADMIN", "EDITOR"].includes(ctx?.session?.user.role);
       const itemsCurrentUserStarted = allItems?.filter(item => item.authorId === ctx.session?.user.id);
       const hasAccessToUnpublished = isModerator || itemsCurrentUserStarted.length
-
       if (hasAccessToUnpublished) {
         items = allItems;
       }
@@ -244,7 +225,6 @@ export const analogiesRouter = createTRPCRouter({
         const nextItem = items.pop();
         nextCursor = nextItem?.id as typeof cursor;
       }
-
       return {
         items,
         total: totalPublished,
@@ -255,7 +235,8 @@ export const analogiesRouter = createTRPCRouter({
       };
     }),
 
-
+  // --- get single analogy for given id, hide unpublished for non-moderators --- //
+  // used in single analogy page & breadcrumbs
   getSingleAnalogyById: publicProcedure
     .input(
       z.object({
@@ -280,24 +261,13 @@ export const analogiesRouter = createTRPCRouter({
         })
         .then((analogy) => {
           if (!analogy) throw new TRPCError({ code: "NOT_FOUND" });
-          return singleAnalogyWithUserAndTopicAndCategoryData(analogy);
+          return singleAnalogyWithUserـTopicـCategoryData(analogy);
         })
     ),
 
 
-  // getAnalogiesByTopicId: publicProcedure
-  //   .input(z.object({ id: z.string() }))
-  //   .query(async ({ ctx, input }) => {
-  //     const analogies = await ctx.prisma.analogy.findMany({
-  //       where: {
-  //         topicId: input.id,
-  //       },
-  //       take: 10,
-  //       orderBy: [{ createdAt: "desc" }],
-  //     });
-  //     return analogiesWithUserData(analogies);
-  //   }),
-
+  // --- get all analogies for a certain topic
+  // used in topic page
   getByTopicId: publicProcedure
     .input(
       z.object({
@@ -364,10 +334,8 @@ export const analogiesRouter = createTRPCRouter({
           createdAt: order as Prisma.SortOrder
         }
       });
-
       let items;
       const isModerator = ["ADMIN", "EDITOR"].includes(ctx?.session?.user.role);
-
       if (!input.viewerId) { items = publishedItems }
       if (input.viewerId && publishedItems_plus_ViewersUnpublishedItems.length > 0) {
         items = publishedItems_plus_ViewersUnpublishedItems
@@ -375,14 +343,11 @@ export const analogiesRouter = createTRPCRouter({
       if (isModerator) {
         items = allItems;
       }
-
       let nextCursor: typeof cursor | undefined = undefined;
       if (items.length > limit) {
-        const nextItem = items.pop();
+        const nextItem = items?.pop();
         nextCursor = nextItem?.id as typeof cursor;
       }
-
-
       return {
         items,
         total: totalPublished,
@@ -395,7 +360,8 @@ export const analogiesRouter = createTRPCRouter({
 
 
 
-
+  // --- create an analogy --- //
+  // used in a custom hook --> topic page & category page (first analogy of a topic)
   create: protectedProcedure
     .input(
       z.object({
@@ -407,7 +373,6 @@ export const analogiesRouter = createTRPCRouter({
     )
     .mutation(async ({ ctx, input }) => {
       const authorId = ctx.session?.user.id;
-
       const analogy = await ctx.prisma.analogy.create({
         data: {
           title: `${await getTopicNameById(input.topicId)} by ${await getUserNameById(authorId)}`,
@@ -420,6 +385,9 @@ export const analogiesRouter = createTRPCRouter({
       return analogy;
     }),
 
+
+  // --- edit an analogy --- //
+  // used in a custom hook --> analogy editor & admin panel
   update: protectedProcedure
     .input(
       z.object({
@@ -433,7 +401,6 @@ export const analogiesRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ ctx, input }) => {
-
       const analogy = await ctx.prisma.analogy.update({
         where: {
           id: input.id,
@@ -451,27 +418,20 @@ export const analogiesRouter = createTRPCRouter({
     }),
 
 
-
-  deleteAllAnalogiesFromTopic: protectedProcedure
-    .input(
-      z.object({
-        topicId: z.string(),
-      })
-    )
+  // --- delete an analogy --- //
+  // used in a custom hook --> analogy editor & admin panel
+  delete: adminProcedure
+    .input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {
-      const authorId = ctx.session?.user.id;
-
-      const analogies = await ctx.prisma.analogy.deleteMany({
-        where: {
-          topicId: input.topicId,
-          authorId: authorId,
-        },
+      const analogy = await ctx.prisma.analogy.delete({
+        where: { id: input.id },
       });
-      return analogies;
-    }
-    ),
+      return analogy;
+    }),
 
 
+  // --- get votes for a single analogy --- //
+  // used in analogy component
   getAnalogyVotes: publicProcedure
     .input(
       z.object({
@@ -493,11 +453,13 @@ export const analogiesRouter = createTRPCRouter({
         likes: analogyLikes.length,
         dislikes: analogyDislikes.length,
       }
-
       return analogyVotes;
     }
     ),
 
+
+  // --- casting votes for a single analogy --- //
+  // used in analogy component
   voting: protectedProcedure
     .input(
       z.object({
@@ -556,6 +518,9 @@ export const analogiesRouter = createTRPCRouter({
     }
     ),
 
+
+  // --- get current user's votes for a single analogy --- //
+  // used in analogy component
   whatDidCurrentUserVote: protectedProcedure
     .input(
       z.object({
@@ -578,29 +543,10 @@ export const analogiesRouter = createTRPCRouter({
         },
       });
       const whatDidCurrentUserVote =
-        // if analogyLikes.length === 1 { return "like" }
-        // else if (analogyDislikes.length === 1) { return "dislike" }
-        // else { return null }
         analogyLikes.length === 1 ? "like" : analogyDislikes.length === 1 ? "dislike" : null;
-
-
-
-
-
       return whatDidCurrentUserVote;
     }
     ),
-
-
-
-  delete: adminProcedure
-    .input(z.object({ id: z.string() }))
-    .mutation(async ({ ctx, input }) => {
-      const analogy = await ctx.prisma.analogy.delete({
-        where: { id: input.id },
-      });
-      return analogy;
-    }),
 
 
 });

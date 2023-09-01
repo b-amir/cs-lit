@@ -1,17 +1,17 @@
 import { z } from "zod";
+import { TRPCError } from "@trpc/server";
 import {
   createTRPCRouter,
   publicProcedure,
   protectedProcedure,
 } from "@/server/api/trpc";
-import { TRPCError } from "@trpc/server";
-import { PrismaClient, type Topic } from "@prisma/client";
 
 
 export const activityRouter = createTRPCRouter({
 
-  // get all the activity logs from activity table
 
+  // --- Get all activity logs --- //
+  // used in admin panel
   getAll: publicProcedure
     .input(
       z.object({
@@ -46,21 +46,8 @@ export const activityRouter = createTRPCRouter({
     }),
 
 
-
-
-  // a create procedure that fires off when a mutation is made. it's gonna get called on onSuccess of other stuff.
-  // here's my prisma schema for the activity table:
-  //   model Activity {
-  //     id        String   @id @default(cuid())
-  //     user      User     @relation(fields: [userId], references: [id])
-  //     userId    String
-  //     entity    String // e.g. "Topic", "Analogy"
-  //     entityId  String
-  //     action    String // e.g. "created", "updated", "deleted"
-  //     timestamp DateTime @default(now())
-
-  //     @@index([userId])
-  // }
+  // --- create an activity log --- //
+  // used in every custom hook when a mutation happens
   create: protectedProcedure
     .input(
       z.object({
@@ -91,6 +78,5 @@ export const activityRouter = createTRPCRouter({
       return activity;
     }
     ),
-
 
 });
