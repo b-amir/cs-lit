@@ -20,7 +20,7 @@ export function OrderBy({ setOrderBy }: OrderByProps) {
         />
         <label
           htmlFor="newest"
-          className="flex cursor-pointer select-none flex-row items-center justify-center gap-1 rounded-md border border-transparent px-3 py-1 text-center transition-transform peer-checked:translate-x-1 peer-checked:border-[#00000045] peer-checked:bg-gradient-to-r peer-checked:from-[#fff] peer-checked:to-[#f0efef] peer-checked:font-bold peer-checked:text-gray-800 peer-checked:shadow-lg peer-checked:duration-200"
+          className="flex cursor-pointer select-none flex-row items-center justify-center gap-1 rounded-md border border-transparent px-3 py-1 text-center transition-transform peer-checked:translate-x-1 peer-checked:border-[#00000045] peer-checked:bg-gradient-to-r peer-checked:from-white peer-checked:to-[#f0efef] peer-checked:font-bold peer-checked:text-gray-800 peer-checked:shadow-lg peer-checked:duration-200"
         >
           <SortDescIcon className="mb-[3px] hidden sm:flex" /> Newest
         </label>
@@ -36,7 +36,7 @@ export function OrderBy({ setOrderBy }: OrderByProps) {
         />
         <label
           htmlFor="oldest"
-          className=" flex cursor-pointer select-none flex-row items-center justify-center gap-1 rounded-md border border-transparent px-3 py-1 text-center transition-transform peer-checked:-translate-x-1 peer-checked:border-[#00000045] peer-checked:bg-gradient-to-l peer-checked:from-[#fff] peer-checked:to-[#f0efef] peer-checked:font-bold peer-checked:text-gray-800 peer-checked:shadow-sm peer-checked:duration-200"
+          className=" flex cursor-pointer select-none flex-row items-center justify-center gap-1 rounded-md border border-transparent px-3 py-1 text-center transition-transform peer-checked:-translate-x-1 peer-checked:border-[#00000045] peer-checked:bg-gradient-to-l peer-checked:from-white peer-checked:to-[#f0efef] peer-checked:font-bold peer-checked:text-gray-800 peer-checked:shadow-sm peer-checked:duration-200"
         >
           <SortAscIcon className="mb-[4px] hidden sm:flex" />
           Oldest

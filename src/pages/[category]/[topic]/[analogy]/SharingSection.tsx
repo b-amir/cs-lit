@@ -23,7 +23,7 @@ export function SharingSection() {
   return (
     <div
       id="nav-share"
-      className="mb-8 flex w-full flex-row justify-end text-sm text-[#2A2A2E] sm:justify-between sm:text-base"
+      className="mb-8 flex w-full flex-row justify-end text-sm text-dark-2 sm:justify-between sm:text-base"
     >
       <button
         onClick={() => router.back()}
@@ -36,7 +36,7 @@ export function SharingSection() {
         {/* <FiShare />  */}
         Share As:{" "}
         <button
-          className="mx-2 inline-flex flex-row items-center rounded-[12px] border border-[#d2d2d28e] bg-[#ffffffc1] px-4 py-1 text-sm transition-all hover:border-[#c8c8c8] hover:bg-[#ffffff]"
+          className="mx-2 inline-flex flex-row items-center rounded-[12px] border border-[#d2d2d28e] bg-[#ffffffc1] px-4 py-1 text-sm transition-all hover:border-[#c8c8c8] hover:bg-white"
           onClick={saveImage as () => void}
         >
           <RiImageLine className="mr-1" />
@@ -45,7 +45,7 @@ export function SharingSection() {
         or{" "}
         <button
           onClick={handleCopy as () => void}
-          className="mx-2 inline-flex flex-row items-center rounded-[12px] border border-[#d2d2d28e] bg-[#ffffffc1] px-4 py-1 text-sm transition-all hover:border-[#c8c8c8] hover:bg-[#ffffff]"
+          className="mx-2 inline-flex flex-row items-center rounded-[12px] border border-[#d2d2d28e] bg-[#ffffffc1] px-4 py-1 text-sm transition-all hover:border-[#c8c8c8] hover:bg-white"
         >
           {!copied ? <AiOutlineLink className="mr-1" /> : null}
           {copied ? "Copied" : "Link"}

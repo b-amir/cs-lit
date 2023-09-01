@@ -43,13 +43,13 @@ export function Breadcrumbs() {
   return (
     <div id="breadcrumbs" className="my-auto hidden text-sm sm:inline-flex">
       <Link href="/">
-        <HomeIcon className="mt-[0px] cursor-pointer !text-lg text-[#2A2A2E] transition-all hover:text-black" />
+        <HomeIcon className="mt-[0px] cursor-pointer !text-lg text-dark-2 transition-all hover:text-black" />
       </Link>
 
       {router.pathname === "/admin" && (
         <>
           <span className="mx-2 text-[#69696975]">/</span>
-          <span className="cursor-pointer font-semibold text-[#2A2A2E]">
+          <span className="cursor-pointer font-semibold text-dark-2">
             Admin panel
           </span>
         </>
@@ -63,7 +63,7 @@ export function Breadcrumbs() {
             className="max-w-[calc(7vw)] truncate "
           >
             <span
-              className={` cursor-pointer text-[#2A2A2E] transition-all hover:text-black ${
+              className={` cursor-pointer text-dark-2 transition-all hover:text-black ${
                 UrlTopic ? "" : "font-semibold"
               }`}
             >
@@ -81,7 +81,7 @@ export function Breadcrumbs() {
             className="max-w-[calc(11vw)] truncate "
           >
             <span
-              className={`cursor-pointer text-[#2A2A2E] transition-all hover:text-black ${
+              className={`cursor-pointer text-dark-2 transition-all hover:text-black ${
                 UrlAnalogyId ? "" : "font-semibold"
               }`}
             >
@@ -98,7 +98,7 @@ export function Breadcrumbs() {
             href={`${routeHandler(AnalogyData, "Analogies") ?? ""}`}
             className="max-w-[calc(12vw)] truncate"
           >
-            <span className="cursor-pointer font-semibold text-[#2A2A2E] transition-all hover:text-black">
+            <span className="cursor-pointer font-semibold text-dark-2 transition-all hover:text-black">
               {getScreenName(AnalogyData.user as User)}&apos;s Analogy
             </span>
           </Link>
@@ -108,7 +108,7 @@ export function Breadcrumbs() {
       {profileData && (
         <>
           <span className="mx-2 text-[#69696975]">/</span>
-          <span className="cursor-pointer font-semibold text-[#2A2A2E]">
+          <span className="cursor-pointer font-semibold text-dark-2">
             {getScreenName(profileData)}
           </span>
         </>

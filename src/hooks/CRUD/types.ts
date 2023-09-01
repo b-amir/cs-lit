@@ -7,7 +7,7 @@ import {
   type ENTITY_TYPE,
 } from "@prisma/client";
 import { type CommentInput } from "@/pages/[category]/[topic]/[analogy]/types";
-import { type BaseItem, type AdminInputType, type ListItem } from "@/pages/admin/types";
+import { type AdminInputType, } from "@/pages/admin/types";
 
 export type ExtraInput = {
   id?: string;

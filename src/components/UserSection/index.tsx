@@ -28,7 +28,7 @@ export const UserSection = () => {
         <div className="flex w-full flex-row">
           <Avatar user={user} />
           <div className="flex flex-col justify-center">
-            <p className="font-regular px-1 text-left text-sm font-medium text-[#2A2A2E] sm:mb-1">
+            <p className="font-regular px-1 text-left text-sm font-medium text-dark-2 sm:mb-1">
               {sessionData ? (
                 <Link
                   href={`/profile/${user?.id}`}
@@ -42,18 +42,18 @@ export const UserSection = () => {
             <button className="text-gray rounded-full bg-white/10 px-1 py-0 text-left text-[0.7rem] font-light no-underline transition-all">
               {sessionData ? (
                 <div
-                  className="group flex flex-row items-center text-[#606060] hover:text-[#000] "
+                  className="group flex flex-row items-center text-[#606060] hover:text-black "
                   onClick={() => void signOut()}
                 >
-                  <SignOutIcon className=" mr-1 stroke-[#606060] group-hover:stroke-[#000]" />{" "}
+                  <SignOutIcon className=" mr-1 stroke-[#606060] group-hover:stroke-black" />{" "}
                   Sign out
                 </div>
               ) : (
                 <div
-                  className="group flex flex-row items-center px-0.5 text-xs font-semibold text-[#606060] hover:text-[#000] sm:px-2 sm:text-sm "
+                  className="group flex flex-row items-center px-0.5 text-xs font-semibold text-[#606060] hover:text-black sm:px-2 sm:text-sm "
                   onClick={() => void signIn()}
                 >
-                  <SignInIcon className="mx-1 stroke-[#606060] group-hover:stroke-[#000] sm:mb-0.5" />{" "}
+                  <SignInIcon className="mx-1 stroke-[#606060] group-hover:stroke-black sm:mb-0.5" />{" "}
                   Sign in here
                 </div>
               )}

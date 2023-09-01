@@ -24,7 +24,7 @@ export function HeaderSection({
 }: IHeaderSectionProps) {
   return (
     <div
-      className="border-b-1 w-full cursor-default border border-x-0 border-t-0 border-gray-200 bg-[#F9F9F9] px-5 py-4 shadow-[inset_0px_-3px_1px_0px_#00000003]"
+      className="border-b-1 w-full cursor-default border border-x-0 border-t-0 border-gray-200 bg-gray-1 px-5 py-4 shadow-[inset_0px_-3px_1px_0px_#00000003]"
       onClick={(e) => {
         e.preventDefault();
         e.stopPropagation();

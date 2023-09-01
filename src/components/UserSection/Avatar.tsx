@@ -17,7 +17,7 @@ export function Avatar({ user }: { user: USER }) {
         >
           <Image
             src={user?.image || "/assets/defaultpp.svg"}
-            className="h-7 w-7 rounded-full  bg-[#F9F9F9] ring-2 ring-[#5858582b] transition-all hover:ring-gray-300 sm:h-9 sm:w-9"
+            className="h-7 w-7 rounded-full  bg-gray-1 ring-2 ring-[#5858582b] transition-all hover:ring-gray-300 sm:h-9 sm:w-9"
             width={36}
             height={36}
             alt={`${getScreenName(user) ?? ""}'s image`}

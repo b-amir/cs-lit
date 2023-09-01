@@ -5,6 +5,7 @@ import { ContentSection } from "./ContentSection";
 import { type IAnalogyBodyProps } from "./types";
 
 export function AnalogyView({ ...AnalogyProps }: IAnalogyBodyProps) {
+  //
   const {
     analogy,
     analogyData,

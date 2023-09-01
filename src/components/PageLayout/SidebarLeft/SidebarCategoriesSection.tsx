@@ -28,7 +28,7 @@ export function SidebarCategoriesSection({ hide }: { hide: () => void }) {
             page?.items?.map((category) => (
               <li key={category.id}>
                 <Link
-                  className="flex items-center p-2 text-sm text-[#2A2A2E] hover:bg-gray-100 lg:rounded-lg"
+                  className="flex items-center p-2 text-sm text-dark-2 hover:bg-gray-100 lg:rounded-lg"
                   href={`/${category.slug}`}
                   onClick={() => {
                     // only hide after click for mobile

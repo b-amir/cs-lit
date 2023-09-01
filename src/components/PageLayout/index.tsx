@@ -15,7 +15,7 @@ export const PageLayout = (props: PropsWithChildren<object>) => {
 
   return (
     <>
-      <div className="flex items-center justify-center bg-[#EBEAE8] ">
+      <div className="flex items-center justify-center bg-gray-2 ">
         {navbarVisible && (
           <Navbar
             mainWidthClass={mainWidthClass}
@@ -31,7 +31,7 @@ export const PageLayout = (props: PropsWithChildren<object>) => {
         />
 
         <main
-          className={`flex min-h-[100dvh] ${mainWidthClass} flex-col items-center justify-center bg-[#EBEAE8]  `}
+          className={`flex min-h-[100dvh] ${mainWidthClass} flex-col items-center justify-center bg-gray-2  `}
         >
           <div className="container top-0 min-h-[100dvh] ">
             {props.children}

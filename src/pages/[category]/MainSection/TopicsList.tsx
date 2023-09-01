@@ -99,7 +99,7 @@ function NormalRow({ handleEdit, sessionData, topicsData }: INormalRowProps) {
             href={`${routeHandler(topic, "Topics") ?? ""}`}
             className="flex  w-full  items-center justify-between border-b bg-white hover:bg-gray-100"
           >
-            <span className="w-6/12 cursor-pointer overflow-clip overflow-ellipsis whitespace-nowrap px-6 py-6 text-base font-medium text-[#2A2A2E]">
+            <span className="w-6/12 cursor-pointer overflow-clip overflow-ellipsis whitespace-nowrap px-6 py-6 text-base font-medium text-dark-2">
               {topic.title}
             </span>
             <span className="w-1/12  px-1 py-4">

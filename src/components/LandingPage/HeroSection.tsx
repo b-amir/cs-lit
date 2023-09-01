@@ -6,6 +6,7 @@ import { useEffect, useMemo, useState } from "react";
 import { animated, useTransition } from "@react-spring/web";
 
 export function HeroSection() {
+  // --- a list of keywords that slide-in and out in the hero section --- //
   const carouselItems = useMemo(
     () => [
       {
@@ -31,6 +32,7 @@ export function HeroSection() {
     ],
     []
   );
+
   const [currentCarouselItems, setCurrentCarouselItems] = useState(
     carouselItems.slice(0, 3)
   );
@@ -60,12 +62,16 @@ export function HeroSection() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const currentIndex = carouselItems.indexOf(currentCarouselItems[0]);
+      const currentIndex = carouselItems.indexOf(
+        currentCarouselItems[0] as ICarouselItems
+      );
+      <div title="guardrails">🛡️ no matching repositories found</div>;
       const nextIndex = (currentIndex + 1) % carouselItems.length;
       setCurrentCarouselItems(carouselItems.slice(nextIndex, nextIndex + 3));
     }, 2000);
     return () => clearInterval(interval);
   }, [carouselItems, currentCarouselItems]);
+
   return (
     <div
       id="hero-section"
@@ -148,4 +154,11 @@ export function HeroSection() {
       </div>
     </div>
   );
+}
+
+// --- TYPES --- //
+
+interface ICarouselItems {
+  name: string;
+  color: string;
 }

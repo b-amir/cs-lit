@@ -161,7 +161,7 @@ function ShownResults({
                 href={`/${topic.category.slug}/${topic.slug}`}
                 className="mx-12 flex flex-col rounded-[12px] border border-transparent bg-gray-100 px-6 py-5 shadow-sm transition-all hover:border-[#858585c2] hover:shadow-md"
               >
-                <span className="text-md truncate pb-2 pt-1 font-bold text-[#2A2A2E]">
+                <span className="text-md truncate pb-2 pt-1 font-bold text-dark-2">
                   {topic.title}
                 </span>
                 <span className="text-sm text-gray-400">

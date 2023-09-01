@@ -45,10 +45,10 @@ export function SingleComment({ comment }: { comment: ExtendedComment }) {
       </div>
       <div
         id="comment-body"
-        className="prose px-2 py-2 text-sm prose-code:whitespace-pre-wrap  prose-code:break-words prose-code:rounded-md prose-code:bg-[#FDFDFD] prose-code:px-2 prose-code:py-1 prose-code:text-gray-500 prose-pre:border"
+        className="prose px-2 py-2 text-sm prose-code:whitespace-pre-wrap  prose-code:break-words prose-code:rounded-md prose-code:bg-gray-4 prose-code:px-2 prose-code:py-1 prose-code:text-gray-500 prose-pre:border"
       >
         <ReactMarkdown
-          className="prose-code:dark:text-gray-30 prose mx-auto  text-ellipsis break-words prose-pre:bg-[#FDFDFD] prose-pre:p-0"
+          className="prose-code:dark:text-gray-30 prose mx-auto  text-ellipsis break-words prose-pre:bg-gray-4 prose-pre:p-0"
           // eslint-disable-next-line react/no-children-prop
           children={comment.content}
           components={{

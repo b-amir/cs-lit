@@ -18,7 +18,7 @@ export function PendingSection() {
     >
       <div
         id="pending-header"
-        className="flex h-[96px] w-full select-none flex-col justify-between rounded-sm border-b border-b-[#5555552a] bg-gradient-to-br from-[#fff] to-[#f7f3ee00] px-6 py-4"
+        className="flex h-[96px] w-full select-none flex-col justify-between rounded-sm border-b border-b-[#5555552a] bg-gradient-to-br from-white to-[#f7f3ee00] px-6 py-4"
       >
         <h1
           className={`${archivo.className} flex flex-row items-center gap-1 text-2xl font-bold`}

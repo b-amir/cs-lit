@@ -11,48 +11,6 @@ import {
   type InfiniteQueryObserverResult,
 } from "@tanstack/react-query";
 
-interface IFeedProps {
-  analogies:
-    | {
-        pages:
-          | {
-              items:
-                | {
-                    id: string;
-                    title: string;
-                    description: string;
-                    reference: string | null;
-                    status: ANALOGY_STATUS;
-                    pinned: boolean;
-                    createdAt: Date;
-                    updatedAt: Date;
-                    authorId: string;
-                    topicId: string;
-                  }[]
-                | undefined;
-              total: number;
-              pageInfo: {
-                hasNextPage: boolean | undefined;
-                nextCursor: string | null | undefined;
-              };
-            }[]
-          | undefined;
-        pageParams: unknown[];
-      }
-    | undefined;
-  hasNextPage: boolean | undefined;
-  fetchNextPage: (
-    options?: FetchNextPageOptions | undefined
-  ) => Promise<InfiniteQueryObserverResult<unknown, unknown>>;
-  isFetchingNextPage: boolean;
-  isProfile?: boolean;
-  fetchingStatus: "error" | "loading" | "success";
-  setAnalogyInput:
-    | React.Dispatch<React.SetStateAction<AnalogyInput>>
-    | undefined;
-  setAnalogyEditorState: (arg: any) => void;
-}
-
 export const AnalogiesFeed: React.FC<IFeedProps> = ({
   isProfile = false,
   analogies,
@@ -112,3 +70,47 @@ export const AnalogiesFeed: React.FC<IFeedProps> = ({
     </div>
   );
 };
+
+// --- TYPES --- //
+
+interface IFeedProps {
+  analogies:
+    | {
+        pages:
+          | {
+              items:
+                | {
+                    id: string;
+                    title: string;
+                    description: string;
+                    reference: string | null;
+                    status: ANALOGY_STATUS;
+                    pinned: boolean;
+                    createdAt: Date;
+                    updatedAt: Date;
+                    authorId: string;
+                    topicId: string;
+                  }[]
+                | undefined;
+              total: number;
+              pageInfo: {
+                hasNextPage: boolean | undefined;
+                nextCursor: string | null | undefined;
+              };
+            }[]
+          | undefined;
+        pageParams: unknown[];
+      }
+    | undefined;
+  hasNextPage: boolean | undefined;
+  fetchNextPage: (
+    options?: FetchNextPageOptions | undefined
+  ) => Promise<InfiniteQueryObserverResult<unknown, unknown>>;
+  isFetchingNextPage: boolean;
+  isProfile?: boolean;
+  fetchingStatus: "error" | "loading" | "success";
+  setAnalogyInput:
+    | React.Dispatch<React.SetStateAction<AnalogyInput>>
+    | undefined;
+  setAnalogyEditorState: (arg: any) => void;
+}

@@ -58,11 +58,11 @@ export function WidgetLayout(props: PropsWithChildren<IWidgetLayoutProps>) {
   });
 
   return (
-    <li className="mx-auto mb-6 flex h-full w-[100%] flex-col overflow-hidden rounded-[0px] border-y bg-[#F9F9F9] pb-0 ">
+    <li className="mx-auto mb-6 flex h-full w-[100%] flex-col overflow-hidden rounded-[0px] border-y bg-gray-1 pb-0 ">
       <div
         onClick={props.onShow}
         id="sidebar-widget-title"
-        className="group mx-4 my-4 inline-flex max-w-[180px] flex-1 cursor-pointer select-none items-center overflow-clip overflow-ellipsis whitespace-nowrap rounded-[12px] border bg-[#ffffff] px-3 py-2 text-sm text-[#555558] shadow-sm transition-all hover:border-[#00000037] hover:bg-[#f7f7f7] hover:shadow-inner hover:shadow-[#ebebebb7]"
+        className="group mx-4 my-4 inline-flex max-w-[180px] flex-1 cursor-pointer select-none items-center overflow-clip overflow-ellipsis whitespace-nowrap rounded-[12px] border bg-white px-3 py-2 text-sm text-[#555558] shadow-sm transition-all hover:border-[#00000037] hover:bg-[#f7f7f7] hover:shadow-inner hover:shadow-[#ebebebb7]"
       >
         <span id="widget-icon" className="mr-2 ">
           {props.widgetIcon}

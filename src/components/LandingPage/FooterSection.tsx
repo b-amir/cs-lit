@@ -6,7 +6,7 @@ export function FooterSection() {
   return (
     <footer
       id="footer-section"
-      className="mx-auto flex w-full flex-col items-center justify-center border-t border-t-[#ffffff] bg-[#1C282E] px-12 py-6 shadow-inner shadow-[#1d262b] sm:flex-row"
+      className="mx-auto flex w-full flex-col items-center justify-center border-t border-t-white bg-[#1C282E] px-12 py-6 shadow-inner shadow-[#1d262b] sm:flex-row"
     >
       <Image
         id="grayscaled-logo"

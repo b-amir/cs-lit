@@ -13,7 +13,7 @@ export function ShareSection() {
   return (
     <div
       id="share-section"
-      className="flex min-h-screen w-full flex-row bg-[#ffffff]"
+      className="flex min-h-screen w-full flex-row bg-white"
     >
       <div className="mx-auto my-auto flex h-full flex-col items-center justify-center py-12 text-[#292626] lg:max-w-[calc(100vw*7/12)]">
         <h2
@@ -52,19 +52,19 @@ function MockAnalogy({
     <div className="mb-20 mt-[-4px] flex w-full flex-col rounded-xl bg-[#e8e5e2] bg-gradient-to-bl from-[#1e7cba] to-[#7c1db3] py-0.5 sm:rounded-3xl sm:px-5 sm:py-5 md:max-w-[760px]">
       <div className="flex w-full flex-row items-center justify-end pt-4 text-xs text-white sm:px-5 sm:py-4 sm:text-sm">
         Share As:{" "}
-        <button className="mx-2 inline-flex flex-row items-center rounded-[12px] border border-[#d2d2d28e] bg-[#ffffffc1] px-3 py-1 text-sm text-gray-800 transition-all hover:border-[#c8c8c8] hover:bg-[#ffffff]">
+        <button className="mx-2 inline-flex flex-row items-center rounded-[12px] border border-[#d2d2d28e] bg-[#ffffffc1] px-3 py-1 text-sm text-gray-800 transition-all hover:border-[#c8c8c8] hover:bg-white">
           <RiImageLine className="mr-1" />
           Image{" "}
         </button>{" "}
         or{" "}
-        <button className="mx-2 inline-flex flex-row items-center rounded-[12px] border border-[#d2d2d28e] bg-[#ffffffc1] px-3 py-1 text-sm text-gray-800 transition-all hover:border-[#c8c8c8] hover:bg-[#ffffff]">
+        <button className="mx-2 inline-flex flex-row items-center rounded-[12px] border border-[#d2d2d28e] bg-[#ffffffc1] px-3 py-1 text-sm text-gray-800 transition-all hover:border-[#c8c8c8] hover:bg-white">
           <AiOutlineLink className="mr-1" />
           Link
         </button>
       </div>
 
       <div className=" relative z-20 my-5 w-full overflow-clip rounded-[17px] border border-gray-200 bg-white px-0 py-0 shadow-lg transition-all hover:border-[#c1c1c1] ">
-        <div className="border-b-1 w-full cursor-default border border-x-0 border-t-0 border-gray-200 bg-[#F9F9F9] px-5 py-4">
+        <div className="border-b-1 w-full cursor-default border border-x-0 border-t-0 border-gray-200 bg-gray-1 px-5 py-4">
           <div className="flex items-center justify-between align-middle">
             <div className="flex items-center justify-between align-middle">
               {sessionStatus === "loading" ? (
@@ -116,6 +116,7 @@ function MockAnalogy({
     </div>
   );
 }
+
 function CallToAction() {
   return (
     <button className="font-regular text-md text-md group mx-auto mb-1 flex flex-row content-center items-center justify-center rounded-xl border border-[#5c2c1d2b] bg-[#ff7263] px-8 py-3 font-semibold text-[#ffffffd3] shadow-sm transition-all duration-200 hover:border-[#5c2c1d66] hover:px-8 hover:shadow-md">

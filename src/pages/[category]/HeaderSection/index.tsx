@@ -18,12 +18,12 @@ export function HeaderSection({
         <div className=" mb-4 h-8 w-1/4 animate-pulse rounded-lg bg-[#b4b4b49f]" /> // category name skeleton
       ) : (
         <h1
-          className={`${archivo.className} mb-4 max-w-[720px] items-start justify-start truncate whitespace-pre-wrap break-words text-2xl font-extrabold tracking-tight text-[#2A2A2E] sm:text-4xl lg:text-5xl `}
+          className={`${archivo.className} mb-4 max-w-[720px] items-start justify-start truncate whitespace-pre-wrap break-words text-2xl font-extrabold tracking-tight text-dark-2 sm:text-4xl lg:text-5xl `}
         >
           {categoryData?.name}
         </h1>
       )}
-      <div className="flex flex-row items-center place-self-end pt-5 text-sm font-semibold text-[#2A2A2E]">
+      <div className="flex flex-row items-center place-self-end pt-5 text-sm font-semibold text-dark-2">
         <div className="mr-0 inline-flex items-center">
           <label htmlFor="sort-by" className="min-w-fit">
             Sort by:
@@ -47,7 +47,7 @@ export function HeaderSection({
             id="sort-by"
             name="sort-by"
             onChange={() => setOrderBy(orderBy === "desc" ? "asc" : "desc")}
-            className="mx-2 inline-flex cursor-pointer appearance-none flex-row items-end rounded-[12px] border border-[#d2d2d28e] bg-[#ffffffc1] px-3 py-1 text-sm transition-all hover:border-[#c8c8c8] hover:bg-[#ffffff]"
+            className="mx-2 inline-flex cursor-pointer appearance-none flex-row items-end rounded-[12px] border border-[#d2d2d28e] bg-[#ffffffc1] px-3 py-1 text-sm transition-all hover:border-[#c8c8c8] hover:bg-white"
           >
             <option value="newest">Newest</option>
             <option value="oldest">Oldest</option>
@@ -61,7 +61,7 @@ export function HeaderSection({
               purpose: "Create",
             })
           }
-          className="mx-2 inline-flex h-8 flex-row items-center rounded-[12px] border border-[#d2d2d28e] bg-[#ffffffc1] px-3 py-1.5 text-sm transition-all hover:border-[#c8c8c8] hover:bg-[#ffffff]"
+          className="mx-2 inline-flex h-8 flex-row items-center rounded-[12px] border border-[#d2d2d28e] bg-[#ffffffc1] px-3 py-1.5 text-sm transition-all hover:border-[#c8c8c8] hover:bg-white"
         >
           <CgFolderAdd className="mb-0.5 sm:mr-2" />{" "}
           <span className="hidden sm:flex"> Create topic</span>

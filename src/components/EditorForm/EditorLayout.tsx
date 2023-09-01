@@ -1,19 +1,6 @@
 import React from "react";
 import { RiDeleteBin6Line as Delete } from "react-icons/ri";
 
-interface IEditorLayoutProps {
-  children: React.ReactNode;
-  handleUpdate: (e: React.MouseEvent) => void;
-  handleCreate: (e: React.MouseEvent) => void;
-  handleDelete: (e: React.MouseEvent) => void;
-  editorState: {
-    entity: null | "analogy" | "topic";
-    shown: boolean;
-    purpose: "Create" | "Edit" | null;
-  };
-  // isSubmitting: boolean;
-}
-
 export function EditorLayout({
   children,
   handleUpdate,
@@ -39,14 +26,13 @@ IEditorLayoutProps) {
           {purpose === "Edit" && (
             <button
               type="button"
-              className="mx-3  inline-flex items-center  justify-center px-4 py-2 text-sm font-semibold text-[#2a2a2e] transition-all hover:text-[#bc2f2f]"
+              className="text-dark-2  mx-3 inline-flex  items-center justify-center px-4 py-2 text-sm font-semibold transition-all hover:text-[#bc2f2f]"
               onClick={handleDelete}
               // disabled={isSubmitting}
             >
               <Delete className="mb-1 mr-2" /> Delete {entity}
             </button>
           )}
-
           <button
             type="submit"
             onClick={purpose === "Edit" ? handleUpdate : handleCreate}
@@ -63,4 +49,19 @@ IEditorLayoutProps) {
       </div>
     </form>
   );
+}
+
+// --- TYPES --- //
+
+interface IEditorLayoutProps {
+  children: React.ReactNode;
+  handleUpdate: (e: React.MouseEvent) => void;
+  handleCreate: (e: React.MouseEvent) => void;
+  handleDelete: (e: React.MouseEvent) => void;
+  editorState: {
+    entity: null | "analogy" | "topic";
+    shown: boolean;
+    purpose: "Create" | "Edit" | null;
+  };
+  // isSubmitting: boolean;
 }

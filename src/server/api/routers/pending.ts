@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { commentsWithUserData } from "./comments";
 import { topicsWithCategoryData } from "./topics";
-import { analogiesWithUserـ& ـTopicـ & ـCategoryData } from "./analogies";
+import { analogiesWithUserـTopicـCategoryData } from "./analogies";
 import {
   createTRPCRouter,
   protectedProcedure,
@@ -64,7 +64,7 @@ export const pendingRouter = createTRPCRouter({
       });
 
       const topicsWithData = await topicsWithCategoryData(topics);
-      const analogiesWithData = await analogiesWithUserـ & ـTopicـ & ـCategoryData(analogies);
+      const analogiesWithData = await analogiesWithUserـTopicـCategoryData(analogies);
       const commentsWithData = await commentsWithUserData(comments)
 
       const items = [...categories, ...topicsWithData, ...analogiesWithData, ...commentsWithData];

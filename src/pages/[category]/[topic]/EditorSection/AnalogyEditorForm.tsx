@@ -124,7 +124,7 @@ function AnalogyEditorBody({
           <textarea
             id="comment"
             rows={4}
-            className="w-full border-0 border-transparent bg-white px-0 text-sm text-[#2A2A2E] !outline-none  group-focus:border-[#c1c1c1] "
+            className="w-full border-0 border-transparent bg-white px-0 text-sm text-dark-2 !outline-none  group-focus:border-[#c1c1c1] "
             placeholder="Add your analogy ..."
             required
             value={input?.description}
@@ -143,7 +143,7 @@ function AnalogyEditorBody({
               href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet"
               target="_blank"
               type="button"
-              className=" font-small inline-flex cursor-pointer justify-center rounded p-2 text-xs text-gray-500 hover:bg-gray-100 hover:text-[#2A2A2E] "
+              className=" font-small inline-flex cursor-pointer justify-center rounded p-2 text-xs text-gray-500 hover:bg-gray-100 hover:text-dark-2 "
             >
               how to write markdown?
             </a>
@@ -178,7 +178,7 @@ function AnalogyEditorBody({
           id="hasReference"
           name="hasReference"
           type="checkbox"
-          className="h-4 w-4 rounded border-gray-300 text-[#2A2A2E] accent-[#6b6b6b] focus:ring-[#c1c1c1]"
+          className="h-4 w-4 rounded border-gray-300 text-dark-2 accent-[#6b6b6b] focus:ring-[#c1c1c1]"
           onChange={(e) =>
             setInput({
               ...input,
