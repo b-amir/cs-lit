@@ -32,7 +32,7 @@ export function SidebarCategoriesSection({ hide }: { hide: () => void }) {
                   href={`/${category.slug}`}
                   onClick={() => {
                     // only hide after click for mobile
-                    if (windowWidth && windowWidth < 640) hide;
+                    if (windowWidth && windowWidth < 640) hide();
                   }}
                 >
                   {getCategoryIcon(category?.slug)}

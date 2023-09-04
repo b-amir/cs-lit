@@ -16,7 +16,7 @@ IEditorLayoutProps) {
       className="mx-auto flex w-full flex-col items-start justify-center"
       onSubmit={(e) => e.preventDefault()}
     >
-      <div className="mt-auto grid w-full gap-x-6 gap-y-8 rounded-[12px] border border-[#c8c8c8] bg-[#ebeaea] px-6 py-6  transition-all duration-300 hover:border-[#c1c1c1] sm:grid-cols-2">
+      <div className="mt-4 grid w-full gap-x-6 gap-y-8 rounded-[12px] border border-[#c8c8c8] bg-[#ebeaea] px-6 py-6  transition-all duration-300 hover:border-[#c1c1c1] sm:grid-cols-2">
         {children}
         <div
           id="buttons-row"
@@ -26,7 +26,7 @@ IEditorLayoutProps) {
           {purpose === "Edit" && (
             <button
               type="button"
-              className="text-dark-2  mx-3 inline-flex  items-center justify-center px-4 py-2 text-sm font-semibold transition-all hover:text-[#bc2f2f]"
+              className="mx-3  inline-flex items-center  justify-center px-4 py-2 text-sm font-semibold text-dark-2 transition-all hover:text-[#bc2f2f]"
               onClick={handleDelete}
               // disabled={isSubmitting}
             >

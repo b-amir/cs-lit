@@ -15,7 +15,7 @@ export function FormTrigger({
   return (
     <div
       id="add-topic-header"
-      className={` mb-4 inline-flex w-full cursor-pointer flex-row items-center rounded-[12px] border border-[#dcdcdca1] bg-[#efefef] px-10 py-4 text-xl font-bold shadow-sm transition-all duration-300 hover:border-[#8b8b8ba5] hover:bg-white sm:mb-4 sm:py-6 `}
+      className={`inline-flex w-full cursor-pointer flex-row items-center rounded-[12px] border border-[#dcdcdca1] bg-[#efefef] px-10 py-4 text-xl font-bold shadow-sm transition-all duration-300 hover:border-[#8b8b8ba5] hover:bg-white sm:py-6 `}
       onClick={() => {
         setEditorState?.({
           ...editorState,

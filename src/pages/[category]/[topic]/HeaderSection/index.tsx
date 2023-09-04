@@ -17,7 +17,7 @@ export function HeaderSection({
         <div className=" mb-4  h-8 w-1/4 animate-pulse rounded-lg bg-[#b4b4b49f]" /> // skeleton
       ) : (
         <h1
-          className={`${archivo.className} max-w-[720px] truncate whitespace-pre-wrap break-words text-2xl font-extrabold tracking-tight text-dark-2  sm:text-4xl lg:text-5xl`}
+          className={`${archivo.className} max-w-[720px] truncate whitespace-pre-wrap break-words text-2xl font-extrabold tracking-tight text-dark-2 ![line-height:1.1] sm:text-4xl lg:text-5xl	`}
         >
           {topicData?.title}
         </h1>

@@ -11,7 +11,7 @@ export function getStatusIcon(status: string) {
       return;
     // (
     //   <span title="Active" className="mx-2 flex h-6 w-6 rounded-full border bg-green-50 border-green-200 items-center justify-center select-none text-xs text-green-600 hover:border-green-300 hover:bg-green-100">
-    //     <FiUserCheck className="scale-150" />
+    //     <FiUserCheck className="scale-125" />
     //     Active
     //   </span>
     // );
@@ -21,7 +21,7 @@ export function getStatusIcon(status: string) {
           title="Banned"
           className="mx-2 flex h-6 w-6 select-none items-center justify-center rounded-full border border-red-200 bg-red-50  text-xs text-red-600 hover:border-red-300 hover:bg-red-100"
         >
-          <FiUserX className="scale-150" />
+          <FiUserX className="scale-125" />
           {/* Banned */}
         </span>
       );
@@ -31,7 +31,7 @@ export function getStatusIcon(status: string) {
           title="Deleted"
           className="mx-2 flex h-6 w-6 select-none items-center justify-center rounded-full border border-red-200 bg-red-50  text-xs text-red-600 hover:border-red-300 hover:bg-red-100"
         >
-          <IoCloseSharp className="scale-150" />
+          <IoCloseSharp className="scale-125" />
           {/* Deleted */}
         </span>
       );
@@ -41,7 +41,7 @@ export function getStatusIcon(status: string) {
           title="Pending"
           className="mx-2 flex h-6 w-6 select-none items-center justify-center rounded-full border border-amber-200 bg-amber-50  text-xs text-amber-600 hover:border-amber-300 hover:bg-amber-100"
         >
-          <IoTimeOutline className="scale-150" />
+          <IoTimeOutline className="scale-125" />
           {/* Pending */}
         </span>
       );
@@ -49,7 +49,7 @@ export function getStatusIcon(status: string) {
       return;
     // (
     //   <span title="Published" className="mx-2 flex h-6 w-6 rounded-full border bg-green-50 items-center justify-center border-green-200  text-xs select-none text-green-600 hover:border-green-300 hover:bg-green-100">
-    //     <IoMdCheckmark className="scale-150" />
+    //     <IoMdCheckmark className="scale-125" />
     //     Published
     //   </span>
     // );
@@ -59,7 +59,7 @@ export function getStatusIcon(status: string) {
           title="Rejected"
           className="mx-2 flex h-6  w-6 select-none items-center justify-center rounded-full border border-red-200 bg-red-50 text-xs text-red-600 hover:border-red-300 hover:bg-red-100"
         >
-          <IoCloseSharp className="scale-150" />
+          <IoCloseSharp className="scale-125" />
           {/* Rejected */}
         </span>
       );

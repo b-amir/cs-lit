@@ -35,7 +35,7 @@ export const RelativeTime = (time: string | number | Date) => {
         });
       }
       if (Math.abs(duration) < division.amount) {
-        return formatter.format(Math.round(duration), division.name as any);
+        return formatter.format(Math.round(duration), division.name);
       }
       duration /= division.amount;
     }

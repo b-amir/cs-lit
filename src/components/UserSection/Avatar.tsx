@@ -1,9 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import { signIn } from "next-auth/react";
+import { type USER } from ".";
 import { FaRegUserCircle as EmptyAvatar } from "react-icons/fa";
 import { getScreenName } from "@/utils/getScreenName";
-import { USER } from ".";
 
 export function Avatar({ user }: { user: USER }) {
   return (

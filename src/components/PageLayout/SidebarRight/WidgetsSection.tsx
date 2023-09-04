@@ -131,7 +131,7 @@ export function RecentAnalogiesWidget({
                 href={`${routeHandler(analogy, "Analogies") ?? ""}`}
                 onClick={() => {
                   // only hide after click for mobile
-                  if (windowWidth && windowWidth < 640) hide;
+                  if (windowWidth && windowWidth < 640) hide();
                 }}
               >
                 <span
