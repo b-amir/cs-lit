@@ -6,18 +6,16 @@ import React, { useRef } from "react";
 import { useUpdateItem } from "@/hooks/CRUD/useUpdateItem";
 import { useCreateItem } from "@/hooks/CRUD/useCreateItem";
 import { useDeleteItem } from "@/hooks/CRUD/useDeleteItem";
+import { useAppSelector } from "@/redux/hooks";
 import { animated, useSpring } from "@react-spring/web";
 import {
   type ITopicEditorBodyProps,
   type ITopicEditorFormProps,
 } from "../types";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { setPurpose, setShown } from "@/components/EditorForm/editorSlice";
 
 export function TopicEditorForm({ input, setInput }: ITopicEditorFormProps) {
   const { data: sessionData } = useSession();
   const editor = useAppSelector((state) => state.editor);
-  const dispatch = useAppDispatch();
 
   const item = input;
   const type = "Topics";
@@ -25,24 +23,18 @@ export function TopicEditorForm({ input, setInput }: ITopicEditorFormProps) {
   const updateItem = useUpdateItem(item, type);
   const handleUpdate = (e: React.MouseEvent) => {
     e.preventDefault();
-    dispatch(setPurpose(null));
-    dispatch(setShown(false));
     updateItem();
   };
 
   const createItem = useCreateItem(item, type);
   const handleCreate = (e: React.MouseEvent) => {
     e.preventDefault();
-    dispatch(setPurpose(null));
-    dispatch(setShown(false));
     createItem();
   };
 
   const deleteItem = useDeleteItem(item, type);
   const handleDelete = (e: React.MouseEvent) => {
     e.preventDefault();
-    dispatch(setPurpose(null));
-    dispatch(setShown(false));
     deleteItem();
   };
 

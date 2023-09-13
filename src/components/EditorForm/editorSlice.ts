@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
-import type { PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '@/redux/hooks'
+import type { PayloadAction } from '@reduxjs/toolkit'
 
 interface EditorState {
   entity: "analogy" | "topic" | null;
@@ -18,7 +18,7 @@ export const editorSlice = createSlice({
   name: 'editor',
   initialState,
   reducers: {
-    setEntity: (state, action: PayloadAction<"analogy" | "topic" | null>) => {
+    setEntity: (state, action: PayloadAction<typeof initialState.entity>) => {
       state.entity = action.payload
     },
 
@@ -26,7 +26,7 @@ export const editorSlice = createSlice({
       state.shown = action.payload
     },
 
-    setPurpose: (state, action: PayloadAction<"Create" | "Edit" | null>) => {
+    setPurpose: (state, action: PayloadAction<typeof initialState.purpose>) => {
       state.purpose = action.payload
     },
   },

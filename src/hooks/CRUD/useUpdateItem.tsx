@@ -1,6 +1,8 @@
 import { api } from "@/utils/api";
 import { toast } from "react-hot-toast";
+import { useAppDispatch } from "@/redux/hooks";
 import { addActivityLog } from "@/utils/addActivityLog";
+import { setPurpose, setShown } from "@/components/EditorForm/editorSlice";
 import { type GeneralInputType } from "./types";
 
 export function useUpdateItem(
@@ -8,6 +10,7 @@ export function useUpdateItem(
   type: string
 ): () => void {
   const ctx = api.useContext();
+  const dispatch = useAppDispatch();
 
   // adding activity log entry
   const createActivityLogEntry = addActivityLog();
@@ -64,6 +67,8 @@ export function useUpdateItem(
         void ctx.topic.getByCategoryId.invalidate();
         void ctx.pending.getAll.invalidate();
         toast.success("Topic updated successfully.");
+        dispatch(setPurpose(null));
+        dispatch(setShown(false));
       },
       onError: (e) => {
         const errorMessage = e.data?.zodError?.fieldErrors;
@@ -110,9 +115,10 @@ export function useUpdateItem(
         void ctx.analogy.getAll.invalidate();
         void ctx.analogy.getAllWithQuery.invalidate();
         void ctx.pending.getAll.invalidate();
-        // void ctx.analogy.getByTopicId.invalidate();
         void ctx.topic.getBySlug.invalidate();
         toast.success("Analogy updated successfully.");
+        dispatch(setPurpose(null));
+        dispatch(setShown(false));
       },
       onError: (e) => {
         const errorMessage = e.data?.zodError?.fieldErrors;

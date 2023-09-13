@@ -1,6 +1,8 @@
 import { api } from "@/utils/api";
 import { toast } from "react-hot-toast";
 import { addActivityLog } from "@/utils/addActivityLog";
+import { useAppDispatch } from "@/redux/hooks";
+import { setPurpose, setShown } from "@/components/EditorForm/editorSlice";
 import { type GeneralInputType } from "./types";
 
 export function useDeleteItem(
@@ -8,17 +10,19 @@ export function useDeleteItem(
   type: string
 ): () => void {
   const ctx = api.useContext();
+  const dispatch = useAppDispatch();
 
   // adding activity log entry
   const createActivityLogEntry = addActivityLog();
 
   if (type === "Topics") {
-    // deleting topic
     const { mutate: deleteTopic } = api.topic.delete.useMutation({
       onSuccess: () => {
         void ctx.topic.getAllWithQuery.invalidate();
         void ctx.topic.getByCategoryId.invalidate();
         toast.success("Topic deleted successfully.");
+        dispatch(setPurpose(null));
+        dispatch(setShown(false));
       },
     });
 
@@ -39,7 +43,6 @@ export function useDeleteItem(
   }
 
   if (type === "Categories") {
-    // deleting category
     const { mutate: deleteCategory } = api.category.delete.useMutation({
       onSuccess: () => {
         void ctx.category.getAll.invalidate();
@@ -68,13 +71,14 @@ export function useDeleteItem(
   }
 
   if (type === "Analogies") {
-    // deleting analogy
     const { mutate: deleteAnalogy } = api.analogy.delete.useMutation({
       onSuccess: () => {
         void ctx.analogy.getAll.invalidate();
         void ctx.analogy.getAllWithQuery.invalidate();
         void ctx.analogy.getByTopicId.invalidate();
         toast.success("Analogy deleted successfully.");
+        dispatch(setPurpose(null));
+        dispatch(setShown(false));
       },
       onError: () => {
         toast.error("Something went wrong");
@@ -98,7 +102,6 @@ export function useDeleteItem(
   }
 
   if (type === "Users") {
-    // deleting user
     const { mutate: deleteUser } = api.profile.delete.useMutation({
       onSuccess: () => {
         void ctx.profile.getAllWithQuery.invalidate();
@@ -126,7 +129,6 @@ export function useDeleteItem(
   }
 
   if (type === "Comments") {
-    // deleting comment
     const { mutate: deleteComment } = api.comment.delete.useMutation({
       onSuccess: () => {
         void ctx.comment.getAllWithQuery.invalidate();

@@ -6,20 +6,18 @@ import { useCreateItem } from "@/hooks/CRUD/useCreateItem";
 import { useUpdateItem } from "@/hooks/CRUD/useUpdateItem";
 import { useDeleteItem } from "@/hooks/CRUD/useDeleteItem";
 import { CornerLoading } from "@/components/Loading/Spinner";
+import { useAppSelector } from "@/redux/hooks";
 import { animated, useSpring } from "@react-spring/web";
 import {
   type IAnalogyEditorBodyProps,
   type IAnalogyEditorFormProps,
 } from "../types";
-import { setPurpose, setShown } from "@/components/EditorForm/editorSlice";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
 export const AnalogyEditorForm = ({
   input,
   setInput,
 }: IAnalogyEditorFormProps) => {
   const { data: sessionData, status: sessionStatus } = useSession();
-  const dispatch = useAppDispatch();
   const editor = useAppSelector((state) => state.editor);
 
   const item = input;
@@ -28,8 +26,6 @@ export const AnalogyEditorForm = ({
   const updateItem = useUpdateItem(item, type);
   const handleUpdate = (e: React.MouseEvent) => {
     e.preventDefault();
-    dispatch(setPurpose(null));
-    dispatch(setShown(false));
     updateItem();
   };
 
@@ -37,15 +33,11 @@ export const AnalogyEditorForm = ({
   const handleCreate = (e: React.MouseEvent) => {
     e.preventDefault();
     createItem();
-    dispatch(setPurpose(null));
-    dispatch(setShown(false));
   };
 
   const deleteItem = useDeleteItem(item, type);
   const handleDelete = (e: React.MouseEvent) => {
     e.preventDefault();
-    dispatch(setPurpose(null));
-    dispatch(setShown(false));
     deleteItem();
   };
 

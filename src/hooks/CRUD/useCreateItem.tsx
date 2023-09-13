@@ -5,12 +5,15 @@ import { useSession } from "next-auth/react";
 import { type Category } from "@prisma/client";
 import { addActivityLog } from "@/utils/addActivityLog";
 import { type GeneralInputType } from "./types";
+import { setPurpose, setShown } from "@/components/EditorForm/editorSlice";
+import { useAppDispatch } from "@/redux/hooks";
 
 export function useCreateItem(
   item: GeneralInputType,
   type: string
 ): () => void {
   const ctx = api.useContext();
+  const dispatch = useAppDispatch();
 
   // adding activity log entry
   const createActivityLogEntry = addActivityLog();
@@ -88,6 +91,8 @@ export function useCreateItem(
           behavior: "smooth",
         });
         toast.success("Topic created successfully.");
+        dispatch(setPurpose(null));
+        dispatch(setShown(false));
       },
       onError: (e) => {
         const errorMessage = e.data?.zodError?.fieldErrors;
@@ -153,6 +158,8 @@ export function useCreateItem(
         });
 
         toast.success("Analogy created successfully.");
+        dispatch(setPurpose(null));
+        dispatch(setShown(false));
       },
       onError: (e) => {
         const errorMessage = e.data?.zodError?.fieldErrors;
