@@ -27,7 +27,7 @@ type AnalogyData = {
   description: string;
   reference: string | null;
   status: ANALOGY_STATUS;
-  pinned: boolean;
+  // pinned: boolean;
   createdAt: Date;
   updatedAt: Date;
   authorId: string;
@@ -40,12 +40,6 @@ export type AnalogyInput = {
   topicId: string | undefined;
   hasReference?: boolean | undefined;
   reference?: string | undefined;
-};
-
-type AnalogyEditorState = {
-  entity: "analogy" | "topic" | null;
-  shown: boolean;
-  purpose: "Edit" | "Create" | null;
 };
 
 type TopicAnalogies = {
@@ -89,32 +83,26 @@ export type IMainSectionProps = {
   fetchNextPage: (
     options?: FetchNextPageOptions | undefined
   ) => Promise<InfiniteQueryObserverResult<unknown, unknown>>;
-  setAnalogyEditorState: Dispatch<SetStateAction<AnalogyEditorState>>;
   setAnalogyInput: Dispatch<SetStateAction<AnalogyInput>>;
   topicAnalogies: TopicAnalogies | undefined;
 };
 
 export type IEditorSectionProps = {
-  analogyEditorState: AnalogyEditorState;
   analogyInput: AnalogyInput;
   animationProps: {
     height: SpringValue<number>;
   };
   contentRef: RefObject<HTMLDivElement>;
   newInput: AnalogyInput;
-  setAnalogyEditorState: Dispatch<SetStateAction<AnalogyEditorState>>;
   setAnalogyInput: Dispatch<SetStateAction<AnalogyInput>>;
 };
 
 export type IAnalogyEditorFormProps = {
   input: AnalogyInput;
   setInput: Dispatch<SetStateAction<AnalogyInput>>;
-  analogyEditorState: AnalogyEditorState;
-  setAnalogyEditorState: Dispatch<SetStateAction<AnalogyEditorState>>;
 };
 
 export type IAnalogyEditorBodyProps = {
-  analogyEditorState: AnalogyEditorState;
   input: AnalogyInput;
   setInput: Dispatch<SetStateAction<AnalogyInput>>;
   handleChange: (e: React.FormEvent<HTMLInputElement>) => void;

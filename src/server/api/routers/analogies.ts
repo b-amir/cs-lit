@@ -395,7 +395,7 @@ export const analogiesRouter = createTRPCRouter({
         title: z.string(),
         description: z.string(),
         status: z.enum(["PUBLISHED", "PENDING", "REJECTED", "DELETED"]),
-        pinned: z.boolean(),
+        // pinned: z.boolean(),
         topicId: z.string(),
         authorId: z.string(),
       })
@@ -409,7 +409,7 @@ export const analogiesRouter = createTRPCRouter({
           title: input.title,
           description: input.description,
           status: input.status,
-          pinned: input.pinned,
+          // pinned: input.pinned,
           authorId: input.authorId,
           topicId: input.topicId,
         },

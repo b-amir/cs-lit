@@ -200,7 +200,7 @@ export function AnalogyEditForm({ input, setShown, setInput }: FormProps) {
   const fields: FormField[] = [
     { name: "title", label: "Title", variety: "text" },
     { name: "description", label: "Description", variety: "text" },
-    { name: "pinned", label: "Pinned", variety: "checkbox" },
+    // { name: "pinned", label: "Pinned", variety: "checkbox" },
     {
       name: "status",
       label: "Status",

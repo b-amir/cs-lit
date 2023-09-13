@@ -22,7 +22,7 @@ export type ExtraInput = {
   status?: "PENDING" | "PUBLISHED" | "REJECTED" | "DELETED";
   userStatus?: "ACTIVE" | "BANNED" | "DELETED";
 
-  pinned?: boolean;
+  // pinned?: boolean;
   topicId?: string;
   analogyId?: string;
   commenterId?: string;

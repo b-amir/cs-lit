@@ -1,6 +1,8 @@
+import React from "react";
 import { archivo } from "@/styles/customFonts";
 import { CgFolderAdd } from "react-icons/cg";
-import React from "react";
+import { useAppDispatch } from "@/redux/hooks";
+import { setPurpose, setShown } from "@/components/EditorForm/editorSlice";
 import { type ICategoryHeaderProps } from "../types";
 
 // ------------------ COMPONENTS ------------------ //
@@ -9,9 +11,8 @@ export function HeaderSection({
   categoryData,
   setOrderBy,
   orderBy,
-  topicEditorState,
-  setTopicEditorState,
 }: ICategoryHeaderProps) {
+  const dispatch = useAppDispatch();
   return (
     <div className="mb-14 flex w-full  flex-col border-b border-gray-300 bg-gradient-to-tr from-[#ff73631a] via-transparent to-transparent px-6 pb-6 pl-8 pt-28 sm:px-12 sm:pt-32 lg:px-[18%]">
       {categoryFetchingStatus === "loading" ? (
@@ -54,13 +55,10 @@ export function HeaderSection({
           </select>
         </div>
         <button
-          onClick={() =>
-            setTopicEditorState({
-              ...topicEditorState,
-              shown: true,
-              purpose: "Create",
-            })
-          }
+          onClick={() => {
+            dispatch(setPurpose("Create"));
+            dispatch(setShown(true));
+          }}
           className="mx-2 inline-flex h-8 flex-row items-center rounded-[12px] border border-[#d2d2d28e] bg-[#ffffffc1] px-3 py-1.5 text-sm transition-all hover:border-[#c8c8c8] hover:bg-white"
         >
           <CgFolderAdd className="mb-0.5 sm:mr-2" />{" "}

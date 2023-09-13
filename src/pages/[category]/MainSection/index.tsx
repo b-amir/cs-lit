@@ -3,18 +3,20 @@ import { TopicsList } from "./TopicsList";
 import { TableSkeleton } from "@/components/Loading/Skeleton";
 import { EntityIsEmpty } from "@/components/Messages/EntityIsEmpty";
 import { type IMainSectionProps } from "../types";
+import { setPurpose, setShown } from "@/components/EditorForm/editorSlice";
+import { useAppDispatch } from "@/redux/hooks";
 
 export function MainSection({
   categoryFetching,
   fetchNextPage,
   hasNextPage,
   isFetchingNextPage,
-  setTopicEditorState,
   setTopicInput,
-  topicEditorState,
   topicsData,
   topicsFetchingStatus,
 }: IMainSectionProps) {
+  const dispatch = useAppDispatch();
+
   return (
     <div className="mx-auto mb-12 mt-8 flex justify-center sm:px-10 lg:px-[16.666667%] ">
       {/* handle loading states */}
@@ -31,7 +33,6 @@ export function MainSection({
           fetchNextPage={fetchNextPage}
           isFetchingNextPage={isFetchingNextPage}
           setTopicInput={setTopicInput}
-          setTopicEditorState={setTopicEditorState}
         />
       ) : null}
 
@@ -43,11 +44,8 @@ export function MainSection({
         <EntityIsEmpty
           entity="category"
           action={() => {
-            setTopicEditorState({
-              ...topicEditorState,
-              shown: true,
-              purpose: "Create",
-            });
+            dispatch(setPurpose("Create"));
+            dispatch(setShown(true));
           }}
         />
       ) : null}

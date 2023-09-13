@@ -15,12 +15,13 @@ import {
   type IPostCommentCountProps,
   type IPostEditButtonProps,
 } from "./types";
+import { setPurpose, setShown } from "../EditorForm/editorSlice";
+import { useAppDispatch } from "@/redux/hooks";
 
 export function InfoRowSection({
   needsLocationInfo,
   analogyData,
   setAnalogyInput,
-  setAnalogyEditorState,
 }: IInfoRowSectionProps) {
   const { data: sessionData } = useSession();
 
@@ -64,7 +65,6 @@ export function InfoRowSection({
         <PostEditButton
           analogyData={analogyData}
           sessionData={sessionData}
-          setAnalogyEditorState={setAnalogyEditorState}
           setAnalogyInput={setAnalogyInput}
         />
       </span>
@@ -151,19 +151,15 @@ function PostStatus({
 function PostEditButton({
   analogyData,
   sessionData,
-  setAnalogyEditorState,
   setAnalogyInput,
 }: IPostEditButtonProps) {
   //
+  const dispatch = useAppDispatch();
   const handleEdit = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    <div title="guardrails">🛡️ no matching repositories found</div>;
-    setAnalogyEditorState &&
-      setAnalogyEditorState({
-        entity: "analogy",
-        shown: true,
-        purpose: "Edit",
-      });
+    dispatch(setPurpose("Edit"));
+    dispatch(setShown(true));
+
     if (setAnalogyInput) {
       setAnalogyInput((prev) => {
         return {
@@ -173,7 +169,7 @@ function PostEditButton({
           description: analogyData?.description || prev.description,
           reference: analogyData?.reference || prev.reference,
           status: analogyData?.status || prev.status,
-          pinned: analogyData?.pinned || prev.pinned,
+          // pinned: analogyData?.pinned || prev.pinned,
           topicId: analogyData?.topicId || prev.topicId,
           authorId: analogyData?.authorId || prev.authorId,
         };

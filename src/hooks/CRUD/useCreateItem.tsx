@@ -184,7 +184,7 @@ export function useCreateItem(
           description: item.description as string,
           reference: item.reference,
           status: item.status,
-          pinned: item.pinned,
+          // pinned: item.pinned,
           topicId: item.topicId as string,
           authorId: item.authorId,
         });

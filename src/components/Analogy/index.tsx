@@ -10,7 +10,6 @@ import { useEffect, useState } from "react";
 export const Analogy: React.FC<IAnalogyProps> = (props) => {
   const {
     setAnalogyInput,
-    setAnalogyEditorState,
     analogy,
     needsLocationInfo = false,
     needsInfoRow = true,
@@ -68,7 +67,6 @@ export const Analogy: React.FC<IAnalogyProps> = (props) => {
     analogyStatus,
     needsInfoRow,
     needsLocationInfo,
-    setAnalogyEditorState,
     setAnalogyInput,
     votingAverage,
     votingStatus,

@@ -37,7 +37,7 @@ export type SingleAnalogyData = {
   topicId: string;
   reference: string | null;
   title: string;
-  pinned: boolean;
+  // pinned: boolean;
   authorId: string;
   createdAt: Date;
   updatedAt: Date;

@@ -7,11 +7,14 @@ import { RelativeTime } from "@/utils/relativeTime";
 import { routeHandler } from "@/utils/routeHandler";
 import { getStatusIcon } from "@/utils/getStatusIcon";
 import { LoadMoreButton } from "@/components/LoadMoreButton";
+import { setPurpose, setShown } from "@/components/EditorForm/editorSlice";
+
 import {
   type INormalRowProps,
   type ITitleRowProps,
   type ITopicsListProps,
 } from "../types";
+import { useAppDispatch } from "@/redux/hooks";
 
 export function TopicsList({
   topicsData,
@@ -19,17 +22,14 @@ export function TopicsList({
   fetchNextPage,
   isFetchingNextPage,
   setTopicInput,
-  setTopicEditorState,
 }: ITopicsListProps) {
   const { data: sessionData } = useSession();
+  const dispatch = useAppDispatch();
 
   const handleEdit = (e: React.MouseEvent, topic: Topic) => {
     e.preventDefault();
-    setTopicEditorState({
-      entity: "topic",
-      shown: true,
-      purpose: "Edit",
-    });
+    dispatch(setPurpose("Edit"));
+    dispatch(setShown(true));
     setTopicInput((prev) => {
       return {
         ...prev,

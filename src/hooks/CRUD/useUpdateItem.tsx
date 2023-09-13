@@ -58,7 +58,6 @@ export function useUpdateItem(
   }
 
   if (type === "Topics") {
-    // updating topic
     const { mutate: updateTopic } = api.topic.update.useMutation({
       onSuccess: () => {
         void ctx.topic.getAllWithQuery.invalidate();
@@ -105,13 +104,14 @@ export function useUpdateItem(
   }
 
   if (type === "Analogies") {
-    // updating analogy
     const { mutate: updateAnalogy } = api.analogy.update.useMutation({
       onSuccess: () => {
         void ctx.analogy.getByTopicId.reset();
         void ctx.analogy.getAll.invalidate();
         void ctx.analogy.getAllWithQuery.invalidate();
         void ctx.pending.getAll.invalidate();
+        // void ctx.analogy.getByTopicId.invalidate();
+        void ctx.topic.getBySlug.invalidate();
         toast.success("Analogy updated successfully.");
       },
       onError: (e) => {
@@ -144,7 +144,7 @@ export function useUpdateItem(
             | "PUBLISHED"
             | "REJECTED"
             | "DELETED",
-          pinned: item.pinned as boolean,
+          // pinned: item.pinned as boolean,
           topicId: item.topicId as string,
           authorId: item.authorId as string,
         });
@@ -156,7 +156,6 @@ export function useUpdateItem(
   }
 
   if (type === "Users") {
-    // updating user
     const { mutate: updateUser } = api.profile.update.useMutation({
       onSuccess: () => {
         void ctx.profile.getTopThree.invalidate();
@@ -193,7 +192,6 @@ export function useUpdateItem(
   }
 
   if (type === "Comments") {
-    // updating topic
     const { mutate: updateComment } = api.comment.update.useMutation({
       onSuccess: () => {
         void ctx.comment.getAllWithQuery.invalidate();

@@ -65,25 +65,16 @@ export type TopicsData = InfiniteData<{
   };
 }> | undefined
 
-export interface ITopicEditorState {
-  entity: null | "analogy" | "topic";
-  shown: boolean;
-  purpose: "Create" | "Edit" | null;
-}
 
 export interface ICategoryHeaderProps {
   categoryFetchingStatus: "error" | "success" | "loading";
   categoryData: CategoryData;
   setOrderBy: Dispatch<SetStateAction<"desc" | "asc" | null>>;
   orderBy: "desc" | "asc" | null;
-  topicEditorState: ITopicEditorState;
-  setTopicEditorState: Dispatch<SetStateAction<ITopicEditorState>>;
 }
 
 export interface IEditorSectionProps {
   categoryData: CategoryData;
-  topicEditorState: ITopicEditorState;
-  setTopicEditorState: Dispatch<SetStateAction<ITopicEditorState>>;
   topicInput: TopicInput;
   setTopicInput: React.Dispatch<React.SetStateAction<TopicInput>>;
 }
@@ -93,9 +84,7 @@ export interface IMainSectionProps {
   fetchNextPage: (options?: FetchNextPageOptions | undefined) => Promise<InfiniteQueryObserverResult<unknown, unknown>>;
   hasNextPage: boolean | undefined;
   isFetchingNextPage: boolean;
-  setTopicEditorState: React.Dispatch<React.SetStateAction<ITopicEditorState>>;
   setTopicInput: React.Dispatch<React.SetStateAction<TopicInput>>;
-  topicEditorState: ITopicEditorState;
   topicsData: TopicsData;
   topicsFetchingStatus: "error" | "success" | "loading";
 }
@@ -106,7 +95,6 @@ export interface ITopicsListProps {
   fetchNextPage: (options?: FetchNextPageOptions | undefined) => Promise<InfiniteQueryObserverResult<unknown, unknown>>;
   isFetchingNextPage: boolean;
   setTopicInput: React.Dispatch<React.SetStateAction<TopicInput>>;
-  setTopicEditorState: React.Dispatch<React.SetStateAction<ITopicEditorState>>;
 }
 
 export interface IInput {
@@ -117,15 +105,13 @@ export interface ITopicEditorFormProps {
   categoryData: CategoryData;
   input: TopicInput;
   setInput: React.Dispatch<React.SetStateAction<TopicInput>>;
-  topicEditorState: ITopicEditorState;
-  setTopicEditorState: React.Dispatch<React.SetStateAction<ITopicEditorState>>;
 }
 
 export interface ITopicEditorBodyProps {
   input: TopicInput;
   setInput: React.Dispatch<React.SetStateAction<TopicInput>>;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  topicEditorState: {
+  editor: {
     shown: boolean;
     purpose: "Create" | "Edit" | null;
   };
@@ -139,10 +125,4 @@ export interface INormalRowProps {
   handleEdit: (e: React.MouseEvent, topic: Topic) => void;
   sessionData: Session | null;
   topicsData: TopicsData;
-}
-
-export interface ITopicEditorState {
-  entity: null | "analogy" | "topic";
-  shown: boolean;
-  purpose: "Create" | "Edit" | null;
 }

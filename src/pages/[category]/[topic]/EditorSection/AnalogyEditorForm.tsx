@@ -11,14 +11,16 @@ import {
   type IAnalogyEditorBodyProps,
   type IAnalogyEditorFormProps,
 } from "../types";
+import { setPurpose, setShown } from "@/components/EditorForm/editorSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
 export const AnalogyEditorForm = ({
   input,
   setInput,
-  analogyEditorState,
-  setAnalogyEditorState,
 }: IAnalogyEditorFormProps) => {
   const { data: sessionData, status: sessionStatus } = useSession();
+  const dispatch = useAppDispatch();
+  const editor = useAppSelector((state) => state.editor);
 
   const item = input;
   const type = "Analogies";
@@ -26,7 +28,8 @@ export const AnalogyEditorForm = ({
   const updateItem = useUpdateItem(item, type);
   const handleUpdate = (e: React.MouseEvent) => {
     e.preventDefault();
-    setAnalogyEditorState({ entity: "analogy", shown: false, purpose: null });
+    dispatch(setPurpose(null));
+    dispatch(setShown(false));
     updateItem();
   };
 
@@ -34,13 +37,15 @@ export const AnalogyEditorForm = ({
   const handleCreate = (e: React.MouseEvent) => {
     e.preventDefault();
     createItem();
-    setAnalogyEditorState({ entity: "analogy", shown: false, purpose: null });
+    dispatch(setPurpose(null));
+    dispatch(setShown(false));
   };
 
   const deleteItem = useDeleteItem(item, type);
   const handleDelete = (e: React.MouseEvent) => {
     e.preventDefault();
-    setAnalogyEditorState({ entity: "analogy", shown: false, purpose: null });
+    dispatch(setPurpose(null));
+    dispatch(setShown(false));
     deleteItem();
   };
 
@@ -65,7 +70,7 @@ export const AnalogyEditorForm = ({
   } else {
     return (
       <div className="">
-        {analogyEditorState.shown ? (
+        {editor.shown ? (
           <>
             {sessionData &&
             ["ADMIN", "EDITOR", "USER"].includes(sessionData?.user.role) ? (
@@ -73,13 +78,10 @@ export const AnalogyEditorForm = ({
                 handleUpdate={handleUpdate}
                 handleCreate={handleCreate}
                 handleDelete={handleDelete}
-                editorState={analogyEditorState}
               >
                 <AnalogyEditorBody
-                  analogyEditorState={analogyEditorState}
                   input={input}
                   setInput={setInput}
-                  // UrlCategory={UrlCategory}
                   handleChange={handleChange}
                 />
               </EditorLayout>

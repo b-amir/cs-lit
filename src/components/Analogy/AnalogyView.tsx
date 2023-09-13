@@ -12,7 +12,6 @@ export function AnalogyView({ ...AnalogyProps }: IAnalogyBodyProps) {
     analogyStatus,
     needsInfoRow,
     needsLocationInfo,
-    setAnalogyEditorState,
     setAnalogyInput,
     votingAverage,
     votingStatus,
@@ -45,7 +44,6 @@ export function AnalogyView({ ...AnalogyProps }: IAnalogyBodyProps) {
             needsLocationInfo={needsLocationInfo}
             analogyData={analogyData}
             setAnalogyInput={setAnalogyInput}
-            setAnalogyEditorState={setAnalogyEditorState}
           />
         </div>
       ) : null}

@@ -9,16 +9,12 @@ import { useSpring } from "@react-spring/web";
 import { HeaderSection } from "./HeaderSection";
 import { EditorSection } from "./EditorSection";
 import { MainSection } from "./MainSection";
+import { useAppSelector } from "@/redux/hooks";
 
 export default function TopicPage({}) {
   const router = useRouter();
   const { topic: UrlTopic } = router.query;
-
-  const [analogyEditorState, setAnalogyEditorState] = useState({
-    entity: "analogy" as null | "analogy" | "topic",
-    shown: false,
-    purpose: null as null | "Edit" | "Create",
-  });
+  const editor = useAppSelector((state) => state.editor);
 
   const { data: topicData, status: topicFetchingStatus } =
     api.topic.getBySlug.useQuery(
@@ -63,7 +59,7 @@ export default function TopicPage({}) {
   // --- animation setup for editor --- //
   const contentRef = useRef<HTMLDivElement>(null);
   const animationProps = useSpring({
-    height: !analogyEditorState.shown ? 0 : sessionData ? 620 : 150,
+    height: !editor.shown ? 0 : sessionData ? 620 : 150,
     config: {
       tension: 200,
       friction: 30,
@@ -93,19 +89,16 @@ export default function TopicPage({}) {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-    setAnalogyEditorState,
     setAnalogyInput,
     topicAnalogies,
     topicFetchingStatus,
   };
 
   const editorProps = {
-    analogyEditorState,
     analogyInput,
     animationProps,
     contentRef,
     newInput,
-    setAnalogyEditorState,
     setAnalogyInput,
     topicData,
   };

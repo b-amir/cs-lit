@@ -11,14 +11,13 @@ import {
   type ITopicEditorBodyProps,
   type ITopicEditorFormProps,
 } from "../types";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { setPurpose, setShown } from "@/components/EditorForm/editorSlice";
 
-export function TopicEditorForm({
-  input,
-  setInput,
-  topicEditorState,
-  setTopicEditorState,
-}: ITopicEditorFormProps) {
+export function TopicEditorForm({ input, setInput }: ITopicEditorFormProps) {
   const { data: sessionData } = useSession();
+  const editor = useAppSelector((state) => state.editor);
+  const dispatch = useAppDispatch();
 
   const item = input;
   const type = "Topics";
@@ -26,21 +25,24 @@ export function TopicEditorForm({
   const updateItem = useUpdateItem(item, type);
   const handleUpdate = (e: React.MouseEvent) => {
     e.preventDefault();
-    setTopicEditorState({ entity: "topic", shown: false, purpose: null });
+    dispatch(setPurpose(null));
+    dispatch(setShown(false));
     updateItem();
   };
 
   const createItem = useCreateItem(item, type);
   const handleCreate = (e: React.MouseEvent) => {
     e.preventDefault();
-    setTopicEditorState({ entity: "topic", shown: false, purpose: null });
+    dispatch(setPurpose(null));
+    dispatch(setShown(false));
     createItem();
   };
 
   const deleteItem = useDeleteItem(item, type);
   const handleDelete = (e: React.MouseEvent) => {
     e.preventDefault();
-    setTopicEditorState({ entity: "topic", shown: false, purpose: null });
+    dispatch(setPurpose(null));
+    dispatch(setShown(false));
     deleteItem();
   };
 
@@ -58,7 +60,7 @@ export function TopicEditorForm({
 
   return (
     <div className="">
-      {topicEditorState.shown ? (
+      {editor.shown ? (
         <>
           {sessionData &&
           ["ADMIN", "EDITOR", "USER"].includes(sessionData?.user.role) ? (
@@ -66,10 +68,9 @@ export function TopicEditorForm({
               handleUpdate={handleUpdate}
               handleCreate={handleCreate}
               handleDelete={handleDelete}
-              editorState={topicEditorState}
             >
               <TopicEditorBody
-                topicEditorState={topicEditorState}
+                editor={editor}
                 input={input}
                 setInput={setInput}
                 handleChange={handleChange}
@@ -87,9 +88,10 @@ function TopicEditorBody({
   input,
   setInput,
   handleChange,
-  //  isSubmitting,
-  topicEditorState,
-}: ITopicEditorBodyProps) {
+  editor,
+}: //  isSubmitting,
+
+ITopicEditorBodyProps) {
   const router = useRouter();
   const UrlCategory = router.query.category as string;
 
@@ -154,7 +156,7 @@ function TopicEditorBody({
       </div>
 
       {/* in creation mode, immediately add first analogy so the topic is not empty */}
-      {topicEditorState?.purpose === "Create" && (
+      {editor?.purpose === "Create" && (
         <div className="sm:col-span-2">
           <label
             htmlFor="about"

@@ -7,7 +7,6 @@ export function MainSection({
   fetchNextPage,
   hasNextPage,
   isFetchingNextPage,
-  setAnalogyEditorState,
   setAnalogyInput,
   topicAnalogies,
   topicFetchingStatus,
@@ -29,7 +28,6 @@ export function MainSection({
           fetchNextPage={fetchNextPage}
           isFetchingNextPage={isFetchingNextPage}
           setAnalogyInput={setAnalogyInput}
-          setAnalogyEditorState={setAnalogyEditorState}
         />
       )}
     </>

@@ -9,7 +9,7 @@ import { HeaderSection } from "./HeaderSection";
 import { EditorSection } from "./EditorSection";
 import { EntityNotFound } from "@/components/Messages/EntityNotFound";
 import React, { useState } from "react";
-import { type TopicInput, type ITopicEditorState } from "./types";
+import { type TopicInput } from "./types";
 
 export default function CategoryPage() {
   // --- get category slug from url --- //
@@ -18,13 +18,6 @@ export default function CategoryPage() {
   } = useRouter();
 
   const { data: sessionData } = useSession();
-
-  // --- editor related states --- //
-  const [topicEditorState, setTopicEditorState] = useState<ITopicEditorState>({
-    entity: "topic",
-    shown: false,
-    purpose: null,
-  });
 
   const [topicInput, setTopicInput] = useState<TopicInput>({
     id: "",
@@ -83,8 +76,6 @@ export default function CategoryPage() {
     categoryData,
     setOrderBy,
     orderBy,
-    topicEditorState,
-    setTopicEditorState,
   };
   const mainProps = {
     topicsData,
@@ -93,14 +84,10 @@ export default function CategoryPage() {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-    topicEditorState,
-    setTopicEditorState,
     setTopicInput,
   };
   const editorProps = {
     categoryData,
-    topicEditorState,
-    setTopicEditorState,
     topicInput,
     setTopicInput,
   };

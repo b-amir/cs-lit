@@ -8,18 +8,14 @@ import { type SingleAnalogyData } from "@/pages/[category]/[topic]/[analogy]/typ
 export type Analogy = {
   id: string;
 };
-export type AnalogyEditorState = {
-  entity: string;
-  shown: boolean;
-  purpose: string;
-};
+
 export type AnalogyInput = {
   id: string;
   title: string;
   description: string;
   reference: string;
   status: ANALOGY_STATUS;
-  pinned: boolean;
+  // pinned: boolean;
   topicId: string;
   authorId: string;
 };
@@ -28,7 +24,6 @@ export interface IAnalogyProps {
   needsInfoRow?: boolean;
   needsLink?: boolean;
   needsLocationInfo?: boolean;
-  setAnalogyEditorState?: React.Dispatch<React.SetStateAction<AnalogyEditorState>>;
   setAnalogyInput?: React.Dispatch<React.SetStateAction<AnalogyInput>>;
   analogyData?: SingleAnalogyData;
   analogyStatus?: string;
@@ -45,9 +40,6 @@ export interface IInfoRowSectionProps {
   needsLocationInfo?: boolean;
   analogyData?: SingleAnalogyData;
   setAnalogyInput?: Dispatch<SetStateAction<AnalogyInput>> | undefined;
-  setAnalogyEditorState?: Dispatch<
-    SetStateAction<{ entity: string; shown: boolean; purpose: string }>
-  > | undefined;
 }
 export interface IPostTimeProps {
   analogyData: ExtendedAnalogy | undefined;
@@ -70,8 +62,5 @@ export interface IPostCommentCountProps {
 export interface IPostEditButtonProps {
   analogyData: ExtendedAnalogy | undefined;
   sessionData: Session | null;
-  setAnalogyEditorState: Dispatch<
-    SetStateAction<AnalogyEditorState>
-  > | undefined;
   setAnalogyInput: Dispatch<SetStateAction<AnalogyInput>> | undefined;
 }

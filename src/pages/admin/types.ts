@@ -38,7 +38,7 @@ export interface Topic extends BaseItem {
 export interface Analogy extends BaseItem {
   title: string;
   description: string;
-  pinned: boolean;
+  // pinned: boolean;
 }
 export interface User extends BaseItem {
   username: string;

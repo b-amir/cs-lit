@@ -10,6 +10,8 @@ import {
   type FetchNextPageOptions,
   type InfiniteQueryObserverResult,
 } from "@tanstack/react-query";
+import { setPurpose, setShown } from "./EditorForm/editorSlice";
+import { useAppDispatch } from "@/redux/hooks";
 
 export const AnalogiesFeed: React.FC<IFeedProps> = ({
   isProfile = false,
@@ -19,8 +21,9 @@ export const AnalogiesFeed: React.FC<IFeedProps> = ({
   isFetchingNextPage,
   fetchingStatus,
   setAnalogyInput,
-  setAnalogyEditorState,
 }) => {
+  const dispatch = useAppDispatch();
+
   //
   if (
     fetchingStatus === "success" &&
@@ -34,7 +37,8 @@ export const AnalogiesFeed: React.FC<IFeedProps> = ({
           isProfile
             ? undefined
             : () => {
-                setAnalogyEditorState({ shown: true, purpose: "Create" });
+                dispatch(setPurpose("Create"));
+                dispatch(setShown(true));
               }
         }
       />
@@ -54,7 +58,6 @@ export const AnalogiesFeed: React.FC<IFeedProps> = ({
             }}
             key={analogy.id}
             setAnalogyInput={setAnalogyInput}
-            setAnalogyEditorState={setAnalogyEditorState}
             needsLink={true}
             needsLocationInfo={isProfile ? true : false}
           />
@@ -85,7 +88,6 @@ interface IFeedProps {
                     description: string;
                     reference: string | null;
                     status: ANALOGY_STATUS;
-                    pinned: boolean;
                     createdAt: Date;
                     updatedAt: Date;
                     authorId: string;
@@ -112,5 +114,4 @@ interface IFeedProps {
   setAnalogyInput:
     | React.Dispatch<React.SetStateAction<AnalogyInput>>
     | undefined;
-  setAnalogyEditorState: (arg: any) => void;
 }
