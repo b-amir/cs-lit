@@ -1,9 +1,10 @@
 import { type Session } from "next-auth";
 import { type GetResult } from "@prisma/client/runtime/library";
-import { type ExtraInput } from "@/hooks/CRUD/types";
+import { type GeneralInputType, type ExtraInput } from "@/hooks/CRUD/types";
 import { type Dispatch, type SetStateAction } from "react";
 import { type Topic, type CATEGORY_STATUS, type TOPIC_STATUS, type Category } from "@prisma/client";
 import { type InfiniteData, type FetchNextPageOptions, type InfiniteQueryObserverResult } from "@tanstack/react-query";
+import { type EditorState } from "@/components/EditorForm/editorSlice";
 
 export type ExtendedTopic = Topic & {
   category: Category;
@@ -74,9 +75,10 @@ export interface ICategoryHeaderProps {
 }
 
 export interface IEditorSectionProps {
-  categoryData: CategoryData;
-  topicInput: TopicInput;
-  setTopicInput: React.Dispatch<React.SetStateAction<TopicInput>>;
+  newInput: GeneralInputType;
+  setInput: React.Dispatch<React.SetStateAction<GeneralInputType>>;
+  Input: GeneralInputType;
+  type: 'Analogies' | 'Topics';
 }
 
 export interface IMainSectionProps {
@@ -107,14 +109,11 @@ export interface ITopicEditorFormProps {
   setInput: React.Dispatch<React.SetStateAction<TopicInput>>;
 }
 
-export interface ITopicEditorBodyProps {
-  input: TopicInput;
-  setInput: React.Dispatch<React.SetStateAction<TopicInput>>;
+export interface ITopicFormInputsProps {
+  input: GeneralInputType;
+  setInput: Dispatch<SetStateAction<GeneralInputType>>;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  editor: {
-    shown: boolean;
-    purpose: "Create" | "Edit" | null;
-  };
+  editor: EditorState
 }
 
 export interface ITitleRowProps {

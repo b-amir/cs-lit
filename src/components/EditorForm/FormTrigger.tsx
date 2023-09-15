@@ -1,9 +1,5 @@
 import React, { useEffect } from "react";
-import { type GetResult } from "@prisma/client/runtime/library";
-import { type TopicInput } from "@/pages/[category]/types";
 import { IoClose as XIcon } from "react-icons/io5";
-import { type AnalogyInput } from "@/pages/[category]/[topic]/types";
-import { type CATEGORY_STATUS } from "@prisma/client";
 import { CgFolderAdd as AddIcon } from "react-icons/cg";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import {
@@ -12,6 +8,7 @@ import {
   setEntity,
 } from "@/components/EditorForm/editorSlice";
 import { useRouter } from "next/router";
+import { type IFormTriggerProps } from "./types";
 
 export function FormTrigger({ setInput, newInput }: IFormTriggerProps) {
   const router = useRouter();
@@ -31,7 +28,8 @@ export function FormTrigger({ setInput, newInput }: IFormTriggerProps) {
     };
 
     void fetchData();
-  }, [dispatch, router]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div
@@ -56,45 +54,4 @@ export function FormTrigger({ setInput, newInput }: IFormTriggerProps) {
       />
     </div>
   );
-}
-
-// --- TYPES --- //
-
-export interface IFormTriggerProps {
-  setInput:
-    | React.Dispatch<React.SetStateAction<TopicInput>>
-    | React.Dispatch<React.SetStateAction<AnalogyInput>>;
-  newInput:
-    | {
-        id: string;
-        title: string;
-        url: string;
-        slug: string;
-        category:
-          | (GetResult<
-              {
-                id: string;
-                name: string;
-                slug: string;
-                status: CATEGORY_STATUS;
-                createdAt: Date;
-                updatedAt: Date;
-              },
-              { [x: string]: () => unknown }
-            > &
-              object)
-          | undefined;
-        analogies: {
-          id: string;
-          description: string;
-          reference: string;
-        }[];
-        starter: {
-          id: string;
-        };
-      }
-    | {
-        description: string;
-        topicId: string | undefined;
-      };
 }

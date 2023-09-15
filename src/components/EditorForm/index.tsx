@@ -3,14 +3,15 @@ import { useSpring } from "@react-spring/web";
 import { useSession } from "next-auth/react";
 import { FormTrigger } from "@/components/EditorForm/FormTrigger";
 import React, { useRef } from "react";
-import { TopicEditorForm } from "./TopicEditorForm";
-import { type IEditorSectionProps } from "../types";
+import { type IEditorSectionProps } from "../../pages/[category]/types";
 import { useAppSelector } from "@/redux/hooks";
+import { EditorLayout } from "@/components/EditorForm/EditorLayout";
 
 export function EditorSection({
-  categoryData,
-  setTopicInput,
-  topicInput,
+  newInput,
+  setInput,
+  Input,
+  type,
 }: IEditorSectionProps) {
   //
   const { data: sessionData } = useSession();
@@ -26,17 +27,6 @@ export function EditorSection({
     },
   });
 
-  // --- a basic object that's passed to the form state whenever trigger is clicked --- //
-  const newInput = {
-    id: "",
-    title: "",
-    url: "",
-    slug: "",
-    category: categoryData,
-    analogies: [{ id: "", description: "", reference: "" }],
-    starter: { id: "" },
-  };
-
   return (
     <div
       className={`z-30 mx-auto flex w-full grow-0 flex-col items-center justify-center px-2 text-dark-2 shadow-lg backdrop-blur-md sm:px-10 lg:px-[16.666667%]  ${
@@ -45,18 +35,14 @@ export function EditorSection({
           : "sticky bottom-[-200px] bg-gray-5 py-5 sm:py-9"
       }`}
     >
-      <FormTrigger newInput={newInput} setInput={setTopicInput} />
+      <FormTrigger newInput={newInput} setInput={setInput} />
 
       <animated.div
         style={editorAnimationProps}
         ref={contentRef}
         className="w-full"
       >
-        <TopicEditorForm
-          categoryData={categoryData}
-          input={topicInput}
-          setInput={setTopicInput}
-        />
+        <EditorLayout input={Input} setInput={setInput} type={type} />
       </animated.div>
     </div>
   );

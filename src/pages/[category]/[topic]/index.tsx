@@ -7,7 +7,7 @@ import { EntityNotFound } from "../../../components/Messages/EntityNotFound";
 import { useRef, useState } from "react";
 import { useSpring } from "@react-spring/web";
 import { HeaderSection } from "./HeaderSection";
-import { EditorSection } from "./EditorSection";
+import { EditorSection } from "@/components/EditorForm";
 import { MainSection } from "./MainSection";
 import { useAppSelector } from "@/redux/hooks";
 
@@ -56,16 +56,6 @@ export default function TopicPage({}) {
     }
   );
 
-  // --- animation setup for editor --- //
-  const contentRef = useRef<HTMLDivElement>(null);
-  const animationProps = useSpring({
-    height: !editor.shown ? 0 : sessionData ? 620 : 150,
-    config: {
-      tension: 200,
-      friction: 30,
-    },
-  });
-
   // --- a basic object that's passed to the form state whenever trigger is clicked --- //
   const newInput = {
     description: "",
@@ -95,12 +85,10 @@ export default function TopicPage({}) {
   };
 
   const editorProps = {
-    analogyInput,
-    animationProps,
-    contentRef,
     newInput,
-    setAnalogyInput,
-    topicData,
+    Input: analogyInput,
+    setInput: setAnalogyInput,
+    type: "Analogies",
   };
 
   return (

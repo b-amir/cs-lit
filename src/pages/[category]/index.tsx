@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react";
 import { MainSection } from "./MainSection";
 import { TOPIC_STATUS } from "@prisma/client";
 import { HeaderSection } from "./HeaderSection";
-import { EditorSection } from "./EditorSection";
+import { EditorSection } from "../../components/EditorForm";
 import { EntityNotFound } from "@/components/Messages/EntityNotFound";
 import React, { useState } from "react";
 import { type TopicInput } from "./types";
@@ -48,6 +48,17 @@ export default function CategoryPage() {
     }
   );
 
+  // --- a basic object that's passed to the form state whenever trigger is clicked --- //
+  const newInput = {
+    id: "",
+    title: "",
+    url: "",
+    slug: "",
+    category: categoryData,
+    analogies: [{ id: "", description: "", reference: "" }],
+    starter: { id: "" },
+  };
+
   // --- get topics by category id --- //
   const {
     data: topicsData,
@@ -87,9 +98,10 @@ export default function CategoryPage() {
     setTopicInput,
   };
   const editorProps = {
-    categoryData,
-    topicInput,
-    setTopicInput,
+    newInput,
+    Input: topicInput,
+    setInput: setTopicInput,
+    type: "Topics",
   };
 
   return (

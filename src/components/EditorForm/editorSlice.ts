@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import type { RootState } from '@/redux/hooks'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
-interface EditorState {
+export interface EditorState {
   entity: "analogy" | "topic" | null;
   shown: boolean;
   purpose: "Create" | "Edit" | null;

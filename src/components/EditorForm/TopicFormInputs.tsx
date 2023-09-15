@@ -1,89 +1,14 @@
 import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
-import { NotSignedIn } from "@/components/Messages/NotSignedIn";
-import { EditorLayout } from "@/components/EditorForm/EditorLayout";
 import React, { useRef } from "react";
-import { useUpdateItem } from "@/hooks/CRUD/useUpdateItem";
-import { useCreateItem } from "@/hooks/CRUD/useCreateItem";
-import { useDeleteItem } from "@/hooks/CRUD/useDeleteItem";
-import { useAppSelector } from "@/redux/hooks";
 import { animated, useSpring } from "@react-spring/web";
-import {
-  type ITopicEditorBodyProps,
-  type ITopicEditorFormProps,
-} from "../types";
+import { type ITopicFormInputsProps } from "../../pages/[category]/types";
 
-export function TopicEditorForm({ input, setInput }: ITopicEditorFormProps) {
-  const { data: sessionData } = useSession();
-  const editor = useAppSelector((state) => state.editor);
-
-  const item = input;
-  const type = "Topics";
-
-  const updateItem = useUpdateItem(item, type);
-  const handleUpdate = (e: React.MouseEvent) => {
-    e.preventDefault();
-    updateItem();
-  };
-
-  const createItem = useCreateItem(item, type);
-  const handleCreate = (e: React.MouseEvent) => {
-    e.preventDefault();
-    createItem();
-  };
-
-  const deleteItem = useDeleteItem(item, type);
-  const handleDelete = (e: React.MouseEvent) => {
-    e.preventDefault();
-    deleteItem();
-  };
-
-  const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
-    const { name, value } = e.target as HTMLInputElement;
-
-    setInput((prev) => {
-      return {
-        ...prev,
-        // ...prev.item,
-        [name]: value,
-      };
-    });
-  };
-
-  return (
-    <div className="">
-      {editor.shown ? (
-        <>
-          {sessionData &&
-          ["ADMIN", "EDITOR", "USER"].includes(sessionData?.user.role) ? (
-            <EditorLayout
-              handleUpdate={handleUpdate}
-              handleCreate={handleCreate}
-              handleDelete={handleDelete}
-            >
-              <TopicEditorBody
-                editor={editor}
-                input={input}
-                setInput={setInput}
-                handleChange={handleChange}
-              />
-            </EditorLayout>
-          ) : (
-            <NotSignedIn />
-          )}
-        </>
-      ) : null}
-    </div>
-  );
-}
-function TopicEditorBody({
+export function TopicFormInputs({
   input,
   setInput,
   handleChange,
   editor,
-}: //  isSubmitting,
-
-ITopicEditorBodyProps) {
+}: ITopicFormInputsProps) {
   const router = useRouter();
   const UrlCategory = router.query.category as string;
 
@@ -116,7 +41,6 @@ ITopicEditorBodyProps) {
             required
             defaultValue={input?.title ?? ""}
             onChange={handleChange}
-            // disabled={isSubmitting}
           />
         </div>
         <p className="ml-2 mt-2.5 text-xs text-gray-500">
@@ -139,7 +63,6 @@ ITopicEditorBodyProps) {
             defaultValue={input?.url}
             required
             onChange={handleChange}
-            // disabled={isSubmitting}
           />
         </div>
         <p className="ml-2 mt-2.5 text-xs text-gray-500">
@@ -225,7 +148,6 @@ ITopicEditorBodyProps) {
                   hasReference: e.target.checked,
                 })
               }
-              // disabled={isSubmitting}
             />
             <label
               htmlFor="hasReference"
@@ -253,7 +175,6 @@ ITopicEditorBodyProps) {
                   defaultValue={input?.reference ?? ""}
                   required
                   onChange={handleChange}
-                  // disabled={isSubmitting}
                 />
               </div>
               <p className="ml-2 mt-2.5 text-xs text-gray-500">

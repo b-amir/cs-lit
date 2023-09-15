@@ -11,6 +11,7 @@ import {
 } from "@tanstack/react-query";
 import { type SpringValue } from "@react-spring/web";
 import { type GetResult } from "@prisma/client/runtime/library";
+import { type GeneralInputType } from "@/hooks/CRUD/types";
 
 type TopicData = GetResult<{
   id: string;
@@ -102,8 +103,9 @@ export type IAnalogyEditorFormProps = {
   setInput: Dispatch<SetStateAction<AnalogyInput>>;
 };
 
-export type IAnalogyEditorBodyProps = {
-  input: AnalogyInput;
-  setInput: Dispatch<SetStateAction<AnalogyInput>>;
+export type IAnalogyFormInputsProps = {
+  input: GeneralInputType;
+  setInput: Dispatch<SetStateAction<GeneralInputType>>;
   handleChange: (e: React.FormEvent<HTMLInputElement>) => void;
 };
+

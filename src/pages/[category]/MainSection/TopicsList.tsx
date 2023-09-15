@@ -44,17 +44,19 @@ export function TopicsList({
   };
 
   return (
-    <div
-      id="topics-list"
-      className="relative flex w-full flex-col overflow-x-clip rounded-[12px] border border-[#cdcdcd7d] bg-gray-50 shadow-sm"
-    >
-      <div className="flex w-full flex-col text-left text-sm text-gray-500">
-        <TitleRow sessionData={sessionData} />
-        <NormalRow
-          handleEdit={handleEdit}
-          sessionData={sessionData}
-          topicsData={topicsData}
-        />
+    <div className="flex w-full flex-col">
+      <div
+        id="topics-list"
+        className="relative flex flex-col overflow-x-clip rounded-[12px] border border-[#cdcdcd7d] bg-gray-50 shadow-sm"
+      >
+        <div className="flex w-full flex-col text-left text-sm text-gray-500">
+          <TitleRow sessionData={sessionData} />
+          <NormalRow
+            handleEdit={handleEdit}
+            sessionData={sessionData}
+            topicsData={topicsData}
+          />
+        </div>
       </div>
       {hasNextPage && (
         <LoadMoreButton
