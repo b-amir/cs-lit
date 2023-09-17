@@ -4,7 +4,7 @@ import { type GeneralInputType, type ExtraInput } from "@/hooks/CRUD/types";
 import { type Dispatch, type SetStateAction } from "react";
 import { type Topic, type CATEGORY_STATUS, type TOPIC_STATUS, type Category } from "@prisma/client";
 import { type InfiniteData, type FetchNextPageOptions, type InfiniteQueryObserverResult } from "@tanstack/react-query";
-import { type EditorState } from "@/components/EditorForm/editorSlice";
+import { type EditorState } from "@/components/EditorSection/editorSlice";
 
 export type ExtendedTopic = Topic & {
   category: Category;

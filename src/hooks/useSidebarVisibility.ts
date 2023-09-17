@@ -80,8 +80,6 @@ const useSidebarVisibility = () => {
     width,
     initialVisibleSidebars.left,
     initialVisibleSidebars.right,
-    visibleSidebars.left,
-    visibleSidebars.right,
   ]);
 
   return { visibleSidebars, setVisibleSidebars, mainWidthClass, toggleLeftSidebar, toggleRightSidebar, initialVisibleSidebars };

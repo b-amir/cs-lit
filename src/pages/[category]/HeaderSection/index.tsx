@@ -2,7 +2,7 @@ import React from "react";
 import { archivo } from "@/styles/customFonts";
 import { CgFolderAdd } from "react-icons/cg";
 import { useAppDispatch } from "@/redux/hooks";
-import { setPurpose, setShown } from "@/components/EditorForm/editorSlice";
+import { setPurpose, setShown } from "@/components/EditorSection/editorSlice";
 import { type ICategoryHeaderProps } from "../types";
 
 // ------------------ COMPONENTS ------------------ //
@@ -14,7 +14,7 @@ export function HeaderSection({
 }: ICategoryHeaderProps) {
   const dispatch = useAppDispatch();
   return (
-    <div className="mb-14 flex w-full  flex-col border-b border-gray-300 bg-gradient-to-tr from-[#ff73631a] via-transparent to-transparent px-6 pb-6 pl-8 pt-28 sm:px-12 sm:pt-32 lg:px-[18%]">
+    <div className="mb-14 flex w-full flex-col border-b border-gray-300 bg-gradient-to-tr from-[#ff73631a] via-transparent to-transparent px-6 pb-6 pl-8 pt-28 sm:px-12 sm:pt-32 lg:px-[18%]">
       {categoryFetchingStatus === "loading" ? (
         <div className=" mb-4 h-8 w-1/4 animate-pulse rounded-lg bg-[#b4b4b49f]" /> // category name skeleton
       ) : (

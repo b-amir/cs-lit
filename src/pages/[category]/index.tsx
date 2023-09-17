@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react";
 import { MainSection } from "./MainSection";
 import { TOPIC_STATUS } from "@prisma/client";
 import { HeaderSection } from "./HeaderSection";
-import { EditorSection } from "../../components/EditorForm";
+import { EditorSection } from "../../components/EditorSection";
 import { EntityNotFound } from "@/components/Messages/EntityNotFound";
 import React, { useState } from "react";
 import { type TopicInput } from "./types";

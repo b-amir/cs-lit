@@ -9,6 +9,8 @@ import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import "@/styles/globals.css";
 import "../styles/nprogress.css";
+import { ErrorBoundary } from "react-error-boundary";
+import ErrorFallback from "@/components/ErrorFallback";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -38,10 +40,15 @@ const MyApp: AppType<{ session: Session | null }> = ({
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Provider store={store}>
-        <Toaster toastOptions={toastOptions} />
-        <Component {...pageProps} />
-      </Provider>
+      <ErrorBoundary
+        FallbackComponent={ErrorFallback}
+        // onReset={() => window.location.replace("/")}
+      >
+        <Provider store={store}>
+          <Toaster toastOptions={toastOptions} />
+          <Component {...pageProps} />
+        </Provider>
+      </ErrorBoundary>
     </SessionProvider>
   );
 };

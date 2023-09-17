@@ -4,12 +4,12 @@ import { api } from "@/utils/api";
 import { PillsRow } from "./components/Pills";
 import { PageLayout } from "@/components/PageLayout";
 import { useSession } from "next-auth/react";
-import { ActivityLogSection } from "./ActivityLogSection";
 import { useDebounce } from "@/hooks/useDebounce";
 import { MainSection } from "./MainSection";
 import { CenteredLoading } from "@/components/Loading/Spinner";
 import { PendingSection } from "./PendingSection";
 import { AiFillLock as Lock } from "react-icons/ai";
+import { ActivityLogSection } from "./ActivityLogSection";
 import {
   EditorModal,
   CategoryEditForm,
@@ -32,7 +32,7 @@ export default function AdminPage({}) {
   const [editorModalInput, setEditorModalInput] =
     useState<IEditorModalInput | null>(null);
   const [ActivityLogSectionCollapsed, setActivityLogSectionCollapsed] =
-    useState(false);
+    useState(true);
   const [orderBy, setOrderBy] = useState<"desc" | "asc" | null>("desc");
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -140,7 +140,7 @@ export default function AdminPage({}) {
     searchQuery,
     setSearchQuery,
   };
-  const footerProps = {
+  const activityLogProps = {
     collapsed: ActivityLogSectionCollapsed,
     setCollapsed: setActivityLogSectionCollapsed,
   };
@@ -153,6 +153,7 @@ export default function AdminPage({}) {
     setInput: setEditorModalInput,
     setShown: setEditorModalShown,
   };
+  const pendingProps = { ActivityLogSectionCollapsed };
 
   return (
     <>
@@ -189,10 +190,10 @@ export default function AdminPage({}) {
                   <MainSection {...mainListProps} />
                 </div>
 
-                <PendingSection />
+                <PendingSection {...pendingProps} />
               </div>
 
-              <ActivityLogSection {...footerProps} />
+              <ActivityLogSection {...activityLogProps} />
             </div>
 
             <EditorModal {...editorModalProps}>

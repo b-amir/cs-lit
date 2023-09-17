@@ -1,11 +1,10 @@
-import { animated } from "@react-spring/web";
-import { useSpring } from "@react-spring/web";
 import { useSession } from "next-auth/react";
-import { FormTrigger } from "@/components/EditorForm/FormTrigger";
+import { FormTrigger } from "@/components/EditorSection/FormTrigger";
+import { EditorLayout } from "@/components/EditorSection/EditorLayout";
 import React, { useRef } from "react";
-import { type IEditorSectionProps } from "../../pages/[category]/types";
 import { useAppSelector } from "@/redux/hooks";
-import { EditorLayout } from "@/components/EditorForm/EditorLayout";
+import { animated, useSpring } from "@react-spring/web";
+import { type IEditorSectionProps } from "../../pages/[category]/types";
 
 export function EditorSection({
   newInput,

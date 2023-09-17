@@ -1,14 +1,14 @@
+import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { IoClose as XIcon } from "react-icons/io5";
+import { type IFormTriggerProps } from "./types";
 import { CgFolderAdd as AddIcon } from "react-icons/cg";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import {
   setPurpose,
   setShown,
   setEntity,
-} from "@/components/EditorForm/editorSlice";
-import { useRouter } from "next/router";
-import { type IFormTriggerProps } from "./types";
+} from "@/components/EditorSection/editorSlice";
 
 export function FormTrigger({ setInput, newInput }: IFormTriggerProps) {
   const router = useRouter();

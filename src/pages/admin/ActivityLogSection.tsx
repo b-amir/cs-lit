@@ -17,22 +17,24 @@ export function ActivityLogSection({
   return (
     <div
       id="admin-footer"
-      className={` bottom-0 z-20 w-full flex-col border-t border-t-[#cbcbcb] bg-[#f6f6f6] transition-all  sm:absolute sm:w-4/6 ${
+      className={` bottom-0 z-20 w-full flex-col border-t border-t-[#cbcbcb] bg-[#f6f6f6] transition-all sm:absolute sm:w-4/6 ${
         collapsed
-          ? "h-8 shadow-sm"
-          : "h-[20dvh]  shadow-[0px_-1.5px_2px_1px_#00000008]"
+          ? "h-14 shadow-sm"
+          : "h-[20dvh] shadow-[0px_-1.5px_2px_1px_#00000008]"
       }`}
     >
       <div
         id="activity-log-header"
-        className={`${archivo.className} mx-auto flex h-[1.95rem] w-[calc(100%-0px)] cursor-pointer flex-row items-center 
-        justify-center border-b border-b-[#4b4b4b3c] bg-[#ededed] 
-        text-sm font-bold text-gray-700 shadow-sm transition-all hover:bg-[#dfdfdf]`}
+        className={`${
+          archivo.className
+        } mx-auto flex w-[calc(100%-0px)] cursor-pointer flex-row items-center justify-center border-b border-b-[#4b4b4b3c] bg-[#ededed] text-sm font-bold text-gray-700 shadow-sm transition-all transition-all hover:bg-[#dfdfdf] ${
+          collapsed ? "h-14" : "h-8"
+        } `}
         onClick={() => setCollapsed(!collapsed)}
       >
         <TbActivity className="mb-0 mr-1 " /> Activity Log{" "}
         <IoIosArrowUp
-          className={`mb-0 ml-1 scale-75 text-gray-400 transition-all delay-300  ${
+          className={`mb-0 ml-1 scale-75 text-gray-400 transition-all delay-300 ${
             collapsed ? "" : "rotate-180"
           }`}
         />

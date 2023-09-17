@@ -1,7 +1,7 @@
+import { type EditorState } from "./editorSlice";
 import { type GeneralInputType } from "@/hooks/CRUD/types";
 import { type Category, type TOPIC_STATUS } from "@prisma/client";
 import { type Dispatch, type SetStateAction } from "react";
-import { type EditorState } from "./editorSlice";
 
 export interface IEditorLayoutProps {
   input: GeneralInputType;

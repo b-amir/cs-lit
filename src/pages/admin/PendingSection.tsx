@@ -10,11 +10,15 @@ import { TbUrgent as UrgentIcon } from "react-icons/tb";
 import { MdDone as Approve, MdClose as Dismiss } from "react-icons/md";
 import { type IPendingItemProps, type PendingItem } from "./types";
 
-export function PendingSection() {
+export function PendingSection({
+  ActivityLogSectionCollapsed,
+}: {
+  ActivityLogSectionCollapsed: boolean;
+}) {
   return (
     <div
       id="admin-sidepanel"
-      className="relative z-20 mx-auto h-full max-h-96 w-full overflow-y-auto overflow-x-clip border border-[#b5b5b511] bg-[#f6f6f6] transition-all sm:max-h-none sm:w-1/4"
+      className="relative z-20 mx-auto  h-[calc(100dvh-2rem-90px)] w-full overflow-x-clip overflow-y-clip border border-[#b5b5b511] bg-[#f6f6f6] transition-all sm:max-h-none sm:w-1/4"
     >
       <div
         id="pending-header"
@@ -30,12 +34,16 @@ export function PendingSection() {
         </div>
       </div>
 
-      <PendingItems />
+      <PendingItems ActivityLogSectionCollapsed={ActivityLogSectionCollapsed} />
     </div>
   );
 }
 
-function PendingItems() {
+function PendingItems({
+  ActivityLogSectionCollapsed,
+}: {
+  ActivityLogSectionCollapsed: boolean;
+}) {
   const {
     data: pendingData,
     hasNextPage,
@@ -52,7 +60,13 @@ function PendingItems() {
   );
 
   return (
-    <div className=" overflow-y-auto sm:h-[calc(100dvh-20dvh-90px-96px)]">
+    <div
+      className={` flex h-full  w-full flex-col overflow-y-scroll ${
+        ActivityLogSectionCollapsed
+          ? "h-[calc(100dvh-3.5rem-90px-96px)]"
+          : "h-[calc(100dvh-20dvh-90px-96px)]"
+      }`}
+    >
       {pendingData?.pages?.map((page) =>
         page?.items?.map((item) => (
           <SinglePendingItem key={item.id} item={item} />

@@ -10,7 +10,7 @@ import {
   type FetchNextPageOptions,
   type InfiniteQueryObserverResult,
 } from "@tanstack/react-query";
-import { setPurpose, setShown } from "./EditorForm/editorSlice";
+import { setPurpose, setShown } from "./EditorSection/editorSlice";
 import { useAppDispatch } from "@/redux/hooks";
 
 export const AnalogiesFeed: React.FC<IFeedProps> = ({

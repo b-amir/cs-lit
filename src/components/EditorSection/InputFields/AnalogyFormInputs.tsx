@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { animated, useSpring } from "@react-spring/web";
-import { type IAnalogyFormInputsProps } from "../../pages/[category]/[topic]/types";
+import { type IAnalogyFormInputsProps } from "../../../pages/[category]/[topic]/types";
 
 export function AnalogyFormInputs({
   input,

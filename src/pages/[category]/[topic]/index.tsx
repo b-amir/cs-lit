@@ -7,7 +7,7 @@ import { EntityNotFound } from "../../../components/Messages/EntityNotFound";
 import { useRef, useState } from "react";
 import { useSpring } from "@react-spring/web";
 import { HeaderSection } from "./HeaderSection";
-import { EditorSection } from "@/components/EditorForm";
+import { EditorSection } from "@/components/EditorSection";
 import { MainSection } from "./MainSection";
 import { useAppSelector } from "@/redux/hooks";
 

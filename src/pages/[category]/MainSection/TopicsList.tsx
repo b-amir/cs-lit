@@ -7,7 +7,7 @@ import { RelativeTime } from "@/utils/relativeTime";
 import { routeHandler } from "@/utils/routeHandler";
 import { getStatusIcon } from "@/utils/getStatusIcon";
 import { LoadMoreButton } from "@/components/LoadMoreButton";
-import { setPurpose, setShown } from "@/components/EditorForm/editorSlice";
+import { setPurpose, setShown } from "@/components/EditorSection/editorSlice";
 
 import {
   type INormalRowProps,
