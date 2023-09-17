@@ -49,6 +49,7 @@ export default function TopicPage({}) {
       limit: 10,
     },
     {
+      enabled: !!topicData?.id,
       getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor,
       refetchOnWindowFocus: false,
       refetchOnMount: false,

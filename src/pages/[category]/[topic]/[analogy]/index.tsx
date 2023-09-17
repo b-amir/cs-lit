@@ -17,6 +17,7 @@ export default function SingleAnalogyPage() {
     api.analogy.getSingleAnalogyById.useQuery(
       { id: UrlAnalogyId as string },
       {
+        enabled: !!UrlAnalogyId,
         refetchOnWindowFocus: false,
         refetchOnMount: false,
         refetchOnReconnect: false,

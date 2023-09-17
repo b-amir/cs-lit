@@ -17,6 +17,7 @@ import {
 } from "./types";
 import { setPurpose, setShown } from "../../features/EditorSection/editorSlice";
 import { useAppDispatch } from "@/redux/hooks";
+import { TiSpannerOutline } from "react-icons/ti";
 
 export function InfoRowSection({
   needsLocationInfo,
@@ -32,7 +33,7 @@ export function InfoRowSection({
       order: "desc",
       limit: 10,
     },
-    {}
+    { enabled: !!analogyData?.id }
   );
 
   return (
@@ -77,12 +78,12 @@ export function InfoRowSection({
 // -------------------------------- //
 function PostTime({ analogyData }: IPostTimeProps) {
   return (
-    <Link
+    <div
       className="mx-2 flex rounded-lg border bg-gray-100 px-3 py-1 text-xs text-gray-500 hover:border-gray-300 hover:bg-[#e9e9e988]"
-      href={`${routeHandler(analogyData, "Analogies") ?? ""}`}
+      // href={`${routeHandler(analogyData, "Analogies") ?? ""}`}
     >
       {analogyData && RelativeTime(analogyData.createdAt)}
-    </Link>
+    </div>
   );
 }
 function PostLocation({
@@ -181,15 +182,15 @@ function PostEditButton({
     <>
       {sessionData &&
         ["ADMIN", "EDITOR"].includes(sessionData?.user.role ?? "") && (
-          <a
-            href="#"
+          <button
+            // href="#"
             className="font-medium text-gray-400 hover:underline"
             onClick={handleEdit}
           >
             <span className="mx-2 flex cursor-pointer rounded-lg border border-transparent p-1 text-xs text-gray-600 hover:border-gray-300 hover:bg-gray-100">
               <DotsMenu className="mt-0.5 scale-125" />
             </span>
-          </a>
+          </button>
         )}
     </>
   );

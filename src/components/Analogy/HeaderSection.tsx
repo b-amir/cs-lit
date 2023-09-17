@@ -134,6 +134,7 @@ export function VoteCastingSection({ analogyId }: { analogyId: string }) {
         analogyId: analogyId,
       },
       {
+        enabled: !!analogyId,
         refetchOnWindowFocus: false,
         refetchOnMount: false,
         refetchOnReconnect: false,

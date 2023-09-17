@@ -63,7 +63,7 @@ export function AnalogyFormInputs({
         ref={contentRef}
         className="z-0 select-none"
       >
-        <p className="ml-6 mt-2.5 text-xs text-gray-500">
+        <div className="ml-6 mt-2.5 text-xs text-gray-500">
           <ul>
             <li className="list-disc py-1">
               An analogy is a short explanation of a topic that helps you
@@ -77,7 +77,7 @@ export function AnalogyFormInputs({
               published.
             </li>
           </ul>
-        </p>
+        </div>
       </animated.div>
 
       {/* a checkmark to indicate if analogy has a reference link */}

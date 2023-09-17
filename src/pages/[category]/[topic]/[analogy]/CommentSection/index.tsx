@@ -23,6 +23,7 @@ export function CommentSection({ analogyId }: ICommentSectionProps) {
       limit: 10,
     },
     {
+      enabled: !!analogyId,
       getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor,
       refetchOnWindowFocus: false,
       refetchOnMount: false,

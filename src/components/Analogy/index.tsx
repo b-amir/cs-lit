@@ -23,6 +23,7 @@ export const Analogy: React.FC<IAnalogyProps> = (props) => {
         id: analogy.id,
       },
       {
+        enabled: !!analogy.id,
         refetchOnWindowFocus: false,
         refetchOnMount: false,
         refetchOnReconnect: false,
@@ -36,6 +37,7 @@ export const Analogy: React.FC<IAnalogyProps> = (props) => {
         analogyId: analogy.id,
       },
       {
+        enabled: !!analogy.id,
         refetchOnWindowFocus: false,
         refetchOnMount: false,
         refetchOnReconnect: false,
