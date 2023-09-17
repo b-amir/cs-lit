@@ -3,7 +3,7 @@ import { TopicsList } from "./TopicsList";
 import { TableSkeleton } from "@/components/Loading/Skeleton";
 import { EntityIsEmpty } from "@/components/Messages/EntityIsEmpty";
 import { type IMainSectionProps } from "../types";
-import { setPurpose, setShown } from "@/components/EditorSection/editorSlice";
+import { setPurpose, setShown } from "@/features/EditorSection/editorSlice";
 import { useAppDispatch } from "@/redux/hooks";
 
 export function MainSection({

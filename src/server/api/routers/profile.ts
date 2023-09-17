@@ -65,7 +65,7 @@ export const profileRouter = createTRPCRouter({
   // --- get profile for user with the given id ---//
   // used in breadcrumbs, activity logs, profile page
   getProfileById: publicProcedure
-    .input(z.object({ id: z.string() }))
+    .input(z.object({ id: z.string().nullish() }))
     .query(async ({ ctx, input }) => {
       const user = await prisma.user.findUnique({
         where: {

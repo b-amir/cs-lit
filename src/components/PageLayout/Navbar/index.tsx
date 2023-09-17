@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Search } from "@/components/Search";
+import { Search } from "@/features/Search";
 import { Breadcrumbs } from "./Breadcrumbs";
 import { useScrolledDown } from "@/hooks/useScrolledDown";
 import { CgMenuLeft as MenuIcon } from "react-icons/cg";

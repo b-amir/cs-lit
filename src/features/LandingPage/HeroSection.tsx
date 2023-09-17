@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Search } from "@/components/Search";
+import { Search } from "@/features/Search";
 import { archivo } from "../../styles/customFonts";
 import { FiArrowDown } from "react-icons/fi";
 import { useEffect, useMemo, useState } from "react";

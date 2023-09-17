@@ -1,10 +1,12 @@
+import { setShown } from "./editorSlice";
 import { useSession } from "next-auth/react";
-import { FormTrigger } from "@/components/EditorSection/FormTrigger";
-import { EditorLayout } from "@/components/EditorSection/EditorLayout";
+import useRouteChange from "@/hooks/useRouteChange";
+import { FormTrigger } from "@/features/EditorSection/FormTrigger";
+import { EditorLayout } from "@/features/EditorSection/EditorLayout";
 import React, { useRef } from "react";
-import { useAppSelector } from "@/redux/hooks";
 import { animated, useSpring } from "@react-spring/web";
 import { type IEditorSectionProps } from "../../pages/[category]/types";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
 export function EditorSection({
   newInput,
@@ -15,6 +17,11 @@ export function EditorSection({
   //
   const { data: sessionData } = useSession();
   const editor = useAppSelector((state) => state.editor);
+
+  // --- hide editor on route change --- //
+  const dispatch = useAppDispatch();
+  const hideEditor = () => dispatch(setShown(false));
+  useRouteChange(hideEditor);
 
   // --- animation setup for editor --- //
   const contentRef = useRef<HTMLDivElement>(null);

@@ -131,7 +131,7 @@ export function Search() {
           setShowResultsPanel={setShowResultsPanel}
           handleInputChange={handleInputChange}
           value={searchQuery}
-          ref={searchInputRef}
+          searchInputRef={searchInputRef}
           setSearchQuery={setSearchQuery}
         />
       )}

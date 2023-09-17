@@ -180,36 +180,34 @@ export function TopContributorsWidget({
       isActive={activeWidgetIndex.includes(1)}
     >
       {TopThreeData?.map((contributor: CONTRIBUTOR) => (
-        <>
+        <div key={contributor.id}>
           {contributor.analogiesCount !== 0 && (
-            <li key={contributor.id}>
-              <Link
-                href={`/profile/${contributor.id}`}
-                onClick={() => {
-                  // only hide after click for mobile
-                  if (windowWidth && windowWidth < 640) hide;
-                }}
+            <Link
+              href={`/profile/${contributor.id}`}
+              onClick={() => {
+                // only hide after click for mobile
+                if (windowWidth && windowWidth < 640) hide;
+              }}
+            >
+              <span
+                className={`ml-0 flex w-full flex-col items-center whitespace-nowrap rounded-sm px-3 py-2.5 pl-6 pt-3 text-xs font-normal hover:bg-[#efefef84] ${
+                  TopThreeData &&
+                  contributor === TopThreeData[TopThreeData.length - 1]
+                    ? "border-0 border-[#eee]"
+                    : "border-b border-[#eee]"
+                }`}
               >
-                <span
-                  className={`ml-0 flex w-full flex-col items-center whitespace-nowrap rounded-sm px-3 py-2.5 pl-6 pt-3 text-xs font-normal hover:bg-[#efefef84] ${
-                    TopThreeData &&
-                    contributor === TopThreeData[TopThreeData.length - 1]
-                      ? "border-0 border-[#eee]"
-                      : "border-b border-[#eee]"
-                  }`}
-                >
-                  <span className="mb-1 self-start font-semibold text-gray-700">
-                    {contributor.name ? contributor.name : "unknown"}
-                  </span>
-                  <span className="self-start text-xs font-light text-gray-500">
-                    {contributor.analogiesCount}{" "}
-                    {contributor.analogiesCount === 1 ? "analogy" : "analogies"}
-                  </span>
+                <span className="mb-1 self-start font-semibold text-gray-700">
+                  {contributor.name ? contributor.name : "unknown"}
                 </span>
-              </Link>
-            </li>
+                <span className="self-start text-xs font-light text-gray-500">
+                  {contributor.analogiesCount}{" "}
+                  {contributor.analogiesCount === 1 ? "analogy" : "analogies"}
+                </span>
+              </span>
+            </Link>
           )}
-        </>
+        </div>
       ))}
     </WidgetLayout>
   );

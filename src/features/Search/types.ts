@@ -16,14 +16,14 @@ export interface IResultsProps {
   setShowResultsPanel: (value: boolean) => void;
   handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   value: string;
-  ref: React.RefObject<HTMLInputElement>;
+  searchInputRef: React.RefObject<HTMLInputElement>;
   setSearchQuery: (value: string) => void;
 }
 export interface IHomeSearchInputProps {
   homepage: boolean;
   handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   value: string;
-  ref: React.RefObject<HTMLInputElement>;
+  searchInputRef: React.RefObject<HTMLInputElement>;
   setSearchQuery: (value: string) => void;
   setShowResultsPanel: (value: boolean) => void;
 }

@@ -6,11 +6,11 @@ import { Provider } from "react-redux";
 import { useProgress } from "../hooks/useProgress";
 import { type AppType } from "next/app";
 import { type Session } from "next-auth";
+import { ErrorBoundary } from "react-error-boundary";
 import { SessionProvider } from "next-auth/react";
+import ErrorFallback from "@/components/ErrorFallback";
 import "@/styles/globals.css";
 import "../styles/nprogress.css";
-import { ErrorBoundary } from "react-error-boundary";
-import ErrorFallback from "@/components/ErrorFallback";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,

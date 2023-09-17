@@ -28,7 +28,7 @@ export function LoadMoreButton({
             <LoadingSpinner size={28} />
           </div>
         ) : (
-          <div className="group bottom-0 z-10 flex min-w-fit max-w-xl  cursor-pointer flex-row items-center justify-center rounded-lg border border-b-4 border-transparent border-b-transparent hover:bg-[#61616110] px-14 py-3 text-[#4d4d4d7f] backdrop-blur-3xl transition-all duration-300 hover:border-[#3c3c3c10] hover:bg-[#9b9b9b10] hover:text-[#0808087f]">
+          <div className="group bottom-0 z-10 flex min-w-fit max-w-xl  cursor-pointer flex-row items-center justify-center rounded-lg border border-b-4 border-transparent border-b-transparent px-14 py-3 text-[#4d4d4d7f] backdrop-blur-3xl transition-all duration-300 hover:border-[#3c3c3c10] hover:bg-[#9b9b9b10] hover:text-[#0808087f]">
             <span className=" translate-y-0.5 text-sm font-semibold drop-shadow-sm transition-all duration-200 group-hover:-translate-y-0.5 group-hover:drop-shadow-md">
               Load more
             </span>

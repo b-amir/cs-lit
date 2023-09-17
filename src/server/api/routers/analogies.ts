@@ -240,7 +240,7 @@ export const analogiesRouter = createTRPCRouter({
   getSingleAnalogyById: publicProcedure
     .input(
       z.object({
-        id: z.string(),
+        id: z.string().nullish(),
       })
     )
     .query(({ ctx, input }) =>

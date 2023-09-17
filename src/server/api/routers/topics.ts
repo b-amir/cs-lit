@@ -221,7 +221,7 @@ export const topicsRouter = createTRPCRouter({
   // --- Get a single topic provided a slug --- //
   // used in topic page & breadcrumbs
   getBySlug: publicProcedure
-    .input(z.object({ slug: z.string() }))
+    .input(z.object({ slug: z.string().nullish() }))
     .query(async ({ ctx, input }) => {
       const topic = await ctx.prisma.topic.findFirst({
         where: {

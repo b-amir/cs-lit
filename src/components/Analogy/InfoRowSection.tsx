@@ -15,7 +15,7 @@ import {
   type IPostCommentCountProps,
   type IPostEditButtonProps,
 } from "./types";
-import { setPurpose, setShown } from "../EditorSection/editorSlice";
+import { setPurpose, setShown } from "../../features/EditorSection/editorSlice";
 import { useAppDispatch } from "@/redux/hooks";
 
 export function InfoRowSection({

@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { FaArrowLeft } from "react-icons/fa";
-import { RiErrorWarningFill } from "react-icons/ri";
+import { RiErrorWarningFill as ErrorIcon } from "react-icons/ri";
 
 export type ErrorType =
   | "default"
@@ -114,7 +114,7 @@ const ErrorPage = () => {
         </div>
         <div className=" rounded-b-3xl bg-[#ffffffd8]  px-16 py-12 backdrop-blur-3xl">
           <h1 className="text-md text-md mb-4 flex items-center justify-center gap-2 text-center font-semibold text-gray-400">
-            <RiErrorWarningFill className="mb-0.5" /> {heading}
+            <ErrorIcon className="mb-0.5" /> {heading}
           </h1>
 
           <div className="text-md mb-4 text-center text-sm font-normal text-gray-700">

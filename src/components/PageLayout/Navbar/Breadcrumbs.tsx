@@ -17,7 +17,6 @@ export function Breadcrumbs() {
   } = router.query;
 
   const queryOptions = {
-    enabled: !!UrlCategory || !!UrlTopic || !!UrlAnalogyId || !!UrlProfile,
     refetchOnWindowFocus: false,
     refetchOnMount: false,
     refetchOnReconnect: false,
@@ -25,19 +24,19 @@ export function Breadcrumbs() {
 
   const { data: topicsData } = api.topic.getBySlug.useQuery(
     { slug: UrlTopic as string },
-    queryOptions
+    { ...queryOptions, enabled: !!UrlTopic }
   );
   const { data: categoryData } = api.category.getBySlug.useQuery(
     { slug: UrlCategory as string },
-    queryOptions
+    { ...queryOptions, enabled: !!UrlCategory }
   );
   const { data: AnalogyData } = api.analogy.getSingleAnalogyById.useQuery(
     { id: UrlAnalogyId as string },
-    queryOptions
+    { ...queryOptions, enabled: !!UrlAnalogyId }
   );
   const { data: profileData } = api.profile.getProfileById.useQuery(
     { id: UrlProfile as string },
-    queryOptions
+    { ...queryOptions, enabled: !!UrlProfile }
   );
 
   return (
@@ -73,7 +72,7 @@ export function Breadcrumbs() {
         </>
       )}
 
-      {topicsData && (
+      {topicsData ? (
         <>
           <span className="mx-2 text-[#69696975] ">/</span>
           <Link
@@ -89,7 +88,7 @@ export function Breadcrumbs() {
             </span>
           </Link>
         </>
-      )}
+      ) : null}
 
       {AnalogyData && (
         <>

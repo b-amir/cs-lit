@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { IoSearch } from "react-icons/io5";
 import { animated } from "@react-spring/web";
 import { CgSpinner } from "react-icons/cg";
 import { type IExtendedTopic } from "./types";
+import { IoSearch as SearchIcon } from "react-icons/io5";
 import {
   type IHomeSearchInputProps,
   type IResultsProps,
@@ -18,7 +18,7 @@ export function Results({
   setShowResultsPanel,
   handleInputChange,
   value,
-  ref,
+  searchInputRef,
   setSearchQuery,
 }: IResultsProps) {
   //
@@ -50,7 +50,7 @@ export function Results({
           {/* if on homepage, show a counter input in the right place */}
           {homepage ? (
             <HomeSearchInput
-              ref={ref}
+              searchInputRef={searchInputRef}
               value={value}
               homepage={homepage}
               setSearchQuery={setSearchQuery}
@@ -78,7 +78,7 @@ export function Results({
 }
 
 function HomeSearchInput({
-  ref,
+  searchInputRef,
   value,
   homepage,
   setSearchQuery,
@@ -99,7 +99,7 @@ function HomeSearchInput({
         } input[type=search] {-webkit-appearance: searchfield !important;} input[type=search]::-webkit-search-cancel-button {-webkit-appearance: searchfield-cancel-button !important;}`}
         onChange={handleInputChange}
         value={value}
-        ref={ref}
+        searchInputRef={searchInputRef}
       />
 
       <button
@@ -123,7 +123,7 @@ function HomeSearchInput({
       </button>
 
       <button type="submit" className="absolute left-8 top-5 mr-4 mt-3">
-        <IoSearch />
+        <SearchIcon />
       </button>
     </>
   );

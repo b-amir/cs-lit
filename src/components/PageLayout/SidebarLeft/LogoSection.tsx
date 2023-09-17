@@ -6,6 +6,7 @@ export function LogoSection() {
     <div className=" border-b-1 mb-0 flex h-[calc(90px+1.5px)] items-center justify-center gap-6 border border-x-0 border-t-0 bg-[#f8f8f8] py-5 pl-7 pr-9 shadow-sm">
       <Link href="/">
         <Image
+          priority={true}
           src={"/assets/logo17.svg"}
           width={80}
           height={20}

@@ -3,7 +3,7 @@ import Image from "next/image";
 import { HiRefresh } from "react-icons/hi";
 import { useRouter } from "next/router";
 import { FaArrowLeft } from "react-icons/fa";
-import { RiErrorWarningFill } from "react-icons/ri";
+import { RiErrorWarningFill as ErrorIcon } from "react-icons/ri";
 
 export default function ErrorFallback({
   error,
@@ -43,7 +43,7 @@ export default function ErrorFallback({
         </div>
         <div className="flex flex-col  items-center rounded-b-3xl bg-[#ffffffd8]  px-16 py-12 backdrop-blur-3xl">
           <h1 className="text-md text-md mb-4 flex items-center justify-center gap-2 text-center font-semibold text-gray-400">
-            <RiErrorWarningFill className="mb-0.5" /> Something went wrong
+            <ErrorIcon className="mb-0.5" /> Something went wrong
           </h1>
 
           <div className="text-md my-4 text-center font-mono text-xs font-normal text-gray-800">

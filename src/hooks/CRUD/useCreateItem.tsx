@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 import { type Category } from "@prisma/client";
 import { addActivityLog } from "@/utils/addActivityLog";
 import { type GeneralInputType } from "./types";
-import { setPurpose, setShown } from "@/components/EditorSection/editorSlice";
+import { setPurpose, setShown } from "@/features/EditorSection/editorSlice";
 import { useAppDispatch } from "@/redux/hooks";
 
 export function useCreateItem(

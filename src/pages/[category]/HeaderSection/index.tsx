@@ -2,7 +2,7 @@ import React from "react";
 import { archivo } from "@/styles/customFonts";
 import { CgFolderAdd } from "react-icons/cg";
 import { useAppDispatch } from "@/redux/hooks";
-import { setPurpose, setShown } from "@/components/EditorSection/editorSlice";
+import { setPurpose, setShown } from "@/features/EditorSection/editorSlice";
 import { type ICategoryHeaderProps } from "../types";
 
 // ------------------ COMPONENTS ------------------ //

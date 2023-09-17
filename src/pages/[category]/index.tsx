@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react";
 import { MainSection } from "./MainSection";
 import { TOPIC_STATUS } from "@prisma/client";
 import { HeaderSection } from "./HeaderSection";
-import { EditorSection } from "../../components/EditorSection";
+import { EditorSection } from "../../features/EditorSection";
 import { EntityNotFound } from "@/components/Messages/EntityNotFound";
 import React, { useState } from "react";
 import { type TopicInput } from "./types";
@@ -74,6 +74,7 @@ export default function CategoryPage() {
       limit: 10,
     },
     {
+      enabled: !!categoryData?.id,
       getNextPageParam: (lastPage) => lastPage.pageInfo.nextCursor,
       refetchOnWindowFocus: false,
       refetchOnMount: false,

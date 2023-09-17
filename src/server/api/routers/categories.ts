@@ -108,7 +108,7 @@ export const categoriesRouter = createTRPCRouter({
   // --- Get single category by it's slug --- //
   // used in breadcrumbs & single category page 
   getBySlug: publicProcedure
-    .input(z.object({ slug: z.string() }))
+    .input(z.object({ slug: z.string().nullish() }))
     .query(async ({ ctx, input }) => {
       const category = await ctx.prisma.category.findFirst({
         where: {

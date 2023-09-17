@@ -1,10 +1,10 @@
 import Head from "next/head";
-import { HeroSection } from "@/components/LandingPage/HeroSection";
-import { ShareSection } from "@/components/LandingPage/ShareSection";
-import { HeaderSection } from "@/components/LandingPage/HeaderSection";
-import { FooterSection } from "@/components/LandingPage/FooterSection";
-import { ExampleSection } from "@/components/LandingPage/ExampleSection";
-import { CategoriesSection } from "@/components/LandingPage/CategoriesSection";
+import { HeroSection } from "@/features/LandingPage/HeroSection";
+import { ShareSection } from "@/features/LandingPage/ShareSection";
+import { HeaderSection } from "@/features/LandingPage/HeaderSection";
+import { FooterSection } from "@/features/LandingPage/FooterSection";
+import { ExampleSection } from "@/features/LandingPage/ExampleSection";
+import { CategoriesSection } from "@/features/LandingPage/CategoriesSection";
 
 export function LandingPage() {
   return (

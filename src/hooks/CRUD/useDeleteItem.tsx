@@ -2,7 +2,7 @@ import { api } from "@/utils/api";
 import { toast } from "react-hot-toast";
 import { addActivityLog } from "@/utils/addActivityLog";
 import { useAppDispatch } from "@/redux/hooks";
-import { setPurpose, setShown } from "@/components/EditorSection/editorSlice";
+import { setPurpose, setShown } from "@/features/EditorSection/editorSlice";
 import { type GeneralInputType } from "./types";
 
 export function useDeleteItem(

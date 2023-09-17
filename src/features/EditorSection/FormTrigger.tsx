@@ -8,7 +8,7 @@ import {
   setPurpose,
   setShown,
   setEntity,
-} from "@/components/EditorSection/editorSlice";
+} from "@/features/EditorSection/editorSlice";
 
 export function FormTrigger({ setInput, newInput }: IFormTriggerProps) {
   const router = useRouter();

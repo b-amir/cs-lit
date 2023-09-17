@@ -2,7 +2,7 @@ import { api } from "@/utils/api";
 import { toast } from "react-hot-toast";
 import { useAppDispatch } from "@/redux/hooks";
 import { addActivityLog } from "@/utils/addActivityLog";
-import { setPurpose, setShown } from "@/components/EditorSection/editorSlice";
+import { setPurpose, setShown } from "@/features/EditorSection/editorSlice";
 import { type GeneralInputType } from "./types";
 
 export function useUpdateItem(

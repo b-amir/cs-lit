@@ -7,7 +7,7 @@ import { RelativeTime } from "@/utils/relativeTime";
 import { routeHandler } from "@/utils/routeHandler";
 import { getStatusIcon } from "@/utils/getStatusIcon";
 import { LoadMoreButton } from "@/components/LoadMoreButton";
-import { setPurpose, setShown } from "@/components/EditorSection/editorSlice";
+import { setPurpose, setShown } from "@/features/EditorSection/editorSlice";
 
 import {
   type INormalRowProps,
@@ -73,7 +73,7 @@ function TitleRow({ sessionData }: ITitleRowProps) {
   return (
     <div
       id="title-row"
-      className="flex  w-full justify-between border-b text-[0.68rem] font-semibold uppercase text-gray-700"
+      className="flex  w-full justify-between border-b text-[0.68rem] font-semibold uppercase text-gray-400"
     >
       <span className="w-6/12 px-6 py-3">Topic</span>
       <span className="w-1/12 px-1 py-3">
