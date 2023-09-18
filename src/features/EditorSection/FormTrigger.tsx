@@ -18,9 +18,17 @@ export function FormTrigger({ setInput, newInput }: IFormTriggerProps) {
   useEffect(() => {
     const fetchData = () => {
       try {
+        //
         // Determine the entity based on the route structure
         const segments = router.pathname.split("/").filter(Boolean);
-        const entity = segments.length === 1 ? "topic" : "analogy";
+        const entity =
+          segments.length === 1
+            ? "topic"
+            : segments.length === 2
+            ? "analogy"
+            : segments.length === 3
+            ? "single analogy"
+            : null;
         dispatch(setEntity(entity));
       } catch (error) {
         console.error("Error:", error);
@@ -28,30 +36,34 @@ export function FormTrigger({ setInput, newInput }: IFormTriggerProps) {
     };
 
     void fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch, router.pathname]);
 
   return (
-    <div
-      id="add-topic-header"
-      className={`inline-flex w-full cursor-pointer flex-row items-center rounded-[12px] border border-[#dcdcdca1] bg-[#efefef] px-10 py-4 text-xl font-bold shadow-sm transition-all duration-300 hover:border-[#8b8b8ba5] hover:bg-white sm:py-6 `}
-      onClick={() => {
-        dispatch(setPurpose("Create"));
-        dispatch(setShown(!editor.shown));
-        setInput(newInput);
-      }}
-    >
-      <AddIcon className="mb-0.5 mr-2.5" />
-      <span className=" grow select-none">
-        <h2>
-          {editor.purpose ?? "Create"} {editor.entity ?? ""}
-        </h2>
-      </span>
-      <XIcon
-        className={`mb-1 transform cursor-pointer text-2xl text-[#737373] transition-transform delay-500 duration-200 hover:text-black ${
-          editor.shown ? "" : "rotate-45" // rotate + into x
-        }`}
-      />
-    </div>
+    <>
+      {editor.entity !== "single analogy" || editor.shown ? (
+        <div
+          id="add-topic-header"
+          className={`inline-flex w-full cursor-pointer flex-row items-center rounded-[12px] border border-[#dcdcdca1] bg-[#efefef] px-10 py-4 text-xl font-bold shadow-sm transition-all duration-300 hover:border-[#8b8b8ba5] hover:bg-white sm:py-6 `}
+          onClick={(e) => {
+            e.stopPropagation();
+            dispatch(setPurpose("Create"));
+            dispatch(setShown(!editor.shown));
+            setInput(newInput);
+          }}
+        >
+          <AddIcon className="mb-0.5 mr-2.5" />
+          <span className=" grow select-none">
+            <h2>
+              {editor.purpose ?? "Create"} {editor.entity ?? ""}
+            </h2>
+          </span>
+          <XIcon
+            className={`mb-1 transform cursor-pointer text-2xl text-[#737373] transition-transform delay-500 duration-200 hover:text-black ${
+              editor.shown ? "" : "rotate-45" // rotate + into x
+            }`}
+          />
+        </div>
+      ) : null}
+    </>
   );
 }

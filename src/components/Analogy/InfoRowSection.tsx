@@ -2,7 +2,7 @@ import Link from "next/link";
 import React from "react";
 import { api } from "@/utils/api";
 import { useSession } from "next-auth/react";
-import { routeHandler } from "@/utils/routeHandler";
+// import { routeHandler } from "@/utils/routeHandler";
 import { RelativeTime } from "@/utils/relativeTime";
 import { AiOutlineLink } from "react-icons/ai";
 import { getStatusIcon } from "@/utils/getStatusIcon";
@@ -16,8 +16,7 @@ import {
   type IPostEditButtonProps,
 } from "./types";
 import { setPurpose, setShown } from "../../features/EditorSection/editorSlice";
-import { useAppDispatch } from "@/redux/hooks";
-import { TiSpannerOutline } from "react-icons/ti";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
 export function InfoRowSection({
   needsLocationInfo,
@@ -155,11 +154,12 @@ function PostEditButton({
   setAnalogyInput,
 }: IPostEditButtonProps) {
   //
+  const editor = useAppSelector((state) => state.editor);
   const dispatch = useAppDispatch();
   const handleEdit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     dispatch(setPurpose("Edit"));
-    dispatch(setShown(true));
+    dispatch(setShown(!editor.shown));
 
     if (setAnalogyInput) {
       setAnalogyInput((prev) => {

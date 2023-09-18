@@ -3,7 +3,7 @@ import type { RootState } from '@/redux/hooks'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
 export interface EditorState {
-  entity: "analogy" | "topic" | null;
+  entity: "analogy" | "topic" | "single analogy" | null;
   shown: boolean;
   purpose: "Create" | "Edit" | null;
 }

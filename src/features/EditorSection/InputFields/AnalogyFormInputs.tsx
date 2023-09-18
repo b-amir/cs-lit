@@ -17,6 +17,14 @@ export function AnalogyFormInputs({
       duration: 100,
     },
   });
+
+  // calculate the number of rows based on content
+  const calculateRows = (content) => {
+    // every 60 characters is a row
+    const lines = content?.match(/.{1,60}/g) ?? [];
+    return Math.min(lines.length, 20);
+  };
+
   return (
     <div className="sm:col-span-2">
       <label
@@ -32,7 +40,7 @@ export function AnalogyFormInputs({
           </label>
           <textarea
             id="comment"
-            rows={4}
+            rows={calculateRows(input.description)}
             className="w-full border-0 border-transparent bg-white px-0 text-sm text-dark-2 !outline-none  group-focus:border-[#c1c1c1] "
             placeholder="Add your analogy ..."
             required

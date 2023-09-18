@@ -1,20 +1,17 @@
 import Head from "next/head";
 import { api } from "@/utils/api";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import { PageLayout } from "@/components/PageLayout";
 import { useSession } from "next-auth/react";
-import { EntityNotFound } from "../../../components/Messages/EntityNotFound";
-import { useRef, useState } from "react";
-import { useSpring } from "@react-spring/web";
+import { MainSection } from "./MainSection";
 import { HeaderSection } from "./HeaderSection";
 import { EditorSection } from "@/features/EditorSection";
-import { MainSection } from "./MainSection";
-import { useAppSelector } from "@/redux/hooks";
+import { EntityNotFound } from "../../../components/Messages/EntityNotFound";
 
 export default function TopicPage({}) {
   const router = useRouter();
   const { topic: UrlTopic } = router.query;
-  const editor = useAppSelector((state) => state.editor);
 
   const { data: topicData, status: topicFetchingStatus } =
     api.topic.getBySlug.useQuery(

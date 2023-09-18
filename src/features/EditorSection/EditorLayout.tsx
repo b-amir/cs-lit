@@ -32,12 +32,13 @@ export function EditorLayout({ input, setInput, type }: IEditorLayoutProps) {
     <form
       className="mx-auto flex w-full flex-col items-start justify-center"
       onSubmit={(e) => e.preventDefault()}
+      onClick={(e) => e.stopPropagation()}
     >
       {editor.shown ? (
         <>
           {sessionData &&
           ["ADMIN", "EDITOR", "USER"].includes(sessionData?.user.role) ? (
-            <div className="mt-4 grid w-full gap-x-6 gap-y-8 rounded-[12px] border border-[#c8c8c8] bg-[#ebeaea] px-6 py-6 transition-all duration-300 hover:border-[#c1c1c1] sm:grid-cols-2">
+            <div className="mt-4 grid w-full gap-x-6 gap-y-8 rounded-[12px] border border-[#c8c8c8] bg-[#ebeaea] px-6 py-6 shadow-sm transition-all duration-300 hover:border-[#c1c1c1] sm:grid-cols-2">
               <>
                 {type === "Topics" ? (
                   <TopicFormInputs

@@ -10,6 +10,7 @@ import { EditorSection } from "../../features/EditorSection";
 import { EntityNotFound } from "@/components/Messages/EntityNotFound";
 import React, { useState } from "react";
 import { type TopicInput } from "./types";
+import { useAppDispatch } from "@/redux/hooks";
 
 export default function CategoryPage() {
   // --- get category slug from url --- //

@@ -116,6 +116,7 @@ export function useUpdateItem(
         void ctx.analogy.getAllWithQuery.invalidate();
         void ctx.pending.getAll.invalidate();
         void ctx.topic.getBySlug.invalidate();
+        void ctx.analogy.getById.invalidate();
         toast.success("Analogy updated successfully.");
         dispatch(setPurpose(null));
         dispatch(setShown(false));

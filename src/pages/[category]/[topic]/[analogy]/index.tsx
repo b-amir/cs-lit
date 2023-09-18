@@ -8,6 +8,9 @@ import { InfoSection } from "./InfoSection";
 import { CommentSection } from "./CommentSection";
 import { EntityNotFound } from "@/components/Messages/EntityNotFound";
 import { AboutWebsiteSection } from "./AboutWebsiteSection";
+import { useEffect, useState } from "react";
+import { EditorSection } from "@/features/EditorSection";
+import { useAppDispatch } from "@/redux/hooks";
 
 export default function SingleAnalogyPage() {
   const router = useRouter();
@@ -24,6 +27,14 @@ export default function SingleAnalogyPage() {
       }
     );
 
+  const [analogyInput, setAnalogyInput] = useState(singleAnalogyData);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    setAnalogyInput(singleAnalogyData);
+  }, [dispatch, singleAnalogyData]);
+
+  console.log("AnalogyInput:", analogyInput);
+  console.log("singleAnalogyData:", singleAnalogyData);
   return (
     <>
       <Head>
@@ -46,11 +57,20 @@ export default function SingleAnalogyPage() {
           <>
             <div className="mx-auto flex max-w-[900px] flex-col justify-between pt-28 sm:px-10 sm:pt-40 lg:px-14">
               <SharingSection />
-              <MainSection singleAnalogyData={singleAnalogyData} />
+              <MainSection
+                singleAnalogyData={singleAnalogyData}
+                setAnalogyInput={setAnalogyInput}
+              />
               <InfoSection singleAnalogyData={singleAnalogyData} />
               <CommentSection analogyId={singleAnalogyData?.id} />
             </div>
             <AboutWebsiteSection />
+            <EditorSection
+              Input={analogyInput}
+              setInput={setAnalogyInput}
+              type="Analogies"
+              newInput={analogyInput}
+            />
           </>
         )}
       </PageLayout>

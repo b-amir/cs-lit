@@ -76,6 +76,8 @@ export function useDeleteItem(
         void ctx.analogy.getAll.invalidate();
         void ctx.analogy.getAllWithQuery.invalidate();
         void ctx.analogy.getByTopicId.invalidate();
+        void ctx.analogy.getById.invalidate();
+
         toast.success("Analogy deleted successfully.");
         dispatch(setPurpose(null));
         dispatch(setShown(false));

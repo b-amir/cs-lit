@@ -4,7 +4,7 @@ import { AiFillLock as Lock } from "react-icons/ai";
 
 export function NotSignedIn() {
   return (
-    <div className="mt-4 grid h-full w-full grid-cols-1 gap-x-6 gap-y-14 rounded-[12px] border border-[#c8c8c8] bg-[#ebeaea] px-6 py-12 transition-all duration-300 hover:border-[#c1c1c1]">
+    <div className="mt-4 grid h-full w-full grid-cols-1 gap-x-6 gap-y-14 rounded-[12px] border border-[#c8c8c8] bg-[#ebeaea] px-6 py-24 transition-all duration-300 hover:border-[#c1c1c1]">
       <div className="flex select-none flex-col items-center justify-center text-gray-500">
         <Lock />
         <span
