@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { api } from "@/utils/api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { PageLayout } from "@/components/PageLayout";
 import { useSession } from "next-auth/react";
@@ -29,6 +29,7 @@ export default function TopicPage({}) {
     description: "",
     topicId: topicData?.id,
   });
+  console.log("analogyInput:", analogyInput);
 
   const { data: sessionData } = useSession();
 

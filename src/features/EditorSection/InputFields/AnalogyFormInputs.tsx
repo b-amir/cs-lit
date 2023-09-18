@@ -22,7 +22,7 @@ export function AnalogyFormInputs({
   const calculateRows = (content) => {
     // every 60 characters is a row
     const lines = content?.match(/.{1,60}/g) ?? [];
-    return Math.min(lines.length, 20);
+    return Math.min(lines.length + 2, 20);
   };
 
   return (
@@ -35,11 +35,11 @@ export function AnalogyFormInputs({
       </label>
       <div className="group mt-1 w-full rounded-[12px] border border-gray-200 bg-gray-50 shadow-sm transition-all hover:border-[#c1c1c1] focus:border-[#c1c1c1] ">
         <div className="rounded-[12px] bg-white px-6 pb-2 pt-6">
-          <label htmlFor="comment" className="sr-only">
+          <label htmlFor="description" className="sr-only">
             Add your analogy
           </label>
           <textarea
-            id="comment"
+            id="description"
             rows={calculateRows(input.description)}
             className="w-full border-0 border-transparent bg-white px-0 text-sm text-dark-2 !outline-none  group-focus:border-[#c1c1c1] "
             placeholder="Add your analogy ..."
@@ -125,7 +125,7 @@ export function AnalogyFormInputs({
               name="reference"
               className="mt-1 block w-full  max-w-[800px] rounded-[12px] border border-gray-300 px-3 py-2 shadow-sm !outline-none ring-0 focus:border-[#c1c1c1] focus:ring-[#c1c1c1] sm:text-sm"
               placeholder="https://..."
-              value={input?.reference ?? ""}
+              value={input?.reference}
               required
               onChange={handleChange}
             />

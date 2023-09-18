@@ -33,8 +33,6 @@ export default function SingleAnalogyPage() {
     setAnalogyInput(singleAnalogyData);
   }, [dispatch, singleAnalogyData]);
 
-  console.log("AnalogyInput:", analogyInput);
-  console.log("singleAnalogyData:", singleAnalogyData);
   return (
     <>
       <Head>
