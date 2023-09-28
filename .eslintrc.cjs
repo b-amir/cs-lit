@@ -19,8 +19,14 @@ const config = {
     project: path.join(__dirname, "tsconfig.json"),
   },
   plugins: ["@typescript-eslint"],
-  extends: ["next/core-web-vitals", "plugin:@typescript-eslint/recommended"],
-
+  extends: ["next/core-web-vitals", "plugin:@typescript-eslint/recommended", "plugin:testing-library/react", "plugin:jest-dom/recommended"],
+  env: {
+    browser: true,
+    node: true,
+    es2021: true,
+    jest: true,
+    "jest/globals": true,
+  },
   rules: {
     "@typescript-eslint/consistent-type-imports": [
       "warn",

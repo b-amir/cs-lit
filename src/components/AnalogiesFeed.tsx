@@ -1,17 +1,14 @@
 import { Analogy } from "./Analogy";
 import { EntityIsEmpty } from "./Messages/EntityIsEmpty";
 import { LoadMoreButton } from "./LoadMoreButton";
+import { useAppDispatch } from "@/redux/hooks";
 import { type AnalogyInput } from "./Analogy/types";
-import {
-  type Analogy as AnalogyType,
-  type ANALOGY_STATUS,
-} from "@prisma/client";
+import { type ANALOGY_STATUS } from "@prisma/client";
+import { setPurpose, setShown } from "../features/EditorSection/editorSlice";
 import {
   type FetchNextPageOptions,
   type InfiniteQueryObserverResult,
 } from "@tanstack/react-query";
-import { setPurpose, setShown } from "../features/EditorSection/editorSlice";
-import { useAppDispatch } from "@/redux/hooks";
 
 export const AnalogiesFeed: React.FC<IFeedProps> = ({
   isProfile = false,
@@ -51,7 +48,7 @@ export const AnalogiesFeed: React.FC<IFeedProps> = ({
       className={`mb-auto flex flex-col items-center  pb-16 sm:px-10 lg:px-[16.666667%]`}
     >
       {analogies?.pages?.map((page) =>
-        page?.items?.map((analogy: AnalogyType) => (
+        page?.items?.map((analogy) => (
           <Analogy
             analogy={{
               id: analogy.id,

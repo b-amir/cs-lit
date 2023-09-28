@@ -26,13 +26,13 @@ export const topicsWithCategoryData = async (topics: Topic[]) => {
 
 
 export async function getUserNameById(id: string) {
-  const user = await prisma.user.findUnique({
+  const user = await prisma?.user.findUnique({
     where: { id: id },
   });
   return user?.name ? user?.name : user?.email
 }
 export async function getTopicNameById(id: string) {
-  const topic = await prisma.topic.findUnique({
+  const topic = await prisma?.topic.findUnique({
     where: { id: id },
   });
   return topic?.title

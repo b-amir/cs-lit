@@ -12,6 +12,7 @@ export function ContentSection({
   return (
     <div
       id="analogy-content"
+      data-testid="analogy-content"
       className="min-h-[120px] w-full  bg-white px-8 pb-12 pt-8"
     >
       {analogyStatus === "loading" ? (

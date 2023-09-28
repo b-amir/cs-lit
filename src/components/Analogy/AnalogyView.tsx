@@ -20,6 +20,7 @@ export function AnalogyView({ ...AnalogyProps }: IAnalogyBodyProps) {
   return (
     <div
       key={analogy?.id}
+      data-testid="analogy-view"
       className=" z-20  mx-auto my-5 flex  w-full max-w-[705px] flex-col overflow-clip rounded-[17px] border border-gray-200 bg-white px-0 py-0 shadow-lg transition-all hover:border-[#c1c1c1] "
     >
       <HeaderSection

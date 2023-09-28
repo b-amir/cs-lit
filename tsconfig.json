@@ -18,9 +18,12 @@
     "incremental": true,
     "noUncheckedIndexedAccess": true,
     "baseUrl": ".",
+    "types": ["vitest/globals"],
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "useDefineForClassFields": true,
+    "allowSyntheticDefaultImports": true
   },
   "include": [
     ".eslintrc.cjs",
@@ -28,7 +31,10 @@
     "**/*.ts",
     "**/*.tsx",
     "**/*.cjs",
-    "**/*.mjs"
+    "**/*.mjs",
+    "jest.config.mjs",
+    "jest.setup.mjs",
+    "vitest.config.ts"
   ],
   "exclude": ["node_modules", ".next", "out"]
 }

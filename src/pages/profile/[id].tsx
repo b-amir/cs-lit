@@ -93,7 +93,7 @@ export interface IProfileHeaderProps {
     profileImageUrl: string | null;
   };
 }
-function ProfileHeader({ profileData }: IProfileHeaderProps) {
+export function ProfileHeader({ profileData }: IProfileHeaderProps) {
   return (
     <div
       id="profile-header"

@@ -107,13 +107,13 @@ export const authOptions: NextAuthOptions = {
     }),
 
     GithubProvider({
-      clientId: env.GITHUB_CLIENT_ID,
-      clientSecret: env.GITHUB_CLIENT_SECRET,
+      clientId: process.env.GITHUB_CLIENT_ID,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET,
     }),
 
     DiscordProvider({
-      clientId: env.DISCORD_CLIENT_ID,
-      clientSecret: env.DISCORD_CLIENT_SECRET,
+      clientId: process.env.DISCORD_CLIENT_ID,
+      clientSecret: process.env.DISCORD_CLIENT_SECRET,
     }),
 
     /**
@@ -153,12 +153,28 @@ export const authOptions: NextAuthOptions = {
  *
  * @see https://next-auth.js.org/configuration/nextjs
  */
+
+
 export const getServerAuthSession = (ctx: {
   req: GetServerSidePropsContext["req"];
   res: GetServerSidePropsContext["res"];
 }) => {
   return getServerSession(ctx.req, ctx.res, authOptions);
 };
+
+// export const getServerAuthSession = async (ctx: {
+//   req: GetServerSidePropsContext["req"];
+//   res: GetServerSidePropsContext["res"];
+// }) => {
+//   // In test environment, we don't want to use the real next-auth session
+//   // because we are not going through the login flow.
+//   // Instead, we use the session provided by the header.
+//   if (process.env.APP_ENV === "test" && ctx.req.headers.session) {
+//     return JSON.parse(ctx.req.headers.session as string) as Session;
+//   }
+//   return await unstable_getServerSession(ctx.req, ctx.res, authOptions);
+// };
+
 // function EmailProvider(arg0: { sendVerificationRequest?: (({ url }: { url: any; }) => void) | undefined; server: { host: string; port: string | number; auth: { user: string | undefined; pass: string; }; }; from: string; }): import("next-auth/providers").Provider {
 //   throw new Error("Function not implemented.");
 // }

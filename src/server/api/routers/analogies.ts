@@ -29,7 +29,7 @@ export const analogiesWithUserData = async (analogies: AnalogyType[]) => {
 export const analogiesWithUserـTopicـCategoryData = async (analogies: AnalogyType[]) => {
   const analogiesWithUserـTopicـCategoryData = await Promise.all(
 
-    analogies.map(async (analogy) => {
+    analogies && analogies.map(async (analogy) => {
       const user = await prisma.user.findUnique({
         where: { id: analogy.authorId },
       });
@@ -47,10 +47,10 @@ export const analogiesWithUserـTopicـCategoryData = async (analogies: AnalogyT
 
 // --- append user & topic & category data to a single analogy --- //
 export const singleAnalogyWithUserـTopicـCategoryData = async (analogy: AnalogyType) => {
-  const user = await prisma.user.findUnique({
+  const user = await prisma?.user.findUnique({
     where: { id: analogy.authorId },
   });
-  const topic = await prisma.topic.findUnique({
+  const topic = await prisma?.topic.findUnique({
     where: { id: analogy.topicId },
   });
   const category = topic ? await prisma.category.findUnique({
@@ -89,7 +89,7 @@ export const analogiesRouter = createTRPCRouter({
         }
       });
       let nextCursor: typeof cursor | undefined = undefined;
-      if (items.length > limit) {
+      if (items?.length && items.length > limit) {
         const nextItem = items.pop();
         nextCursor = nextItem?.id as typeof cursor;
       }
@@ -97,7 +97,7 @@ export const analogiesRouter = createTRPCRouter({
         items: await analogiesWithUserـTopicـCategoryData(items),
         total: await ctx.prisma.analogy.count(),
         pageInfo: {
-          hasNextPage: items.length > limit,
+          hasNextPage: items.length && items.length > limit,
           nextCursor,
         },
       };
@@ -337,14 +337,14 @@ export const analogiesRouter = createTRPCRouter({
       let items;
       const isModerator = ["ADMIN", "EDITOR"].includes(ctx?.session?.user.role);
       if (!input.viewerId) { items = publishedItems }
-      if (input.viewerId && publishedItems_plus_ViewersUnpublishedItems.length > 0) {
+      if (input.viewerId && publishedItems_plus_ViewersUnpublishedItems && publishedItems_plus_ViewersUnpublishedItems.length > 0) {
         items = publishedItems_plus_ViewersUnpublishedItems
       }
       if (isModerator) {
         items = allItems;
       }
       let nextCursor: typeof cursor | undefined = undefined;
-      if (items.length > limit) {
+      if (items && items.length > limit) {
         const nextItem = items?.pop();
         nextCursor = nextItem?.id as typeof cursor;
       }
@@ -352,7 +352,7 @@ export const analogiesRouter = createTRPCRouter({
         items,
         total: totalPublished,
         pageInfo: {
-          hasNextPage: items.length > limit,
+          hasNextPage: items?.length > limit,
           nextCursor,
         },
       };
@@ -366,6 +366,7 @@ export const analogiesRouter = createTRPCRouter({
     .input(
       z.object({
         // title: z.string(),
+        // id: z.string(),
         description: z.string().min(120, "Analogy must be at least 120 characters").max(63206, "your analogy is too long!"),
         topicId: z.string(),
         reference: z.string().url("Please provide a valid URL").nullish(),

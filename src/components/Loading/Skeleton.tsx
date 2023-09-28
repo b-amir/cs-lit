@@ -3,7 +3,7 @@ import React from "react";
 export function MultilineSkeleton(): React.ReactNode {
   return (
     <>
-      <div className="my-1 flex h-4 w-8/12 animate-pulse items-center justify-between rounded-md  bg-gray-200 align-middle" />
+      <div data-testid="skeleton" className="my-1 flex h-4 w-8/12 animate-pulse items-center justify-between rounded-md  bg-gray-200 align-middle" />
       <div className="my-1 flex h-4 w-6/12 animate-pulse items-center justify-between rounded-md  bg-gray-200 align-middle" />
       <div className="my-1 flex h-4 w-5/12 animate-pulse items-center justify-between rounded-md  bg-gray-200 align-middle" />
     </>

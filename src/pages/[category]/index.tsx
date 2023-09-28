@@ -8,9 +8,8 @@ import { TOPIC_STATUS } from "@prisma/client";
 import { HeaderSection } from "./HeaderSection";
 import { EditorSection } from "../../features/EditorSection";
 import { EntityNotFound } from "@/components/Messages/EntityNotFound";
-import React, { useState } from "react";
 import { type TopicInput } from "./types";
-import { useAppDispatch } from "@/redux/hooks";
+import React, { useState } from "react";
 
 export default function CategoryPage() {
   // --- get category slug from url --- //

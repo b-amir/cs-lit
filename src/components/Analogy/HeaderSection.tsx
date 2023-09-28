@@ -75,7 +75,7 @@ export function HeaderSection({
           </div>
         </div>
 
-        <VoteCastingSection analogyId={analogy.id} />
+        <VoteCastingSection analogyId={analogy?.id} />
       </div>
     </div>
   );
@@ -201,6 +201,7 @@ export function VoteCastingSection({ analogyId }: { analogyId: string }) {
           isVoting ? "animate-pulse" : ""
         }} scale-[1.3] scale-x-[1.4]`}
         onClick={handleLike}
+        data-testid="like-button"
       />
 
       <VotingArrow
@@ -212,6 +213,7 @@ export function VoteCastingSection({ analogyId }: { analogyId: string }) {
           isVoting ? "animate-pulse" : ""
         }} rotate-180 scale-[1.3] scale-x-[1.4]`}
         onClick={handleDislike}
+        data-testid="dislike-button"
       />
     </div>
   );

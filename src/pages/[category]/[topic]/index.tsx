@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { api } from "@/utils/api";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import { PageLayout } from "@/components/PageLayout";
 import { useSession } from "next-auth/react";
@@ -29,7 +29,6 @@ export default function TopicPage({}) {
     description: "",
     topicId: topicData?.id,
   });
-  console.log("analogyInput:", analogyInput);
 
   const { data: sessionData } = useSession();
 
@@ -61,8 +60,7 @@ export default function TopicPage({}) {
     topicId: topicData?.id,
   };
 
-  const analogiesCount =
-    topicAnalogies?.pages && topicAnalogies?.pages[0]?.total;
+  const analogiesCount = topicAnalogies?.pages?.[0]?.total;
 
   // --- pass props to components --- //
   const headerProps = {

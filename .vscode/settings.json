@@ -5,6 +5,8 @@
   "cSpell.enableFiletypes": ["tailwindcss"],
   "cSpell.words": [
     "accessdenied",
+    "Archivo",
+    "Authed",
     "Bazgir",
     "callstack",
     "coldark",
@@ -12,17 +14,24 @@
     "defaultpp",
     "grayscaled",
     "hasn",
+    "heeeeey",
     "Ipills",
     "isfetching",
     "Itopic",
+    "mockedt",
     "nextjs",
     "sidepanel",
     "signin",
     "superjson",
     "tailwindcss",
     "tanstack",
+    "testid",
     "trpc",
+    "typesafety",
     "UserـTopicـCategory",
     "XICON"
-  ]
+  ],
+  "deepscan.enable": true,
+  "jest.rootPath": "/",
+  "jest.jestCommandLine": "npx jest"
 }

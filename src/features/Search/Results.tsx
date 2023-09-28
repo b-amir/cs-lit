@@ -70,7 +70,7 @@ export function Results({
         />
       </animated.div>
       <div
-        className="fixed right-0 top-0 z-10 h-[100dvh] w-screen overscroll-y-none bg-[#00000093] backdrop-blur-xl"
+        className="fixed right-0 top-0 z-10 h-[100dvh] w-screen overscroll-y-none bg-[#000000b8] backdrop-blur-xl"
         onClick={() => setShowResultsPanel(false)}
       />
     </>
