@@ -34,6 +34,7 @@ export function EditorSection({
 
   return (
     <div
+    data-testid="editor-backdrop"
       className={`z-30 mx-auto flex max-h-screen w-full grow-0 flex-col items-center justify-center px-2 text-dark-2 shadow-lg backdrop-blur-xl sm:px-10 lg:px-[16.666667%] 
                 ${
                   editor.shown

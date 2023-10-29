@@ -49,7 +49,10 @@ const VerifyRequestPage = () => {
             <IoMailUnread className="mb-0.5" /> Check your email
           </h1>
 
-          <p className="text-md mb-4 text-center text-sm font-normal text-gray-700">
+          <p
+            data-testid="verify-req"
+            className="text-md mb-4 text-center text-sm font-normal text-gray-700"
+          >
             A sign in link has been sent to your email address.
           </p>
           <p></p>

@@ -129,17 +129,9 @@ export function VotingAverageSection({
 }
 export function VoteCastingSection({ analogyId }: { analogyId: string }) {
   const { data: whatDidCurrentUserVote } =
-    api.analogy.whatDidCurrentUserVote.useQuery(
-      {
-        analogyId: analogyId,
-      },
-      {
-        enabled: !!analogyId,
-        refetchOnWindowFocus: false,
-        refetchOnMount: false,
-        refetchOnReconnect: false,
-      }
-    );
+    api.analogy.whatDidCurrentUserVote.useQuery({
+      analogyId: analogyId,
+    });
   const [vote, setVote] = useState<string | null>(
     whatDidCurrentUserVote ?? null
   );

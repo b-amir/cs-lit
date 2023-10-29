@@ -3,6 +3,9 @@ import { vi, expect, describe, it } from "vitest";
 import { mockPrisma } from "@/server/__mocks__/db";
 import { AppRouter, appRouter } from "@/server/api/root";
 import { createInnerTRPCContext } from "@/server/api/trpc";
+import { RouterInputs } from "@/utils/api";
+import { prisma } from "@/server/db";
+import { act, waitFor } from "@testing-library/react";
 
 /*
  * two ways to mock prisma:
@@ -69,5 +72,56 @@ describe("Analogy", async () => {
     expect(analogyById).toStrictEqual(mockOutput);
     expect(analogyById.description).toBe(mockOutput.description);
     expect(analogyById.id).toBe(mockOutput.id);
+  });
+
+  it("unauthorized user should not be able to create an analogy", async () => {
+    const ctx = await createInnerTRPCContext({ session: null });
+    const caller = appRouter.createCaller(ctx);
+
+    const input: RouterInputs["analogy"]["create"] = {
+      description: "test",
+      topicId: "test",
+      reference: "https://google.com",
+    };
+
+    await expect(caller.analogy.create(input)).rejects.toThrowError();
+  });
+
+  it("analogy should be get-able after created", async () => {
+    const user = await prisma?.user.upsert({
+      where: { id: "test" },
+      create: {
+        name: "test",
+        email: "test@test.com",
+        image: "/test",
+        role: "USER",
+        id: "test",
+        status: "ACTIVE",
+        accounts: {},
+        username: "test",
+      },
+      update: {},
+    });
+
+    const ctx = await createInnerTRPCContext({
+      session: {
+        user,
+        expires: "1",
+      },
+    });
+    const caller = appRouter.createCaller(ctx);
+
+    const input: RouterInputs["analogy"]["create"] = {
+      description: "test",
+      topicId: "test",
+      reference: "https://google.com",
+    };
+
+    const analogy = await caller.analogy.create(input);
+    const byDescription = await caller.analogy.getByDescription({
+      description: analogy.description,
+    });
+
+    expect(byDescription).toMatchObject(input);
   });
 });

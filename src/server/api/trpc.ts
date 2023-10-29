@@ -122,7 +122,30 @@ export const publicProcedure = t.procedure;
 // });
 
 
+// if it's test environment, we don't want to use the real next-auth session
+// because we are mocking the login flow.
+const testUserSession = {
+  ctx: {
+    session: {
+      // ...ctx.session,
+      user: {
+        name: 'Test Admin',
+        image: 'https://avatars.githubusercontent.com/u/12345678?v=4',
+        email: 'test.admin@example.com',
+        role: 'ADMIN',
+      },
+      // expires: new Date(3000, 1, 1)
+    },
+    prisma,
+  }
+};
+
 const enforceUserIsAuthed = t.middleware(async ({ ctx, next }) => {
+
+  if (process.env.TESTING) {
+    return next(testUserSession)
+  }
+
   if (!ctx.session || !ctx.session.user) {
     throw new TRPCError({ code: "UNAUTHORIZED" });
   }
@@ -130,7 +153,7 @@ const enforceUserIsAuthed = t.middleware(async ({ ctx, next }) => {
   const { id } = ctx.session.user;
 
   // Fetch the user from the database based on their id
-  const user = await prisma.user.findUnique({ where: { id } });
+  const user = await prisma?.user.findUnique({ where: { id } });
 
   if (!user) {
     throw new TRPCError({ code: "UNAUTHORIZED" });
@@ -145,6 +168,11 @@ const enforceUserIsAuthed = t.middleware(async ({ ctx, next }) => {
 });
 
 const onlyAdminCan = t.middleware(async ({ ctx, next }) => {
+
+  if (process.env.TESTING) {
+    return next(testUserSession)
+  }
+
   if (!ctx.session || !ctx.session.user) {
     throw new TRPCError({ code: "UNAUTHORIZED" });
   }

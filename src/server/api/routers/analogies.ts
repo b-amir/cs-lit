@@ -159,7 +159,7 @@ export const analogiesRouter = createTRPCRouter({
   getById: publicProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ ctx, input }) => {
-      const analogy = await ctx.prisma.analogy.findUnique({
+      const analogy = await ctx.prisma?.analogy.findUnique({
         where: {
           id: input.id,
         },
@@ -168,6 +168,18 @@ export const analogiesRouter = createTRPCRouter({
       return singleAnalogyWithUserـTopicـCategoryData(analogy);
     }),
 
+
+  getByDescription: publicProcedure
+    .input(z.object({ description: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const analogy = await ctx.prisma?.analogy.findFirstOrThrow({
+        where: {
+          description: input.description,
+        },
+      });
+      // if (!analogy) throw new TRPCError({ code: "NOT_FOUND" });
+      return singleAnalogyWithUserـTopicـCategoryData(analogy);
+    }),
 
   // --- get all analogies for given user id --- //
   // used in profile page

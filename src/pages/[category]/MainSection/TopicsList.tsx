@@ -114,6 +114,7 @@ function NormalRow({ handleEdit, sessionData, topicsData }: INormalRowProps) {
               ["ADMIN", "EDITOR"].includes(sessionData?.user.role) && (
                 <span className="flex w-1/12 items-center justify-center  px-1 py-4 text-center">
                   <a
+                  data-testid="topiclist-edit-button"
                     href="#"
                     className="font-medium text-gray-400 hover:underline"
                     onClick={(e) => handleEdit(e, topic)}

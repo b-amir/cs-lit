@@ -26,12 +26,15 @@
     "tailwindcss",
     "tanstack",
     "testid",
+    "topiclist",
     "trpc",
     "typesafety",
+    "upsert",
     "UserـTopicـCategory",
     "XICON"
   ],
   "deepscan.enable": true,
   "jest.rootPath": "/",
-  "jest.jestCommandLine": "npx jest"
+  "jest.jestCommandLine": "npx jest",
+  "DevChat.DevChatPath": "/home/amyr/.chat/mamba/envs/devchat/bin/devchat"
 }

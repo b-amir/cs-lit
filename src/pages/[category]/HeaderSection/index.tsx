@@ -11,6 +11,8 @@ export function HeaderSection({
   categoryData,
   setOrderBy,
   orderBy,
+  setInput,
+  newInput,
 }: ICategoryHeaderProps) {
   const dispatch = useAppDispatch();
   return (
@@ -55,9 +57,11 @@ export function HeaderSection({
           </select>
         </div>
         <button
+          data-testid="create-topic-button"
           onClick={() => {
             dispatch(setPurpose("Create"));
             dispatch(setShown(true));
+            setInput(newInput);
           }}
           className="mx-2 inline-flex h-8 flex-row items-center rounded-[12px] border border-[#d2d2d28e] bg-[#ffffffc1] px-3 py-1.5 text-sm transition-all hover:border-[#c8c8c8] hover:bg-white"
         >

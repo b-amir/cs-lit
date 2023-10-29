@@ -32,6 +32,7 @@ export function AddCategorySection() {
         <RiAddFill
           className="w-1/6 cursor-pointer hover:text-gray-500"
           type="submit"
+          data-testid="add-category-submit"
           onClick={handleCreate}
         />
       ) : (
@@ -40,6 +41,7 @@ export function AddCategorySection() {
       <input
         className="w-5/6 items-center rounded-md border border-[#2A2A2E00] bg-[#ffffff00] px-2 py-1  text-xs text-dark-2 placeholder-gray-500 outline-none transition-all placeholder:font-medium hover:border-[#2A2A2E23] hover:bg-[#e8e8e845] focus:border-[#2A2A2E23] focus:bg-[#e8e8e845] focus:outline-none"
         type="text"
+        data-testid="add-category-input"
         placeholder={isModerator ? "Add category" : "Suggest category"}
         value={input.name}
         onChange={(event) => setInput({ ...input, name: event.target.value })}

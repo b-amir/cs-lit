@@ -151,12 +151,20 @@ function ShownResults({
           </div>
         </div>
       ) : null}
-      <ul id="search-result-items" className="flex w-full flex-col gap-5">
+      <ul
+        id="search-result-items"
+        className="flex w-full flex-col gap-5"
+        data-testid="search-results"
+      >
         {debouncedSearch?.length > 1 &&
           results &&
           results?.length > 0 &&
           results?.map((topic: IExtendedTopic) => (
-            <li className="w-full" key={topic.id}>
+            <li
+              className="w-full"
+              key={topic.id}
+              data-testid={`result-${topic.id}`}
+            >
               <Link
                 href={`/${topic.category.slug}/${topic.slug}`}
                 className="mx-12 flex flex-col rounded-[12px] border border-transparent bg-gray-100 px-6 py-5 shadow-sm transition-all hover:border-[#858585c2] hover:shadow-md"

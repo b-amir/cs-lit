@@ -136,6 +136,13 @@ export const authOptions: NextAuthOptions = {
         },
       },
       from: process.env.EMAIL_FROM || 'default@mail.com',
+      //  if in test environment, send a fixed string as the login link
+      ...(process.env.TESTING ? {
+        async generateVerificationToken() {
+          return "this-is-a-testing-token"
+        }
+      } : {}),
+
 
       // only enable in development - debugs email sending
       ...(process.env.NODE_ENV !== 'production' ? {

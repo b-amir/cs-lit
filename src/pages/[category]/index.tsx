@@ -88,7 +88,9 @@ export default function CategoryPage() {
     categoryData,
     setOrderBy,
     orderBy,
-  };
+    setInput: setTopicInput,
+    newInput
+    };
   const mainProps = {
     topicsData,
     topicsFetchingStatus,

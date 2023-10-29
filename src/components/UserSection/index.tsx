@@ -4,6 +4,7 @@ import { UserSkeleton } from "../Loading/Skeleton";
 import { getScreenName } from "@/utils/getScreenName";
 import { type USER_ROLE } from "@prisma/client";
 import { signIn, signOut, useSession } from "next-auth/react";
+import { test } from "vitest";
 import {
   HiOutlineLogout as SignOutIcon,
   HiOutlineLogin as SignInIcon,
@@ -32,6 +33,7 @@ export const UserSection = () => {
               {sessionData ? (
                 <Link
                   href={`/profile/${user?.id}`}
+                  data-testid="user-section-username"
                   className="cursor-pointer truncate whitespace-nowrap hover:underline"
                 >
                   {getScreenName(user)}
@@ -44,6 +46,7 @@ export const UserSection = () => {
                 <div
                   className="group flex flex-row items-center text-[#606060] hover:text-black "
                   onClick={() => void signOut()}
+                  data-testid="user-section-logout"
                 >
                   <SignOutIcon className=" mr-1 stroke-[#606060] group-hover:stroke-black" />{" "}
                   Sign out
@@ -52,6 +55,7 @@ export const UserSection = () => {
                 <div
                   className="group flex flex-row items-center px-0.5 text-xs font-semibold text-[#606060] hover:text-black sm:px-2 sm:text-sm "
                   onClick={() => void signIn()}
+                  data-testid="user-section-login"
                 >
                   <SignInIcon className="mx-1 stroke-[#606060] group-hover:stroke-black sm:mb-0.5" />{" "}
                   Sign in here

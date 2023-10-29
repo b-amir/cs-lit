@@ -20,7 +20,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
   useProgress(router);
 
   const toastOptions = {
-    className: "toast",
+    className: "toast-notification",
     style: {
       color: "#fff",
       fontSize: "0.9rem",

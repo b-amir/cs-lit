@@ -88,6 +88,7 @@ export function Search() {
                   }
                 }, 0);
               }}
+              data-testid="home-search-button"
             >
               <IoSearch className="absolute left-4 top-4 " />
               <span> Find topics...</span>
@@ -97,6 +98,7 @@ export function Search() {
               <input
                 type="search"
                 name="search"
+                data-testid="search-bar-input"
                 placeholder="Find topics..."
                 className={`focus:outline-none" h-10 w-36 rounded-full border border-[#2A2A2E22] bg-[#f9f9f98f] px-5 pr-10 text-sm outline-none backdrop-blur-sm backdrop-filter transition-all duration-300 focus:w-64 focus:border-[#9e9e9e] focus:bg-white focus:shadow-sm
                 ${

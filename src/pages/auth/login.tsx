@@ -74,6 +74,7 @@ const LoginPage = () => {
         <div className=" flex w-full flex-col items-center justify-center rounded-t-3xl border-b border-gray-300 bg-[#4545450f] py-10  backdrop-blur-md">
           <Link href="/">
             <Image
+              data-testid="logo"
               src={"/assets/logo17.svg"}
               width={180}
               height={0}
@@ -95,6 +96,7 @@ const LoginPage = () => {
             Sign in using providers
           </h1>
           <button
+            data-testid="google-signin"
             onClick={() =>
               void signIn("google", {
                 callbackUrl: callbackURL as string,
@@ -115,6 +117,7 @@ const LoginPage = () => {
             <BsDiscord className="mb-0.5 mr-4" /> Sign in with Discord
           </button>
           <button
+            data-testid="github-signin"
             onClick={() =>
               void signIn("github", {
                 callbackUrl: callbackURL as string,
@@ -130,6 +133,7 @@ const LoginPage = () => {
           </h1>
           <input
             type="email"
+            data-testid="login-email-input"
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 e.preventDefault();

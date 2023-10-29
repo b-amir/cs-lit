@@ -72,6 +72,8 @@ export interface ICategoryHeaderProps {
   categoryData: CategoryData;
   setOrderBy: Dispatch<SetStateAction<"desc" | "asc" | null>>;
   orderBy: "desc" | "asc" | null;
+  newInput: GeneralInputType;
+  setInput: React.Dispatch<React.SetStateAction<GeneralInputType>>;
 }
 
 export interface IEditorSectionProps {

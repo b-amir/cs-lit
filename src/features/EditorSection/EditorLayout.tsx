@@ -9,6 +9,7 @@ import { TopicFormInputs } from "./InputFields/TopicFormInputs";
 import { AnalogyFormInputs } from "./InputFields/AnalogyFormInputs";
 import { RiDeleteBin6Line as Delete } from "react-icons/ri";
 import { type IButtonsRowProps, type IEditorLayoutProps } from "./types";
+import { test } from "vitest";
 
 export function EditorLayout({ input, setInput, type }: IEditorLayoutProps) {
   const editor = useAppSelector((state) => state.editor);
@@ -99,12 +100,14 @@ function ButtonsRow({ editor, input, type }: IButtonsRowProps) {
           type="button"
           className="mx-3 inline-flex items-center justify-center px-4 py-2 text-sm font-semibold text-dark-2 transition-all hover:text-[#bc2f2f]"
           onClick={handleDelete}
+          data-testid="entity-delete-button"
         >
           <Delete className="mb-1 mr-2" /> Delete {editor.entity ?? ""}
         </button>
       )}
       <button
         type="submit"
+        data-testid="submit-button"
         onClick={editor.purpose === "Edit" ? handleUpdate : handleCreate}
         className="group flex flex-row justify-center rounded-xl border border-[#5c2c1d2b] bg-[#ff7263] px-6 py-1.5 text-sm font-semibold text-[#ffffffd3] shadow-sm transition-all duration-200 [text-shadow:_0_1px_0_rgb(0_0_0_/_10%)] hover:border-[#5c2c1d66] hover:shadow-md"
       >

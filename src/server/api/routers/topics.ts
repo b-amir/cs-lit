@@ -200,12 +200,12 @@ export const topicsRouter = createTRPCRouter({
           OR: [
             {
               title: {
-                contains: input.query,
+                contains: input.query?.toLowerCase(),
               },
             },
             {
-              title: {
-                contains: input.query.toLowerCase(),
+              slug: {
+                contains: input.query?.toLowerCase(),
               },
             },
           ],

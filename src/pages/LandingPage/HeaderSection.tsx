@@ -3,6 +3,7 @@ import Image from "next/image";
 import { UserSection } from "@/components/UserSection";
 import { HomeUserSkeleton } from "@/components/Loading/Skeleton";
 import { useSession } from "next-auth/react";
+import { test } from "vitest";
 
 export function HeaderSection() {
   const { status: sessionStatus } = useSession();
@@ -14,6 +15,7 @@ export function HeaderSection() {
     >
       <Link href="/" className="flex items-center justify-center">
         <Image
+          data-testid="logo"
           src={"/assets/logo17.svg"}
           width={100}
           height={0}
