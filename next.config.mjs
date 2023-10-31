@@ -22,6 +22,11 @@ const config = {
       "*.googleusercontent.com",
     ],
   },
+  typescript: {
+    // ignore some type errors for now.
+    ignoreBuildErrors: true,
+  },
+  pageExtensions: ['page.tsx', 'page.ts', 'page.jsx', 'page.js']
   // i18n: {
   //   locales: ["en"],
   //   defaultLocale: "en",

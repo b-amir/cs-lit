@@ -2,8 +2,9 @@ import { type Session } from "next-auth";
 import { type InfiniteData } from "@tanstack/react-query";
 import { type ExtendedAnalogy } from "../PageLayout/SidebarRight/types";
 import { type Dispatch, type SetStateAction } from "react";
-import { type ANALOGY_STATUS, type Comment, type User } from "@prisma/client";
+import { USER_STATUS, type ANALOGY_STATUS, type Comment, type User, USER_ROLE, COMMENT_STATUS } from "@prisma/client";
 import { type SingleAnalogyData } from "@/pages/[category]/[topic]/[analogy]/types";
+import { GetResult } from "@prisma/client/runtime/library";
 
 export type Analogy = {
   id: string;
@@ -50,14 +51,31 @@ export interface ExtendedComment extends Comment {
 export interface IPostCommentCountProps {
   analogyData: ExtendedAnalogy | undefined;
   commentsData: InfiniteData<{
-    items: ExtendedComment[];
+    items: {
+      user: (GetResult<{
+        id: string;
+        username: string | null;
+        name: string | null;
+        email: string | null;
+        emailVerified: Date | null;
+        image: string | null;
+        status: USER_STATUS;
+        role: USER_ROLE;
+      }, { [x: string]: () => unknown; }> & {}) | null;
+      id: string;
+      status: COMMENT_STATUS;
+      analogyId: string;
+      createdAt: Date;
+      updatedAt: Date;
+      content: string;
+      commenterId: string;
+    }[];
     total: number;
     pageInfo: {
-      count: number;
-      nextCursor: string | undefined;
-      hasNextPage: boolean | undefined;
+      hasNextPage: boolean;
+      nextCursor: string | null | undefined;
     };
-  }> | undefined;
+  }> | undefined
 }
 export interface IPostEditButtonProps {
   analogyData: ExtendedAnalogy | undefined;

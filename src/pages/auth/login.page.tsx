@@ -6,7 +6,7 @@ import { GoBackButton } from "@/components/GoBackButton";
 import { CornerLoading } from "@/components/Loading/Spinner";
 import { signIn, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
-import { type SignInErrorTypes } from "next-auth/src/core/pages/signin";
+import { type SignInErrorTypes } from "next-auth/core/pages/signin";
 import { BsGoogle, BsDiscord, BsGithub } from "react-icons/bs";
 
 const LoginPage = () => {

@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { ProfileHeader } from "@/pages/profile/[id]";
+import { ProfileHeader } from "@/pages/profile/[id].page";
 import { render, screen } from "@testing-library/react";
 import { TRPClientProvider } from "../utils/trpcWrapper";
 

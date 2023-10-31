@@ -83,7 +83,7 @@ export function HeaderSection({
 export function VotingAverageSection({
   votingAverage,
 }: {
-  votingAverage: number;
+  votingAverage: number | undefined;
 }) {
   return (
     <div
@@ -92,7 +92,7 @@ export function VotingAverageSection({
     >
       {
         // check if votingAverage is not NaN
-        isNaN(votingAverage) ? (
+        typeof votingAverage === "number" && isNaN(votingAverage) ? (
           <>has no votes yet</>
         ) : (
           <>
