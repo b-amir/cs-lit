@@ -14,6 +14,11 @@ import { env } from "@/env.mjs";
 import { prisma } from "@/server/db";
 import { type USER_ROLE } from "@prisma/client";
 
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { sendVerificationRequest } from '@/utils/sendVerificationReqEmail';
+import { constants } from "crypto";
+
+
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
  * object and keep type safety.
@@ -151,6 +156,12 @@ export const authOptions: NextAuthOptions = {
         },
       } : {}),
     }),
+    // this is fine  // @ts-ignore
+    {
+      id: 'resend',
+      type: 'email',
+      sendVerificationRequest
+    }
 
   ],
 };
