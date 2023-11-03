@@ -26,7 +26,19 @@ const config = {
     // ignore some type errors for now.
     ignoreBuildErrors: true,
   },
-  pageExtensions: ['page.tsx', 'page.ts', 'page.jsx', 'page.js']
+  pageExtensions: ['page.tsx', 'page.ts', 'page.jsx', 'page.js'],
+  async rewrites() {
+    return [
+      {
+        source: `/api/:path*`,
+        destination: `/api/:path*`,
+      },
+      {
+        source: `/:path*`,
+        destination: `${process.env.PLATFORM_URL}/:path*`,
+      },
+    ];
+  },
   // i18n: {
   //   locales: ["en"],
   //   defaultLocale: "en",
