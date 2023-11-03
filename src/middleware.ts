@@ -12,7 +12,17 @@ import { type NextRequest, NextResponse } from 'next/server';
 
 // };
 
-export default async function middleware(req: NextRequest) {
+import { withAuth } from "next-auth/middleware"
+
+export default withAuth({
+  // Matches the pages config in `[...nextauth]`
+  pages: {
+    signIn: '/login',
+    error: '/error',
+  }
+})
+
+export async function middleware(req: NextRequest) {
   // const path = req.nextUrl.pathname;
   // const session = await getSession({ req });
   const session = !!req.cookies.get("next-auth.session-token")
