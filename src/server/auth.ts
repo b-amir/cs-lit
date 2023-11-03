@@ -156,7 +156,8 @@ export const authOptions: NextAuthOptions = {
         },
       } : {}),
     }),
-    // this is fine  // @ts-ignore
+    // this is fine 
+    // @ts-ignore
     {
       id: 'resend',
       type: 'email',
