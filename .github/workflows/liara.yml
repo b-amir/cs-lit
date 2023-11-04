@@ -2,7 +2,7 @@ name: CD-Liara
 on:
   push:
     branches:
-      - master
+      - main
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -16,5 +16,5 @@ jobs:
         env:
           LIARA_TOKEN: ${{ secrets.LIARA_API_TOKEN }}
         run: |
-          npm i -g @liara/cli@4
-          liara deploy --app="cslit" --api-token=$LIARA_TOKEN --detach
+          npm i -g @liara/cli@5
+          liara deploy --app="cslit" --api-token="$LIARA_TOKEN" --no-app-logs --port=3000
