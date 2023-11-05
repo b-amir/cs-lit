@@ -114,11 +114,17 @@ export const authOptions: NextAuthOptions = {
     GithubProvider({
       clientId: process.env.GITHUB_CLIENT_ID || "",
       clientSecret: process.env.GITHUB_CLIENT_SECRET || "",
+      httpOptions: {
+        timeout: 40000,
+      },
     }),
 
     DiscordProvider({
       clientId: process.env.DISCORD_CLIENT_ID || "",
       clientSecret: process.env.DISCORD_CLIENT_SECRET || "",
+      httpOptions: {
+        timeout: 40000,
+      },
     }),
 
     /**
@@ -161,7 +167,10 @@ export const authOptions: NextAuthOptions = {
     {
       id: 'resend',
       type: 'email',
-      sendVerificationRequest
+      sendVerificationRequest,
+      httpOptions: {
+        timeout: 40000,
+      },
     }
 
   ],

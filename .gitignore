@@ -47,3 +47,7 @@ yarn-error.log*
 
 # Local Netlify folder
 .netlify
+
+
+# old files for comparison sake
+.old
