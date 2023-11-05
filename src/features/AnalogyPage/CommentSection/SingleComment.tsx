@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { coy } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import ReactMarkdown from "react-markdown";
-import { RelativeTime } from "../../../../../utils/relativeTime";
+import { RelativeTime } from "../../../utils/relativeTime";
 import { getScreenName } from "@/utils/getScreenName";
 import { type ExtendedComment } from "../types";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";

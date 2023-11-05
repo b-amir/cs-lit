@@ -1,4 +1,4 @@
-import { type ListItem } from "@/pages/admin/types";
+import { type ListItem } from "@/features/AdminPage/types";
 
 export interface USER {
   name?: string | null | undefined;

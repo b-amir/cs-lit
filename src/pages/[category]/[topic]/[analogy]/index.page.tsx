@@ -1,13 +1,13 @@
 import Head from "next/head";
 import { api } from "@/utils/api";
-import { SharingSection } from "./SharingSection";
+import { SharingSection } from "../../../../features/AnalogyPage/SharingSection";
 import { useRouter } from "next/router";
 import { PageLayout } from "@/components/PageLayout";
-import { MainSection } from "./MainSection";
-import { InfoSection } from "./InfoSection";
-import { CommentSection } from "./CommentSection";
+import { MainSection } from "../../../../features/AnalogyPage/MainSection";
+import { InfoSection } from "../../../../features/AnalogyPage/InfoSection";
+import { CommentSection } from "../../../../features/AnalogyPage/CommentSection";
 import { EntityNotFound } from "@/components/Messages/EntityNotFound";
-import { AboutWebsiteSection } from "./AboutWebsiteSection";
+import { AboutWebsiteSection } from "../../../../features/AnalogyPage/AboutWebsiteSection";
 import { useEffect, useState } from "react";
 import { EditorSection } from "@/features/EditorSection";
 import { useAppDispatch } from "@/redux/hooks";

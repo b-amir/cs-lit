@@ -4,7 +4,7 @@ import { FormTrigger } from "@/features/EditorSection/FormTrigger";
 import { EditorLayout } from "@/features/EditorSection/EditorLayout";
 import React, { useRef } from "react";
 import { animated, useSpring } from "@react-spring/web";
-import { type IEditorSectionProps } from "../../pages/[category]/types";
+import { type IEditorSectionProps } from "../CategoryPage/types";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
 export function EditorSection({
@@ -34,7 +34,7 @@ export function EditorSection({
 
   return (
     <div
-    data-testid="editor-backdrop"
+      data-testid="editor-backdrop"
       className={`z-30 mx-auto flex max-h-screen w-full grow-0 flex-col items-center justify-center px-2 text-dark-2 shadow-lg backdrop-blur-xl sm:px-10 lg:px-[16.666667%] 
                 ${
                   editor.shown

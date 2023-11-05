@@ -3,7 +3,7 @@ import { type InfiniteData } from "@tanstack/react-query";
 import { type ExtendedAnalogy } from "../PageLayout/SidebarRight/types";
 import { type Dispatch, type SetStateAction } from "react";
 import { USER_STATUS, type ANALOGY_STATUS, type Comment, type User, USER_ROLE, COMMENT_STATUS, TOPIC_STATUS, CATEGORY_STATUS } from "@prisma/client";
-import { type SingleAnalogyData } from "@/pages/[category]/[topic]/[analogy]/types";
+import { type SingleAnalogyData } from "@/features/AnalogyPage/types";
 import { GetResult } from "@prisma/client/runtime/library";
 
 export type Analogy = {

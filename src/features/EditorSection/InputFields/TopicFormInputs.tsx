@@ -2,7 +2,7 @@
 import { useRouter } from "next/router";
 import React, { useRef } from "react";
 import { animated, useSpring } from "@react-spring/web";
-import { type ITopicFormInputsProps } from "../../../pages/[category]/types";
+import { type ITopicFormInputsProps } from "../../CategoryPage/types";
 
 export function TopicFormInputs({
   input,

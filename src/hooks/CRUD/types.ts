@@ -1,13 +1,13 @@
-import { type TopicInput } from "@/pages/[category]/types";
-import { type AnalogyInput } from "@/pages/[category]/[topic]/types";
+import { type TopicInput } from "@/features/CategoryPage/types";
+import { type AnalogyInput } from "@/features/TopicPage/types";
 import {
   type ACTIVITY_ACTION,
   type Analogy,
   type Category,
   type ENTITY_TYPE,
 } from "@prisma/client";
-import { type CommentInput } from "@/pages/[category]/[topic]/[analogy]/types";
-import { type AdminInputType, } from "@/pages/admin/types";
+import { type CommentInput } from "@/features/AnalogyPage/types";
+import { type AdminInputType, } from "@/features/AdminPage/types";
 
 export type ExtraInput = {
   id?: string;

@@ -4,12 +4,12 @@ import { api } from "@/utils/api";
 import { useRouter } from "next/router";
 import { PageLayout } from "@/components/PageLayout";
 import { useSession } from "next-auth/react";
-import { MainSection } from "./MainSection";
+import { MainSection } from "../../features/CategoryPage/MainSection";
 import { TOPIC_STATUS } from "@prisma/client";
-import { HeaderSection } from "./HeaderSection";
+import { HeaderSection } from "../../features/CategoryPage/HeaderSection";
 import { EditorSection } from "../../features/EditorSection";
 import { EntityNotFound } from "@/components/Messages/EntityNotFound";
-import { type TopicInput } from "./types";
+import { type TopicInput } from "../../features/CategoryPage/types";
 import React, { useState } from "react";
 
 export default function CategoryPage() {
