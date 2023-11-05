@@ -6,6 +6,7 @@ import { RelativeTime } from "../../../../../utils/relativeTime";
 import { getScreenName } from "@/utils/getScreenName";
 import { type ExtendedComment } from "../types";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { User } from "@prisma/client";
 
 export function SingleComment({ comment }: { comment: ExtendedComment }) {
   return (
@@ -36,7 +37,7 @@ export function SingleComment({ comment }: { comment: ExtendedComment }) {
             id="name"
             className="mt-0.5 text-xs font-semibold text-slate-700"
           >
-            {getScreenName(comment.user)}
+            {getScreenName(comment.user as User)}
           </div>
         </Link>
         <div id="time" className="mt-0.5 text-xs font-normal text-slate-400">

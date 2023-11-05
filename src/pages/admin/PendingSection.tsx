@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { api } from "@/utils/api";

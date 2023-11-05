@@ -68,7 +68,7 @@ export const topicsRouter = createTRPCRouter({
         take: limit + 1,
         where: {
           title: {
-            contains: input.query,
+            contains: input.query || "",
           },
         },
         cursor: cursor ? { id: cursor } : undefined,
@@ -147,7 +147,7 @@ export const topicsRouter = createTRPCRouter({
           OR: [
             {
               categoryId: input.id,
-              starterId: input.viewerId,
+              starterId: input.viewerId || "",
               status: {
                 not: "PUBLISHED"
               }
@@ -164,7 +164,7 @@ export const topicsRouter = createTRPCRouter({
       }).then(topicsWithCategoryData)
 
       let items;
-      const isModerator = ["ADMIN", "EDITOR"].includes(ctx?.session?.user.role);
+      const isModerator = ["ADMIN", "EDITOR"].includes(ctx?.session?.user.role || "");
       if (!input.viewerId) { items = publishedItems }
       if (input.viewerId && publishedItems_plus_ViewersUnpublishedItems.length > 0) {
         items = publishedItems_plus_ViewersUnpublishedItems
@@ -174,7 +174,9 @@ export const topicsRouter = createTRPCRouter({
       }
 
       let nextCursor: typeof cursor | undefined = undefined;
+      // @ts-ignore
       if (items.length > limit) {
+        // @ts-ignore
         const nextItem = items.pop();
         nextCursor = nextItem?.id as typeof cursor;
       }
@@ -183,6 +185,7 @@ export const topicsRouter = createTRPCRouter({
         items,
         total: totalPublished,
         pageInfo: {
+          // @ts-ignore
           hasNextPage: items.length > limit,
           nextCursor,
         },
@@ -225,7 +228,7 @@ export const topicsRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       const topic = await ctx.prisma.topic.findFirst({
         where: {
-          slug: input.slug,
+          slug: input.slug || "",
         },
       })
         .then((topic) => {

@@ -50,7 +50,7 @@ export const commentsRouter = createTRPCRouter({
         take: limit + 1,
         where: {
           content: {
-            contains: input.query,
+            contains: input.query || "",
           },
         },
         cursor: cursor ? { id: cursor } : undefined,

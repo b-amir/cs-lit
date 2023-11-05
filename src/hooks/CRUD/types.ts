@@ -48,4 +48,14 @@ export type ExtraInput = {
   type: "string";
 };
 
-export type GeneralInputType = ExtraInput & (AnalogyInput | TopicInput | CommentInput | AdminInputType);
+export type CategoryInput = ExtraInput & {
+  name: string;
+  slug: string;
+  description: string;
+  status: "PENDING" | "PUBLISHED" | "REJECTED" | "DELETED";
+  userStatus: "ACTIVE" | "BANNED" | "DELETED";
+  item: Category;
+  type: string;
+};
+
+export type GeneralInputType = ExtraInput & (AnalogyInput | TopicInput | CommentInput | AdminInputType | CategoryInput);

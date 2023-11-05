@@ -79,6 +79,7 @@ export function EditorBodyBlueprint({
             <select
               name={field.name}
               id={field.name}
+              // @ts-ignore
               value={input.item[field.name] ?? null}
               onChange={handleChange}
               className="focus:shadow-outline mb-2 w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none"
@@ -96,6 +97,7 @@ export function EditorBodyBlueprint({
                   type="checkbox"
                   name={field.name}
                   id={field.name}
+                  // @ts-ignore
                   checked={input.item[field.name] || false}
                   onChange={handleChange}
                 />
@@ -104,6 +106,7 @@ export function EditorBodyBlueprint({
                   type="text"
                   name={field.name}
                   id={field.name}
+                  // @ts-ignore
                   value={input.item[field.name] || ""}
                   onChange={handleChange}
                   placeholder={`Enter ${field.label.toLowerCase()}`}

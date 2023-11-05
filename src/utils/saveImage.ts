@@ -58,6 +58,7 @@ export async function saveImage() {
     await html2canvas(element).then(async (canvas) => {
       // Revert the changes by applying the original styles
       for (const style in originalStyles) {
+        // @ts-ignore
         element.style[style] = originalStyles[style];
       }
       // Export canvas to image

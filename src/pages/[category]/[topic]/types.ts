@@ -4,6 +4,8 @@ import {
   type TOPIC_STATUS,
   type ANALOGY_STATUS,
   type CATEGORY_STATUS,
+  USER_STATUS,
+  USER_ROLE,
 } from "@prisma/client";
 import {
   type FetchNextPageOptions,
@@ -13,14 +15,25 @@ import { type SpringValue } from "@react-spring/web";
 import { type GetResult } from "@prisma/client/runtime/library";
 import { type GeneralInputType } from "@/hooks/CRUD/types";
 
-type TopicData = GetResult<{
+type TopicData = {
+  category: {
+    id: string;
+    name: string;
+    slug: string;
+    status: CATEGORY_STATUS;
+    createdAt: Date;
+    updatedAt: Date;
+  } | null;
   id: string;
-  name: string;
+  title: string;
   slug: string;
-  status: CATEGORY_STATUS;
+  status: TOPIC_STATUS;
+  url: string;
   createdAt: Date;
   updatedAt: Date;
-}, { [x: string]: () => unknown; }> & object;
+  starterId: string;
+  categoryId: string;
+} | undefined
 
 type AnalogyData = {
   id: string;
@@ -63,17 +76,24 @@ export type IHeaderSectionProps = {
   sessionData: SessionData;
   topicFetchingStatus: "error" | "success" | "loading";
   topicData: {
-    category: TopicData | null;
-    status: TOPIC_STATUS;
+    category: {
+      id: string;
+      name: string;
+      slug: string;
+      status: CATEGORY_STATUS;
+      createdAt: Date;
+      updatedAt: Date;
+    } | null;
     id: string;
     title: string;
+    slug: string;
+    status: TOPIC_STATUS;
+    url: string;
     createdAt: Date;
     updatedAt: Date;
-    slug: string;
-    url: string;
     starterId: string;
     categoryId: string;
-  } | undefined;
+  } | undefined
 };
 
 export type IMainSectionProps = {
@@ -104,7 +124,46 @@ export type IAnalogyEditorFormProps = {
 };
 
 export type IAnalogyFormInputsProps = {
-  input: GeneralInputType;
+  input: {
+    user: {
+      id: string;
+      username: string | null;
+      name: string | null;
+      email: string | null;
+      emailVerified: Date | null;
+      image: string | null;
+      status: USER_STATUS;
+      role: USER_ROLE;
+    } | null;
+    topic: {
+      id: string;
+      title: string;
+      slug: string;
+      status: TOPIC_STATUS;
+      url: string;
+      createdAt: Date;
+      updatedAt: Date;
+      starterId: string;
+      categoryId: string;
+    } | null;
+    category: {
+      id: string;
+      name: string;
+      slug: string;
+      status: CATEGORY_STATUS;
+      createdAt: Date;
+      updatedAt: Date;
+    } | null;
+    id: string;
+    title: string;
+    description: string;
+    reference: string | null;
+    status: ANALOGY_STATUS;
+    createdAt: Date;
+    updatedAt: Date;
+    authorId: string;
+    topicId: string;
+  } | undefined
   setInput: Dispatch<SetStateAction<GeneralInputType>>;
   handleChange: (e: React.FormEvent<HTMLInputElement>) => void;
 };

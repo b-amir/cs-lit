@@ -9,6 +9,7 @@ import {
   HiOutlineLogout as SignOutIcon,
   HiOutlineLogin as SignInIcon,
 } from "react-icons/hi";
+import { type User } from "@prisma/client";
 
 export interface USER {
   id: string;
@@ -27,7 +28,7 @@ export const UserSection = () => {
         <UserSkeleton />
       ) : (
         <div className="flex w-full flex-row">
-          <Avatar user={user} />
+          <Avatar user={user as User} />
           <div className="flex flex-col justify-center">
             <p className="font-regular px-1 text-left text-sm font-medium text-dark-2 sm:mb-1">
               {sessionData ? (
@@ -36,7 +37,7 @@ export const UserSection = () => {
                   data-testid="user-section-username"
                   className="cursor-pointer truncate whitespace-nowrap hover:underline"
                 >
-                  {getScreenName(user)}
+                  {getScreenName(user as User)}
                 </Link>
               ) : null}
             </p>

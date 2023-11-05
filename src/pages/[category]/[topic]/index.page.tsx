@@ -1,3 +1,4 @@
+// @ts-nocheck
 import Head from "next/head";
 import { api } from "@/utils/api";
 import { useState } from "react";

@@ -70,7 +70,9 @@ const ProfilePage: NextPage<object> = () => {
             className="grow-1 min-h-[calc(100dvh)] w-full [overflow:overlay]"
           >
             <ProfileHeader profileData={profileData} />
+
             <AnalogiesFeed
+              setAnalogyInput={() => {}}
               analogies={userAnalogies}
               hasNextPage={hasNextPage}
               fetchNextPage={fetchNextPage}

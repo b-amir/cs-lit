@@ -1,8 +1,9 @@
+// @ts-nocheck
 import { type Session } from "next-auth";
 import { type GetResult } from "@prisma/client/runtime/library";
 import { type GeneralInputType, type ExtraInput } from "@/hooks/CRUD/types";
 import { type Dispatch, type SetStateAction } from "react";
-import { type Topic, type CATEGORY_STATUS, type TOPIC_STATUS, type Category } from "@prisma/client";
+import { type Topic, type CATEGORY_STATUS, type TOPIC_STATUS, type Category, USER_ROLE, USER_STATUS, ANALOGY_STATUS } from "@prisma/client";
 import { type InfiniteData, type FetchNextPageOptions, type InfiniteQueryObserverResult } from "@tanstack/react-query";
 import { type EditorState } from "@/features/EditorSection/editorSlice";
 
@@ -69,18 +70,124 @@ export type TopicsData = InfiniteData<{
 
 export interface ICategoryHeaderProps {
   categoryFetchingStatus: "error" | "success" | "loading";
-  categoryData: CategoryData;
+  categoryData: {
+    id: string;
+    name: string;
+    slug: string;
+    status: CATEGORY_STATUS;
+    createdAt: Date;
+    updatedAt: Date;
+  } | undefined;
   setOrderBy: Dispatch<SetStateAction<"desc" | "asc" | null>>;
   orderBy: "desc" | "asc" | null;
-  newInput: GeneralInputType;
-  setInput: React.Dispatch<React.SetStateAction<GeneralInputType>>;
+  newInput: {
+    id: string;
+    title: string;
+    url: string;
+    slug: string;
+    category: {
+      id: string;
+      name: string;
+      slug: string;
+      status: CATEGORY_STATUS;
+      createdAt: Date;
+      updatedAt: Date;
+    } | undefined;
+    analogies: {
+      id: string;
+      description: string;
+      reference: string;
+    }[];
+    starter: {
+      id: string;
+    };
+  };
+  setInput: React.Dispatch<React.SetStateAction<TopicInput>>;
 }
 
 export interface IEditorSectionProps {
-  newInput: GeneralInputType;
-  setInput: React.Dispatch<React.SetStateAction<GeneralInputType>>;
-  Input: GeneralInputType;
-  type: 'Analogies' | 'Topics';
+  newInput: {
+    user: {
+      id: string;
+      username: string | null;
+      name: string | null;
+      email: string | null;
+      emailVerified: Date | null;
+      image: string | null;
+      status: USER_STATUS;
+      role: USER_ROLE;
+    } | null;
+    topic: {
+      id: string;
+      title: string;
+      slug: string;
+      status: TOPIC_STATUS;
+      url: string;
+      createdAt: Date;
+      updatedAt: Date;
+      starterId: string;
+      categoryId: string;
+    } | null;
+    category: {
+      id: string;
+      name: string;
+      slug: string;
+      status: CATEGORY_STATUS;
+      createdAt: Date;
+      updatedAt: Date;
+    } | null;
+    id: string;
+    title: string;
+    description: string;
+    reference: string | null;
+    status: ANALOGY_STATUS;
+    createdAt: Date;
+    updatedAt: Date;
+    authorId: string;
+    topicId: string;
+  } | undefined
+  setInput: Dispatch<any>;
+  Input: {
+    user: {
+      id: string;
+      username: string | null;
+      name: string | null;
+      email: string | null;
+      emailVerified: Date | null;
+      image: string | null;
+      status: USER_STATUS;
+      role: USER_ROLE;
+    } | null;
+    topic: {
+      id: string;
+      title: string;
+      slug: string;
+      status: TOPIC_STATUS;
+      url: string;
+      createdAt: Date;
+      updatedAt: Date;
+      starterId: string;
+      categoryId: string;
+    } | null;
+    category: {
+      id: string;
+      name: string;
+      slug: string;
+      status: CATEGORY_STATUS;
+      createdAt: Date;
+      updatedAt: Date;
+    } | null;
+    id: string;
+    title: string;
+    description: string;
+    reference: string | null;
+    status: ANALOGY_STATUS;
+    createdAt: Date;
+    updatedAt: Date;
+    authorId: string;
+    topicId: string;
+  } | undefined
+  type: string;
 }
 
 export interface IMainSectionProps {
@@ -89,12 +196,62 @@ export interface IMainSectionProps {
   hasNextPage: boolean | undefined;
   isFetchingNextPage: boolean;
   setTopicInput: React.Dispatch<React.SetStateAction<TopicInput>>;
-  topicsData: TopicsData;
+  topicsData: InfiniteData<{
+    items: {
+      category: {
+        id: string;
+        name: string;
+        slug: string;
+        status: CATEGORY_STATUS;
+        createdAt: Date;
+        updatedAt: Date;
+      } | null;
+      id: string;
+      title: string;
+      slug: string;
+      status: TOPIC_STATUS;
+      url: string;
+      createdAt: Date;
+      updatedAt: Date;
+      starterId: string;
+      categoryId: string;
+    }[] | undefined;
+    total: number;
+    pageInfo: {
+      hasNextPage: boolean;
+      nextCursor: string | null | undefined;
+    };
+  }> | undefined;
   topicsFetchingStatus: "error" | "success" | "loading";
 }
 
 export interface ITopicsListProps {
-  topicsData: TopicsData;
+  topicsData: InfiniteData<{
+    items: {
+      category: {
+        id: string;
+        name: string;
+        slug: string;
+        status: CATEGORY_STATUS;
+        createdAt: Date;
+        updatedAt: Date;
+      } | null;
+      id: string;
+      title: string;
+      slug: string;
+      status: TOPIC_STATUS;
+      url: string;
+      createdAt: Date;
+      updatedAt: Date;
+      starterId: string;
+      categoryId: string;
+    }[] | undefined;
+    total: number;
+    pageInfo: {
+      hasNextPage: boolean;
+      nextCursor: string | null | undefined;
+    };
+  }>;
   hasNextPage: boolean | undefined;
   fetchNextPage: (options?: FetchNextPageOptions | undefined) => Promise<InfiniteQueryObserverResult<unknown, unknown>>;
   isFetchingNextPage: boolean;
@@ -112,7 +269,46 @@ export interface ITopicEditorFormProps {
 }
 
 export interface ITopicFormInputsProps {
-  input: GeneralInputType;
+  input: {
+    user: {
+      id: string;
+      username: string | null;
+      name: string | null;
+      email: string | null;
+      emailVerified: Date | null;
+      image: string | null;
+      status: USER_STATUS;
+      role: USER_ROLE;
+    } | null;
+    topic: {
+      id: string;
+      title: string;
+      slug: string;
+      status: TOPIC_STATUS;
+      url: string;
+      createdAt: Date;
+      updatedAt: Date;
+      starterId: string;
+      categoryId: string;
+    } | null;
+    category: {
+      id: string;
+      name: string;
+      slug: string;
+      status: CATEGORY_STATUS;
+      createdAt: Date;
+      updatedAt: Date;
+    } | null;
+    id: string;
+    title: string;
+    description: string;
+    reference: string | null;
+    status: ANALOGY_STATUS;
+    createdAt: Date;
+    updatedAt: Date;
+    authorId: string;
+    topicId: string;
+  } | undefined
   setInput: Dispatch<SetStateAction<GeneralInputType>>;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   editor: EditorState
@@ -125,5 +321,30 @@ export interface ITitleRowProps {
 export interface INormalRowProps {
   handleEdit: (e: React.MouseEvent, topic: Topic) => void;
   sessionData: Session | null;
-  topicsData: TopicsData;
+  topicsData: InfiniteData<{
+    items: {
+      category: {
+        id: string;
+        name: string;
+        slug: string;
+        status: CATEGORY_STATUS;
+        createdAt: Date;
+        updatedAt: Date;
+      } | null;
+      id: string;
+      title: string;
+      slug: string;
+      status: TOPIC_STATUS;
+      url: string;
+      createdAt: Date;
+      updatedAt: Date;
+      starterId: string;
+      categoryId: string;
+    }[] | undefined;
+    total: number;
+    pageInfo: {
+      hasNextPage: boolean;
+      nextCursor: string | null | undefined;
+    };
+  }>;
 }

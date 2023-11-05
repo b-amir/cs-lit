@@ -1,4 +1,4 @@
-export const routeHandler = (item, type) => {
+export const routeHandler = (item: any, type: string) => {
   if (type === "Topics") {
     return `/${item?.category?.slug}/${item?.slug}`;
   } else if (type === "Categories") {

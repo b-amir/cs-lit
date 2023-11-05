@@ -165,14 +165,14 @@ function PostEditButton({
       setAnalogyInput((prev) => {
         return {
           ...prev,
-          id: analogyData?.id || prev.id,
-          title: analogyData?.title || prev.title,
+          // id: analogyData?.id || prev.id,
+          // title: analogyData?.title || prev.title,
           description: analogyData?.description || prev.description,
-          reference: analogyData?.reference || prev.reference,
-          status: analogyData?.status || prev.status,
+          // reference: analogyData?.reference || prev.reference,
+          // status: analogyData?.status || prev.status,
           // pinned: analogyData?.pinned || prev.pinned,
           topicId: analogyData?.topicId || prev.topicId,
-          authorId: analogyData?.authorId || prev.authorId,
+          // authorId: analogyData?.authorId || prev.authorId,
         };
       });
     }

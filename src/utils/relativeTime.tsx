@@ -19,6 +19,7 @@ export const RelativeTime = (time: string | number | Date) => {
     let duration = (date.getTime() - new Date().getTime()) / 1000;
 
     for (let i = 0; i <= divisions.length; i++) {
+      // @ts-ignore
       const division: Division = divisions[i];
       // if the upcoming time is less than 24 hours, show today instead of in x hours
       if (division.name === "hours" && duration < 24 && duration > 0) {
@@ -35,6 +36,7 @@ export const RelativeTime = (time: string | number | Date) => {
         });
       }
       if (Math.abs(duration) < division.amount) {
+        // @ts-ignore
         return formatter.format(Math.round(duration), division.name);
       }
       duration /= division.amount;

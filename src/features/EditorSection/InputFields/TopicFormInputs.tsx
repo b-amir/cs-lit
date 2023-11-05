@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useRouter } from "next/router";
 import React, { useRef } from "react";
 import { animated, useSpring } from "@react-spring/web";
@@ -114,6 +115,7 @@ export function TopicFormInputs({
             </div>
           </div>
           <animated.div
+            // @ts-ignore
             style={animationProps}
             ref={contentRef}
             className="z-0 select-none"

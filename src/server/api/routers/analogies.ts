@@ -129,7 +129,7 @@ export const analogiesRouter = createTRPCRouter({
         take: limit + 1,
         where: {
           title: {
-            contains: input.query,
+            contains: input.query || "",
           },
         },
         cursor: cursor ? { id: cursor } : undefined,
@@ -226,7 +226,7 @@ export const analogiesRouter = createTRPCRouter({
       }).then(analogiesWithUserData);
 
       let items = publishedItems;
-      const isModerator = ["ADMIN", "EDITOR"].includes(ctx?.session?.user.role);
+      const isModerator = ["ADMIN", "EDITOR"].includes(ctx?.session?.user.role || "");
       const itemsCurrentUserStarted = allItems?.filter(item => item.authorId === ctx.session?.user.id);
       const hasAccessToUnpublished = isModerator || itemsCurrentUserStarted.length
       if (hasAccessToUnpublished) {
@@ -259,10 +259,10 @@ export const analogiesRouter = createTRPCRouter({
       ctx.prisma.analogy
         .findUnique({
           where: {
-            id: input.id,
+            id: input.id || "",
             OR: [
               {
-                status: ["ADMIN", "EDITOR"].includes(ctx?.session?.user.role) ? { not: "DELETED" } : "PUBLISHED",
+                status: ["ADMIN", "EDITOR"].includes(ctx?.session?.user.role || "") ? { not: "DELETED" } : "PUBLISHED",
               },
               {
                 status: { not: "DELETED" },
@@ -331,7 +331,7 @@ export const analogiesRouter = createTRPCRouter({
           OR: [
             {
               topicId: input.id,
-              authorId: input.viewerId,
+              authorId: input.viewerId || "",
               status: {
                 not: "PUBLISHED"
               }
@@ -347,7 +347,7 @@ export const analogiesRouter = createTRPCRouter({
         }
       });
       let items;
-      const isModerator = ["ADMIN", "EDITOR"].includes(ctx?.session?.user.role);
+      const isModerator = ["ADMIN", "EDITOR"].includes(ctx?.session?.user.role || "");
       if (!input.viewerId) { items = publishedItems }
       if (input.viewerId && publishedItems_plus_ViewersUnpublishedItems && publishedItems_plus_ViewersUnpublishedItems.length > 0) {
         items = publishedItems_plus_ViewersUnpublishedItems
@@ -364,6 +364,7 @@ export const analogiesRouter = createTRPCRouter({
         items,
         total: totalPublished,
         pageInfo: {
+          // @ts-ignore
           hasNextPage: items?.length > limit,
           nextCursor,
         },

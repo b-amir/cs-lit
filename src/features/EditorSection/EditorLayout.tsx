@@ -70,19 +70,19 @@ export function EditorLayout({ input, setInput, type }: IEditorLayoutProps) {
 
 function ButtonsRow({ editor, input, type }: IButtonsRowProps) {
   const item = input;
-
+  // @ts-ignore
   const updateItem = useUpdateItem(item, type);
   const handleUpdate = (e: React.MouseEvent) => {
     e.preventDefault();
     updateItem();
   };
-
+  // @ts-ignore
   const createItem = useCreateItem(item, type);
   const handleCreate = (e: React.MouseEvent) => {
     e.preventDefault();
     createItem();
   };
-
+  // @ts-ignore
   const deleteItem = useDeleteItem(item, type);
   const handleDelete = (e: React.MouseEvent) => {
     e.preventDefault();

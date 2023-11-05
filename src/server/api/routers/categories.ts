@@ -78,7 +78,7 @@ export const categoriesRouter = createTRPCRouter({
         take: limit + 1,
         where: {
           name: {
-            contains: input.query,
+            contains: input.query || "",
           },
         },
         cursor: cursor ? { id: cursor } : undefined,
@@ -112,7 +112,7 @@ export const categoriesRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       const category = await ctx.prisma.category.findFirst({
         where: {
-          slug: input.slug,
+          slug: input.slug || "",
         },
       });
       if (!category) throw new TRPCError({ code: "NOT_FOUND" });

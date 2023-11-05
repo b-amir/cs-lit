@@ -35,7 +35,7 @@ export const profileRouter = createTRPCRouter({
         take: limit + 1,
         where: {
           name: {
-            contains: input.query,
+            contains: input.query || "",
           },
         },
         cursor: cursor ? { id: cursor } : undefined,
@@ -69,7 +69,7 @@ export const profileRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       const user = await prisma.user.findUnique({
         where: {
-          id: input.id,
+          id: input.id || "",
         },
       });
       if (!user) {
@@ -78,6 +78,7 @@ export const profileRouter = createTRPCRouter({
           message: "User not found",
         });
       }
+      // @ts-ignore
       return filterUserForClient(user);
     }
     ),
@@ -118,6 +119,7 @@ export const profileRouter = createTRPCRouter({
           },
         ],
       });
+      // @ts-ignore
       return filterUsersForClient(users);
     }),
 

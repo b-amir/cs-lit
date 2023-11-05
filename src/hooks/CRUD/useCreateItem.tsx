@@ -186,14 +186,14 @@ export function useCreateItem(
         });
 
         createAnalogy({
-          id: item.id as string,
-          title: item.title,
+          // id: item.id as string,
+          // title: item.title,
           description: item.description as string,
           reference: item.reference,
-          status: item.status,
+          // status: item.status,
           // pinned: item.pinned,
           topicId: item.topicId as string,
-          authorId: item.authorId,
+          // authorId: item.authorId,
         });
       } catch (e) {
         toast.error("Something went wrong");

@@ -99,7 +99,7 @@ function HomeSearchInput({
         } input[type=search] {-webkit-appearance: searchfield !important;} input[type=search]::-webkit-search-cancel-button {-webkit-appearance: searchfield-cancel-button !important;}`}
         onChange={handleInputChange}
         value={value}
-        searchInputRef={searchInputRef}
+        ref={searchInputRef}
       />
 
       <button

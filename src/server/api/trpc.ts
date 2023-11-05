@@ -129,6 +129,7 @@ const testUserSession = {
     session: {
       // ...ctx.session,
       user: {
+        id: 'test-admin',
         name: 'Test Admin',
         image: 'https://avatars.githubusercontent.com/u/12345678?v=4',
         email: 'test.admin@example.com',

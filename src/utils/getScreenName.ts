@@ -4,7 +4,13 @@ export interface USER {
   name?: string | null | undefined;
   email?: string | null | undefined;
 }
-export function getScreenName(user: USER | null) {
+export function getScreenName(user: {
+  id: string;
+  name: string | null;
+  email: string | null;
+  image?: string | null;
+  profileImageUrl?: string | null;
+} | undefined) {
   return user?.name ? user?.name : user?.email ? user?.email : "unknown"
 }
 

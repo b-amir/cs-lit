@@ -1,4 +1,5 @@
 import { useCreateItem } from "@/hooks/CRUD/useCreateItem";
+import { GeneralInputType } from "@/hooks/CRUD/types";
 import { useEffect, useState } from "react";
 import { type CommentInput, type ICommentEditorProps } from "../types";
 
@@ -16,7 +17,7 @@ export function CommentEditor({ analogyId }: ICommentEditorProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const item = commentInput as CommentInput;
+  const item = commentInput as GeneralInputType;
   const type = "Comments";
 
   const createItem = useCreateItem(item, type);

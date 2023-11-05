@@ -154,7 +154,7 @@ export function useUpdateItem(
           // pinned: item.pinned as boolean,
           topicId: item.topicId as string,
           authorId: item.authorId as string,
-          reference: item.reference,
+          reference: item.reference as string,
         });
       } catch (e) {
         toast.error("Something went wrong");

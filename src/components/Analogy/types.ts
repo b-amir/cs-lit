@@ -2,7 +2,7 @@ import { type Session } from "next-auth";
 import { type InfiniteData } from "@tanstack/react-query";
 import { type ExtendedAnalogy } from "../PageLayout/SidebarRight/types";
 import { type Dispatch, type SetStateAction } from "react";
-import { USER_STATUS, type ANALOGY_STATUS, type Comment, type User, USER_ROLE, COMMENT_STATUS } from "@prisma/client";
+import { USER_STATUS, type ANALOGY_STATUS, type Comment, type User, USER_ROLE, COMMENT_STATUS, TOPIC_STATUS, CATEGORY_STATUS } from "@prisma/client";
 import { type SingleAnalogyData } from "@/pages/[category]/[topic]/[analogy]/types";
 import { GetResult } from "@prisma/client/runtime/library";
 
@@ -25,22 +25,149 @@ export interface IAnalogyProps {
   needsInfoRow?: boolean;
   needsLink?: boolean;
   needsLocationInfo?: boolean;
-  setAnalogyInput?: React.Dispatch<React.SetStateAction<AnalogyInput>>;
-  analogyData?: SingleAnalogyData;
+  setAnalogyInput?: Dispatch<
+    SetStateAction<{
+      description: string;
+      topicId: string | undefined;
+    }>
+  >;
+  analogyData?: {
+    user: {
+      id: string;
+      username: string | null;
+      name: string | null;
+      email: string | null;
+      emailVerified: Date | null;
+      image: string | null;
+      status: USER_STATUS;
+      role: USER_ROLE;
+    } | null;
+    topic: {
+      id: string;
+      title: string;
+      slug: string;
+      status: TOPIC_STATUS;
+      url: string;
+      createdAt: Date;
+      updatedAt: Date;
+      starterId: string;
+      categoryId: string;
+    } | null;
+    category: {
+      id: string;
+      name: string;
+      slug: string;
+      status: CATEGORY_STATUS;
+      createdAt: Date;
+      updatedAt: Date;
+    } | null;
+    id: string;
+    title: string;
+    description: string;
+    reference: string | null;
+    status: ANALOGY_STATUS;
+    createdAt: Date;
+    updatedAt: Date;
+    authorId: string;
+    topicId: string;
+  } | undefined;
   analogyStatus?: string;
   votingAverage?: number;
   votingStatus?: string;
 }
 export type IAnalogyBodyProps = IAnalogyProps
 export interface IContentSectionProps {
-  analogyData: ExtendedAnalogy | undefined;
+  analogyData: {
+    user: {
+      id: string;
+      username: string | null;
+      name: string | null;
+      email: string | null;
+      emailVerified: Date | null;
+      image: string | null;
+      status: USER_STATUS;
+      role: USER_ROLE;
+    } | null;
+    topic: {
+      id: string;
+      title: string;
+      slug: string;
+      status: TOPIC_STATUS;
+      url: string;
+      createdAt: Date;
+      updatedAt: Date;
+      starterId: string;
+      categoryId: string;
+    } | null;
+    category: {
+      id: string;
+      name: string;
+      slug: string;
+      status: CATEGORY_STATUS;
+      createdAt: Date;
+      updatedAt: Date;
+    } | null;
+    id: string;
+    title: string;
+    description: string;
+    reference: string | null;
+    status: ANALOGY_STATUS;
+    createdAt: Date;
+    updatedAt: Date;
+    authorId: string;
+    topicId: string;
+  } | undefined;
   analogyStatus?: string;
 }
 export type IHeaderSectionProps = IAnalogyProps
 export interface IInfoRowSectionProps {
   needsLocationInfo?: boolean;
-  analogyData?: SingleAnalogyData;
-  setAnalogyInput?: Dispatch<SetStateAction<AnalogyInput>> | undefined;
+  analogyData?: {
+    user: {
+      id: string;
+      username: string | null;
+      name: string | null;
+      email: string | null;
+      emailVerified: Date | null;
+      image: string | null;
+      status: USER_STATUS;
+      role: USER_ROLE;
+    } | null;
+    topic: {
+      id: string;
+      title: string;
+      slug: string;
+      status: TOPIC_STATUS;
+      url: string;
+      createdAt: Date;
+      updatedAt: Date;
+      starterId: string;
+      categoryId: string;
+    } | null;
+    category: {
+      id: string;
+      name: string;
+      slug: string;
+      status: CATEGORY_STATUS;
+      createdAt: Date;
+      updatedAt: Date;
+    } | null;
+    id: string;
+    title: string;
+    description: string;
+    reference: string | null;
+    status: ANALOGY_STATUS;
+    createdAt: Date;
+    updatedAt: Date;
+    authorId: string;
+    topicId: string;
+  } | undefined;
+  setAnalogyInput?: Dispatch<
+    SetStateAction<{
+      description: string;
+      topicId: string | undefined;
+    }>
+  >;
 }
 export interface IPostTimeProps {
   analogyData: ExtendedAnalogy | undefined;
@@ -52,7 +179,7 @@ export interface IPostCommentCountProps {
   analogyData: ExtendedAnalogy | undefined;
   commentsData: InfiniteData<{
     items: {
-      user: (GetResult<{
+      user: {
         id: string;
         username: string | null;
         name: string | null;
@@ -61,14 +188,14 @@ export interface IPostCommentCountProps {
         image: string | null;
         status: USER_STATUS;
         role: USER_ROLE;
-      }, { [x: string]: () => unknown; }> & {}) | null;
+      } | null;
       id: string;
+      content: string;
       status: COMMENT_STATUS;
-      analogyId: string;
       createdAt: Date;
       updatedAt: Date;
-      content: string;
       commenterId: string;
+      analogyId: string;
     }[];
     total: number;
     pageInfo: {
@@ -80,5 +207,10 @@ export interface IPostCommentCountProps {
 export interface IPostEditButtonProps {
   analogyData: ExtendedAnalogy | undefined;
   sessionData: Session | null;
-  setAnalogyInput: Dispatch<SetStateAction<AnalogyInput>> | undefined;
+  setAnalogyInput?: Dispatch<
+    SetStateAction<{
+      description: string;
+      topicId: string | undefined;
+    }>
+  >;
 }

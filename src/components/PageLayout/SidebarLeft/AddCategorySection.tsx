@@ -3,6 +3,7 @@ import { RiMenuAddFill, RiAddFill } from "react-icons/ri";
 import { type Category } from "@prisma/client";
 import { useCreateItem } from "@/hooks/CRUD/useCreateItem";
 import { useSession } from "next-auth/react";
+import { ExtraInput, GeneralInputType } from "@/hooks/CRUD/types";
 
 export function AddCategorySection() {
   const { data: sessionData } = useSession();
@@ -11,7 +12,7 @@ export function AddCategorySection() {
     slug: "",
     id: "",
   });
-  const item = input as Category;
+  const item = input as GeneralInputType;
   const type = "Categories";
   const createItem = useCreateItem(item, type);
   const handleCreate = (e: React.SyntheticEvent) => {

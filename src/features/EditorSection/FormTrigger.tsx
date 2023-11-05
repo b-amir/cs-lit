@@ -48,6 +48,7 @@ export function FormTrigger({ setInput, newInput }: IFormTriggerProps) {
             e.stopPropagation();
             dispatch(setPurpose("Create"));
             dispatch(setShown(!editor.shown));
+            // @ts-ignore
             setInput(newInput);
           }}
         >

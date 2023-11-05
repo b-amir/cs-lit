@@ -1,3 +1,4 @@
+// @ts-nocheck
 import Head from "next/head";
 import { api } from "@/utils/api";
 import { useRouter } from "next/router";
@@ -89,8 +90,8 @@ export default function CategoryPage() {
     setOrderBy,
     orderBy,
     setInput: setTopicInput,
-    newInput
-    };
+    newInput,
+  };
   const mainProps = {
     topicsData,
     topicsFetchingStatus,

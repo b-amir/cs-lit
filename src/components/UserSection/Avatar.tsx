@@ -1,11 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
 import { signIn } from "next-auth/react";
-import { type USER } from ".";
+import { type User } from "@prisma/client";
 import { FaRegUserCircle as EmptyAvatar } from "react-icons/fa";
 import { getScreenName } from "@/utils/getScreenName";
 
-export function Avatar({ user }: { user: USER }) {
+export function Avatar({ user }: { user: User }) {
   return (
     <>
       {user && user.id !== undefined ? (
@@ -20,7 +20,7 @@ export function Avatar({ user }: { user: USER }) {
             className="h-7 w-7 rounded-full  bg-gray-1 ring-2 ring-[#5858582b] transition-all hover:ring-gray-300 sm:h-9 sm:w-9"
             width={36}
             height={36}
-            alt={`${getScreenName(user) ?? ""}'s image`}
+            alt={`${getScreenName(user as User) ?? ""}'s image`}
           />
         </Link>
       ) : (

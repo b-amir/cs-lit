@@ -8,6 +8,7 @@ export function useAdminEditorForm(
   setInput: React.Dispatch<React.SetStateAction<FormInput>>,
   setShown: React.Dispatch<React.SetStateAction<boolean>>
 ) {
+  // @ts-ignore
   const updateItem = useUpdateItem(input.item, input.type);
 
   const handleSave = (e: React.MouseEvent<HTMLButtonElement> | React.FormEvent<HTMLInputElement>) => {

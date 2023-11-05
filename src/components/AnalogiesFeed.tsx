@@ -9,6 +9,7 @@ import {
   type FetchNextPageOptions,
   type InfiniteQueryObserverResult,
 } from "@tanstack/react-query";
+import { Dispatch, SetStateAction } from "react";
 
 export const AnalogiesFeed: React.FC<IFeedProps> = ({
   isProfile = false,
@@ -108,7 +109,10 @@ interface IFeedProps {
   isFetchingNextPage: boolean;
   isProfile?: boolean;
   fetchingStatus: "error" | "loading" | "success";
-  setAnalogyInput:
-    | React.Dispatch<React.SetStateAction<AnalogyInput>>
-    | undefined;
+  setAnalogyInput: Dispatch<
+    SetStateAction<{
+      description: string;
+      topicId: string | undefined;
+    }>
+  >;
 }

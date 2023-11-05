@@ -16,6 +16,7 @@ import {
   type IWidgetLayoutProps,
   type IWidgetsSectionProps,
 } from "./types";
+import { type User } from "@prisma/client";
 
 export function WidgetsSection({ hide }: IWidgetsSectionProps) {
   const { width: windowWidth, height: windowHeight } = useWindowSize();
@@ -86,6 +87,7 @@ export function WidgetLayout(props: PropsWithChildren<IWidgetLayoutProps>) {
       <animated.div
         id="sidebar-widget-body"
         className="mb-0 "
+        // @ts-ignore
         style={animationProps}
         ref={contentRef}
       >
@@ -105,6 +107,7 @@ export function RecentAnalogiesWidget({
     { limit: 5, order: "desc" },
     {}
   );
+
   return (
     <WidgetLayout
       widgetTitle="Recent Analogies"
@@ -135,18 +138,19 @@ export function RecentAnalogiesWidget({
                 }}
               >
                 <span
-                  className={`ml-0 flex w-full flex-col items-center whitespace-nowrap rounded-sm px-3 py-2.5 pl-6 pt-3 text-xs font-normal hover:bg-[#efefef84] ${
-                    AnalogiesData &&
-                    analogy === AnalogiesData[AnalogiesData.length - 1]
-                      ? "border-0 border-[#eee]"
-                      : "border-b border-[#eee]"
-                  }`}
+                  className={`ml-0 flex w-full flex-col items-center whitespace-nowrap rounded-sm px-3 py-2.5 pl-6 pt-3 text-xs font-normal hover:bg-[#efefef84]`}
+                  //        ${
+                  //   AnalogiesData &&
+                  //   analogy === AnalogiesData[AnalogiesData.length - 1]
+                  //     ? "border-0 border-[#eee]"
+                  //     : "border-b border-[#eee]"
+                  // }
                 >
                   <span className="mb-1 w-11/12 self-start overflow-clip overflow-ellipsis whitespace-nowrap font-semibold text-gray-700">
                     {analogy.topic?.title}
                   </span>
                   <span className="self-start text-xs font-light text-gray-500">
-                    by {getScreenName(analogy.user)}
+                    by {getScreenName(analogy.user as User)}
                   </span>
                 </span>
               </Link>
