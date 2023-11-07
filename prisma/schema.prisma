@@ -152,9 +152,9 @@ model Analogy {
     // id          String         @id @default(uuid())
     id String @id @default(nanoid(8))
 
-    title       String
-    description String
-    reference   String?
+    title       String         @db.Text
+    description String         @db.Text
+    reference   String?        @db.Text
     status      ANALOGY_STATUS @default(PENDING)
     // pinned      Boolean        @default(false)
 
@@ -216,7 +216,7 @@ enum COMMENT_STATUS {
 
 model Comment {
     id      String         @id @default(uuid())
-    content String
+    content String         @db.Text
     status  COMMENT_STATUS @default(PUBLISHED)
 
     createdAt DateTime @default(now())
