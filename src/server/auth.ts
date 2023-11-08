@@ -137,31 +137,31 @@ export const authOptions: NextAuthOptions = {
      * @see https://next-auth.js.org/providers/github
      */
 
-    EmailProvider({
-      server: {
-        host: process.env.EMAIL_SERVER || 'http://localhost:3000',
-        port: process.env.EMAIL_PORT || 587,
-        auth: {
-          user: process.env.EMAIL_USERNAME,
-          pass: process.env.EMAIL_PASSWORD || '',
-        },
-      },
-      from: process.env.EMAIL_FROM || 'default@mail.com',
-      //  if in test environment, send a fixed string as the login link
-      ...(process.env.TESTING ? {
-        async generateVerificationToken() {
-          return "this-is-a-testing-token"
-        }
-      } : {}),
+    // EmailProvider({
+    //   server: {
+    //     host: process.env.EMAIL_SERVER || 'http://localhost:3000',
+    //     port: process.env.EMAIL_PORT || 587,
+    //     auth: {
+    //       user: process.env.EMAIL_USERNAME,
+    //       pass: process.env.EMAIL_PASSWORD || '',
+    //     },
+    //   },
+    //   from: process.env.EMAIL_FROM || 'default@mail.com',
+    //   //  if in test environment, send a fixed string as the login link
+    //   ...(process.env.TESTING ? {
+    //     async generateVerificationToken() {
+    //       return "this-is-a-testing-token"
+    //     }
+    //   } : {}),
 
 
-      // only enable in development - debugs email sending
-      ...(process.env.NODE_ENV !== 'production' ? {
-        sendVerificationRequest({ url }) {
-          console.log("Login Link", url)
-        },
-      } : {}),
-    }),
+    //   // only enable in development - debugs email sending
+    //   ...(process.env.NODE_ENV !== 'production' ? {
+    //     sendVerificationRequest({ url }) {
+    //       console.log("Login Link", url)
+    //     },
+    //   } : {}),
+    // }),
     // this is fine 
     // @ts-ignore
     {
