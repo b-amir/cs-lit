@@ -58,6 +58,7 @@ export function HeaderSection({
         </div>
         <button
           data-testid="create-topic-button"
+          aria-label="Create topic"
           onClick={() => {
             dispatch(setPurpose("Create"));
             dispatch(setShown(true));
