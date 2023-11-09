@@ -7,7 +7,7 @@ export function LogoSection() {
       <Link href="/">
         <Image
           priority={true}
-          src={"/assets/logo17.svg"}
+          src={"/assets/logo.svg"}
           width={80}
           height={20}
           alt={"CS LIT: like I'm 10"}

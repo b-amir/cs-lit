@@ -29,7 +29,7 @@ export function CategoriesSection() {
     >
       <Image
         className="absolute bottom-0 z-0 mb-0 flex max-h-[calc(250px)] select-none sm:max-h-[calc(95dvh)] sm:max-w-[calc(1*100vw/4)]"
-        src="/assets/lighthouse2.svg"
+        src="/assets/lighthouse.svg"
         height={400}
         width={400}
         alt="lighthouse"

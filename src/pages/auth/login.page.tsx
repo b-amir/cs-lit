@@ -74,8 +74,9 @@ const LoginPage = () => {
         <div className=" flex w-full flex-col items-center justify-center rounded-t-3xl border-b border-gray-300 bg-[#4545450f] py-10  backdrop-blur-md">
           <Link href="/">
             <Image
+            priority={true}
               data-testid="logo"
-              src={"/assets/logo17.svg"}
+              src={"/assets/logo.svg"}
               width={180}
               height={0}
               alt={"CS LIT: like I'm 10"}

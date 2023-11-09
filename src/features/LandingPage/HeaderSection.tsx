@@ -16,7 +16,8 @@ export function HeaderSection() {
       <Link href="/" className="flex items-center justify-center">
         <Image
           data-testid="logo"
-          src={"/assets/logo17.svg"}
+          src={"/assets/logo.svg"}
+          priority={true}
           width={100}
           height={0}
           alt={"CS LIT: like I'm 10"}

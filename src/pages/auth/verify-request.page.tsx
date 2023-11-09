@@ -37,7 +37,8 @@ const VerifyRequestPage = () => {
         <div className=" flex w-full flex-col items-center justify-center rounded-t-3xl border-b border-gray-300 bg-[#4545450f] py-10  backdrop-blur-md">
           <Link href="/">
             <Image
-              src={"/assets/logo17.svg"}
+              priority={true}
+              src={"/assets/logo.svg"}
               width={180}
               height={0}
               alt={"CS LIT: like I'm 10"}

@@ -48,7 +48,8 @@ export function Navbar({
         <div className="flex items-center justify-center sm:hidden">
           <Link href="/">
             <Image
-              src={"/assets/logo17.svg"}
+            priority={true}
+              src={"/assets/logo.svg"}
               width={80}
               height={20}
               alt={"CS LIT: like I'm 10"}
