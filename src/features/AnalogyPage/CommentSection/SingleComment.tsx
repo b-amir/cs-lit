@@ -18,7 +18,7 @@ export function SingleComment({ comment }: { comment: ExtendedComment }) {
       <div className="flex items-center gap-1">
         <Link
           href={`/profile/${comment.commenterId}`}
-          id="commenter"
+          id={`commenter-${comment.commenterId}}`}
           className="inline-flex cursor-pointer  gap-2 rounded-md px-2 py-1 transition-all hover:bg-white"
         >
           <Image
