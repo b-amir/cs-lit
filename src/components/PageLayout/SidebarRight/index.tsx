@@ -1,9 +1,13 @@
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { IoClose } from "react-icons/io5";
 import { useSession } from "next-auth/react";
 import { UserSection } from "../../UserSection";
 import { AiFillControl } from "react-icons/ai";
-import { WidgetsSection } from "./WidgetsSection";
+
+const WidgetsSection = dynamic(() =>
+  import("./WidgetsSection").then((mod) => mod.WidgetsSection)
+);
 
 interface ISidebarRightProps {
   visible: boolean;

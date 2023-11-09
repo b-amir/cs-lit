@@ -1,14 +1,17 @@
-// @ts-nocheck
 import Head from "next/head";
+import dynamic from "next/dynamic";
 import { api } from "@/utils/api";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { PageLayout } from "@/components/PageLayout";
 import { useSession } from "next-auth/react";
-import { MainSection } from "../../../features/TopicPage/MainSection";
-import { HeaderSection } from "../../../features/TopicPage/HeaderSection";
-import { EditorSection } from "@/features/EditorSection";
-import { EntityNotFound } from "../../../components/Messages/EntityNotFound";
+import { MainSection } from "@/features/TopicPage/MainSection";
+import { HeaderSection } from "@/features/TopicPage/HeaderSection";
+import { EntityNotFound } from "@/components/Messages/EntityNotFound";
+
+const EditorSection = dynamic(() =>
+  import("@/features/EditorSection").then((mod) => mod.EditorSection)
+);
 
 export default function TopicPage({}) {
   const router = useRouter();

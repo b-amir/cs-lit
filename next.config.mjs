@@ -57,9 +57,9 @@ const config = {
   pageExtensions: ['page.tsx', 'page.ts', 'page.jsx', 'page.js'],
 
 
-  // i18n: {
-  //   locales: ["en"],
-  //   defaultLocale: "en",
-  // },
+  i18n: {
+    locales: ["en"],
+    defaultLocale: "en",
+  },
 };
 export default config;

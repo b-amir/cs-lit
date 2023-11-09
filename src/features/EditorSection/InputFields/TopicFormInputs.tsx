@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { useRouter } from "next/router";
 import React, { useRef } from "react";
 import { animated, useSpring } from "@react-spring/web";

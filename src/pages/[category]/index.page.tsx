@@ -1,16 +1,19 @@
-// @ts-nocheck
 import Head from "next/head";
+import dynamic from "next/dynamic";
 import { api } from "@/utils/api";
 import { useRouter } from "next/router";
 import { PageLayout } from "@/components/PageLayout";
 import { useSession } from "next-auth/react";
-import { MainSection } from "../../features/CategoryPage/MainSection";
+import { MainSection } from "@/features/CategoryPage/MainSection";
 import { TOPIC_STATUS } from "@prisma/client";
-import { HeaderSection } from "../../features/CategoryPage/HeaderSection";
-import { EditorSection } from "../../features/EditorSection";
+import { HeaderSection } from "@/features/CategoryPage/HeaderSection";
 import { EntityNotFound } from "@/components/Messages/EntityNotFound";
-import { type TopicInput } from "../../features/CategoryPage/types";
+import { type TopicInput } from "@/features/CategoryPage/types";
 import React, { useState } from "react";
+
+const EditorSection = dynamic(() =>
+  import("@/features/EditorSection").then((mod) => mod.EditorSection)
+);
 
 export default function CategoryPage() {
   // --- get category slug from url --- //

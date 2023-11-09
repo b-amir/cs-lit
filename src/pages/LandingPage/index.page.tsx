@@ -1,10 +1,26 @@
 import Head from "next/head";
-import { HeroSection } from "@/features/LandingPage/HeroSection";
-import { ShareSection } from "@/features/LandingPage/ShareSection";
+import dynamic from "next/dynamic";
 import { HeaderSection } from "@/features/LandingPage/HeaderSection";
-import { FooterSection } from "@/features/LandingPage/FooterSection";
-import { ExampleSection } from "@/features/LandingPage/ExampleSection";
-import { CategoriesSection } from "@/features/LandingPage/CategoriesSection";
+import { HeroSection } from "@/features/LandingPage/HeroSection";
+
+const CategoriesSection = dynamic(() =>
+  import("@/features/LandingPage/CategoriesSection").then(
+    (mod) => mod.CategoriesSection
+  )
+);
+const ExampleSection = dynamic(() =>
+  import("@/features/LandingPage/ExampleSection").then(
+    (mod) => mod.ExampleSection
+  )
+);
+const ShareSection = dynamic(() =>
+  import("@/features/LandingPage/ShareSection").then((mod) => mod.ShareSection)
+);
+const FooterSection = dynamic(() =>
+  import("@/features/LandingPage/FooterSection").then(
+    (mod) => mod.FooterSection
+  )
+);
 
 export default function LandingPage() {
   return (

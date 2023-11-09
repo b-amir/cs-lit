@@ -76,6 +76,8 @@ export function Search() {
           {/* in homepage a button will trigger the real input */}
           {homepage ? (
             <button
+              aria-label="submit-search"
+              name="submit-search"
               className="flex h-10 w-72 cursor-pointer select-none items-center justify-start rounded-2xl border border-[#5c2c1d2a] bg-[#f9f9f9a8] px-5 py-6 pl-10 text-sm text-gray-400 shadow-md shadow-[#6c6c6c0b] outline-none backdrop-blur-lg backdrop-filter transition-all duration-300 hover:border-[#9e9e9ec0] focus:bg-white focus:shadow-sm focus:outline-none sm:w-96 lg:w-96 lg:focus:w-96"
               onClick={() => {
                 setShowResultsPanel(true);
@@ -110,6 +112,8 @@ export function Search() {
               />
               <button
                 type="submit"
+                aria-label="submit-search"
+                name="submit-search"
                 className={`absolute right-0 top-0 mr-4 mt-3`}
               >
                 {loading ? (

@@ -41,7 +41,7 @@ export function Breadcrumbs() {
 
   return (
     <div id="breadcrumbs" className="my-auto hidden text-sm sm:inline-flex">
-      <Link href="/">
+      <Link href="/" aria-label="Home">
         <HomeIcon className="mt-[0px] cursor-pointer !text-lg text-dark-2 transition-all hover:text-black" />
       </Link>
 

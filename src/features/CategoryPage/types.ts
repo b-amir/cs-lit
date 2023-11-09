@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { type Session } from "next-auth";
 import { type GetResult } from "@prisma/client/runtime/library";
 import { type GeneralInputType, type ExtraInput } from "@/hooks/CRUD/types";

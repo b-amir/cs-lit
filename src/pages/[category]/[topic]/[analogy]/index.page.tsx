@@ -1,16 +1,38 @@
 import Head from "next/head";
+import dynamic from "next/dynamic";
 import { api } from "@/utils/api";
-import { SharingSection } from "../../../../features/AnalogyPage/SharingSection";
 import { useRouter } from "next/router";
 import { PageLayout } from "@/components/PageLayout";
-import { MainSection } from "../../../../features/AnalogyPage/MainSection";
-import { InfoSection } from "../../../../features/AnalogyPage/InfoSection";
-import { CommentSection } from "../../../../features/AnalogyPage/CommentSection";
+import { MainSection } from "@/features/AnalogyPage/MainSection";
 import { EntityNotFound } from "@/components/Messages/EntityNotFound";
-import { AboutWebsiteSection } from "../../../../features/AnalogyPage/AboutWebsiteSection";
-import { useEffect, useState } from "react";
-import { EditorSection } from "@/features/EditorSection";
 import { useAppDispatch } from "@/redux/hooks";
+import { useEffect, useState } from "react";
+
+const CommentSection = dynamic(() =>
+  import("@/features/AnalogyPage/CommentSection").then(
+    (mod) => mod.CommentSection
+  )
+);
+
+const AboutWebsiteSection = dynamic(() =>
+  import("@/features/AnalogyPage/AboutWebsiteSection").then(
+    (mod) => mod.AboutWebsiteSection
+  )
+);
+
+const SharingSection = dynamic(() =>
+  import("@/features/AnalogyPage/SharingSection").then(
+    (mod) => mod.SharingSection
+  )
+);
+
+const EditorSection = dynamic(() =>
+  import("@/features/EditorSection").then((mod) => mod.EditorSection)
+);
+
+const InfoSection = dynamic(() =>
+  import("@/features/AnalogyPage/InfoSection").then((mod) => mod.InfoSection)
+);
 
 export default function SingleAnalogyPage() {
   const router = useRouter();

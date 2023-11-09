@@ -1,7 +1,11 @@
-import { SidebarCategoriesSection } from "./SidebarCategoriesSection";
-import { AddCategorySection } from "./AddCategorySection";
-import { LogoSection } from "./LogoSection";
+import dynamic from "next/dynamic";
 import { IoClose } from "react-icons/io5";
+import { LogoSection } from "./LogoSection";
+import { SidebarCategoriesSection } from "./SidebarCategoriesSection";
+
+const AddCategorySection = dynamic(() =>
+  import("./AddCategorySection").then((mod) => mod.AddCategorySection)
+);
 
 interface ISidebarLeftProps {
   visible: boolean;
