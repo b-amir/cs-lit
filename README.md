@@ -1,28 +1,27 @@
-# Create T3 App
+# CSLIT - Computer Science Like I'm Ten
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+CSLIT is a free and open-source community where individuals can create accounts, suggest categories, and contribute analogies for various computer science topics. The goal is to simplify complex concepts through easy-to-understand analogies and metaphors.
 
-## What's next? How do I make an app with this?
+## Installation
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+CSLIT is an online community. To use it, simply visit [cslit.cc](https://cslit.cc) in your web browser.
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+## Usage
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+1. **Create an Account:** Users can create accounts to start contributing analogies.
+2. **Suggest Categories:** Feel free to suggest new categories to expand the range of topics.
+3. **Create Topics:** Initiate discussions by creating topics within relevant categories.
+4. **Write Analogies:** Contribute by providing analogies to make complex computer science subjects more accessible.
 
-## Learn More
+## Contributing
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+CSLIT is an open-source project, and contributions are welcome! Feel free to fork the repository, make improvements, and submit pull requests to help make CSLIT a better place for learners.
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+## License
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+This project is licensed under the [MIT License](LICENSE) - a permissive open-source license.
 
-## How do I deploy this?
+## Demo
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+Explore CSLIT in action at [cslit.cc](https://cslit.cc).
+
