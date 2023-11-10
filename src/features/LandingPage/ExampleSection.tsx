@@ -1,6 +1,6 @@
+import dynamic from "next/dynamic";
 import { api } from "@/utils/api";
-import { archivo } from "../../styles/customFonts";
-import { Analogy } from "@/components/Analogy";
+import { archivo } from "@/styles/customFonts";
 
 export function ExampleSection() {
   const { data: analogyData } = api.analogy.getById.useQuery(
@@ -12,6 +12,10 @@ export function ExampleSection() {
       refetchOnMount: false,
       refetchOnReconnect: false,
     }
+  );
+
+  const Analogy = dynamic(() =>
+    import("@/components/Analogy").then((mod) => mod.Analogy)
   );
   return (
     <div

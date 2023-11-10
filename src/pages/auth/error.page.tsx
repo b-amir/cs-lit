@@ -105,10 +105,10 @@ const ErrorPage = () => {
         <div className=" flex w-full flex-col items-center justify-center rounded-t-3xl border-b border-gray-300 bg-[#4545450f] py-10  backdrop-blur-md">
           <Link href="/">
             <Image
-            priority={true}
+              priority={true}
               src={"/assets/logo.svg"}
               width={180}
-              height={0}
+              height={91.1}
               alt={"CS LIT: like I'm 10"}
             />
           </Link>

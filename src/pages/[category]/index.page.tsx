@@ -11,10 +11,6 @@ import { EntityNotFound } from "@/components/Messages/EntityNotFound";
 import { type TopicInput } from "@/features/CategoryPage/types";
 import React, { useState } from "react";
 
-const EditorSection = dynamic(() =>
-  import("@/features/EditorSection").then((mod) => mod.EditorSection)
-);
-
 export default function CategoryPage() {
   // --- get category slug from url --- //
   const {
@@ -110,6 +106,10 @@ export default function CategoryPage() {
     setInput: setTopicInput,
     type: "Topics",
   };
+
+  const EditorSection = dynamic(() =>
+    import("@/features/EditorSection").then((mod) => mod.EditorSection)
+  );
 
   return (
     <>

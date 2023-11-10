@@ -8,32 +8,6 @@ import { EntityNotFound } from "@/components/Messages/EntityNotFound";
 import { useAppDispatch } from "@/redux/hooks";
 import { useEffect, useState } from "react";
 
-const CommentSection = dynamic(() =>
-  import("@/features/AnalogyPage/CommentSection").then(
-    (mod) => mod.CommentSection
-  )
-);
-
-const AboutWebsiteSection = dynamic(() =>
-  import("@/features/AnalogyPage/AboutWebsiteSection").then(
-    (mod) => mod.AboutWebsiteSection
-  )
-);
-
-const SharingSection = dynamic(() =>
-  import("@/features/AnalogyPage/SharingSection").then(
-    (mod) => mod.SharingSection
-  )
-);
-
-const EditorSection = dynamic(() =>
-  import("@/features/EditorSection").then((mod) => mod.EditorSection)
-);
-
-const InfoSection = dynamic(() =>
-  import("@/features/AnalogyPage/InfoSection").then((mod) => mod.InfoSection)
-);
-
 export default function SingleAnalogyPage() {
   const router = useRouter();
   const { analogy: UrlAnalogyId } = router.query;
@@ -54,6 +28,32 @@ export default function SingleAnalogyPage() {
   useEffect(() => {
     setAnalogyInput(singleAnalogyData);
   }, [dispatch, singleAnalogyData]);
+
+  const CommentSection = dynamic(() =>
+    import("@/features/AnalogyPage/CommentSection").then(
+      (mod) => mod.CommentSection
+    )
+  );
+
+  const AboutWebsiteSection = dynamic(() =>
+    import("@/features/AnalogyPage/AboutWebsiteSection").then(
+      (mod) => mod.AboutWebsiteSection
+    )
+  );
+
+  const SharingSection = dynamic(() =>
+    import("@/features/AnalogyPage/SharingSection").then(
+      (mod) => mod.SharingSection
+    )
+  );
+
+  const EditorSection = dynamic(() =>
+    import("@/features/EditorSection").then((mod) => mod.EditorSection)
+  );
+
+  const InfoSection = dynamic(() =>
+    import("@/features/AnalogyPage/InfoSection").then((mod) => mod.InfoSection)
+  );
 
   return (
     <>

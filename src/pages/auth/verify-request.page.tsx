@@ -40,7 +40,7 @@ const VerifyRequestPage = () => {
               priority={true}
               src={"/assets/logo.svg"}
               width={180}
-              height={0}
+              height={91.1}
               alt={"CS LIT: like I'm 10"}
             />
           </Link>

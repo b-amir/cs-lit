@@ -4,16 +4,16 @@
  */
 await import("./src/env.mjs");
 
-import withBundleAnalyzerBase from '@next/bundle-analyzer';
-const withBundleAnalyzer = withBundleAnalyzerBase({
-  enabled: process.env.ANALYZE === 'true',
-})
+// import withBundleAnalyzerBase from '@next/bundle-analyzer';
+// const withBundleAnalyzer = withBundleAnalyzerBase({
+//   enabled: process.env.ANALYZE === 'true',
+// })
 
 /** @type {import("next").NextConfig} */
 const config = {
   output: 'standalone',
   reactStrictMode: true,
-  ...withBundleAnalyzer({}),
+  // ...withBundleAnalyzer({}),
 
   /**
    * If you have `experimental: { appDir: true }` set, then you must comment the below `i18n` config

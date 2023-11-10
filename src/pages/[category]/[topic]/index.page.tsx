@@ -9,10 +9,6 @@ import { MainSection } from "@/features/TopicPage/MainSection";
 import { HeaderSection } from "@/features/TopicPage/HeaderSection";
 import { EntityNotFound } from "@/components/Messages/EntityNotFound";
 
-const EditorSection = dynamic(() =>
-  import("@/features/EditorSection").then((mod) => mod.EditorSection)
-);
-
 export default function TopicPage({}) {
   const router = useRouter();
   const { topic: UrlTopic } = router.query;
@@ -91,6 +87,10 @@ export default function TopicPage({}) {
     setInput: setAnalogyInput,
     type: "Analogies",
   };
+
+  const EditorSection = dynamic(() =>
+    import("@/features/EditorSection").then((mod) => mod.EditorSection)
+  );
 
   return (
     <>

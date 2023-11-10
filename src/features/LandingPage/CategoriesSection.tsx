@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { api } from "@/utils/api";
-import { archivo } from "../../styles/customFonts";
+import { archivo } from "@/styles/customFonts";
 import { getCategoryIcon } from "@/utils/getCategoryIcon";
 import { HomeCategorySkeleton } from "@/components/Loading/Skeleton";
 
