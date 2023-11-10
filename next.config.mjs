@@ -11,7 +11,7 @@ await import("./src/env.mjs");
 
 /** @type {import("next").NextConfig} */
 const config = {
-  output: 'standalone',
+  // output: 'standalone', // enabled for Docker builds
   reactStrictMode: true,
   // ...withBundleAnalyzer({}),
 
@@ -22,12 +22,6 @@ const config = {
    * @see https://github.com/vercel/next.js/issues/41980
    */
   images: {
-    // domains: [
-    //   "avatars.githubusercontent.com",
-    //   "cdn.discordapp.com",
-    //   "lh3.googleusercontent.com",
-    //   "*.googleusercontent.com",
-    // ],
     remotePatterns: [
       {
         protocol: 'https',
@@ -57,12 +51,9 @@ const config = {
     ],
   },
   typescript: {
-    // ignore some type errors for now.
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: true, // ignore some type errors for now.
   },
   pageExtensions: ['page.tsx', 'page.ts', 'page.jsx', 'page.js'],
-
-
   i18n: {
     locales: ["en"],
     defaultLocale: "en",

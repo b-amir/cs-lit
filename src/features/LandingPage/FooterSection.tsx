@@ -25,7 +25,7 @@ export function FooterSection() {
       {/* links: */}
 
       <div className="flex flex-col text-xs text-[#dadadac1] sm:ml-6">
-        <div className="inline-flex ">
+        <div className="my-1 inline-flex">
           <FaLinkedin className="mr-1.5 mt-0.5" />
           <span className="mr-1">Hey, I&apos;m</span>
           <a
@@ -40,13 +40,13 @@ export function FooterSection() {
         <a
           href="https://github.com/b-amir?tab=repositories"
           target="_blank"
-          className="inline-flex py-1 hover:underline"
+          className="my-1 inline-flex py-1 hover:underline"
         >
           <AiOutlineLink className="mr-1.5 mt-0.5" />
           And I make quirky things on the internet.
         </a>
 
-        <div className="inline-flex ">
+        <div className="my-1 inline-flex">
           <FaGithub className="mr-1.5 mt-0.5" />
           <span className="mr-1"> You can</span>
           <a

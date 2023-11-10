@@ -1,10 +1,9 @@
 import React from "react";
-// import ReactMarkdown from "react-markdown";
+import dynamic from "next/dynamic";
 import { coldarkDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { MultilineSkeleton } from "../Loading/Skeleton";
 import { type IContentSectionProps } from "./types";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import dynamic from "next/dynamic";
 
 export function ContentSection({
   analogyData,
