@@ -1,7 +1,7 @@
 import { useEffect, type PropsWithChildren, useRef, useState } from "react";
 import Link from "next/link";
 import { api } from "@/utils/api";
-import { archivo } from "../../../styles/customFonts";
+import { archivo } from "@/styles/customFonts";
 import { routeHandler } from "@/utils/routeHandler";
 import { getScreenName } from "@/utils/getScreenName";
 import { useWindowSize } from "@/hooks/useWindowSize";

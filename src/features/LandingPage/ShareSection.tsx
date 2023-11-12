@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { archivo } from "../../styles/customFonts";
+import { archivo } from "@/styles/customFonts";
 import { useSession } from "next-auth/react";
 import { RiImageLine } from "react-icons/ri";
 import { type Session } from "next-auth";

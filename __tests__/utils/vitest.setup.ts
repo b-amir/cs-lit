@@ -1,4 +1,7 @@
 import '@testing-library/jest-dom'
+import '@testing-library/jest-dom/extend-expect'
+
+
 import { prisma } from '@/server/db'
 import { vi } from 'vitest'
 import { Archivo } from 'next/font/google';

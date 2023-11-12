@@ -2,7 +2,7 @@ import { delay } from "@/utils/delay";
 import userEvent from "@testing-library/user-event";
 import { render, screen } from "@testing-library/react";
 import { TRPClientProvider } from "../utils/trpcWrapper";
-import { VoteCastingSection } from "../../src/components/Analogy/HeaderSection";
+import { VoteCastingSection } from "@/components/Analogy/HeaderSection";
 
 describe("VoteCastingSection", () => {
   it("should be able to see voting buttons", async () => {

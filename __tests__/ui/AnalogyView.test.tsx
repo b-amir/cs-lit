@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { AnalogyView } from "../../src/components/Analogy/AnalogyView";
+import { AnalogyView } from "@/components/Analogy/AnalogyView";
 import { TRPClientProvider } from "../utils/trpcWrapper";
 
 it("should render loading state when analogyData is undefined", async () => {

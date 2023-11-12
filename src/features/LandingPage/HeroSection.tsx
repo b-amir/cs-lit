@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Search } from "@/features/Search";
-import { archivo } from "../../styles/customFonts";
+import { archivo } from "@/styles/customFonts";
 import { FiArrowDown } from "react-icons/fi";
 import { useEffect, useMemo, useState } from "react";
 import { animated, useTransition } from "@react-spring/web";

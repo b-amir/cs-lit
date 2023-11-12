@@ -1,5 +1,5 @@
 import { screen, render } from "@testing-library/react";
-import { ShareSection } from "@/pages/LandingPage/ShareSection";
+import { ShareSection } from "@/features/LandingPage/ShareSection";
 import { TRPClientProvider } from "../utils/trpcWrapper";
 import { expect, it } from "vitest";
 import { ContentSection } from "@/components/Analogy/ContentSection";

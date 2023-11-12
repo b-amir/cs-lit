@@ -1,15 +1,15 @@
 import React, { useState, type ComponentType } from "react";
 import Head from "next/head";
 import { api } from "@/utils/api";
-import { PillsRow } from "../../features/AdminPage/components/Pills";
+import { PillsRow } from "@/features/AdminPage/components/Pills";
 import { PageLayout } from "@/components/PageLayout";
 import { useSession } from "next-auth/react";
 import { useDebounce } from "@/hooks/useDebounce";
-import { MainSection } from "../../features/AdminPage/MainSection";
+import { MainSection } from "@/features/AdminPage/MainSection";
 import { CenteredLoading } from "@/components/Loading/Spinner";
-import { PendingSection } from "../../features/AdminPage/PendingSection";
+import { PendingSection } from "@/features/AdminPage/PendingSection";
 import { AiFillLock as Lock } from "react-icons/ai";
-import { ActivityLogSection } from "../../features/AdminPage/ActivityLogSection";
+import { ActivityLogSection } from "@/features/AdminPage/ActivityLogSection";
 import {
   EditorModal,
   CategoryEditForm,
@@ -17,12 +17,12 @@ import {
   AnalogyEditForm,
   UserEditForm,
   CommentEditForm,
-} from "../../features/AdminPage/components/EditorModal";
+} from "@/features/AdminPage/components/EditorModal";
 import {
   type FetchNextPage,
   type GeneralData,
   type IEditorModalInput,
-} from "../../features/AdminPage/types";
+} from "@/features/AdminPage/types";
 
 export default function AdminPage({}) {
   const { data: sessionData, status: sessionStatus } = useSession();

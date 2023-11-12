@@ -1,6 +1,6 @@
 import React from "react";
 import { useSession } from "next-auth/react";
-import { NotSignedIn } from "../../components/Messages/NotSignedIn";
+import { NotSignedIn } from "@/components/Messages/NotSignedIn";
 import { useUpdateItem } from "@/hooks/CRUD/useUpdateItem";
 import { useCreateItem } from "@/hooks/CRUD/useCreateItem";
 import { useDeleteItem } from "@/hooks/CRUD/useDeleteItem";
