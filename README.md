@@ -27,20 +27,23 @@ If you're curious about the technical aspects of CSLIT, here are some details fo
 
 ### Tech Stack
 
-- **Frontend:** TypeScript, Next.js
-- **Styling:** Tailwind CSS
+- **Frontend & Backend:** TypeScript, Next.js
+- **Styling:** Tailwind CSS, react-spring (animations)
 - **State Management:** Redux (RTK)
-- **Backend:** Prisma ORM
 - **API Communication:** tRPC
+- **Boilerplate:** create-t3-app
 
 ### Data Storage
 
-- **Database:** postgresql (Prisma)
+- **Database:** postgresql (Prisma ORM)
 - **User Authentication:** next-auth (Authjs)
   
 ### Additional Libraries and Tools
 
 - **React Query:** CSLIT integrates React Query for efficient and optimized data fetching, providing a seamless user experience.
+- **Zod:** The project utilizes Zod for robust runtime type checking, enhancing data validation and ensuring the integrity of information across the application.
+- **Resend:** Resend is incorporated to streamline and manage email communications within CSLIT, ensuring a reliable system for account verification and notifications.
+
 
 ### Testing
 - **unit tests:** Vitest
