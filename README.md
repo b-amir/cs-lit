@@ -27,7 +27,7 @@ If you're curious about the technical aspects of CSLIT, here are some details fo
 
 ### Tech Stack
 
-- **Frontend & Backend:** TypeScript, Next.js
+- **Frontend & Backend:** TypeScript, React.js & Next.js
 - **Styling:** Tailwind CSS, react-spring (animations)
 - **State Management:** Redux (RTK)
 - **API Communication:** tRPC
