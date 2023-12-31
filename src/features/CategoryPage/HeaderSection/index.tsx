@@ -1,6 +1,7 @@
 import React from "react";
 import { archivo } from "@/styles/customFonts";
 import { CgFolderAdd } from "react-icons/cg";
+import { setTopicInput } from "@/features/EditorSection/inputSlice";
 import { useAppDispatch } from "@/redux/hooks";
 import { setPurpose, setShown } from "@/features/EditorSection/editorSlice";
 import { type ICategoryHeaderProps } from "../types";
@@ -11,7 +12,6 @@ export function HeaderSection({
   categoryData,
   setOrderBy,
   orderBy,
-  setInput,
   newInput,
 }: ICategoryHeaderProps) {
   const dispatch = useAppDispatch();
@@ -62,8 +62,7 @@ export function HeaderSection({
           onClick={() => {
             dispatch(setPurpose("Create"));
             dispatch(setShown(true));
-            // @ts-ignore
-            setInput(newInput);
+            dispatch(setTopicInput(newInput));
           }}
           className="mx-2 inline-flex h-8 flex-row items-center rounded-[12px] border border-[#d2d2d28e] bg-[#ffffffc1] px-3 py-1.5 text-sm transition-all hover:border-[#c8c8c8] hover:bg-white"
         >

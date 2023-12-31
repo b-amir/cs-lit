@@ -11,7 +11,6 @@ export function MainSection({
   fetchNextPage,
   hasNextPage,
   isFetchingNextPage,
-  setTopicInput,
   topicsData,
   topicsFetchingStatus,
 }: IMainSectionProps) {
@@ -32,7 +31,6 @@ export function MainSection({
           hasNextPage={hasNextPage as boolean}
           fetchNextPage={fetchNextPage}
           isFetchingNextPage={isFetchingNextPage}
-          setTopicInput={setTopicInput}
         />
       ) : null}
 

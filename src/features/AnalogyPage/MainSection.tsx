@@ -2,10 +2,7 @@ import { Analogy } from "@/components/Analogy";
 import { useEffect, useState } from "react";
 import { type IMainSectionProps } from "./types";
 
-export function MainSection({
-  singleAnalogyData,
-  setAnalogyInput,
-}: IMainSectionProps) {
+export function MainSection({ singleAnalogyData }: IMainSectionProps) {
   const [domainName, setDomainName] = useState("");
   useEffect(() => {
     // avoid the ReferenceError and get the domain name of the current URL in the browser environment
@@ -40,7 +37,6 @@ export function MainSection({
           analogy={{
             id: singleAnalogyData?.id as string,
           }}
-          setAnalogyInput={setAnalogyInput}
           // because in single analogy page the info row is rendered outside of analogy view for a cleaner look
           needsInfoRow={false}
         />

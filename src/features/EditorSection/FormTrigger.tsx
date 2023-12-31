@@ -4,13 +4,14 @@ import { IoClose as XIcon } from "react-icons/io5";
 import { type IFormTriggerProps } from "./types";
 import { CgFolderAdd as AddIcon } from "react-icons/cg";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { setAnalogyInput, setTopicInput } from "./inputSlice";
 import {
   setPurpose,
   setShown,
   setEntity,
 } from "@/features/EditorSection/editorSlice";
 
-export function FormTrigger({ setInput, newInput }: IFormTriggerProps) {
+export function FormTrigger({ newInput }: IFormTriggerProps) {
   const router = useRouter();
   const editor = useAppSelector((state) => state.editor);
   const dispatch = useAppDispatch();
@@ -48,8 +49,13 @@ export function FormTrigger({ setInput, newInput }: IFormTriggerProps) {
             e.stopPropagation();
             dispatch(setPurpose("Create"));
             dispatch(setShown(!editor.shown));
-            // @ts-ignore
-            setInput(newInput);
+            if (editor.entity === "topic") {
+              // @ts-ignore
+              dispatch(setTopicInput(newInput));
+            } else if (editor.entity === "analogy") {
+              // @ts-ignore
+              dispatch(setAnalogyInput(newInput));
+            }
           }}
         >
           <AddIcon className="mb-0.5 mr-2.5" />

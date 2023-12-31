@@ -7,12 +7,7 @@ import { animated, useSpring } from "@react-spring/web";
 import { type IEditorSectionProps } from "../CategoryPage/types";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
-export function EditorSection({
-  newInput,
-  setInput,
-  Input,
-  type,
-}: IEditorSectionProps) {
+export function EditorSection({ newInput, type }: IEditorSectionProps) {
   //
   const editor = useAppSelector((state) => state.editor);
 
@@ -57,8 +52,8 @@ export function EditorSection({
                     ${editor.shown ? "pt-[90px]" : "pb-5 pt-7"}
         `}
       >
-        <FormTrigger newInput={newInput} setInput={setInput} />
-        <EditorLayout input={Input} setInput={setInput} type={type} />
+        <FormTrigger newInput={newInput} />
+        <EditorLayout type={type} />
       </animated.div>
     </div>
   );

@@ -2,15 +2,21 @@ import { useRouter } from "next/router";
 import React, { useRef } from "react";
 import { animated, useSpring } from "@react-spring/web";
 import { type ITopicFormInputsProps } from "../../CategoryPage/types";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import {
+  setTopicFirstAnalogy,
+  setTopicHasReference,
+  setTopicReference,
+  setTopicTitle,
+  setTopicUrl,
+} from "../inputSlice";
 
-export function TopicFormInputs({
-  input,
-  setInput,
-  handleChange,
-  editor,
-}: ITopicFormInputsProps) {
+export function TopicFormInputs({ editor }: ITopicFormInputsProps) {
+  const dispatch = useAppDispatch();
+
   const router = useRouter();
   const UrlCategory = router.query.category as string;
+  const input = useAppSelector((state) => state.input.topicInput);
 
   // --- animation setup for reference ---> //
   const contentRef = useRef<HTMLDivElement>(null);
@@ -40,7 +46,7 @@ export function TopicFormInputs({
             placeholder="Ex: Closure"
             required
             defaultValue={input?.title ?? ""}
-            onChange={handleChange}
+            onChange={(e) => dispatch(setTopicTitle(e.target.value))}
           />
         </div>
         <p className="ml-2 mt-2.5 text-xs text-gray-500">
@@ -62,7 +68,7 @@ export function TopicFormInputs({
             placeholder="https://..."
             defaultValue={input?.url}
             required
-            onChange={handleChange}
+            onChange={(e) => dispatch(setTopicUrl(e.target.value))}
           />
         </div>
         <p className="ml-2 mt-2.5 text-xs text-gray-500">
@@ -91,12 +97,8 @@ export function TopicFormInputs({
                 placeholder="Add your analogy ..."
                 required
                 value={input?.firstAnalogy}
-                onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) =>
-                  setInput({
-                    ...input,
-                    firstAnalogy: event.target.value,
-                  })
-                }
+                onChange={(e) => dispatch(setTopicFirstAnalogy(e.target.value))}
+
                 // disabled={isSubmitting || editorLayoutState?.purpose === "Edit"}
               ></textarea>
             </div>
@@ -143,12 +145,8 @@ export function TopicFormInputs({
               name="hasReference"
               type="checkbox"
               className="h-4 w-4 rounded border-gray-300 text-dark-2 accent-[#6b6b6b] focus:ring-[#c1c1c1]"
-              onChange={(e) =>
-                setInput({
-                  ...input,
-                  hasReference: e.target.checked,
-                })
-              }
+              checked={input?.hasReference}
+              onChange={(e) => dispatch(setTopicHasReference(e.target.checked))}
             />
             <label
               htmlFor="hasReference"
@@ -175,7 +173,7 @@ export function TopicFormInputs({
                   placeholder="https://..."
                   defaultValue={input?.reference ?? ""}
                   required
-                  onChange={handleChange}
+                  onChange={(e) => dispatch(setTopicReference(e.target.value))}
                 />
               </div>
               <p className="ml-2 mt-2.5 text-xs text-gray-500">

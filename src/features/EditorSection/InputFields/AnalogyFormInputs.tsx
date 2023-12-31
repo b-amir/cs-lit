@@ -1,14 +1,19 @@
 import { useRef } from "react";
 import { animated, useSpring } from "@react-spring/web";
-import { type IAnalogyFormInputsProps } from "../../TopicPage/types";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import {
+  setAnalogyDescription,
+  setAnalogyHasReference,
+  setAnalogyReference,
+} from "../inputSlice";
 
-export function AnalogyFormInputs({
-  input,
-  setInput,
-  handleChange,
-}: IAnalogyFormInputsProps) {
+export function AnalogyFormInputs() {
+  const dispatch = useAppDispatch();
+
   // --- animation setup for reference ---> //
   const contentRef = useRef<HTMLDivElement>(null);
+  const input = useAppSelector((state) => state.input.analogyInput);
+
   const animationProps = useSpring({
     height: input?.hasReference ? 0 : 80,
     opacity: input?.hasReference ? 0 : 1,
@@ -45,12 +50,7 @@ export function AnalogyFormInputs({
             placeholder="Add your analogy ..."
             required
             value={input?.description}
-            onChange={(e) =>
-              setInput({
-                ...input,
-                description: e.target.value,
-              })
-            }
+            onChange={(e) => dispatch(setAnalogyDescription(e.target.value))}
           ></textarea>
         </div>
         <div className="flex items-center justify-between border-t px-3 py-2">
@@ -96,12 +96,8 @@ export function AnalogyFormInputs({
           name="hasReference"
           type="checkbox"
           className="h-4 w-4 rounded border-gray-300 text-dark-2 accent-[#6b6b6b] focus:ring-[#c1c1c1]"
-          onChange={(e) =>
-            setInput({
-              ...input,
-              hasReference: e.target.checked,
-            })
-          }
+          checked={input?.hasReference}
+          onChange={(e) => dispatch(setAnalogyHasReference(e.target.checked))}
         />
         <label
           htmlFor="hasReference"
@@ -128,7 +124,7 @@ export function AnalogyFormInputs({
               placeholder="https://..."
               value={input?.reference}
               required
-              onChange={handleChange}
+              onChange={(e) => dispatch(setAnalogyReference(e.target.value))}
             />
           </div>
           <p className="ml-2 mt-2.5 text-xs text-gray-500">

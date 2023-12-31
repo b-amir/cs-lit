@@ -1,7 +1,6 @@
 import Head from "next/head";
 import dynamic from "next/dynamic";
 import { api } from "@/utils/api";
-import { useState } from "react";
 import { useRouter } from "next/router";
 import { PageLayout } from "@/components/PageLayout";
 import { useSession } from "next-auth/react";
@@ -24,11 +23,6 @@ export default function TopicPage({}) {
         refetchOnReconnect: false,
       }
     );
-
-  const [analogyInput, setAnalogyInput] = useState({
-    description: "",
-    topicId: topicData?.id,
-  });
 
   const { data: sessionData } = useSession();
 
@@ -76,15 +70,12 @@ export default function TopicPage({}) {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-    setAnalogyInput,
     topicAnalogies,
     topicFetchingStatus,
   };
 
   const editorProps = {
     newInput,
-    Input: analogyInput,
-    setInput: setAnalogyInput,
     type: "Analogies",
   };
 

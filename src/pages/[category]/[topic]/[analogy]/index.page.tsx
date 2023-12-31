@@ -5,11 +5,16 @@ import { useRouter } from "next/router";
 import { PageLayout } from "@/components/PageLayout";
 import { MainSection } from "@/features/AnalogyPage/MainSection";
 import { EntityNotFound } from "@/components/Messages/EntityNotFound";
-import { useAppDispatch } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useEffect, useState } from "react";
+import { setAnalogyInput } from "@/features/EditorSection/inputSlice";
 
 export default function SingleAnalogyPage() {
   const router = useRouter();
+  const input = useAppSelector((state) => state.input.analogyInput);
+
+  console.log("analogy input:", input);
+
   const { analogy: UrlAnalogyId } = router.query;
 
   const { data: singleAnalogyData, status: singleAnalogyFetchingStatus } =
@@ -22,11 +27,11 @@ export default function SingleAnalogyPage() {
         refetchOnReconnect: false,
       }
     );
-
-  const [analogyInput, setAnalogyInput] = useState(singleAnalogyData);
   const dispatch = useAppDispatch();
+
   useEffect(() => {
-    setAnalogyInput(singleAnalogyData);
+    // @ts-ignore
+    dispatch(setAnalogyInput(singleAnalogyData));
   }, [dispatch, singleAnalogyData]);
 
   const CommentSection = dynamic(() =>
@@ -77,19 +82,16 @@ export default function SingleAnalogyPage() {
           <>
             <div className="mx-auto flex max-w-[900px] flex-col justify-between pt-28 sm:px-10 sm:pt-40 lg:px-14">
               <SharingSection />
-              <MainSection
-                singleAnalogyData={singleAnalogyData}
-                setAnalogyInput={setAnalogyInput}
-              />
+              <MainSection singleAnalogyData={singleAnalogyData} />
               <InfoSection singleAnalogyData={singleAnalogyData} />
               <CommentSection analogyId={singleAnalogyData?.id} />
             </div>
             <AboutWebsiteSection />
+
             <EditorSection
-              Input={analogyInput}
-              setInput={setAnalogyInput}
               type="Analogies"
-              newInput={analogyInput}
+              // @ts-ignore
+              newInput={input}
             />
           </>
         )}

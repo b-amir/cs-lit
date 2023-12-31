@@ -124,47 +124,6 @@ export type IAnalogyEditorFormProps = {
 };
 
 export type IAnalogyFormInputsProps = {
-  input: {
-    user: {
-      id: string;
-      username: string | null;
-      name: string | null;
-      email: string | null;
-      emailVerified: Date | null;
-      image: string | null;
-      status: USER_STATUS;
-      role: USER_ROLE;
-    } | null;
-    topic: {
-      id: string;
-      title: string;
-      slug: string;
-      status: TOPIC_STATUS;
-      url: string;
-      createdAt: Date;
-      updatedAt: Date;
-      starterId: string;
-      categoryId: string;
-    } | null;
-    category: {
-      id: string;
-      name: string;
-      slug: string;
-      status: CATEGORY_STATUS;
-      createdAt: Date;
-      updatedAt: Date;
-    } | null;
-    id: string;
-    title: string;
-    description: string;
-    reference: string | null;
-    status: ANALOGY_STATUS;
-    createdAt: Date;
-    updatedAt: Date;
-    authorId: string;
-    topicId: string;
-  } | undefined
-  setInput: Dispatch<SetStateAction<GeneralInputType>>;
-  handleChange: (e: React.FormEvent<HTMLInputElement>) => void;
+
 };
 

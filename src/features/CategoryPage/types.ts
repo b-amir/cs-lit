@@ -101,52 +101,10 @@ export interface ICategoryHeaderProps {
       id: string;
     };
   };
-  setInput: React.Dispatch<React.SetStateAction<TopicInput>>;
 }
 
 export interface IEditorSectionProps {
   newInput: {
-    user: {
-      id: string;
-      username: string | null;
-      name: string | null;
-      email: string | null;
-      emailVerified: Date | null;
-      image: string | null;
-      status: USER_STATUS;
-      role: USER_ROLE;
-    } | null;
-    topic: {
-      id: string;
-      title: string;
-      slug: string;
-      status: TOPIC_STATUS;
-      url: string;
-      createdAt: Date;
-      updatedAt: Date;
-      starterId: string;
-      categoryId: string;
-    } | null;
-    category: {
-      id: string;
-      name: string;
-      slug: string;
-      status: CATEGORY_STATUS;
-      createdAt: Date;
-      updatedAt: Date;
-    } | null;
-    id: string;
-    title: string;
-    description: string;
-    reference: string | null;
-    status: ANALOGY_STATUS;
-    createdAt: Date;
-    updatedAt: Date;
-    authorId: string;
-    topicId: string;
-  } | undefined
-  setInput: Dispatch<any>;
-  Input: {
     user: {
       id: string;
       username: string | null;
@@ -194,7 +152,6 @@ export interface IMainSectionProps {
   fetchNextPage: (options?: FetchNextPageOptions | undefined) => Promise<InfiniteQueryObserverResult<unknown, unknown>>;
   hasNextPage: boolean | undefined;
   isFetchingNextPage: boolean;
-  setTopicInput: React.Dispatch<React.SetStateAction<TopicInput>>;
   topicsData: InfiniteData<{
     items: {
       category: {
@@ -254,7 +211,6 @@ export interface ITopicsListProps {
   hasNextPage: boolean | undefined;
   fetchNextPage: (options?: FetchNextPageOptions | undefined) => Promise<InfiniteQueryObserverResult<unknown, unknown>>;
   isFetchingNextPage: boolean;
-  setTopicInput: React.Dispatch<React.SetStateAction<TopicInput>>;
 }
 
 export interface IInput {
@@ -268,48 +224,7 @@ export interface ITopicEditorFormProps {
 }
 
 export interface ITopicFormInputsProps {
-  input: {
-    user: {
-      id: string;
-      username: string | null;
-      name: string | null;
-      email: string | null;
-      emailVerified: Date | null;
-      image: string | null;
-      status: USER_STATUS;
-      role: USER_ROLE;
-    } | null;
-    topic: {
-      id: string;
-      title: string;
-      slug: string;
-      status: TOPIC_STATUS;
-      url: string;
-      createdAt: Date;
-      updatedAt: Date;
-      starterId: string;
-      categoryId: string;
-    } | null;
-    category: {
-      id: string;
-      name: string;
-      slug: string;
-      status: CATEGORY_STATUS;
-      createdAt: Date;
-      updatedAt: Date;
-    } | null;
-    id: string;
-    title: string;
-    description: string;
-    reference: string | null;
-    status: ANALOGY_STATUS;
-    createdAt: Date;
-    updatedAt: Date;
-    authorId: string;
-    topicId: string;
-  } | undefined
-  setInput: Dispatch<SetStateAction<GeneralInputType>>;
-  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+
   editor: EditorState
 }
 

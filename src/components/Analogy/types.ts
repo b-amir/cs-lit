@@ -25,12 +25,6 @@ export interface IAnalogyProps {
   needsInfoRow?: boolean;
   needsLink?: boolean;
   needsLocationInfo?: boolean;
-  setAnalogyInput?: Dispatch<
-    SetStateAction<{
-      description: string;
-      topicId: string | undefined;
-    }>
-  >;
   analogyData?: {
     user: {
       id: string;
@@ -162,12 +156,7 @@ export interface IInfoRowSectionProps {
     authorId: string;
     topicId: string;
   } | undefined;
-  setAnalogyInput?: Dispatch<
-    SetStateAction<{
-      description: string;
-      topicId: string | undefined;
-    }>
-  >;
+
 }
 export interface IPostTimeProps {
   analogyData: ExtendedAnalogy | undefined;
@@ -207,10 +196,5 @@ export interface IPostCommentCountProps {
 export interface IPostEditButtonProps {
   analogyData: ExtendedAnalogy | undefined;
   sessionData: Session | null;
-  setAnalogyInput?: Dispatch<
-    SetStateAction<{
-      description: string;
-      topicId: string | undefined;
-    }>
-  >;
+
 }

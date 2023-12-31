@@ -19,16 +19,6 @@ export default function CategoryPage() {
 
   const { data: sessionData } = useSession();
 
-  const [topicInput, setTopicInput] = useState<TopicInput>({
-    id: "",
-    title: "",
-    url: "",
-    category: "",
-    firstAnalogy: "",
-    slug: "",
-    status: TOPIC_STATUS.PENDING,
-  });
-
   // --- topics sorting order state. controlled in header section --- //
   const [orderBy, setOrderBy] = useState<"desc" | "asc" | null>("desc");
 
@@ -88,7 +78,6 @@ export default function CategoryPage() {
     categoryData,
     setOrderBy,
     orderBy,
-    setInput: setTopicInput,
     newInput,
   };
   const mainProps = {
@@ -98,12 +87,9 @@ export default function CategoryPage() {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-    setTopicInput,
   };
   const editorProps = {
     newInput,
-    Input: topicInput,
-    setInput: setTopicInput,
     type: "Topics",
   };
 

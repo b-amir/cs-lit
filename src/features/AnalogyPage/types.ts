@@ -133,7 +133,6 @@ export interface IMainSectionProps {
     authorId: string;
     topicId: string;
   } | undefined;
-  setAnalogyInput: Dispatch<any>
 }
 export interface ICommentSectionProps {
   analogyId: string | undefined;

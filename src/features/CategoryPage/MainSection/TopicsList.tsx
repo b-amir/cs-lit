@@ -15,13 +15,13 @@ import {
   type ITopicsListProps,
 } from "../types";
 import { useAppDispatch } from "@/redux/hooks";
+import { setTopicInput } from "@/features/EditorSection/inputSlice";
 
 export function TopicsList({
   topicsData,
   hasNextPage,
   fetchNextPage,
   isFetchingNextPage,
-  setTopicInput,
 }: ITopicsListProps) {
   const { data: sessionData } = useSession();
   const dispatch = useAppDispatch();
@@ -30,17 +30,16 @@ export function TopicsList({
     e.preventDefault();
     dispatch(setPurpose("Edit"));
     dispatch(setShown(true));
-    setTopicInput((prev) => {
-      return {
-        ...prev,
+    dispatch(
+      setTopicInput({
         id: topic.id,
         title: topic.title,
-        categoryId: topic.categoryId,
-        status: topic.status,
         url: topic.url,
+        categoryId: topic.categoryId,
         slug: topic.slug,
-      };
-    });
+        status: topic.status,
+      })
+    );
   };
 
   return (
@@ -114,7 +113,7 @@ function NormalRow({ handleEdit, sessionData, topicsData }: INormalRowProps) {
               ["ADMIN", "EDITOR"].includes(sessionData?.user.role) && (
                 <span className="flex w-1/12 items-center justify-center  px-1 py-4 text-center">
                   <a
-                  data-testid="topiclist-edit-button"
+                    data-testid="topiclist-edit-button"
                     href="#"
                     className="font-medium text-gray-400 hover:underline"
                     onClick={(e) => handleEdit(e, topic)}

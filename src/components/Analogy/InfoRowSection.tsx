@@ -2,12 +2,13 @@ import Link from "next/link";
 import React from "react";
 import { api } from "@/utils/api";
 import { useSession } from "next-auth/react";
-// import { routeHandler } from "@/utils/routeHandler";
 import { RelativeTime } from "@/utils/relativeTime";
 import { AiOutlineLink } from "react-icons/ai";
 import { getStatusIcon } from "@/utils/getStatusIcon";
 import { HiOutlineChatAlt } from "react-icons/hi";
 import { type ExtendedAnalogy } from "../PageLayout/SidebarRight/types";
+import { setPurpose, setShown } from "@/features/EditorSection/editorSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { HiOutlineDotsVertical as DotsMenu } from "react-icons/hi";
 import {
   type IPostTimeProps,
@@ -15,13 +16,15 @@ import {
   type IPostCommentCountProps,
   type IPostEditButtonProps,
 } from "./types";
-import { setPurpose, setShown } from "@/features/EditorSection/editorSlice";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import {
+  setAnalogyDescription,
+  setAnalogyInput,
+  setAnalogyTopicId,
+} from "@/features/EditorSection/inputSlice";
 
 export function InfoRowSection({
   needsLocationInfo,
   analogyData,
-  setAnalogyInput,
 }: IInfoRowSectionProps) {
   const { data: sessionData } = useSession();
 
@@ -62,11 +65,7 @@ export function InfoRowSection({
         <PostStatus analogyData={analogyData} />
       </span>
       <span className="shrink grow-0">
-        <PostEditButton
-          analogyData={analogyData}
-          sessionData={sessionData}
-          setAnalogyInput={setAnalogyInput}
-        />
+        <PostEditButton analogyData={analogyData} sessionData={sessionData} />
       </span>
     </div>
   );
@@ -148,11 +147,7 @@ function PostStatus({
 }) {
   return <span>{getStatusIcon(analogyData?.status ?? "")}</span>;
 }
-function PostEditButton({
-  analogyData,
-  sessionData,
-  setAnalogyInput,
-}: IPostEditButtonProps) {
+function PostEditButton({ analogyData, sessionData }: IPostEditButtonProps) {
   //
   const editor = useAppSelector((state) => state.editor);
   const dispatch = useAppDispatch();
@@ -160,22 +155,8 @@ function PostEditButton({
     e.preventDefault();
     dispatch(setPurpose("Edit"));
     dispatch(setShown(!editor.shown));
-
-    if (setAnalogyInput) {
-      setAnalogyInput((prev) => {
-        return {
-          ...prev,
-          // id: analogyData?.id || prev.id,
-          // title: analogyData?.title || prev.title,
-          description: analogyData?.description || prev.description,
-          // reference: analogyData?.reference || prev.reference,
-          // status: analogyData?.status || prev.status,
-          // pinned: analogyData?.pinned || prev.pinned,
-          topicId: analogyData?.topicId || prev.topicId,
-          // authorId: analogyData?.authorId || prev.authorId,
-        };
-      });
-    }
+    // @ts-ignore
+    dispatch(setAnalogyInput(analogyData));
   };
 
   return (
@@ -183,7 +164,6 @@ function PostEditButton({
       {sessionData &&
         ["ADMIN", "EDITOR"].includes(sessionData?.user.role ?? "") && (
           <button
-            // href="#"
             className="font-medium text-gray-400 hover:underline"
             onClick={handleEdit}
           >

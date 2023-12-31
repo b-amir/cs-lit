@@ -4,35 +4,32 @@ import { NotSignedIn } from "@/components/Messages/NotSignedIn";
 import { useUpdateItem } from "@/hooks/CRUD/useUpdateItem";
 import { useCreateItem } from "@/hooks/CRUD/useCreateItem";
 import { useDeleteItem } from "@/hooks/CRUD/useDeleteItem";
-import { useAppSelector } from "@/redux//hooks";
+import { useAppDispatch, useAppSelector } from "@/redux//hooks";
 import { TopicFormInputs } from "./InputFields/TopicFormInputs";
 import { AnalogyFormInputs } from "./InputFields/AnalogyFormInputs";
 import { RiDeleteBin6Line as Delete } from "react-icons/ri";
-import { type IButtonsRowProps, type IEditorLayoutProps } from "./types";
-import { test } from "vitest";
+import { setAnalogyInput, setTopicInput } from "./inputSlice";
+import {
+  type IButtonsRowProps,
+  type IEditorLayoutProps,
+  AnalogyInput,
+} from "./types";
 
-export function EditorLayout({ input, setInput, type }: IEditorLayoutProps) {
+export function EditorLayout({ type }: IEditorLayoutProps) {
+  const dispatch = useAppDispatch();
   const editor = useAppSelector((state) => state.editor);
 
   const { data: sessionData } = useSession();
 
-  const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
-    // Destructure the 'name' and 'value' properties from the event target (input element)
-    const { name, value } = e.target as HTMLInputElement;
-    // Update the state using the 'setInput' function and a callback
-    setInput((prev) => {
-      // Return a new object that merges the previous state ('prev') and the updated property
-      return {
-        ...prev, // Copy all properties from the previous state
-        [name]: value, // Update the property specified by 'name' with the new 'value'
-      };
-    });
-  };
-
   return (
     <form
       className="mx-auto flex w-full flex-col items-start justify-center"
-      onSubmit={(e) => e.preventDefault()}
+      onSubmit={(e) => {
+        e.preventDefault();
+        type === "Topics"
+          ? dispatch(setTopicInput(e.currentTarget))
+          : dispatch(setAnalogyInput(e.currentTarget));
+      }}
       onClick={(e) => e.stopPropagation()}
     >
       {editor.shown ? (
@@ -43,20 +40,16 @@ export function EditorLayout({ input, setInput, type }: IEditorLayoutProps) {
               <>
                 {type === "Topics" ? (
                   <TopicFormInputs
-                    input={input}
-                    setInput={setInput}
-                    handleChange={handleChange}
+                    // handleChange={handleChange}
                     editor={editor}
                   />
                 ) : null}
                 {type === "Analogies" ? (
                   <AnalogyFormInputs
-                    input={input}
-                    setInput={setInput}
-                    handleChange={handleChange}
+                  // handleChange={handleChange}
                   />
                 ) : null}
-                <ButtonsRow editor={editor} input={input} type={type} />
+                <ButtonsRow editor={editor} type={type} />
               </>
             </div>
           ) : (
@@ -68,7 +61,10 @@ export function EditorLayout({ input, setInput, type }: IEditorLayoutProps) {
   );
 }
 
-function ButtonsRow({ editor, input, type }: IButtonsRowProps) {
+function ButtonsRow({ editor, type }: IButtonsRowProps) {
+  const input = useAppSelector((state) =>
+    type === "Topics" ? state.input.topicInput : state.input.analogyInput
+  );
   const item = input;
   // @ts-ignore
   const updateItem = useUpdateItem(item, type);
