@@ -1,6 +1,7 @@
 import dynamic from "next/dynamic";
 import { api } from "@/utils/api";
 import { archivo } from "@/styles/customFonts";
+import Link from "next/link";
 
 export function ExampleSection() {
   const { data: analogyData } = api.analogy.getById.useQuery(
@@ -61,11 +62,14 @@ export function ExampleSection() {
 
         <VerticalLine />
 
-        <button className="font-regular text-md group mx-auto mb-3 mt-[-4px] flex flex-row content-center items-center justify-center rounded-xl border border-[#5c2c1d2b] bg-[#ffffff98] px-8 py-2 text-sm font-semibold text-[#292626a9] shadow-sm transition-all duration-200 hover:border-[#5c2c1d66] hover:px-8 hover:shadow-md">
+        <Link
+          href={"/javascript/closure"}
+          className="font-regular text-md group mx-auto mb-3 mt-[-4px] flex flex-row content-center items-center justify-center rounded-xl border border-[#5c2c1d2b] bg-[#ffffff98] px-8 py-2 text-sm font-semibold text-[#292626a9] shadow-sm transition-all duration-200 hover:border-[#5c2c1d66] hover:px-8 hover:shadow-md"
+        >
           <span className="cursor-pointer transition-all duration-300 group-hover:-translate-x-0.5">
             Explore Closure Topic
           </span>
-        </button>
+        </Link>
       </div>
     </div>
   );

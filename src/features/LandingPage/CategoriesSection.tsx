@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { api } from "@/utils/api";
 import { archivo } from "@/styles/customFonts";
+import { MdOutlineInfo as InfoIcon } from "react-icons/md";
 import { getCategoryIcon } from "@/utils/getCategoryIcon";
 import { HomeCategorySkeleton } from "@/components/Loading/Skeleton";
 
@@ -64,10 +65,10 @@ export function CategoriesSection() {
             )}
           </ul>
         )}
-        <div className=" h-1/12 my-12 flex-col items-end">
-          <p className="font-regular z-10 flex flex-row justify-center rounded-lg border border-[#d5d9df33] bg-[#d6e2f634] px-4 py-2 text-sm text-[#292626a9] shadow-sm backdrop-blur-sm sm:bg-[#d6e2f600] sm:shadow-none md:border-0 md:bg-none md:backdrop-blur-0">
-            If you find a category missing, you can add it via GitHub
-            contribution. It&apos;s an open-sourced project.
+        <div className=" h-1/12 absolute bottom-0 left-[5%] right-[5%] my-12 flex flex-col items-center sm:items-end">
+          <p className="font-regular z-10 flex w-[max-content] flex-row items-center justify-center gap-1.5 rounded-lg border border-[#d5d9df33] bg-[#d6e2f634] px-4 py-2 text-sm text-[#292626a9] shadow-sm backdrop-blur-sm sm:bg-[#d6e2f600] sm:shadow-none md:border-0 md:bg-none">
+            <InfoIcon className="mb-0.5" /> You can contribute by recommending
+            missing categories.
           </p>
         </div>
       </div>

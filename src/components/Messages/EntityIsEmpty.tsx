@@ -21,7 +21,7 @@ export function EntityIsEmpty({
         ) : entity === "topicFeed" ? (
           <span>There are no analogies to show.</span>
         ) : entity === "category" ? (
-          <span>There are no Topics to show.</span>
+          <span>There are no topics to show.</span>
         ) : (
           <span>Nothing to show.</span>
         )}
