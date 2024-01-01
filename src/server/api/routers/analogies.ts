@@ -408,7 +408,7 @@ export const analogiesRouter = createTRPCRouter({
         id: z.string(),
         title: z.string(),
         description: z.string(),
-        reference: z.string(),
+        reference: z.string().nullable(),
         status: z.enum(["PUBLISHED", "PENDING", "REJECTED", "DELETED"]),
         // pinned: z.boolean(),
         topicId: z.string(),

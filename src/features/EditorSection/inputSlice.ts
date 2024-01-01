@@ -20,7 +20,7 @@ export interface AnalogyInput {
   description: string;
   topicId: string;
   hasReference?: boolean;
-  reference?: string;
+  reference: string;
 }
 
 export interface InitialState {

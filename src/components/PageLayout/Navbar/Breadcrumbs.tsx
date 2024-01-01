@@ -40,14 +40,17 @@ export function Breadcrumbs() {
   );
 
   return (
-    <div id="breadcrumbs" className="my-auto hidden text-sm sm:inline-flex">
+    <div
+      id="breadcrumbs"
+      className="my-auto hidden select-none text-sm sm:inline-flex "
+    >
       <Link href="/home" aria-label="Home">
         <HomeIcon className="mt-[0px] cursor-pointer !text-lg text-dark-2 transition-all hover:text-black" />
       </Link>
       {router.pathname === "/home" && (
         <>
           <span className="mx-2 text-[#69696975]">-</span>
-          <span className="cursor-pointer font-semibold text-dark-2">
+          <span className="font-semibold text-dark-2">
             Explain CS like I'm ten!
           </span>
         </>
@@ -56,9 +59,7 @@ export function Breadcrumbs() {
       {router.pathname === "/admin" && (
         <>
           <span className="mx-2 text-[#69696975]">/</span>
-          <span className="cursor-pointer font-semibold text-dark-2">
-            Admin panel
-          </span>
+          <span className="font-semibold text-dark-2">Admin panel</span>
         </>
       )}
 

@@ -4,7 +4,11 @@ import { IoClose as XIcon } from "react-icons/io5";
 import { type IFormTriggerProps } from "./types";
 import { CgFolderAdd as AddIcon } from "react-icons/cg";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { setAnalogyInput, setTopicInput } from "./inputSlice";
+import {
+  setAnalogyInput,
+  setAnalogyReference,
+  setTopicInput,
+} from "./inputSlice";
 import {
   setPurpose,
   setShown,

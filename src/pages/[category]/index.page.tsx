@@ -31,7 +31,7 @@ export default function CategoryPage() {
     },
     {
       refetchOnWindowFocus: false,
-      refetchOnMount: false,
+      refetchOnMount: true,
       refetchOnReconnect: false,
     }
   );
