@@ -13,8 +13,6 @@ export default function SingleAnalogyPage() {
   const router = useRouter();
   const input = useAppSelector((state) => state.input.analogyInput);
 
-  console.log("analogy input:", input);
-
   const { analogy: UrlAnalogyId } = router.query;
 
   const { data: singleAnalogyData, status: singleAnalogyFetchingStatus } =

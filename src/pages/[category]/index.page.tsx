@@ -5,10 +5,8 @@ import { useRouter } from "next/router";
 import { PageLayout } from "@/components/PageLayout";
 import { useSession } from "next-auth/react";
 import { MainSection } from "@/features/CategoryPage/MainSection";
-import { TOPIC_STATUS } from "@prisma/client";
 import { HeaderSection } from "@/features/CategoryPage/HeaderSection";
 import { EntityNotFound } from "@/components/Messages/EntityNotFound";
-import { type TopicInput } from "@/features/CategoryPage/types";
 import React, { useState } from "react";
 
 export default function CategoryPage() {

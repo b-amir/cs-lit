@@ -35,7 +35,7 @@ const LoginPage = () => {
   }
 
   // --- store the previous page they were on for callbackURL --- //
-  const callbackURL = router.query.callbackUrl || "/";
+  const callbackURL = router.query.callbackUrl || "/home";
 
   // --- clean error messages for auth situations from original auth-js (some are clarified) --- //
   const errors: Record<SignInErrorTypes, string> = {

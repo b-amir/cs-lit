@@ -8,6 +8,6 @@ export const routeHandler = (item: any, type: string) => {
   } else if (type === "Analogies") {
     return `/${item?.category?.slug}/${item?.topic?.slug}/${item?.id}`;
   } else if (type === "Comments") {
-    return "/";
+    return `/_/_/${item?.analogyId}`; // this still does the job without attaching a bunch of data to comment object
   } else return;
 };

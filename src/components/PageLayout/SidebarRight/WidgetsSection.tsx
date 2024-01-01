@@ -129,7 +129,10 @@ export function RecentAnalogiesWidget({
       <ul className="group">
         {AnalogiesData?.pages?.map((page) =>
           page?.items?.map((analogy: ExtendedAnalogy) => (
-            <li key={analogy.id}>
+            <li
+              key={analogy.id}
+              className=" border-b border-[#eee] last-of-type:border-0"
+            >
               <Link
                 href={`${routeHandler(analogy, "Analogies") ?? ""}`}
                 onClick={() => {
@@ -138,13 +141,7 @@ export function RecentAnalogiesWidget({
                 }}
               >
                 <span
-                  className={`ml-0 flex w-full flex-col items-center whitespace-nowrap rounded-sm px-3 py-2.5 pl-6 pt-3 text-xs font-normal hover:bg-[#efefef84]`}
-                  //        ${
-                  //   AnalogiesData &&
-                  //   analogy === AnalogiesData[AnalogiesData.length - 1]
-                  //     ? "border-0 border-[#eee]"
-                  //     : "border-b border-[#eee]"
-                  // }
+                  className={`ml-0 flex w-full flex-col items-center whitespace-nowrap rounded-sm px-3 py-2.5 pl-6 pt-3 text-xs font-normal  hover:bg-[#efefef84]`}
                 >
                   <span className="mb-1 w-11/12 self-start overflow-clip overflow-ellipsis whitespace-nowrap font-semibold text-gray-700">
                     {analogy.topic?.title}
