@@ -4,6 +4,7 @@ import { UserSection } from "@/components/UserSection";
 import { HomeUserSkeleton } from "@/components/Loading/Skeleton";
 import { useSession } from "next-auth/react";
 import { test } from "vitest";
+import { CallToAction } from "./CallToAction";
 
 export function HeaderSection() {
   const { status: sessionStatus } = useSession();
@@ -28,9 +29,14 @@ export function HeaderSection() {
         {sessionStatus === "loading" ? (
           <HomeUserSkeleton />
         ) : (
-          <div className="flex items-center gap-0 rounded-full border border-[#5c2c1d2b] bg-[#ffffff36] px-2 py-1 pr-4 backdrop-blur-sm transition-all duration-300 hover:border-[#5c2c1d91] hover:bg-[#ff73631c] sm:py-2 ">
-            <UserSection />
-          </div>
+          <span className="flex items-center justify-center">
+            <span className="hidden sm:flex">
+              <CallToAction text="Explore Now" />
+            </span>
+            <div className="ml-4 flex h-[3.1rem] items-center gap-0  border-[#5c2c1d2b] bg-[#ffffff36] px-3 py-1 pr-4 backdrop-blur-sm transition-all duration-300 sm:border-l sm:py-2 ">
+              <UserSection />
+            </div>
+          </span>
         )}
       </div>
     </nav>

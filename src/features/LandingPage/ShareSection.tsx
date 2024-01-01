@@ -6,6 +6,7 @@ import { RiImageLine } from "react-icons/ri";
 import { type Session } from "next-auth";
 import { AiOutlineLink } from "react-icons/ai";
 import { AvatarSkeleton } from "@/components/Loading/Skeleton";
+import { CallToAction } from "./CallToAction";
 
 export function ShareSection() {
   const { data: sessionData, status: sessionStatus } = useSession();
@@ -114,21 +115,5 @@ function MockAnalogy({
         </div>
       </div>
     </div>
-  );
-}
-
-function CallToAction() {
-  return (
-    <button className="font-regular text-md text-md group mx-auto mb-1 flex flex-row content-center items-center justify-center rounded-xl border border-[#5c2c1d2b] bg-[#ff7263] px-8 py-3 font-semibold text-[#ffffffd3] shadow-sm transition-all duration-200 hover:border-[#5c2c1d66] hover:px-8 hover:shadow-md">
-      <span
-        className="cursor-pointer transition-all duration-300 group-hover:-translate-x-0.5"
-        onClick={() => {
-          const categorySection = document.getElementById("category-section");
-          categorySection?.scrollIntoView({ behavior: "smooth" });
-        }}
-      >
-        Start Contributing!
-      </span>
-    </button>
   );
 }
