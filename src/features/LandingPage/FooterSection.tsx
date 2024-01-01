@@ -38,7 +38,8 @@ export function FooterSection() {
         </div>
 
         <a
-          href="https://github.com/b-amir?tab=repositories"
+          // href="https://github.com/b-amir?tab=repositories"
+          href="https://b-amir.link/"
           target="_blank"
           className="my-1 inline-flex py-1 hover:underline"
         >

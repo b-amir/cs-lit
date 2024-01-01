@@ -32,9 +32,9 @@ export default function ErrorFallback({
       </button>
       <div className="mx-auto flex min-w-[300px] max-w-[400px] flex-col rounded-3xl shadow-[0px_0px_0px_1px_#00000020,0px_3px_8px_0px_#00000020,0px_10px_13px_9px_#00000008,0px_5px_4px_2px_#00000007]  ">
         <div className=" flex w-full flex-col items-center justify-center rounded-t-3xl border-b border-gray-300 bg-[#4545450f] py-10  backdrop-blur-md">
-          <Link href="/">
+          <Link href="/home">
             <Image
-            priority={true}
+              priority={true}
               src={"/assets/logo.svg"}
               width={180}
               height={0}

@@ -2,9 +2,10 @@ import React from "react";
 import { TopicsList } from "./TopicsList";
 import { TableSkeleton } from "@/components/Loading/Skeleton";
 import { EntityIsEmpty } from "@/components/Messages/EntityIsEmpty";
-import { type IMainSectionProps } from "../types";
-import { setPurpose, setShown } from "@/features/EditorSection/editorSlice";
+import { setTopicInput } from "@/features/EditorSection/inputSlice";
 import { useAppDispatch } from "@/redux/hooks";
+import { setPurpose, setShown } from "@/features/EditorSection/editorSlice";
+import { type IMainSectionProps } from "../types";
 
 export function MainSection({
   categoryFetching,
@@ -13,6 +14,7 @@ export function MainSection({
   isFetchingNextPage,
   topicsData,
   topicsFetchingStatus,
+  newInput,
 }: IMainSectionProps) {
   const dispatch = useAppDispatch();
 
@@ -44,6 +46,8 @@ export function MainSection({
           action={() => {
             dispatch(setPurpose("Create"));
             dispatch(setShown(true));
+            // @ts-ignore
+            dispatch(setTopicInput(newInput));
           }}
         />
       ) : null}

@@ -85,6 +85,7 @@ export default function CategoryPage() {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
+    newInput,
   };
   const editorProps = {
     newInput,

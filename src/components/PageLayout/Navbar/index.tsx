@@ -46,9 +46,9 @@ export function Navbar({
         </div>
 
         <div className="flex items-center justify-center sm:hidden">
-          <Link href="/">
+          <Link href="/home">
             <Image
-            priority={true}
+              priority={true}
               src={"/assets/logo.svg"}
               width={80}
               height={20}

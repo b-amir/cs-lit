@@ -42,7 +42,7 @@ export function AboutWebsiteSection() {
           </span>
           <br />
           <br />
-          <Link href="/">
+          <Link href="/home">
             <span className="inline-flex cursor-pointer flex-row text-sm font-semibold hover:underline ">
               <LinkIcon className="mr-1 mt-0.5" /> See more analogies like this
             </span>

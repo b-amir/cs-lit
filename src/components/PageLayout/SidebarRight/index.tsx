@@ -20,7 +20,7 @@ export function SidebarRight({ visible, hide }: ISidebarRightProps) {
     <div className="flex ">
       <aside
         id="sidebar-right"
-        className={`fixed right-0 top-0 z-50 flex h-screen w-9/12 flex-col place-content-stretch items-stretch justify-between border-l border-white bg-white pt-0 shadow-md transition-transform sm:w-4/12 md:w-1/6 ${
+        className={`fixed right-0 top-0 z-50 flex h-screen w-9/12 select-none flex-col place-content-stretch items-stretch justify-between border-l border-white bg-white pt-0 shadow-md transition-transform sm:w-4/12 md:w-1/6 ${
           visible ? "translate-x-0" : "translate-x-full"
         }`}
         aria-label="Sidebar"
