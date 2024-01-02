@@ -34,12 +34,49 @@ const MyApp: AppType<{ session: Session | null }> = ({
     <SessionProvider session={session}>
       <Head>
         <title>Explain CS like I&apos;m 10</title>
+
+        <meta name="title" content="CS Like I'm 10 !" />
         <meta
           name="description"
           content="A place for computer science enthusiasts to learn stuff easily"
         />
+
+        {/* Open Graph / Facebook  */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="http://cslit.cc" />
+        <meta property="og:title" content="CS Like I'm 10 !" />
+        <meta
+          property="og:description"
+          content="A place for computer science enthusiasts to learn stuff easily"
+        />
+        <meta
+          property="og:image"
+          content="blob:https://graygrids.com/33c7939a-57ea-4f21-b835-9a3c5f647d4e"
+        />
+
+        {/* Twitter  */}
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="http://cslit.cc" />
+        <meta property="twitter:title" content="CS Like I'm 10 !" />
+        <meta
+          property="twitter:description"
+          content="A place for computer science enthusiasts to learn stuff easily"
+        />
+        <meta
+          property="twitter:image"
+          content="blob:https://graygrids.com/edd0304e-9fda-47d0-a6ec-75e8971b5ca0"
+        />
+
+        {/* favicon and touch icon */}
         <link rel="icon" href="/favicon.ico" />
+        <link
+          rel="apple-touch-icon"
+          href="/apple-icon.png?ebbb82dc3cc1b5eb"
+          type="image/png"
+          sizes="512x512"
+        />
       </Head>
+
       <ErrorBoundary
         FallbackComponent={ErrorFallback}
         // onReset={() => window.location.replace("/")}
