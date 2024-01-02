@@ -2,6 +2,16 @@
 
 CSLIT is a free and open-source community where individuals can create accounts, suggest categories, and contribute analogies for various computer science topics. The goal is to simplify complex concepts through easy-to-understand analogies and metaphors.
 
+</br>
+
+<div align="center" >
+  <img src="https://raw.githubusercontent.com/b-amir/cs-lit/main/public/link-preview.png">
+  </br></br>
+ 🟢  |  <strong><a href="https://cslit.cc">Try it Live!</a> </strong>
+</div>
+
+</br></br>
+
 ## Demo
 
 CSLIT is an online community. To use it, simply visit [cslit.cc](https://cslit.cc) in your web browser.
@@ -37,18 +47,17 @@ If you're curious about the technical aspects of CSLIT, here are some details fo
 
 - **Database:** postgresql (Prisma ORM)
 - **User Authentication:** next-auth (Authjs)
-  
+
 ### Additional Libraries and Tools
 
 - **React Query:** CSLIT integrates React Query for efficient and optimized data fetching, providing a seamless user experience.
 - **Zod:** The project utilizes Zod for robust runtime type checking, enhancing data validation and ensuring the integrity of information across the application.
 - **Resend:** Resend is incorporated to streamline and manage email communications within CSLIT, ensuring a reliable system for account verification and notifications.
 
-
 ### Testing
+
 - **unit tests:** Vitest
 - **e2e tests:** Cypress
-
 
 ### Deployment
 

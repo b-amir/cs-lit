@@ -1,6 +1,7 @@
 import { FaCode } from "react-icons/fa";
 import { GrSquare } from "react-icons/gr";
 import { MdCategory } from "react-icons/md";
+import { FaComputer } from "react-icons/fa6";
 import { IoLogoCss3 } from "react-icons/io";
 import { RiFlowChart } from "react-icons/ri";
 import { SiNextdotjs } from "react-icons/si";
@@ -31,6 +32,8 @@ export function getCategoryIcon(categorySlug: string) {
       return <MdCategory />;
     case "web-development":
       return <FaCode />;
+    case "general-cs":
+      return <FaComputer />;
     default:
       return <GrSquare className="opacity-60" />;
   }

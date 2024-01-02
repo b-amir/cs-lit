@@ -1,10 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
-import { UserSection } from "@/components/UserSection";
-import { HomeUserSkeleton } from "@/components/Loading/Skeleton";
-import { useSession } from "next-auth/react";
 import { test } from "vitest";
+import { useSession } from "next-auth/react";
+import { UserSection } from "@/components/UserSection";
 import { CallToAction } from "./CallToAction";
+import { HomeUserSkeleton } from "@/components/Loading/Skeleton";
 
 export function HeaderSection() {
   const { status: sessionStatus } = useSession();

@@ -44,7 +44,7 @@ export function CategoriesSection() {
         {categoriesFetchingStatus === "loading" ? (
           <HomeCategorySkeleton />
         ) : (
-          <ul className="h-8/12 mx-auto mb-20 grid w-full justify-center gap-6 text-lg font-normal sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="h-8/12 mx-auto mb-28 grid w-full justify-center gap-6 text-lg font-normal sm:mb-20 sm:grid-cols-2 lg:grid-cols-3">
             {categories?.pages?.map((page) =>
               page?.items?.map((category) => (
                 <li key={category.id} className="">

@@ -1,5 +1,6 @@
 import React from "react";
 import dynamic from "next/dynamic";
+import ReactMarkdown from "react-markdown";
 import { coldarkDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { MultilineSkeleton } from "../Loading/Skeleton";
 import { type IContentSectionProps } from "./types";
@@ -9,15 +10,17 @@ export function ContentSection({
   analogyData,
   analogyStatus,
 }: IContentSectionProps) {
-  // @ts-ignore
-  const ReactMarkdown = dynamic(() => import("react-markdown"));
+  // --- Dynamically importing the react-markdown causes a flash of unstyled content.
+  // --- disabling the dynamic import, in favor of better UX, for now.
+  // const ReactMarkdown = dynamic(() => import("react-markdown"));
+
   return (
     <div
       id="analogy-content"
       data-testid="analogy-content"
       className="min-h-[120px] w-full  bg-white px-8 pb-12 pt-8"
     >
-      {analogyStatus === "loading" ? (
+      {analogyStatus === "loading" || !analogyData ? (
         <MultilineSkeleton />
       ) : (
         <ReactMarkdown
