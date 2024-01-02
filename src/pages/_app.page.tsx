@@ -38,7 +38,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <meta name="title" content="CS Like I'm 10 !" />
         <meta
           name="description"
-          content="A place for computer science enthusiasts to learn stuff easily"
+          content="A space for computer science enthusiasts to easily grasp complex subjects."
         />
 
         {/* Open Graph / Facebook  */}
@@ -47,11 +47,11 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <meta property="og:title" content="CS Like I'm 10 !" />
         <meta
           property="og:description"
-          content="A place for computer science enthusiasts to learn stuff easily"
+          content="A space for computer science enthusiasts to easily grasp complex subjects."
         />
         <meta
           property="og:image"
-          content="https://raw.githubusercontent.com/b-amir/cs-lit/d55914362c226748ff5255abb8aa1d27808f0316/public/link-preview.svg"
+          content="https://zvb0iewehs9niuwn.public.blob.vercel-storage.com/link-preview.svg"
         />
 
         {/* Twitter  */}
@@ -60,11 +60,11 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <meta property="twitter:title" content="CS Like I'm 10 !" />
         <meta
           property="twitter:description"
-          content="A place for computer science enthusiasts to learn stuff easily"
+          content="A space for computer science enthusiasts to easily grasp complex subjects."
         />
         <meta
           property="twitter:image"
-          content="https://raw.githubusercontent.com/b-amir/cs-lit/d55914362c226748ff5255abb8aa1d27808f0316/public/link-preview.svg"
+          content="https://zvb0iewehs9niuwn.public.blob.vercel-storage.com/link-preview.svg"
         />
 
         {/* favicon and touch icon */}
