@@ -38,7 +38,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <meta name="title" content="CS Like I'm 10 !" />
         <meta
           name="description"
-          content="A space for computer science enthusiasts to easily grasp complex subjects."
+          content="A space for computer science enthusiasts to easily comprehend complex subjects."
         />
 
         {/* Open Graph / Facebook  */}
@@ -47,7 +47,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <meta property="og:title" content="CS Like I'm 10 !" />
         <meta
           property="og:description"
-          content="A space for computer science enthusiasts to easily grasp complex subjects."
+          content="A space for computer science enthusiasts to easily comprehend complex subjects."
         />
         <meta
           property="og:image"
@@ -60,7 +60,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <meta property="twitter:title" content="CS Like I'm 10 !" />
         <meta
           property="twitter:description"
-          content="A space for computer science enthusiasts to easily grasp complex subjects."
+          content="A space for computer science enthusiasts to easily comprehend complex subjects."
         />
         <meta
           property="twitter:image"
