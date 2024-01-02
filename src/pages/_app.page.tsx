@@ -51,7 +51,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         />
         <meta
           property="og:image"
-          content="blob:https://graygrids.com/1d6c5592-4a9f-404e-aeab-9cd67bbbe2ce"
+          content="https://raw.githubusercontent.com/b-amir/cs-lit/main/public/link-preview.png"
         />
 
         {/* Twitter  */}
@@ -64,7 +64,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         />
         <meta
           property="twitter:image"
-          content="blob:https://graygrids.com/5befcfa6-65a4-4b6d-a6b4-decd5a23bee8"
+          content="https://raw.githubusercontent.com/b-amir/cs-lit/main/public/link-preview.png"
         />
 
         {/* favicon and touch icon */}
