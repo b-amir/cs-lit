@@ -1,11 +1,14 @@
 import Link from "next/link";
 import { api } from "@/utils/api";
+import { setShown } from "@/features/EditorSection/editorSlice";
 import { useWindowSize } from "@/hooks/useWindowSize";
+import { useAppDispatch } from "@/redux/hooks";
 import { getCategoryIcon } from "@/utils/getCategoryIcon";
 import { SidebarCategorySkeleton } from "@/components/Loading/Skeleton";
 
 export function SidebarCategoriesSection({ hide }: { hide: () => void }) {
   const { width: windowWidth } = useWindowSize();
+  const dispatch = useAppDispatch();
 
   const { data: categories, status: categoryFetchingStatus } =
     api.category.getAll.useInfiniteQuery(
@@ -31,6 +34,8 @@ export function SidebarCategoriesSection({ hide }: { hide: () => void }) {
                   className="flex items-center p-2 text-sm text-dark-2 hover:bg-gray-100 lg:rounded-lg"
                   href={`/${category.slug}`}
                   onClick={() => {
+                    dispatch(setShown(false));
+
                     // only hide after click for mobile
                     if (windowWidth && windowWidth < 640) hide();
                   }}

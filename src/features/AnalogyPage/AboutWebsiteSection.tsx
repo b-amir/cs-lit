@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { archivo } from "@/styles/customFonts";
 import { useState } from "react";
-import { LuExternalLink as LinkIcon } from "react-icons/lu";
+import { FaArrowRight as ArrowIcon } from "react-icons/fa";
 
 export function AboutWebsiteSection() {
   const [aboutIsHidden, setAboutIsHidden] = useState(true);
@@ -44,7 +44,7 @@ export function AboutWebsiteSection() {
           <br />
           <Link href="/home">
             <span className="inline-flex cursor-pointer flex-row text-sm font-semibold hover:underline ">
-              <LinkIcon className="mr-1 mt-0.5" /> See more analogies like this
+              <ArrowIcon className="mr-2 mt-0.5" /> See more analogies like this
             </span>
           </Link>
         </div>

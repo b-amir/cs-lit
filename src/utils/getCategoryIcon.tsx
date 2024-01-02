@@ -1,11 +1,12 @@
+import { FaCode } from "react-icons/fa";
+import { GrSquare } from "react-icons/gr";
+import { MdCategory } from "react-icons/md";
+import { IoLogoCss3 } from "react-icons/io";
+import { RiFlowChart } from "react-icons/ri";
 import { SiNextdotjs } from "react-icons/si";
 import { SiTypescript } from "react-icons/si";
 import { SiJavascript } from "react-icons/si";
 import { TbBrandReact } from "react-icons/tb";
-import { IoLogoCss3 } from "react-icons/io";
-import { RiFlowChart } from "react-icons/ri";
-import { GrSquare } from "react-icons/gr";
-import { MdCategory } from "react-icons/md";
 
 {
   /*  since there's only gonna be a few obvious topics,
@@ -18,9 +19,9 @@ export function getCategoryIcon(categorySlug: string) {
       return <SiJavascript />;
     case "typescript":
       return <SiTypescript />;
-    case "next.js":
+    case "next":
       return <SiNextdotjs />;
-    case "react.js":
+    case "react":
       return <TbBrandReact />;
     case "css":
       return <IoLogoCss3 />;
@@ -28,6 +29,8 @@ export function getCategoryIcon(categorySlug: string) {
       return <RiFlowChart />;
     case "data-structure":
       return <MdCategory />;
+    case "web-development":
+      return <FaCode />;
     default:
       return <GrSquare className="opacity-60" />;
   }

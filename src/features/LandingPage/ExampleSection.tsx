@@ -6,7 +6,7 @@ import Link from "next/link";
 export function ExampleSection() {
   const { data: analogyData } = api.analogy.getById.useQuery(
     {
-      id: "seiydzNj", // A specific analogy to showcase in homepage.
+      id: "z0fLOIg8", // A specific analogy to showcase in homepage.
     },
     {
       refetchOnWindowFocus: false,

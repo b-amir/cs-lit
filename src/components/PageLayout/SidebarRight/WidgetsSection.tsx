@@ -2,9 +2,12 @@ import { useEffect, type PropsWithChildren, useRef, useState } from "react";
 import Link from "next/link";
 import { api } from "@/utils/api";
 import { archivo } from "@/styles/customFonts";
+import { setShown } from "@/features/EditorSection/editorSlice";
+import { type User } from "@prisma/client";
 import { routeHandler } from "@/utils/routeHandler";
 import { getScreenName } from "@/utils/getScreenName";
 import { useWindowSize } from "@/hooks/useWindowSize";
+import { useAppDispatch } from "@/redux/hooks";
 import { animated, useSpring } from "@react-spring/web";
 import { TbStarFilled as Star } from "react-icons/tb";
 import { IoIosArrowUp as ArrowUp } from "react-icons/io";
@@ -16,7 +19,6 @@ import {
   type IWidgetLayoutProps,
   type IWidgetsSectionProps,
 } from "./types";
-import { type User } from "@prisma/client";
 
 export function WidgetsSection({ hide }: IWidgetsSectionProps) {
   const { width: windowWidth, height: windowHeight } = useWindowSize();
@@ -103,6 +105,8 @@ export function RecentAnalogiesWidget({
   windowWidth,
   setActiveWidgetIndex,
 }: ISingleWidgetProps) {
+  const dispatch = useAppDispatch();
+
   const { data: AnalogiesData } = api.analogy.getAll.useInfiniteQuery(
     { limit: 5, order: "desc" },
     {}
@@ -142,6 +146,7 @@ export function RecentAnalogiesWidget({
               >
                 <span
                   className={`ml-0 flex w-full flex-col items-center whitespace-nowrap rounded-sm px-3 py-2.5 pl-6 pt-3 text-xs font-normal  hover:bg-[#efefef84]`}
+                  onClick={dispatch(setShown(false))}
                 >
                   <span className="mb-1 w-11/12 self-start overflow-clip overflow-ellipsis whitespace-nowrap font-semibold text-gray-700">
                     {analogy.topic?.title}

@@ -67,7 +67,7 @@ export function CategoriesSection() {
         )}
         <div className=" h-1/12 absolute bottom-0 left-[5%] right-[5%] my-12 flex flex-col items-center sm:items-end">
           <p className="font-regular z-10 flex w-[max-content] flex-row items-center justify-center gap-1.5 rounded-lg border border-[#d5d9df33] bg-[#d6e2f634] px-4 py-2 text-sm text-[#292626a9] shadow-sm backdrop-blur-sm sm:bg-[#d6e2f600] sm:shadow-none md:border-0 md:bg-none">
-            <InfoIcon className="mb-0.5" /> You can contribute by recommending
+            <InfoIcon className="mb-0.5" /> You can contribute by suggesting
             missing categories.
           </p>
         </div>
