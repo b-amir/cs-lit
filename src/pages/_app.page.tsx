@@ -51,7 +51,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         />
         <meta
           property="og:image"
-          content="https://zvb0iewehs9niuwn.public.blob.vercel-storage.com/link-preview.svg"
+          content="blob:https://graygrids.com/1d6c5592-4a9f-404e-aeab-9cd67bbbe2ce"
         />
 
         {/* Twitter  */}
@@ -64,7 +64,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         />
         <meta
           property="twitter:image"
-          content="https://zvb0iewehs9niuwn.public.blob.vercel-storage.com/link-preview.svg"
+          content="blob:https://graygrids.com/5befcfa6-65a4-4b6d-a6b4-decd5a23bee8"
         />
 
         {/* favicon and touch icon */}
