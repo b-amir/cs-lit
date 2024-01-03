@@ -44,10 +44,12 @@ export function InfoRowSection({
       className="flex h-12 w-full cursor-default items-center justify-start"
     >
       <span className="flex shrink-0 grow">
-        <PostTime analogyData={analogyData} />
+        {analogyData ? <PostTime analogyData={analogyData} /> : null}
 
         {/*  if needed, show where analogy is posted. ex: in profile page */}
-        {needsLocationInfo ? <PostLocation analogyData={analogyData} /> : null}
+        {analogyData && needsLocationInfo ? (
+          <PostLocation analogyData={analogyData} />
+        ) : null}
 
         {/* if there's a reference */}
         {analogyData?.reference ? (
