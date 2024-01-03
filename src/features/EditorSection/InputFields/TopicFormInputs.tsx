@@ -11,7 +11,10 @@ import {
   setTopicUrl,
 } from "../inputSlice";
 
-export function TopicFormInputs({ editor }: ITopicFormInputsProps) {
+export function TopicFormInputs({
+  editor,
+  isSubmitting,
+}: ITopicFormInputsProps) {
   const dispatch = useAppDispatch();
 
   const router = useRouter();
@@ -86,20 +89,25 @@ export function TopicFormInputs({ editor }: ITopicFormInputsProps) {
             Your analogy for this topic
           </label>
           <div className="group mt-1 w-full rounded-[12px] border border-gray-200 bg-gray-50 shadow-sm transition-all hover:border-[#c1c1c1] focus:border-[#c1c1c1]">
-            <div className="rounded-[12px] bg-white px-6 pb-2 pt-6">
+            <div
+              className={`rounded-[12px] px-6 pb-2 pt-6 ${
+                isSubmitting ? "bg-gray-100" : "bg-white"
+              }`}
+            >
               <label htmlFor="comment" className="sr-only">
                 Add your analogy
               </label>
               <textarea
                 id="comment"
                 rows={4}
-                className="w-full border-0 border-transparent bg-white px-0 text-sm text-dark-2 !outline-none  group-focus:border-[#c1c1c1]"
+                className={`max-h-[15dvh] w-full border-0 border-transparent  px-0 text-sm text-dark-2 !outline-none  group-focus:border-[#c1c1c1] ${
+                  isSubmitting ? "bg-gray-100" : "bg-white"
+                }`}
                 placeholder="Add your analogy ..."
                 required
                 value={input?.firstAnalogy}
                 onChange={(e) => dispatch(setTopicFirstAnalogy(e.target.value))}
-
-                // disabled={isSubmitting || editorLayoutState?.purpose === "Edit"}
+                disabled={isSubmitting}
               ></textarea>
             </div>
             <div className="flex items-center justify-between border-t px-3 py-2">
@@ -147,6 +155,7 @@ export function TopicFormInputs({ editor }: ITopicFormInputsProps) {
               className="h-4 w-4 rounded border-gray-300 text-dark-2 accent-[#6b6b6b] focus:ring-[#c1c1c1]"
               checked={input?.hasReference}
               onChange={(e) => dispatch(setTopicHasReference(e.target.checked))}
+              disabled={isSubmitting}
             />
             <label
               htmlFor="hasReference"
@@ -173,6 +182,7 @@ export function TopicFormInputs({ editor }: ITopicFormInputsProps) {
                   placeholder="https://..."
                   defaultValue={input?.reference ?? ""}
                   required
+                  disabled={isSubmitting}
                   onChange={(e) => dispatch(setTopicReference(e.target.value))}
                 />
               </div>

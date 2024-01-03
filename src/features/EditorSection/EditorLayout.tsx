@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FormEvent, useState } from "react";
 import { useSession } from "next-auth/react";
 import { NotSignedIn } from "@/components/Messages/NotSignedIn";
 import { useUpdateItem } from "@/hooks/CRUD/useUpdateItem";
@@ -20,16 +20,25 @@ export function EditorLayout({ type }: IEditorLayoutProps) {
   const editor = useAppSelector((state) => state.editor);
 
   const { data: sessionData } = useSession();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = (e: FormEvent) => {
+    setIsSubmitting(true);
+    try {
+      type === "Topics"
+        ? dispatch(setTopicInput(e.currentTarget))
+        : dispatch(setAnalogyInput(e.currentTarget));
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <form
       className="mx-auto flex w-full flex-col items-start justify-center"
-      onSubmit={(e) => {
-        e.preventDefault();
-        type === "Topics"
-          ? dispatch(setTopicInput(e.currentTarget))
-          : dispatch(setAnalogyInput(e.currentTarget));
-      }}
+      onSubmit={handleSubmit}
       onClick={(e) => e.stopPropagation()}
     >
       {editor.shown ? (
@@ -40,16 +49,18 @@ export function EditorLayout({ type }: IEditorLayoutProps) {
               <>
                 {type === "Topics" ? (
                   <TopicFormInputs
-                    // handleChange={handleChange}
                     editor={editor}
+                    isSubmitting={isSubmitting}
                   />
                 ) : null}
                 {type === "Analogies" ? (
-                  <AnalogyFormInputs
-                  // handleChange={handleChange}
-                  />
+                  <AnalogyFormInputs isSubmitting={isSubmitting} />
                 ) : null}
-                <ButtonsRow editor={editor} type={type} />
+                <ButtonsRow
+                  editor={editor}
+                  type={type}
+                  isSubmitting={isSubmitting}
+                />
               </>
             </div>
           ) : (
@@ -61,7 +72,7 @@ export function EditorLayout({ type }: IEditorLayoutProps) {
   );
 }
 
-function ButtonsRow({ editor, type }: IButtonsRowProps) {
+function ButtonsRow({ editor, type, isSubmitting }: IButtonsRowProps) {
   const input = useAppSelector((state) =>
     type === "Topics" ? state.input.topicInput : state.input.analogyInput
   );
@@ -93,9 +104,12 @@ function ButtonsRow({ editor, type }: IButtonsRowProps) {
       {/* show delete button only in edit mode */}
       {editor.purpose === "Edit" && (
         <button
-          type="button"
-          className="mx-3 inline-flex items-center justify-center px-4 py-2 text-sm font-semibold text-dark-2 transition-all hover:text-[#bc2f2f]"
+          type="submit"
+          className={`mx-3 inline-flex items-center justify-center px-4 py-2 text-sm font-semibold text-dark-2 transition-all hover:text-[#bc2f2f] ${
+            isSubmitting ? "cursor-not-allowed" : "cursor-pointer"
+          }`}
           onClick={handleDelete}
+          disabled={isSubmitting}
           data-testid="entity-delete-button"
         >
           <Delete className="mb-1 mr-2" /> Delete {editor.entity ?? ""}
@@ -104,10 +118,13 @@ function ButtonsRow({ editor, type }: IButtonsRowProps) {
       <button
         type="submit"
         data-testid="submit-button"
+        disabled={isSubmitting}
         onClick={editor.purpose === "Edit" ? handleUpdate : handleCreate}
-        className="group flex flex-row justify-center rounded-xl border border-[#5c2c1d2b] bg-[#ff7263] px-6 py-1.5 text-sm font-semibold text-[#ffffffd3] shadow-sm transition-all duration-200 [text-shadow:_0_1px_0_rgb(0_0_0_/_10%)] hover:border-[#5c2c1d66] hover:shadow-md"
+        className={`group flex flex-row justify-center rounded-xl border border-[#5c2c1d2b] bg-[#ff7263] px-6 py-1.5 text-sm font-semibold text-[#ffffffd3] shadow-sm transition-all duration-200 [text-shadow:_0_1px_0_rgb(0_0_0_/_10%)] hover:border-[#5c2c1d66] hover:shadow-md ${
+          isSubmitting ? "cursor-not-allowed" : "cursor-pointer"
+        }`}
       >
-        <span className="cursor-pointer transition-transform duration-300 group-hover:-translate-x-0.5 group-hover:[text-shadow:_0_2px_0_rgb(0_0_0_/_15%)]">
+        <span className="transition-transform duration-300 group-hover:-translate-x-0.5 group-hover:[text-shadow:_0_2px_0_rgb(0_0_0_/_15%)]">
           {editor.purpose === "Edit"
             ? `Update ${editor.entity ?? ""}`
             : `Submit ${editor.entity ?? ""}`}

@@ -7,7 +7,7 @@ import {
   setAnalogyReference,
 } from "../inputSlice";
 
-export function AnalogyFormInputs() {
+export function AnalogyFormInputs({ isSubmitting }: { isSubmitting: boolean }) {
   const dispatch = useAppDispatch();
 
   // --- animation setup for reference ---> //
@@ -39,16 +39,23 @@ export function AnalogyFormInputs() {
         Your analogy
       </label>
       <div className="group mt-1 w-full rounded-[12px] border border-gray-200 bg-gray-50 shadow-sm transition-all hover:border-[#c1c1c1] focus:border-[#c1c1c1] ">
-        <div className="rounded-[12px] bg-white px-6 pb-2 pt-6">
+        <div
+          className={`rounded-[12px] px-6 pb-2 pt-6 ${
+            isSubmitting ? "bg-gray-100" : "bg-white"
+          } `}
+        >
           <label htmlFor="description" className="sr-only">
             Add your analogy
           </label>
           <textarea
             id="description"
             rows={calculateRows(input.description || "")}
-            className="w-full border-0 border-transparent bg-white px-0 text-sm text-dark-2 !outline-none  group-focus:border-[#c1c1c1] "
+            className={`max-h-[30dvh] w-full border-0 border-transparent px-0 text-sm text-dark-2 !outline-none  group-focus:border-[#c1c1c1] ${
+              isSubmitting ? "bg-gray-100" : "bg-white"
+            }`}
             placeholder="Add your analogy ..."
             required
+            disabled={isSubmitting}
             value={input?.description}
             onChange={(e) => dispatch(setAnalogyDescription(e.target.value))}
           ></textarea>
@@ -95,6 +102,7 @@ export function AnalogyFormInputs() {
           id="hasReference"
           name="hasReference"
           type="checkbox"
+          disabled={isSubmitting}
           className="h-4 w-4 rounded border-gray-300 text-dark-2 accent-[#6b6b6b] focus:ring-[#c1c1c1]"
           checked={input?.hasReference}
           onChange={(e) => dispatch(setAnalogyHasReference(e.target.checked))}
@@ -120,10 +128,11 @@ export function AnalogyFormInputs() {
             <input
               id="reference"
               name="reference"
-              className="mt-1 block w-full  max-w-[800px] rounded-[12px] border border-gray-300 px-3 py-2 shadow-sm !outline-none ring-0 focus:border-[#c1c1c1] focus:ring-[#c1c1c1] sm:text-sm"
+              className="mt-1 block w-full max-w-[800px] rounded-[12px] border border-gray-300 px-3 py-2 shadow-sm !outline-none ring-0 focus:border-[#c1c1c1] focus:ring-[#c1c1c1] sm:text-sm"
               placeholder="https://..."
               value={input?.reference}
               required
+              disabled={isSubmitting}
               onChange={(e) => dispatch(setAnalogyReference(e.target.value))}
             />
           </div>

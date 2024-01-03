@@ -264,7 +264,7 @@ export interface ITopicEditorFormProps {
 }
 
 export interface ITopicFormInputsProps {
-
+  isSubmitting: boolean;
   editor: EditorState
 }
 

@@ -28,7 +28,7 @@ export type AnalogyInput = {
 };
 
 export interface IButtonsRowProps {
-
+  isSubmitting: boolean;
   type: string;
   editor: EditorState
 }
