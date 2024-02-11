@@ -92,10 +92,10 @@ function PostLocation({
   analogyData: ExtendedAnalogy | undefined;
 }) {
   return (
-    <div className="mx-2 flex max-w-[15rem] overflow-clip truncate text-ellipsis rounded-lg border bg-gray-100 px-3 py-1 text-xs text-gray-500 hover:border-gray-300 hover:bg-[#e9e9e988]">
+    <div className="mx-2 flex text-ellipsis rounded-lg border bg-gray-100 px-3 py-1 text-xs text-gray-500 hover:border-gray-300 hover:bg-[#e9e9e988]">
       <span className=" font-normal ">about&nbsp;</span>
       <Link
-        className="flex max-w-[5rem] cursor-pointer items-center overflow-clip text-ellipsis align-middle font-semibold transition-all hover:text-gray-800"
+        className="flex cursor-pointer items-center  truncate align-middle font-semibold transition-all hover:text-gray-800"
         href={`/${analogyData?.category?.slug ?? "#"}/${
           analogyData?.topic?.slug ?? "#"
         }`}
@@ -104,7 +104,7 @@ function PostLocation({
       </Link>
       <span className=" font-normal">&nbsp;in&nbsp;</span>
       <Link
-        className="flex max-w-[5rem] cursor-pointer items-center truncate align-middle font-semibold transition-all hover:text-gray-800"
+        className="flex cursor-pointer items-center align-middle font-semibold transition-all hover:text-gray-800"
         href={`/${analogyData?.category?.slug ?? "#"}`}
       >
         {analogyData?.category?.name}
@@ -120,7 +120,9 @@ function PostReference({
   return (
     <Link
       href={`${analogyData?.reference ?? "#"}`}
+      target="_blank"
       className="mx-2 flex cursor-pointer rounded-lg border bg-indigo-50 px-3 py-1 text-xs text-indigo-600 hover:border-indigo-300 hover:bg-indigo-100"
+      onClick={(e) => e.stopPropagation()}
     >
       <AiOutlineLink className="mr-2 mt-0.5 scale-125" /> reference
     </Link>
