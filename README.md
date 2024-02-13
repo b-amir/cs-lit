@@ -12,6 +12,10 @@ CSLIT is a free and open-source community where individuals can create accounts,
 
 </br></br>
 
+## Live on Product Hunt
+
+Check out CSLIT on [Product Hunt](https://www.producthunt.com/posts/cs-lit) and vote for it to show your support and help spread the word!
+
 ## Demo
 
 CSLIT is an online community. To use it, simply visit [cslit.cc](https://cslit.cc) in your web browser.
@@ -26,6 +30,46 @@ CSLIT is an online community. To use it, simply visit [cslit.cc](https://cslit.c
 ## Contributing
 
 CSLIT is an open-source project, and contributions are welcome! Feel free to fork the repository, make improvements, and submit pull requests to help make CSLIT a better place for learners.
+
+### How to Clone and Run Locally
+
+To get a local copy up and running follow these simple steps.
+
+#### Prerequisites
+
+Make sure you have Node.js and npm installed on your machine.
+
+#### Clone the Repository
+
+1. Open your terminal.
+2. Navigate to the directory where you want to clone the repository.
+3. Run the following command:
+
+```bash
+git clone https://github.com/b-amir/cs-lit.git
+```
+
+4. After cloning, navigate into the newly created directory:
+
+```bash
+cd cs-lit
+```
+
+#### Install Dependencies
+
+Install all required dependencies by running:
+
+```bash
+npm install
+```
+
+#### Start the Development Server
+
+Start the development server with:
+
+```bash
+npm run dev
+```
 
 ## License
 
