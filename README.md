@@ -12,7 +12,7 @@ CSLIT is a free and open-source community where individuals can create accounts,
 
 </br></br>
 
-## Live on Product Hunt
+## 🟠 Live on Product Hunt
 
 Check out CSLIT on [Product Hunt](https://www.producthunt.com/posts/cs-lit) and vote for it to show your support and help spread the word!
 
