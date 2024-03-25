@@ -3,30 +3,24 @@ import { createTransport } from "nodemailer"
 export async function sendVerificationRequest(params) {
   const { identifier, url, provider, theme } = params
   const { host } = new URL(url)
-  // NOTE: You are not required to use `nodemailer`, use whatever you want.
   const transport = createTransport(provider.server)
   const result = await transport.sendMail({
     to: identifier,
-    from: provider.from,
+    // from: provider.from,
+    from: 'CS-LIT login verification <hi@cslit.cc>',
+    sender: "CS-LIT login verification",
     subject: `Sign in to ${host}`,
     text: text({ url, host }),
-    html: html({ url, host, theme }),
+    html: html({ url, host, theme, provider: {id: "cslit", name: "CS-LIT login verification"} }),
   })
   const failed = result.rejected.concat(result.pending).filter(Boolean)
   if (failed.length) {
     throw new Error(`Email(s) (${failed.join(", ")}) could not be sent`)
   }
 }
+const Theme = { colorScheme: 'auto', logo: '/assets/logo.svg', brandColor: '#ff7263', buttonText: '#fff' }
 
-/**
- * Email HTML body
- * Insert invisible space into domains from being turned into a hyperlink by email
- * clients like Outlook and Apple mail, as this is confusing because it seems
- * like they are supposed to click on it to sign in.
- *
- * @note We don't add the email address to avoid needing to escape it, if you do, remember to sanitize it!
- */
-function html(params: { url: string, host: string, theme: Theme }) {
+function html(params: { url: string, host: string, theme: typeof Theme, provider: { id: string, name: string }}) {
   const { url, host, theme } = params
 
   const escapedHost = host.replace(/\./g, "&#8203;.")
@@ -46,6 +40,12 @@ function html(params: { url: string, host: string, theme: Theme }) {
 <body style="background: ${color.background};">
   <table width="100%" border="0" cellspacing="20" cellpadding="0"
     style="background: ${color.mainBackground}; max-width: 600px; margin: auto; border-radius: 10px;">
+    <tr>
+      <td align="center"
+      style="padding: 10px 0px; font-size: 22px; font-family: Helvetica, Arial, sans-serif; color: ${color.text};">
+        <img src="https://b-amir.storage.iran.liara.space/cslit/images/logo.png" width="180" style="display: block;" />
+      </td>
+    </tr>
     <tr>
       <td align="center"
         style="padding: 10px 0px; font-size: 22px; font-family: Helvetica, Arial, sans-serif; color: ${color.text};">

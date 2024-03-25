@@ -147,7 +147,7 @@ export const authOptions: NextAuthOptions = {
       sendVerificationRequest(params) {
         sendVerificationRequest(params)
         // console.log("Login Link", params.url)
-
+        // console.log("params", params)
       },
       //  if in test environment, send a fixed string as the login link
       // ...(process.env.TESTING ? {
