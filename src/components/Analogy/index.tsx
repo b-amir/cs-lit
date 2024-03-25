@@ -44,7 +44,7 @@ export const Analogy: React.FC<IAnalogyProps> = (props) => {
     );
 
   // --- votingAverage state is lifted to be used in two child components --- //
-  const [votingAverage, setVotingAverage] = useState(0);
+  const [votingAverage, setVotingAverage] = useState<number | "loading">("loading");
 
   // --- useEffect to run code after the first render. --- //
   useEffect(() => {

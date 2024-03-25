@@ -66,7 +66,7 @@ export interface IAnalogyProps {
     topicId: string;
   } | undefined;
   analogyStatus?: string;
-  votingAverage?: number;
+  votingAverage?: number | "loading";
   votingStatus?: string;
 }
 export type IAnalogyBodyProps = IAnalogyProps

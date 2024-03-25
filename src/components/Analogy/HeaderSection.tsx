@@ -76,7 +76,7 @@ export function HeaderSection({
               </div>
             )}
 
-            {votingStatus === "loading" ? (
+            {votingStatus === "loading" || votingAverage === "loading" ? (
               <SmallSkeleton />
             ) : (
               <VotingAverageSection votingAverage={votingAverage} />
