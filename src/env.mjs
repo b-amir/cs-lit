@@ -31,11 +31,12 @@ export const env = createEnv({
     GITHUB_CLIENT_ID: z.string(), // add this line
     GITHUB_CLIENT_SECRET: z.string(),
     // NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
-    // EMAIL_SERVER: z.string(),
-    // EMAIL_PORT: z.string(),
-    // EMAIL_USERNAME: z.string(),
-    // EMAIL_PASSWORD: z.string(),
-    // EMAIL_FROM: z.string(),
+    EMAIL_HOST: z.string(),
+    EMAIL_PORT: z.string(),
+    EMAIL_USERNAME: z.string(),
+    EMAIL_PASSWORD: z.string(),
+    EMAIL_FROM: z.string(),
+    
   },
 
   /**
@@ -60,11 +61,12 @@ export const env = createEnv({
     DISCORD_CLIENT_SECRET: process.env.DISCORD_CLIENT_SECRET,
     GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
     GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
-    // EMAIL_SERVER: process.env.EMAIL_SERVER,
-    // EMAIL_PORT: process.env.EMAIL_PORT,
-    // EMAIL_USERNAME: process.env.EMAIL_USERNAME,
-    // EMAIL_PASSWORD: process.env.EMAIL_PASSWORD,
-    // EMAIL_FROM: process.env.EMAIL_FROM,
+    EMAIL_HOST: process.env.EMAIL_HOST,
+    EMAIL_PORT: process.env.EMAIL_PORT,
+    EMAIL_USERNAME: process.env.EMAIL_USERNAME,
+    EMAIL_PASSWORD: process.env.EMAIL_PASSWORD,
+    EMAIL_FROM: process.env.EMAIL_FROM,
+    
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.

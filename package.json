@@ -30,6 +30,7 @@
 		"@trpc/next": "^10.26.0",
 		"@trpc/react-query": "^10.26.0",
 		"@trpc/server": "^10.26.0",
+		"@types/nodemailer": "^6.4.14",
 		"@vitejs/plugin-react": "^4.1.0",
 		"dotenv-cli": "^7.3.0",
 		"html2canvas": "^1.4.1",

@@ -9,14 +9,9 @@ import DiscordProvider from "next-auth/providers/discord";
 import GithubProvider from "next-auth/providers/github";
 import EmailProvider from "next-auth/providers/email";
 import GoogleProvider from "next-auth/providers/google"
-
-import { env } from "@/env.mjs";
 import { prisma } from "@/server/db";
 import { type USER_ROLE } from "@prisma/client";
-
-import type { NextApiRequest, NextApiResponse } from 'next';
-import { sendVerificationRequest } from '@/utils/sendVerificationReqEmail';
-import { constants } from "crypto";
+import { sendVerificationRequest } from '@/utils/sendVerificationRequest';
 
 
 /**
@@ -137,41 +132,51 @@ export const authOptions: NextAuthOptions = {
      * @see https://next-auth.js.org/providers/github
      */
 
-    // EmailProvider({
-    //   server: {
-    //     host: process.env.EMAIL_SERVER || 'http://localhost:3000',
-    //     port: process.env.EMAIL_PORT || 587,
-    //     auth: {
-    //       user: process.env.EMAIL_USERNAME,
-    //       pass: process.env.EMAIL_PASSWORD || '',
-    //     },
-    //   },
-    //   from: process.env.EMAIL_FROM || 'default@mail.com',
-    //   //  if in test environment, send a fixed string as the login link
-    //   ...(process.env.TESTING ? {
-    //     async generateVerificationToken() {
-    //       return "this-is-a-testing-token"
-    //     }
-    //   } : {}),
+    EmailProvider({
+      server: {
+        host: process.env.EMAIL_HOST || 'http://localhost:3000',
+        port: process.env.EMAIL_PORT || 587,
+        auth: {
+          user: process.env.EMAIL_USERNAME,
+          pass: process.env.EMAIL_PASSWORD || '',
+        },
+      },
+      from: process.env.EMAIL_FROM || 'default@mail.com',
+      maxAge: 30 * 60, // Magic links are valid for 30 minutes
+      type: 'email',
+      sendVerificationRequest(params) {
+        sendVerificationRequest(params)
+        // console.log("Login Link", params.url)
+
+      },
+      //  if in test environment, send a fixed string as the login link
+      // ...(process.env.TESTING ? {
+      //   async generateVerificationToken() {
+      //     return "this-is-a-testing-token"
+      //   }
+      // } : {}),
 
 
-    //   // only enable in development - debugs email sending
-    //   ...(process.env.NODE_ENV !== 'production' ? {
-    //     sendVerificationRequest({ url }) {
-    //       console.log("Login Link", url)
-    //     },
-    //   } : {}),
-    // }),
+      // only enable in development - debugs email sending
+      // ...(process.env.NODE_ENV !== 'production' ? {
+      //   sendVerificationRequest({ url }) {
+      //       // @ts-ignore
+      //       sendVerificationRequest(url)
+        
+      //     console.log("Login Link", url)
+      //   },
+      // } : {}),
+    }),
     // this is fine 
     // @ts-ignore
-    {
-      id: 'resend',
-      type: 'email',
-      sendVerificationRequest,
-      httpOptions: {
-        timeout: 40000,
-      },
-    }
+    // {
+    //   id: 'resend',
+    //   type: 'email',
+    //   sendVerificationRequest,
+    //   httpOptions: {
+    //     timeout: 40000,
+    //   },
+    // }
 
   ],
 };

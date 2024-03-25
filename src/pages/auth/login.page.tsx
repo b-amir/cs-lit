@@ -138,11 +138,7 @@ const LoginPage = () => {
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 e.preventDefault();
-                // void signIn("email", {
-                //   callbackUrl: callbackURL as string,
-                //   email: e.currentTarget.value,
-                // });
-                void signIn("resend", {
+                void signIn("email", {
                   callbackUrl: callbackURL as string,
                   email: e.currentTarget.value,
                 });
