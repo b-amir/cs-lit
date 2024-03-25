@@ -4,6 +4,7 @@ import Image from "next/image";
 import { api } from "@/utils/api";
 import { toast } from "react-hot-toast";
 import { type USER } from "../UserSection";
+import { useSession } from "next-auth/react";
 import { routeHandler } from "@/utils/routeHandler";
 import { getScreenName } from "@/utils/getScreenName";
 import { useEffect, useState } from "react";
@@ -136,9 +137,13 @@ export function VotingAverageSection({
   );
 }
 export function VoteCastingSection({ analogyId }: { analogyId: string }) {
+  const isLoggedIn = useSession().data?.user?.id !== undefined;
   const { data: whatDidCurrentUserVote } =
     api.analogy.whatDidCurrentUserVote.useQuery({
       analogyId: analogyId,
+    },
+    {
+      enabled: isLoggedIn,
     });
   const [vote, setVote] = useState<string | null>(
     whatDidCurrentUserVote ?? null
