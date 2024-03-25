@@ -11,7 +11,7 @@ await import("./src/env.mjs");
 
 /** @type {import("next").NextConfig} */
 const config = {
-  // output: 'standalone', // enabled for Docker builds
+  output: 'standalone', // enabled for Docker builds
   reactStrictMode: true,
   // ...withBundleAnalyzer({}),
 
