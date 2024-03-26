@@ -23,7 +23,7 @@ export function ShareSection() {
           Share your insights within your social circles
         </h2>
 
-        <p className="font-regular text-md mx-auto my-3 flex w-3/4 flex-row items-center justify-center px-4 text-center text-[#292626a9]">
+        <p className="font-regular text-md mx-auto my-3 flex w-3/4 flex-row items-center justify-center px-4 text-balance text-center text-[#292626a9]">
           The thought structure that helped you understand this complex topic
           could add value to the world. Share it with your friends!
         </p>
@@ -50,7 +50,7 @@ function MockAnalogy({
   sessionStatus: "loading" | "authenticated" | "unauthenticated";
 }) {
   return (
-    <div className="mb-20 mt-[-4px] flex w-full flex-col rounded-xl bg-[#e8e5e2] bg-gradient-to-bl from-[#1e7cba] to-[#7c1db3] py-0.5 sm:rounded-3xl sm:px-5 sm:py-5 md:max-w-[760px]">
+    <div className="mb-20 px-2 mt-[-4px] flex w-full flex-col bg-[#e8e5e2] bg-gradient-to-bl from-[#1e7cba] to-[#7c1db3] py-0.5 sm:rounded-3xl sm:px-5 sm:py-5 md:max-w-[760px]">
       <div className="flex w-full flex-row items-center justify-end pt-4 text-xs text-white sm:px-5 sm:py-4 sm:text-sm">
         Share As:{" "}
         <button className="mx-2 inline-flex flex-row items-center rounded-[12px] border border-[#d2d2d28e] bg-[#ffffffc1] px-3 py-1 text-sm text-gray-800 transition-all hover:border-[#c8c8c8] hover:bg-white">

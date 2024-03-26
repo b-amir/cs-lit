@@ -117,13 +117,13 @@ export function HeroSection() {
             <Search />
           </div>
           <p
-            className="group flex select-none flex-row items-center justify-center px-2  text-sm text-[#5c2c1dc4]"
+            className="group flex select-none flex-row items-center justify-center px-2 text-sm text-[#5c2c1dc4]"
             onClick={() => {
               const exampleSection = document.getElementById("example-section");
               exampleSection?.scrollIntoView({ behavior: "smooth" });
             }}
           >
-            <span className="cursor-pointer transition-all duration-300 group-hover:translate-x-1">
+            <span className="cursor-pointer transition-all duration-300 group-hover:translate-x-1 pt-2 sm:pt-0">
               What exactly is it? See an example
             </span>
             <FiArrowDown className="mb-0.5 hidden -rotate-90 items-center transition-all duration-100 group-hover:block group-hover:translate-x-2" />

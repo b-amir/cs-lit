@@ -33,7 +33,7 @@ export function ExampleSection() {
 
         <VerticalLine />
 
-        <p className="font-regular text-md mx-auto my-3 flex flex-row items-center justify-center px-4 text-center text-[#292626a9]">
+        <p className="font-regular text-md mx-auto my-3 flex flex-row items-center justify-center px-4 text-center text-[#292626a9] text-balance">
           A user shared a helpful analogy about Closures in JavaScript,
           <br />
           making it easier for others to understand the concept.
@@ -41,7 +41,7 @@ export function ExampleSection() {
 
         <VerticalLine />
 
-        <div className="mx-auto my-[-4px] flex w-full max-w-[760px] flex-row rounded-xl border-[1px] border-[#5c2c1d2b] bg-[#5c2c1d09] py-0.5 sm:rounded-3xl sm:px-5 sm:py-10 ">
+        <div className="mx-auto my-[-4px] flex w-full max-w-[760px] flex-row border-[1px] border-[#5c2c1d2b] bg-[#5c2c1d09] py-0.5 sm:rounded-3xl sm:px-5 sm:py-10 ">
           <Analogy
             analogy={{
               id: analogyData?.id ?? "",
@@ -54,7 +54,7 @@ export function ExampleSection() {
 
         <VerticalLine />
 
-        <p className="font-regular text-md mx-auto my-3 flex flex-col items-center justify-center px-4 text-center text-[#292626a9] sm:flex-row">
+        <p className="font-regular text-md mx-auto my-3 flex flex-col items-center justify-center px-4 text-center text-[#292626a9] text-balance sm:flex-row">
           Other people can also participate and post their analogies.
           <span className="pt-3 italic text-[#292626c6] sm:pt-0">
             &nbsp;Especially you!

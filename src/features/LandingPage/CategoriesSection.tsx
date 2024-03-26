@@ -36,16 +36,16 @@ export function CategoriesSection() {
         width={400}
         alt="lighthouse"
       />
-      <div className=" my-4 flex min-h-screen w-full flex-col text-[#E6E6E6] sm:right-0 sm:my-10 md:max-w-[calc(5*100vw/5)] lg:right-0 lg:mx-24 lg:ml-auto lg:max-w-[calc(3*100vw/5)]">
+      <div className=" my-4 flex sm:min-h-screen w-full flex-col text-[#E6E6E6] sm:right-0 sm:my-10 md:max-w-[calc(5*100vw/5)] lg:right-0 lg:mx-24 lg:ml-auto lg:max-w-[calc(3*100vw/5)]">
         <h2
-          className={`${archivo.className} h-3/12 mx-auto my-14 flex min-h-[calc(15dvh)] w-full flex-row justify-center px-6 text-center text-3xl font-bold [text-shadow:_0px_1px_5px_rgb(66_80_99_/_45%)] [text-shadow:_1px_1px_0px_rgb(66_80_99_/_30%)] sm:text-4xl`}
+          className={`${archivo.className} h-3/12 mx-auto text-balance my-14 flex min-h-[calc(15dvh)] w-full flex-row justify-center px-6 text-center text-3xl font-bold [text-shadow:_0px_1px_5px_rgb(66_80_99_/_45%)] [text-shadow:_1px_1px_0px_rgb(66_80_99_/_30%)] sm:text-4xl`}
         >
           Choose a category and dive in:
         </h2>
         {categoriesFetchingStatus === "loading" ? (
           <HomeCategorySkeleton />
         ) : (
-          <ul className="h-8/12 mx-auto mb-28 grid w-full justify-center gap-6 text-lg font-normal sm:mb-20 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="h-8/12 px-4 mx-auto mb-28 grid w-full justify-center gap-6 text-lg font-normal sm:mb-20 grid-cols-2 lg:grid-cols-3">
             {categories?.pages?.map((page) =>
               page?.items?.map((category) => (
                 <li key={category.id} className="">
@@ -57,7 +57,7 @@ export function CategoriesSection() {
                       {getCategoryIcon(category?.slug)}
                     </span>
 
-                    <span className="ml-4 flex-1 truncate text-ellipsis whitespace-nowrap font-semibold transition-all duration-200 ">
+                    <span className="ml-4 text-sm sm:text-lg flex-1 truncate text-ellipsis whitespace-nowrap font-semibold transition-all duration-200 ">
                       {category.name}
                     </span>
                   </Link>
@@ -67,7 +67,7 @@ export function CategoriesSection() {
           </ul>
         )}
         <div className=" h-1/12 absolute bottom-0 left-[5%] right-[5%] my-12 flex flex-col items-center sm:items-end">
-          <p className="font-regular z-10 flex w-[max-content] flex-row items-center justify-center gap-1.5 rounded-lg border border-[#d5d9df33] bg-[#d6e2f634] px-4 py-2 text-sm text-[#292626a9] shadow-sm backdrop-blur-sm sm:bg-[#d6e2f600] sm:shadow-none md:border-0 md:bg-none">
+          <p className="hidden font-regular z-10 sm:flex w-[max-content] flex-row items-center justify-center gap-1.5 rounded-lg border border-[#d5d9df33] bg-[#d6e2f634] px-4 py-2 text-sm text-[#292626a9] shadow-sm backdrop-blur-sm ">
             <InfoIcon className="mb-0.5" /> You can contribute by suggesting
             missing categories.
           </p>
