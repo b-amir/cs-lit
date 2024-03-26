@@ -80,6 +80,7 @@ export function HeroSection() {
         backgroundColor: "#fff",
         backgroundAttachment: "fixed",
         backgroundSize: "cover",
+        backgroundPositionX: "center",
         backgroundImage: `url("/assets/heroBg.svg")`,
       }}
     >
