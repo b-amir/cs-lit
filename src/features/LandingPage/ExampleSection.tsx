@@ -12,6 +12,7 @@ export function ExampleSection() {
       refetchOnWindowFocus: false,
       refetchOnMount: false,
       refetchOnReconnect: false,
+      cacheTime: 360000,
     }
   );
 

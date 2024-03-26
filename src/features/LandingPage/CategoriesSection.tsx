@@ -15,6 +15,7 @@ export function CategoriesSection() {
         refetchOnWindowFocus: false,
         refetchOnMount: false,
         refetchOnReconnect: false,
+        cacheTime: 60000,
       }
     );
   return (

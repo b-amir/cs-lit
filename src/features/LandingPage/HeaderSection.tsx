@@ -33,7 +33,7 @@ export function HeaderSection() {
             <span className="hidden sm:flex">
               <CallToAction text="Explore Now" />
             </span>
-            <div className="ml-4 flex h-[3.1rem] items-center gap-0  border-[#5c2c1d2b] bg-[#ffffff36] px-3 py-1 pr-4 backdrop-blur-sm transition-all duration-300 sm:border-l sm:py-2 ">
+            <div className="ml-4 flex h-[3.1rem] items-center gap-0  border-[#5c2c1d2b] bg-[#ffffff00] px-3 py-1 pr-4 backdrop-blur-sm transition-all duration-300 sm:border-l sm:py-2 ">
               <UserSection />
             </div>
           </span>
