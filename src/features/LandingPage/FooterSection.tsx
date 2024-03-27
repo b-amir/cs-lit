@@ -1,12 +1,12 @@
 import Image from "next/image";
 import { AiOutlineLink } from "react-icons/ai";
-import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaArrowUp } from "react-icons/fa";
 
 export function FooterSection() {
   return (
     <footer
       id="footer-section"
-      className="mx-auto flex w-full flex-col items-center justify-center border-t border-t-white bg-[#1C282E] px-12 py-6 shadow-inner shadow-[#1d262b] sm:flex-row"
+      className="mx-auto flex w-full flex-col items-center justify-center border-t border-t-white bg-[#1C282E] px-12 py-6 shadow-inner shadow-[#1d262b] sm:flex-row md:px-48"
     >
       <Image
         id="grayscaled-logo"
@@ -16,18 +16,15 @@ export function FooterSection() {
         alt="logo"
         className="mb-6 sm:mb-0 sm:mr-6"
       />
-
       <div
         id="vertical-line"
         className="my-1 hidden h-16  w-[1px] flex-col items-center justify-center bg-[#e5e1e031] sm:flex"
       />
-
       {/* links: */}
-
       <div className="flex flex-col text-xs text-[#dadadac1] sm:ml-6">
         <div className="my-1 inline-flex">
           <FaLinkedin className="mr-1.5 mt-0.5" />
-          <span className="mr-1">Hey, I&apos;m</span>
+          <span className="mr-1">Hi, I&apos;m</span>
           <a
             className="inline-flex flex-wrap font-semibold hover:underline"
             href="https://www.linkedin.com/in/amirbazgir/"
@@ -59,6 +56,40 @@ export function FooterSection() {
           </a>
           <span>to this project.</span>
         </div>
+      </div>
+      <div
+        id="horizontal-spacer"
+        className="mx-3 hidden shrink-0 flex-grow sm:flex"
+      />
+
+      <a
+        href="https://www.producthunt.com/products/cs-lit"
+        target="_blank"
+        className="hidden sm:flex"
+        rel="noreferrer"
+        title="CS-LIT on ProductHunt"
+      >
+        <div
+          id="producthunt-badge"
+          className="mx-3  cursor-pointer rounded-xl border-2 border-[#FF615450] bg-[#FF615420] p-4 px-6 text-sm transition-all hover:border-[#FF6154] hover:bg-[#FF615440]"
+        >
+          <p className="text-balance text-center text-[#dadadac1] ">
+            We're on&nbsp;
+            <span className="font-bold text-[#FF6154]">ProductHunt</span>
+          </p>
+        </div>
+      </a>
+      <div
+        id="vertical-line"
+        className="mx-3 my-1 hidden h-16  w-[1px] flex-col items-center justify-center bg-[#e5e1e031] sm:flex"
+      />
+      <div
+        id="go-to-top"
+        title="Go to top"
+        className="group mx-3 hidden cursor-pointer rounded-xl border-0 border-[#f1ccc950] bg-[#cca8a520] p-4  text-sm transition-all hover:border-[#ECECEC] hover:bg-[#ECECEC40] sm:flex"
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+      >
+        <FaArrowUp className="text-base text-[#dadadac1] duration-500 group-hover:-translate-y-0.5" />
       </div>
     </footer>
   );
