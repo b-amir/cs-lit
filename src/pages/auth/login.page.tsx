@@ -15,9 +15,15 @@ const LoginPage = () => {
 
   // --- get error from router query and store as state --- //
   const [errorState, setErrorState] = useState(router.query.error || "none");
+  const [activeProvider, setActiveProvider] = useState("");
+
   useEffect(() => {
     setErrorState(router.query.error || "none");
   }, [router.query.error]);
+
+  const handleButtonClick = (buttonId: string) => {
+    setActiveProvider(buttonId);
+  };
 
   if (status === "loading") {
     return <CornerLoading />;
@@ -96,38 +102,36 @@ const LoginPage = () => {
           <h1 className="text-md mb-4 text-center text-xs font-normal text-gray-400">
             Sign in using providers
           </h1>
-          <button
-            data-testid="google-signin"
-            onClick={() =>
-              void signIn("google", {
-                callbackUrl: callbackURL as string,
-              })
-            }
-            className="mx-auto mb-3 flex w-full place-content-center items-center rounded-2xl border border-gray-300 bg-white px-6 py-2 shadow-sm transition-all duration-200 hover:border-gray-400  hover:bg-blue-100 hover:text-gray-900  "
-          >
-            <BsGoogle className="mb-0.5 mr-4" /> Sign in with Google
-          </button>
-          <button
-            onClick={() =>
-              void signIn("discord", {
-                callbackUrl: callbackURL as string,
-              })
-            }
-            className="mx-auto mb-3 flex w-full place-content-center items-center rounded-2xl border border-gray-300 bg-white px-6 py-2 shadow-sm transition-all duration-200 hover:border-gray-400 hover:bg-indigo-100 hover:text-gray-900 "
-          >
-            <BsDiscord className="mb-0.5 mr-4" /> Sign in with Discord
-          </button>
-          <button
-            data-testid="github-signin"
-            onClick={() =>
-              void signIn("github", {
-                callbackUrl: callbackURL as string,
-              })
-            }
-            className="mx-auto mb-3 flex w-full place-content-center items-center rounded-2xl border border-gray-300 bg-white px-6 py-2 shadow-sm transition-all duration-200 hover:border-gray-400 hover:bg-gray-200 hover:text-gray-900 "
-          >
-            <BsGithub className="mb-0.5 mr-4" /> Sign in with GitHub
-          </button>
+
+          <SignInButton
+            provider="Google"
+            icon={<BsGoogle className="mb-0.5 mr-4" />}
+            onClick={() => {
+              void signIn("google", { callbackUrl: callbackURL as string });
+              handleButtonClick("google");
+            }}
+            isActive={activeProvider === "google"}
+          />
+
+          <SignInButton
+            provider="Discord"
+            icon={<BsDiscord className="mb-0.5 mr-4" />}
+            onClick={() => {
+              void signIn("discord", { callbackUrl: callbackURL as string });
+              handleButtonClick("discord");
+            }}
+            isActive={activeProvider === "discord"}
+          />
+
+          <SignInButton
+            provider="GitHub"
+            icon={<BsGithub className="mb-0.5 mr-4" />}
+            onClick={() => {
+              void signIn("github", { callbackUrl: callbackURL as string });
+              handleButtonClick("github");
+            }}
+            isActive={activeProvider === "github"}
+          />
 
           <h1 className="text-md mb-4 mt-8 text-center text-xs font-normal text-gray-400">
             or via magic link
@@ -142,14 +146,57 @@ const LoginPage = () => {
                   callbackUrl: callbackURL as string,
                   email: e.currentTarget.value,
                 });
+                handleButtonClick("email");
               }
             }}
+            disabled={activeProvider === "email"}
             placeholder="Enter your email"
-            className="mb-12 flex w-full items-center rounded-2xl border border-gray-300 px-6 py-2 transition-colors duration-200 hover:bg-gray-50 hover:text-black"
+            className={`mb-12 flex w-full items-center rounded-2xl border border-gray-300 px-6 py-2 transition-colors duration-200 hover:bg-gray-50 hover:text-black ${
+              activeProvider === "email" &&
+              "animate-pulse cursor-not-allowed border-gray-400 bg-gray-300 text-gray-600 hover:bg-gray-300"
+            } `}
           />
         </div>
       </div>
     </div>
+  );
+};
+
+type SignInButtonProps = {
+  provider: string;
+  icon: JSX.Element;
+  onClick: () => void;
+  isActive: boolean;
+};
+
+const SignInButton = ({
+  provider,
+  icon,
+  onClick,
+  isActive,
+}: SignInButtonProps) => {
+  //
+  const providerColors: { [key: string]: string } = {
+    google: "bg-blue-100",
+    discord: "bg-indigo-100",
+    github: "bg-gray-200",
+    email: "bg-gray-50",
+  };
+
+  const bgColorClass =
+    providerColors[provider.toLowerCase()] || providerColors.email;
+
+  return (
+    <button
+      onClick={onClick}
+      disabled={isActive}
+      className={`mx-auto mb-3 flex w-full place-content-center items-center rounded-2xl border border-gray-300 bg-white px-6 py-2 shadow-sm transition-all duration-200 hover:border-gray-400 hover:${bgColorClass} hover:text-gray-900 ${
+        isActive &&
+        "animate-pulse cursor-not-allowed border-gray-400 bg-gray-300 text-gray-600 hover:bg-gray-300"
+      }`}
+    >
+      {icon} Sign in with {provider}
+    </button>
   );
 };
 
